@@ -1,6 +1,14 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <ul>
+      <li
+        v-for="(post, index) in posts"
+        :key="index"
+      >
+        {{ post.title }}
+      </li>
+    </ul>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -35,6 +43,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  computed: {
+    posts() {
+      return this.$store.state.posts;
+    }
   }
 }
 </script>
