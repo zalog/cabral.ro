@@ -6,7 +6,7 @@
     "build": "npm run build:server -- --silent && npm run build:client -- --no-clean --silent",
     "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build",
     "build:client": "vue-cli-service build",
-    "serve": "cross-env NODE_ENV=development npm-run-all -p build start serve:client",
+    "serve": "cross-env NODE_ENV=development npm run build && cross-env NODE_ENV=development npm-run-all -p start serve:client",
     "serve:client": "vue-cli-service serve",
     "start": "node scripts/start",
     "lint": "vue-cli-service lint"
