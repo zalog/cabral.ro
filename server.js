@@ -53,9 +53,7 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-app.use('/js', express.static(path.resolve(__dirname, './dist/js')));
-app.use('/img', express.static(path.resolve(__dirname, './dist/img')));
-app.use('/css', express.static(path.resolve(__dirname, './dist/css')));
+app.use('/', express.static(path.resolve(__dirname, './dist')));
 
 app.get('*', (req, res) => {
   res.setHeader("Content-Type", "text/html");
