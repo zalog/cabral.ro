@@ -9,7 +9,7 @@ const { createBundleRenderer } = require('vue-server-renderer');
 const devServerBaseURL = process.env.DEV_SERVER_BASE_URL || 'http://localhost';
 const devServerPort = process.env.DEV_SERVER_PORT || 8081;
 
-const app = express();
+const server = express();
 
 function createRenderer (bundle, options) {
   return createBundleRenderer(bundle, Object.assign(options, {
@@ -17,19 +17,17 @@ function createRenderer (bundle, options) {
   }));
 }
 
-let renderer;
 const templatePath = path.resolve(__dirname, './src/index.template.html');
-
 const bundle = require('./dist/vue-ssr-server-bundle.json');
 const template = fs.readFileSync(templatePath, 'utf-8');
 const clientManifest = require('./dist/vue-ssr-client-manifest.json');
-renderer = createRenderer(bundle, {
+const renderer = createRenderer(bundle, {
   template,
   clientManifest
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  app.use('/main*', proxy({
+  server.use('/main*', proxy({
     target: `${devServerBaseURL}:${devServerPort}`,
     changeOrigin: true,
     pathRewrite: function (path) {
@@ -40,22 +38,21 @@ if (process.env.NODE_ENV !== 'production') {
     prependPath: false
   }));
 
-  app.use('/*hot-update*', proxy({
+  server.use('/*hot-update*', proxy({
     target: `${devServerBaseURL}:${devServerPort}`,
     changeOrigin: true,
   }));
 
-
-  app.use('/sockjs-node', proxy({
+  server.use('/sockjs-node', proxy({
     target: `${devServerBaseURL}:${devServerPort}`,
     changeOrigin: true,
     ws: true
   }));
 }
 
-app.use('/', express.static(path.resolve(__dirname, './dist')));
+server.use('/', express.static(path.resolve(__dirname, './dist')));
 
-app.get('*', (req, res) => {
+server.get('*', (req, res) => {
   res.setHeader("Content-Type", "text/html");
 
   const context = {
@@ -75,8 +72,8 @@ app.get('*', (req, res) => {
       }
     }
     res.status(context.HTTPStatus || 200);
-    res.send(html);
+    res.end(html);
   });
 });
 
-module.exports = app;
+module.exports = server;
