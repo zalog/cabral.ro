@@ -1,4 +1,4 @@
-import { createApp } from './main';
+import { createApp } from './app';
 
 export default context => new Promise((resolve, reject) => {
   const { app, router, store } = createApp();
