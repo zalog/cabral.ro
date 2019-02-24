@@ -50,7 +50,7 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-server.use('/', express.static(path.resolve(__dirname, './dist')));
+server.use('/dist', express.static(path.resolve(__dirname, './dist')));
 
 server.get('*', (req, res) => {
   res.setHeader("Content-Type", "text/html");

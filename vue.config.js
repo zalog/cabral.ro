@@ -14,6 +14,7 @@ const target = TARGET_NODE
   : 'client';
 
 module.exports = {
+  publicPath: './dist',
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*'
