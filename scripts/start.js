@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const server = require('../server');
+const server = require('../server/index');
 
 const port = process.env.PORT || 8080;
 

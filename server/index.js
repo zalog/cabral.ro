@@ -17,10 +17,10 @@ function createRenderer (bundle, options) {
   }));
 }
 
-const templatePath = path.resolve(__dirname, './src/index.template.html');
-const bundle = require('./dist/vue-ssr-server-bundle.json');
+const templatePath = path.resolve(__dirname, './../src/index.template.html');
+const bundle = require('./../dist/vue-ssr-server-bundle.json');
 const template = fs.readFileSync(templatePath, 'utf-8');
-const clientManifest = require('./dist/vue-ssr-client-manifest.json');
+const clientManifest = require('./../dist/vue-ssr-client-manifest.json');
 const renderer = createRenderer(bundle, {
   template,
   clientManifest
