@@ -15,7 +15,9 @@ export default {
   name: 'app',
 
   computed: {
-    showMenu() { return this.$store.state.ui.menu }
+    showMenu() {
+      return this.$store.state.ui.menu;
+    }
   }
-}
+};
 </script>
