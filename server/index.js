@@ -56,15 +56,13 @@ if (isProd) {
   );
 }
 
-const serve = (path, cache) => express.static(resolve(path), {
+const serve = (path, cache) => express.static(path, {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
 });
 
 app.use(compression({ threshold: 0 }));
-app.use('/dist', serve('./dist', true));
+app.use('/', serve('./dist', true));
 app.use('/public', serve('./public', true));
-app.use('/manifest.json', serve('./manifest.json', true));
-app.use('/service-worker.js', serve('./dist/service-worker.js'));
 
 // 1-second microcache.
 app.use(microcache.cacheSeconds(1, req => useMicroCache && req.originalUrl));
