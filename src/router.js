@@ -21,6 +21,14 @@ export function createRouter () {
         component: () => import('./components/PagePosts.vue')
       },
       {
+        path: '/posts/page/1',
+        redirect: '/posts'
+      },
+      {
+        path: '/posts/page/:id',
+        component: () => import('./components/PagePosts.vue')
+      },
+      {
         path: '*',
         redirect: '/'
       }
