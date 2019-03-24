@@ -1,15 +1,45 @@
+import Vue from 'vue';
+import paginate from 'jw-paginate';
+
 export default {
   namespaced: true,
 
   state: () => ({
-    count: 0
+    posts: [],
+    pagination: []
   }),
 
   mutations: {
-    inc: state => state.count++
+    posts: (state, playload) => state.posts = playload,
+    pagination: (state, payload) => state.pagination = payload
   },
 
   actions: {
-    inc: ({ commit }) => commit('inc')
+    fetch: ({ commit }, currentPage) => {
+      return new Promise((resolve, reject) => {
+        if (typeof currentPage === 'string') currentPage = parseInt(currentPage);
+
+        let itemsOnPage = 10;
+        let paginationMaxPages = 11;
+
+        Vue.prototype.$http({
+          method: 'get',
+          url: 'https://www.cabral.ro/wp-json/wp/v2/posts',
+          params: {
+            'per_page': itemsOnPage,
+            'page': currentPage
+          }
+        }).then((response) => {
+          let itemsTotal = parseInt(response.headers['x-wp-total']);
+          let pagination = paginate(itemsTotal, currentPage, itemsOnPage, paginationMaxPages);
+
+          commit('pagination', pagination.pages);
+          commit('posts', response.data);
+          resolve();
+        }).catch((error) => {
+          reject(error);
+        });
+      });
+    }
   }
 };
