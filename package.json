@@ -15,6 +15,7 @@
     "compression": "^1.7.4",
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.1",
+    "jw-paginate": "^1.0.2",
     "route-cache": "^0.4.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.2",
