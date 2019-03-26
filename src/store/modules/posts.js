@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { API } from './../../utils/constants';
 import paginate from 'jw-paginate';
 
 export default {
@@ -24,7 +25,7 @@ export default {
 
         Vue.prototype.$http({
           method: 'get',
-          url: 'https://www.cabral.ro/wp-json/wp/v2/posts',
+          url: API.POSTS,
           params: {
             'per_page': itemsOnPage,
             'page': currentPage
