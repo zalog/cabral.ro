@@ -3,6 +3,9 @@ import App from './App.vue';
 import { createRouter } from './router';
 import { createStore } from './store';
 
+import http from './plugins/http';
+Vue.use(http);
+
 export function createApp () {
   const router = createRouter();
   const store = createStore();
