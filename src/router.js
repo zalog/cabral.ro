@@ -13,19 +13,19 @@ export function createRouter () {
         component: () => import('./components/PageHome.vue')
       },
       {
+        path: '/page/1',
+        redirect: '/'
+      },
+      {
+        path: '/page/:id',
+        component: () => import('./components/PageHome.vue')
+      },
+      {
         path: '/about',
         component: () => import('./components/PageAbout.vue')
       },
       {
         path: '/posts',
-        component: () => import('./components/PagePosts.vue')
-      },
-      {
-        path: '/posts/page/1',
-        redirect: '/posts'
-      },
-      {
-        path: '/posts/page/:id',
         component: () => import('./components/PagePosts.vue')
       },
       {
