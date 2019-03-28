@@ -5,6 +5,7 @@ const path = require('path');
 const resolve = file => path.resolve(__dirname, file);
 
 const express = require('express');
+const favicon = require('serve-favicon');
 const LRU = require('lru-cache');
 const compression = require('compression');
 const microcache = require('route-cache');
@@ -61,6 +62,7 @@ const serve = (path, cache) => express.static(path, {
 });
 
 app.use(compression({ threshold: 0 }));
+app.use(favicon('./public/favicon.ico'));
 app.use('/', serve('./dist', true));
 app.use('/public', serve('./public', true));
 
