@@ -21,8 +21,8 @@ export function createRouter () {
         component: () => import('./components/PageHome.vue')
       },
       {
-        path: '/about',
-        component: () => import('./components/PageAbout.vue')
+        path: '/:pageSlug',
+        component: () => import('./components/PagePage.vue')
       },
       {
         path: '/posts',
