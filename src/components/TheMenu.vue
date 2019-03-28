@@ -3,8 +3,8 @@
     <router-link
       v-for="item in menu"
       :key="item.ID"
-      :to="item.url"
-    >{{ item.title }}</router-link>
+      :to="menuItemTo(item.url)"
+    >{{ item.title }} {{ item.object }} / </router-link>
   </div>
 </template>
 
@@ -25,7 +25,8 @@ export default {
   methods: {
     fetchMenu() {
       return this.$store.dispatch('ui/fetchMenu');
-    }
+    },
+    menuItemTo: (url) => url.replace('https://www.cabral.ro', '')
   }
 };
 </script>
