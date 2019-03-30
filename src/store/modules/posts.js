@@ -15,17 +15,20 @@ export default {
   },
 
   actions: {
-    fetch: ({ commit }, payloadParams) => {
-      payloadParams.fields = ['title'];
+    fetch: ({ commit }, payload) => {
+      payload = {
+        fields: ['title'],
+        ...payload
+      };
 
-      if (typeof payloadParams.currentPage === 'string') payloadParams.currentPage = parseInt(payloadParams.currentPage);
+      if (typeof payload.currentPage === 'string') payload.currentPage = parseInt(payload.currentPage);
 
-      return fetchPosts(payloadParams).then((response) => {
+      return fetchPosts(payload).then((response) => {
         let itemsTotal = parseInt(response.headers['x-wp-total']);
         let paginationItemsOnPage = 10;
         let paginationMaxPages = 11;
 
-        let pagination = paginate(itemsTotal, payloadParams.currentPage, paginationItemsOnPage, paginationMaxPages);
+        let pagination = paginate(itemsTotal, payload.currentPage, paginationItemsOnPage, paginationMaxPages);
 
         commit('pagination', pagination.pages);
         commit('posts', response.data);
