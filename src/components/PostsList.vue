@@ -21,7 +21,7 @@
 import postsModule from '../store/modules/posts';
 
 export default {
-  name: 'PageHome',
+  name: 'PostsList',
 
   computed: {
     posts() {
