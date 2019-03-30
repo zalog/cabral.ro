@@ -56,8 +56,8 @@ export default {
     registerModule() {
       this.$store.registerModule('posts', postsModule, { preserveState: !!this.$store.state.posts });
     },
-    fetchPosts(pageNr) {
-      return this.$store.dispatch('posts/fetch', pageNr);
+    fetchPosts(currentPage) {
+      return this.$store.dispatch('posts/fetch', {currentPage});
     }
   }
 };
