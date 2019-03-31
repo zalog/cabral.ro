@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>Posts</div>
     <ul>
       <li v-for="(post, index) in posts" :key="index">
         <a v-html="post.title.rendered" />
@@ -9,8 +8,7 @@
 
     <span v-for="(page, index) in pagination" :key="index">
       <router-link
-        :to="'/page/' + page"
-        @click.native="fetchPosts(page)"
+        :to="paginationTo(page)"
       >{{ page }}</router-link>
       /
     </span>
@@ -18,46 +16,28 @@
 </template>
 
 <script>
-import postsModule from '../store/modules/posts';
-
 export default {
   name: 'PostsList',
 
-  computed: {
-    posts() {
-      return this.$store.state.posts.posts;
+  props: {
+    posts: {
+      type: Array,
+      required: true
     },
-    pagination() {
-      return this.$store.state.posts.pagination;
-    }
-  },
-
-  serverPrefetch() {
-    this.registerModule();
-    return this.fetchPosts(this.$route.params.id);
-  },
-
-  beforeMount() {
-    this.registerModule();
-    if (!this.$store.state.posts.posts.length) this.fetchPosts(this.$route.params.id);
-  },
-
-  destroyed() {
-    this.$store.unregisterModule('posts');
-  },
-
-  watch: {
-    $route(to) {
-      if (typeof to.params.id === 'undefined') this.fetchPosts(1);
+    pagination: {
+      type: Array,
+      required: true
     }
   },
 
   methods: {
-    registerModule() {
-      this.$store.registerModule('posts', postsModule, { preserveState: !!this.$store.state.posts });
-    },
-    fetchPosts(currentPage) {
-      return this.$store.dispatch('posts/fetch', {currentPage});
+    paginationTo(page) {
+      const categorySlug = this.$route.params.categorySlug;
+      let url = `/page/${page}`;
+
+      if (categorySlug) url = `/category/${categorySlug}${url}`;
+
+      return url;
     }
   }
 };

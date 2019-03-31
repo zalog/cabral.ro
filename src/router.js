@@ -29,6 +29,18 @@ export function createRouter () {
         component: () => import('./components/PagePosts.vue')
       },
       {
+        path: '/category/:categorySlug',
+        component: () => import('./components/PageCategory.vue')
+      },
+      {
+        path: '/category/:categorySlug/page/1',
+        redirect: '/category/:categorySlug'
+      },
+      {
+        path: '/category/:categorySlug/page/:id',
+        component: () => import('./components/PageCategory.vue')
+      },
+      {
         path: '*',
         redirect: '/'
       }

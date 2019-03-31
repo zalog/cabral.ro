@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Home</h1>
+    <h1>Category</h1>
     <PostsList
       :posts="posts"
       :pagination="pagination"
@@ -13,7 +13,7 @@ import PostsList from "./PostsList.vue";
 import postsModule from './../store/modules/posts';
 
 export default {
-  name: 'PageHome',
+  name: 'PageCategory',
 
   components: {
     PostsList
@@ -26,11 +26,11 @@ export default {
 
   beforeMount() {
     this.registerModule();
-    if (!this.$store.state.home.posts.length) this.fetchPosts(this.$route.params.id);
+    if (!this.$store.state.categories.posts.length) this.fetchPosts(this.$route.params.id);
   },
 
   destroyed() {
-    this.$store.unregisterModule('home');
+    this.$store.unregisterModule('categories');
   },
 
   watch: {
@@ -42,19 +42,19 @@ export default {
 
   computed: {
     posts() {
-      return this.$store.state.home.posts;
+      return this.$store.state.categories.posts;
     },
     pagination() {
-      return this.$store.state.home.pagination;
+      return this.$store.state.categories.pagination;
     }
   },
 
   methods: {
     registerModule() {
-      this.$store.registerModule('home', postsModule, { preserveState: !!this.$store.state.home });
+      this.$store.registerModule('categories', postsModule, { preserveState: !!this.$store.state.categories });
     },
     fetchPosts(currentPage) {
-      return this.$store.dispatch('home/fetch', {currentPage});
+      return this.$store.dispatch('categories/fetch', {currentPage, categories: [this.$route.params.categorySlug]});
     }
   }
 };
