@@ -25,10 +25,6 @@ export function createRouter () {
         component: () => import('./components/PagePage.vue')
       },
       {
-        path: '/posts',
-        component: () => import('./components/PagePosts.vue')
-      },
-      {
         path: '/category/:categorySlug',
         component: () => import('./components/PageCategory.vue')
       },
