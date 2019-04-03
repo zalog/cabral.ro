@@ -21,8 +21,8 @@ export function createRouter () {
         component: () => import('./components/PageHome.vue')
       },
       {
-        path: '/:pageSlug',
-        component: () => import('./components/PagePage.vue')
+        path: '/:singleSlug',
+        component: () => import('./components/PageSingle.vue')
       },
       {
         path: '/category/:categorySlug',
