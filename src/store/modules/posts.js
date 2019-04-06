@@ -11,7 +11,12 @@ export default {
 
   mutations: {
     posts: (state, playload) => state.posts = playload,
-    pagination: (state, payload) => state.pagination = payload
+    pagination: (state, payload) => {
+      state.pagination = {
+        data: payload.data,
+        currentPage: payload.currentPage
+      };
+    }
   },
 
   actions: {
@@ -33,9 +38,13 @@ export default {
     },
     pagination: ({ commit }, payload) => {
       const maxPages = 10;
-      const pages = paginate(payload.itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages).pages;
+      const pagination = paginate(payload.itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
-      commit('pagination', pages);
+      commit('pagination', {
+        path: '/',
+        data: pagination.pages,
+        currentPage: pagination.currentPage
+      });
     }
   }
 };

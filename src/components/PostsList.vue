@@ -6,9 +6,10 @@
       </li>
     </ul>
 
-    <span v-for="(page, index) in pagination" :key="index">
+    <span v-for="(page, index) in pagination.data" :key="index">
       <router-link
         :to="paginationTo(page)"
+        :class="{ 'active': [pagination.currentPage] == page }"
       >{{ page }}</router-link>
       /
     </span>
@@ -25,7 +26,7 @@ export default {
       required: true
     },
     pagination: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
