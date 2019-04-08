@@ -2,15 +2,15 @@
   <div>
     <h1>Home</h1>
     <PostsList
-      :posts="posts"
-      :pagination="pagination"
+      v-if="data"
+      :posts="data.posts"
+      :pagination="data.postsPagination"
     />
   </div>
 </template>
 
 <script>
 import PostsList from "./PostsList.vue";
-import postsModule from './../store/modules/posts';
 
 export default {
   name: 'PageHome',
@@ -19,42 +19,42 @@ export default {
     PostsList
   },
 
+  data: () => ({
+    forceDataRecompute: 1,
+    currentPath: null
+  }),
+
   serverPrefetch() {
-    this.registerModule();
-    return this.fetchPosts(this.$route.params.id);
+    return this.fetchPosts();
   },
 
   beforeMount() {
-    this.registerModule();
-    if (!this.$store.state.home.posts.length) this.fetchPosts(this.$route.params.id);
-  },
-
-  destroyed() {
-    this.$store.unregisterModule('home');
+    this.currentPath = this.$route.fullPath;
+    this.fetchPosts();
   },
 
   watch: {
-    $route(to) {
-      if (typeof to.params.id === 'undefined') this.fetchPosts(1);
-      else this.fetchPosts(to.params.id);
+    $route() {
+      this.fetchPosts();
     }
   },
 
   computed: {
-    posts() {
-      return this.$store.state.home.posts;
-    },
-    pagination() {
-      return this.$store.state.home.pagination;
+    data() {
+      this.forceDataRecompute;
+      return this.$store.state.data[this.currentPath];
     }
   },
 
   methods: {
-    registerModule() {
-      this.$store.registerModule('home', postsModule, { preserveState: !!this.$store.state.home });
-    },
-    fetchPosts(currentPage) {
-      return this.$store.dispatch('home/fetch', {currentPage});
+    fetchPosts() {
+      return this.$store.dispatch('data/fetchPosts', {
+        currentPage: this.$route.params.id || 1,
+        path: this.$route.fullPath
+      }).then(() => {
+        this.currentPath = this.$route.fullPath;
+        this.forceDataRecompute++;
+      });
     }
   }
 };
