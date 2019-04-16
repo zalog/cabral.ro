@@ -42,7 +42,8 @@ export default {
   computed: {
     data() {
       this.forceDataRecompute;
-      return this.$store.state.data[this.currentPath];
+      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
+      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
     }
   },
 

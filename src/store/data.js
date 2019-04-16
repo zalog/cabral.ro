@@ -4,22 +4,23 @@ import paginate from 'jw-paginate';
 export default {
   namespaced: true,
 
-  state: () => ({}),
+  state: () => ([]),
 
   mutations: {
     addPosts: (state, payload) => {
-      state[payload.path] = {
-        ...state[payload.path],
-        posts: payload.data
-      };
+      state.push({
+        [payload.path]: {
+          posts: payload.data
+        }
+      });
+
+      if (state.length >= 5) state.shift();
     },
     addPostsPagination: (state, payload) => {
-      state[payload.path] = {
-        ...state[payload.path],
-        postsPagination: {
-          data: payload.data,
-          currentPage: payload.currentPage
-        }
+      let page = state.find(obj => obj[payload.path]);
+      page[payload.path].postsPagination = {
+        data: payload.data,
+        currentPage: payload.currentPage
       };
     }
   },
@@ -33,7 +34,8 @@ export default {
       };
 
       // stops if page exists
-      if (state.hasOwnProperty(payload.path)) return;
+      let page = state.find(obj => obj[payload.path]);
+      if (typeof page !== 'undefined') return;
 
       return fetchPosts(payload).then((response) => {
         payload.currentPage = parseInt(payload.currentPage);
