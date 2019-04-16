@@ -4,7 +4,6 @@
     <PostsList
       v-if="data"
       :posts="data.posts"
-      :pagination="data.postsPagination"
     />
   </div>
 </template>

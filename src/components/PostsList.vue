@@ -1,15 +1,15 @@
 <template>
   <div>
     <ul>
-      <li v-for="(post, index) in posts" :key="index">
+      <li v-for="(post, index) in posts.data" :key="index">
         <a v-html="post.title.rendered" />
       </li>
     </ul>
 
-    <span v-for="(page, index) in pagination.data" :key="index">
+    <span v-for="(page, index) in posts.pagination.data" :key="index">
       <router-link
         :to="paginationTo(page)"
-        :class="{ 'active': [pagination.currentPage] == page }"
+        :class="{ 'active': [posts.pagination.currentPage] == page }"
       >{{ page }}</router-link>
       /
     </span>
@@ -22,10 +22,6 @@ export default {
 
   props: {
     posts: {
-      type: Array,
-      required: true
-    },
-    pagination: {
       type: Object,
       required: true
     }

@@ -10,7 +10,9 @@ export default {
     addPosts: (state, payload) => {
       state.push({
         [payload.path]: {
-          posts: payload.data
+          posts: {
+            data: payload.data
+          }
         }
       });
 
@@ -18,7 +20,7 @@ export default {
     },
     addPostsPagination: (state, payload) => {
       let page = state.find(obj => obj[payload.path]);
-      page[payload.path].postsPagination = {
+      page[payload.path].posts.pagination = {
         data: payload.data,
         currentPage: payload.currentPage
       };
