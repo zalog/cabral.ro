@@ -1,58 +1,50 @@
 <template>
-  <div v-if="single">
-    <h1>{{ single.title.rendered }}</h1>
-    <div v-html="single.content.rendered" />
+  <div v-if="data.data">
+    <h1>{{ data.data.title.rendered }}</h1>
+    <div v-html="data.data.content.rendered" />
   </div>
 </template>
 
 <script>
-import singleModule from "../store/modules/single";
-
 export default {
   name: 'PageSingle',
 
+  data: () => ({
+    forceDataRecompute: 1,
+    currentPath: null
+  }),
+
   serverPrefetch() {
-    this.registerModule();
-    return this.fetchSingle(this.$route.params.singleSlug);
+    return this.fetchSingle();
   },
 
   beforeMount() {
-    this.registerModule();
-    this.fetchSingle(this.$route.params.singleSlug);
-  },
-
-  destroyed() {
-    this.$store.unregisterModule('single');
+    this.currentPath = this.$route.fullPath;
+    this.fetchSingle();
   },
 
   watch: {
-    $route(to) {
-      this.fetchSingle(to.params.singleSlug);
+    $route() {
+      this.fetchSingle();
     }
   },
 
   computed: {
-    single() {
-      if (this.$route.params.singleType === 'post')
-        return this.$store.state.single.post;
-      else if (this.$route.params.singleType === 'page')
-        return this.$store.state.single.page;
-      else
-        return this.$store.state.single.post || this.$store.state.single.page;
+    data() {
+      this.forceDataRecompute;
+      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
+      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
     }
   },
 
   methods: {
-    registerModule() {
-      this.$store.registerModule('single', singleModule, { preserveState: !!this.$store.state.single });
-    },
-    fetchSingle(singleSlug) {
-      if (this.$route.params.singleType === 'post')
-        return this.$store.dispatch('single/fetchPost', singleSlug);
-      else if (this.$route.params.singleType === 'page')
-        return this.$store.dispatch('single/fetchPage', singleSlug);
-      else
-        return this.$store.dispatch('single/fetch', singleSlug);
+    fetchSingle() {
+      return this.$store.dispatch('data/fetchSingle', {
+        slug: this.$route.fullPath
+      }).then(() => {
+        this.currentPath = this.$route.fullPath;
+        this.forceDataRecompute++;
+      });
     }
   }
 };

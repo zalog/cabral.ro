@@ -1,4 +1,5 @@
 import { fetchPosts } from './../services/posts';
+import { fetchPost, fetchPage } from './../services/single';
 import paginate from 'jw-paginate';
 
 export default {
@@ -24,6 +25,13 @@ export default {
         data: payload.data,
         currentPage: payload.currentPage
       };
+    },
+    addSingle: (state, payload) => {
+      state.push({
+        [payload.slug]: {
+          data: payload.data
+        }
+      });
     }
   },
 
@@ -57,7 +65,42 @@ export default {
           currentPage: pagination.currentPage
         });
       });
+    },
+    fetchPost: ({ commit }, {slug}) => {
+      return fetchPost({slug}).then((response) => {
+        commit('addSingle', {
+          slug,
+          data: response.data[0]
+        });
+      });
+    },
+    fetchPage: ({ commit }, {slug}) => {
+      return fetchPage({slug}).then((response) => {
+        commit('addSingle', {
+          slug,
+          data: response.data[0]
+        });
+      });
+    },
+    fetchSingle: ({ state, commit }, {slug}) => {
+      // stops if slug exists
+      let page = state.find(obj => obj[slug]);
+      if (typeof page !== 'undefined') return;
 
+      return fetchPost({slug}).then((response) => {
+        if (response.data.length)
+          commit('addSingle', {
+            slug,
+            data: response.data[0]
+          });
+        else
+          return fetchPage({slug}).then((response) => {
+            commit('addSingle', {
+              slug,
+              data: response.data[0]
+            });
+          });
+      });
     }
   }
 };
