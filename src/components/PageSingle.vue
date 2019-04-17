@@ -39,7 +39,11 @@ export default {
 
   methods: {
     fetchSingle() {
-      return this.$store.dispatch('data/fetchSingle', {
+      let actionName = 'data/fetchSingle';
+      if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
+      else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
+
+      return this.$store.dispatch(actionName, {
         slug: this.$route.fullPath
       }).then(() => {
         this.currentPath = this.$route.fullPath;

@@ -33,7 +33,7 @@ export default {
 
       if (['post', 'page'].indexOf(item.object) !== -1) {
         output = {
-          path: url.pathname,
+          name: 'single',
           params: {
             singleSlug: url.pathname.slice(1, -1),
             singleType: item.object

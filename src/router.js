@@ -22,6 +22,7 @@ export function createRouter () {
       },
       {
         path: '/:singleSlug',
+        name: 'single',
         component: () => import('./components/PageSingle.vue')
       },
       {
