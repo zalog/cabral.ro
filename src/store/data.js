@@ -3,6 +3,10 @@ import { fetchPost, fetchPage } from './../services/single';
 import paginate from 'jw-paginate';
 
 const pagesToKeep = 5;
+const pageInData = (state, slug) => {
+  let page = state.find(obj => obj[slug]);
+  if (typeof page !== 'undefined') return true;
+};
 
 export default {
   namespaced: true,
@@ -47,9 +51,7 @@ export default {
         ...payload
       };
 
-      // stops if page exists
-      let page = state.find(obj => obj[payload.path]);
-      if (typeof page !== 'undefined') return;
+      if (pageInData(state, payload.path)) return;
 
       return fetchPosts(payload).then((response) => {
         payload.currentPage = parseInt(payload.currentPage);
@@ -70,7 +72,9 @@ export default {
         });
       });
     },
-    fetchPost: ({ commit }, {slug}) => {
+    fetchPost: ({ state, commit }, {slug}) => {
+      if (pageInData(state, slug)) return;
+
       return fetchPost({slug}).then((response) => {
         commit('addSingle', {
           slug,
@@ -78,7 +82,9 @@ export default {
         });
       });
     },
-    fetchPage: ({ commit }, {slug}) => {
+    fetchPage: ({ state, commit }, {slug}) => {
+      if (pageInData(state, slug)) return;
+
       return fetchPage({slug}).then((response) => {
         commit('addSingle', {
           slug,
@@ -87,9 +93,7 @@ export default {
       });
     },
     fetchSingle: ({ state, commit }, {slug}) => {
-      // stops if slug exists
-      let page = state.find(obj => obj[slug]);
-      if (typeof page !== 'undefined') return;
+      if (pageInData(state, slug)) return;
 
       return fetchPost({slug}).then((response) => {
         if (response.data.length)
