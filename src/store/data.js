@@ -2,6 +2,8 @@ import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
 import paginate from 'jw-paginate';
 
+const pagesToKeep = 5;
+
 export default {
   namespaced: true,
 
@@ -17,7 +19,7 @@ export default {
         }
       });
 
-      if (state.length >= 5) state.shift();
+      if (state.length > pagesToKeep) state.shift();
     },
     addPostsPagination: (state, payload) => {
       let page = state.find(obj => obj[payload.path]);
@@ -32,6 +34,8 @@ export default {
           data: payload.data
         }
       });
+
+      if (state.length > pagesToKeep) state.shift();
     }
   },
 
