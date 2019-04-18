@@ -1,9 +1,13 @@
 <template>
   <div>
     <ul>
-      <li v-for="(post, index) in posts.data" :key="index">
+      <router-link
+        tag="li"
+        v-for="(post, index) in posts.data" :key="index"
+        :to="postTo(post.slug)"
+      >
         <a v-html="post.title.rendered" />
-      </li>
+      </router-link>
     </ul>
 
     <span v-for="(page, index) in posts.pagination.data" :key="index">
@@ -35,6 +39,15 @@ export default {
       if (categorySlug) url = `/category/${categorySlug}${url}`;
 
       return url;
+    },
+    postTo(slug) {
+      return {
+        name: 'single',
+        params: {
+          singleSlug: slug,
+          singleType: 'post'
+        }
+      };
     }
   }
 };

@@ -46,7 +46,7 @@ export default {
   actions: {
     fetchPosts: ({ state, commit }, payload) => {
       payload = {
-        fields: ['title'],
+        fields: ['title', 'slug'],
         itemsOnPage: 12,
         ...payload
       };
