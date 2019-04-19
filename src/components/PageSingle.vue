@@ -1,22 +1,13 @@
 <template>
-  <div>
-    <h1>Home</h1>
-    <PostsList
-      v-if="data"
-      :posts="data.posts"
-    />
+  <div v-if="data.data">
+    <h1>{{ data.data.title.rendered }}</h1>
+    <div v-html="data.data.content.rendered" />
   </div>
 </template>
 
 <script>
-import PostsList from "./PostsList.vue";
-
 export default {
-  name: 'PageHome',
-
-  components: {
-    PostsList
-  },
+  name: 'PageSingle',
 
   data: () => ({
     forceDataRecompute: 1,
@@ -24,17 +15,17 @@ export default {
   }),
 
   serverPrefetch() {
-    return this.fetchPosts();
+    return this.fetchSingle();
   },
 
   beforeMount() {
     this.currentPath = this.$route.fullPath;
-    this.fetchPosts();
+    this.fetchSingle();
   },
 
   watch: {
     $route() {
-      this.fetchPosts();
+      this.fetchSingle();
     }
   },
 
@@ -47,10 +38,13 @@ export default {
   },
 
   methods: {
-    fetchPosts() {
-      return this.$store.dispatch('data/fetchPosts', {
-        currentPage: this.$route.params.id || 1,
-        path: this.$route.fullPath
+    fetchSingle() {
+      let actionName = 'data/fetchSingle';
+      if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
+      else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
+
+      return this.$store.dispatch(actionName, {
+        slug: this.$route.fullPath
       }).then(() => {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;

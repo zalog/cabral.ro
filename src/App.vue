@@ -1,23 +1,19 @@
 <template>
   <div id="app">
-    <div v-if="showMenu">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/posts">Posts</router-link>
-    </div>
+    <TheMenu />
 
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import TheMenu from './components/TheMenu.vue';
+
 export default {
   name: 'app',
 
-  computed: {
-    showMenu() {
-      return this.$store.state.ui.menu;
-    }
+  components: {
+    TheMenu
   }
 };
 </script>

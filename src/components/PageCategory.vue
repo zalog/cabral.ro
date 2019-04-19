@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Home</h1>
+    <h1>Category</h1>
     <PostsList
       v-if="data"
       :posts="data.posts"
@@ -12,7 +12,7 @@
 import PostsList from "./PostsList.vue";
 
 export default {
-  name: 'PageHome',
+  name: 'PageCategory',
 
   components: {
     PostsList
@@ -50,7 +50,8 @@ export default {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
-        path: this.$route.fullPath
+        path: this.$route.fullPath,
+        categories: [this.$route.params.categorySlug]
       }).then(() => {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;

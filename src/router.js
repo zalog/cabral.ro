@@ -13,20 +13,29 @@ export function createRouter () {
         component: () => import('./components/PageHome.vue')
       },
       {
-        path: '/about',
-        component: () => import('./components/PageAbout.vue')
+        path: '/page/1',
+        redirect: '/'
       },
       {
-        path: '/posts',
-        component: () => import('./components/PagePosts.vue')
+        path: '/page/:id',
+        component: () => import('./components/PageHome.vue')
       },
       {
-        path: '/posts/page/1',
-        redirect: '/posts'
+        path: '/:singleSlug',
+        name: 'single',
+        component: () => import('./components/PageSingle.vue')
       },
       {
-        path: '/posts/page/:id',
-        component: () => import('./components/PagePosts.vue')
+        path: '/category/:categorySlug',
+        component: () => import('./components/PageCategory.vue')
+      },
+      {
+        path: '/category/:categorySlug/page/1',
+        redirect: '/category/:categorySlug'
+      },
+      {
+        path: '/category/:categorySlug/page/:id',
+        component: () => import('./components/PageCategory.vue')
       },
       {
         path: '*',
