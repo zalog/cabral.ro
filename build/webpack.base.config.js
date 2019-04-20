@@ -50,9 +50,6 @@ module.exports = {
     ]
   },
   plugins: [
-      new VueLoaderPlugin(),
-    ],
-    ...() => isProd && [
-      new webpack.optimize.ModuleConcatenationPlugin()
-    ]
+    new VueLoaderPlugin()
+  ]
 };
