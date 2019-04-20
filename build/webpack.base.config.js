@@ -52,7 +52,7 @@ module.exports = {
               hmr: !isProd
             }
           },
-          'css-loader', 'sass-loader'
+          'css-loader', 'postcss-loader', 'sass-loader'
         ]
       }
     ]
