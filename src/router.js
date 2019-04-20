@@ -10,7 +10,7 @@ export function createRouter () {
     routes: [
       {
         path: '/',
-        component: () => import('./components/PageHome.vue')
+        component: () => import(/* webpackChunkName: "page-home" */ './components/PageHome.vue')
       },
       {
         path: '/page/1',
@@ -18,16 +18,16 @@ export function createRouter () {
       },
       {
         path: '/page/:id',
-        component: () => import('./components/PageHome.vue')
+        component: () => import(/* webpackChunkName: "page-home" */ './components/PageHome.vue')
       },
       {
         path: '/:singleSlug',
         name: 'single',
-        component: () => import('./components/PageSingle.vue')
+        component: () => import(/* webpackChunkName: "page-single" */ './components/PageSingle.vue')
       },
       {
         path: '/category/:categorySlug',
-        component: () => import('./components/PageCategory.vue')
+        component: () => import(/* webpackChunkName: "page-category" */ './components/PageCategory.vue')
       },
       {
         path: '/category/:categorySlug/page/1',
@@ -35,7 +35,7 @@ export function createRouter () {
       },
       {
         path: '/category/:categorySlug/page/:id',
-        component: () => import('./components/PageCategory.vue')
+        component: () => import(/* webpackChunkName: "page-category" */ './components/PageCategory.vue')
       },
       {
         path: '*',
