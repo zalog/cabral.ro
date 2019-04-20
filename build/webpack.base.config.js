@@ -52,12 +52,10 @@ module.exports = {
   performance: {
     hints: false
   },
-  plugins: isProd
-    ? [
+  plugins: [
       new VueLoaderPlugin(),
+    ],
+    ...() => isProd && [
       new webpack.optimize.ModuleConcatenationPlugin()
-    ]
-    : [
-      new VueLoaderPlugin()
     ]
 };
