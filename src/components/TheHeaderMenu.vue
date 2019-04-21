@@ -76,8 +76,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-@import "./../scss/app-component.scss";
-@import "~bootstrap/scss/navbar";
-</style>
