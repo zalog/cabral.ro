@@ -8,7 +8,8 @@
     "build": "rimraf dist && npm run build:client && npm run build:server",
     "build:client": "webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules",
-    "prod": "npm install && cross-env NODE_ENV=production npm run build && cross-env NODE_ENV=production pm2 start server --update-env"
+    "prod": "npm install && npm run prod:build && cross-env NODE_ENV=production pm2 start server --update-env",
+    "prod:build": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@vue/babel-preset-app": "^3.6.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
