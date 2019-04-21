@@ -56,7 +56,7 @@ export default {
       return fetchPosts(payload).then((response) => {
         payload.currentPage = parseInt(payload.currentPage);
 
-        const maxPages = 10;
+        const maxPages = 8;
         const itemsTotal = parseInt(response.headers['x-wp-total']);
         const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 

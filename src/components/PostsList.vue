@@ -18,13 +18,19 @@
       </div>
     </router-link>
 
-    <span v-for="(page, index) in posts.pagination.data" :key="`pagination-page-${index}`">
-      <router-link
-        :to="paginationTo(page)"
-        :class="{ 'active': [posts.pagination.currentPage] == page }"
-      >{{ page }}</router-link>
-      /
-    </span>
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <router-link
+          tag="li"
+          v-ripple="'rgba(00, 00, 00, 0.1)'"
+          v-for="(page, index) in posts.pagination.data" :key="`pagination-page-${index}`"
+          :to="paginationTo(page)"
+          :class="{ 'page-item': true, 'active': [posts.pagination.currentPage] == page }"
+        >
+          <a class="page-link">{{ page }}</a>
+        </router-link>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -67,7 +73,17 @@ export default {
 $card-border-radius:          $border-radius-lg;
 $card-border-color:           transparent;
 
+$pagination-color:            $body-color;
+$pagination-bg:               transparent;
+$pagination-border-width:     0;
+$pagination-hover-color:      $pagination-color;
+$pagination-hover-bg:         transparent;
+$pagination-active-color:     $pagination-hover-color;
+$pagination-active-bg:        $gray-100;
+$pagination-focus-box-shadow: none;
+
 @import "~bootstrap/scss/card";
+@import "~bootstrap/scss/pagination";
 
 .cards-posts /deep/ {
   .card {
@@ -94,6 +110,13 @@ $card-border-color:           transparent;
   }
   .card-text > *:last-child {
     margin-bottom: 0;
+  }
+
+  .pagination {
+    .active {
+      font-weight: bold;
+      box-shadow: $box-shadow;
+    }
   }
 }
 </style>
