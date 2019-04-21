@@ -1,25 +1,23 @@
 <template>
   <div id="app" class="app">
-    <div class="app-Header">
-      <TheMenu />
-    </div>
+    <TheHeader />
     <div class="app-Content">
       <router-view></router-view>
     </div>
-    <div class="app-Footer">
-      footer
-    </div>
+    <TheFooter />
   </div>
 </template>
 
 <script>
-import TheMenu from './components/TheMenu.vue';
+import TheHeader from './components/TheHeader.vue';
+import TheFooter from './components/TheFooter.vue';
 
 export default {
   name: 'app',
 
   components: {
-    TheMenu
+    TheHeader,
+    TheFooter
   }
 };
 </script>

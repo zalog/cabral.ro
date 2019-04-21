@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'TheMenu',
+  name: 'TheHeaderMenu',
 
   computed: {
     menu() {
