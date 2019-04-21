@@ -1,8 +1,14 @@
 <template>
-  <div id="app">
-    <TheMenu />
-
-    <router-view></router-view>
+  <div id="app" class="app">
+    <div class="app-Header">
+      <TheMenu />
+    </div>
+    <div class="app-Content">
+      <router-view></router-view>
+    </div>
+    <div class="app-Footer">
+      footer
+    </div>
   </div>
 </template>
 
