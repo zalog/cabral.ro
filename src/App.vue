@@ -9,15 +9,12 @@
 </template>
 
 <script>
-import TheHeader from './components/TheHeader.vue';
-import TheFooter from './components/TheFooter.vue';
-
 export default {
   name: 'app',
 
   components: {
-    TheHeader,
-    TheFooter
+    TheHeader: () => import(/* webpackChunkName: "app-header" */ './components/TheHeader.vue'),
+    TheFooter: () => import(/* webpackChunkName: "app-footer" */ './components/TheFooter.vue')
   }
 };
 </script>
