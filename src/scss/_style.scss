@@ -19,6 +19,8 @@ body {
 .app-Header {  }
 .app-Content {
   flex: 1 0 auto;
+  padding-top: $spacer;
+  padding-bottom: $spacer;
 }
 .app-Footer {
   padding: $spacer;

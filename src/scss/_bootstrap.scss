@@ -35,3 +35,10 @@
 @import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";
+
+
+// Override bootstrap
+.container-fluid {
+  min-width: 320px;
+  max-width: 800px;
+}
