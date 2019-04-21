@@ -10,6 +10,7 @@
           v-for="item in menu"
           :key="item.ID"
           :to="menuItemTo(item)"
+          :active="menuItemActive(item)"
         >{{ item.title }}</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -66,6 +67,11 @@ export default {
       }
 
       return output;
+    },
+    menuItemActive: function(item) {
+      item = this.menuItemTo(item);
+      let itemPath = (typeof item === 'string') ? item : '/' + item.params.singleSlug;
+      return this.$route.path === itemPath;
     }
   }
 };
