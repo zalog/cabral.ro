@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 /deep/ {
   @import "./../scss/app-component.scss";
+  @import "~bootstrap/scss/nav";
   @import "~bootstrap/scss/navbar";
 }
 </style>
