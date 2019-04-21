@@ -1,14 +1,19 @@
 <template>
   <div>
-    <ul>
-      <router-link
-        tag="li"
-        v-for="(post, index) in posts.data" :key="index"
-        :to="postTo(post.slug)"
-      >
-        <a v-html="post.title.rendered" />
-      </router-link>
-    </ul>
+    <router-link
+      tag="div"
+      class="card mb-5"
+      v-for="(post, index) in posts.data" :key="index"
+      :to="postTo(post.slug)"
+    >
+      <img :src="post.featured_media_src" class="card-img-top">
+      <div class="card-body" :to="postTo(post.slug)">
+        <h2 class="card-title">
+          <router-link v-html="post.title.rendered" :to="postTo(post.slug)" />
+        </h2>
+        <div class="card-text" v-html="post.excerpt.rendered" />
+      </div>
+    </router-link>
 
     <span v-for="(page, index) in posts.pagination.data" :key="index">
       <router-link
