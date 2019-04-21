@@ -1,6 +1,6 @@
 <template>
   <div class="app-Footer">
-    footer
+    Copyright © 2007 - {{ new Date().getFullYear() }} cabral.ro
   </div>
 </template>
 

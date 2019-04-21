@@ -20,4 +20,9 @@ body {
 .app-Content {
   flex: 1 0 auto;
 }
-.app-Footer {  }
+.app-Footer {
+  padding: $spacer;
+  background-color: $light;
+  text-align: center;
+  font-size: $font-size-sm;
+}
