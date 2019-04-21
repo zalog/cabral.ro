@@ -6,6 +6,9 @@ import { createStore } from './store';
 import http from './plugins/http';
 Vue.use(http);
 
+import Ripple from 'vue-ripple-directive';
+Vue.directive('ripple', Ripple);
+
 import './scss/app.scss';
 
 export function createApp () {

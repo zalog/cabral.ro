@@ -1,12 +1,16 @@
 <template>
   <b-navbar toggleable="md" type="dark" variant="info">
-    <b-navbar-brand :to="'/'">Cabral.ro</b-navbar-brand>
+    <b-navbar-brand
+      v-ripple="'rgba(255, 255, 255, 0.1)'"
+      :to="'/'"
+    >Cabral.ro</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item
+          v-ripple="'rgba(255, 255, 255, 0.1)'"
           v-for="item in menu"
           :key="item.ID"
           :to="menuItemTo(item)"

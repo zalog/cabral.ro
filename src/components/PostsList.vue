@@ -3,6 +3,7 @@
     <router-link
       tag="div"
       class="card mb-5"
+      v-ripple
       v-for="(post, index) in posts.data" :key="index"
       :to="postTo(post.slug)"
     >
