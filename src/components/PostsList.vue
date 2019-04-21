@@ -6,7 +6,9 @@
       v-for="(post, index) in posts.data" :key="index"
       :to="postTo(post.slug)"
     >
-      <img :src="post.featured_media_src" class="card-img-top">
+      <div v-if="post.featured_media_src" class="card-img-top">
+        <img :src="post.featured_media_src">
+      </div>
       <div class="card-body" :to="postTo(post.slug)">
         <h2 class="card-title">
           <router-link v-html="post.title.rendered" :to="postTo(post.slug)" />
@@ -70,6 +72,21 @@ $card-border-color:           transparent;
   .card {
     cursor: pointer;
     box-shadow: $box-shadow-lg;
+    border: 0;
+  }
+  .card-img-top {
+    position: relative;
+    padding-top: percentage(9/16);
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: auto;
+    }
   }
   .card-title > a {
     color: $body-color;
