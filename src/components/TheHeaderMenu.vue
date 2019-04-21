@@ -1,16 +1,40 @@
 <template>
-  <div>
-    <router-link
-      v-for="item in menu"
-      :key="item.ID"
-      :to="menuItemTo(item)"
-    >{{ item.title }} / </router-link>
-  </div>
+  <b-navbar toggleable="md" type="dark" variant="info">
+    <b-navbar-brand :to="'/'">Cabral.ro</b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item
+          v-for="item in menu"
+          :key="item.ID"
+          :to="menuItemTo(item)"
+        >{{ item.title }}</b-nav-item>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
+import BNavbar from 'bootstrap-vue/es/components/navbar/navbar';
+import BNavbarNav from 'bootstrap-vue/es/components/navbar/navbar-nav';
+import BNavbarBrand from 'bootstrap-vue/es/components/navbar/navbar-brand';
+import BNavbarToggle from 'bootstrap-vue/es/components/navbar/navbar-toggle';
+import BCollapse from 'bootstrap-vue/es/components/collapse/collapse';
+import BNavItem from 'bootstrap-vue/es/components/nav/nav-item';
+
 export default {
   name: 'TheHeaderMenu',
+
+  components: {
+    BNavbar,
+    BNavbarNav,
+    BNavbarBrand,
+    BNavbarToggle,
+    BCollapse,
+    BNavItem
+  },
 
   computed: {
     menu() {
