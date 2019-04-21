@@ -42,18 +42,6 @@ module.exports = {
           limit: 10000,
           name: '[name].[ext]?[hash]'
         }
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: !isProd
-            }
-          },
-          'css-loader', 'postcss-loader', 'sass-loader'
-        ]
       }
     ]
   },

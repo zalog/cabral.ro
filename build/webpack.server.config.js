@@ -16,6 +16,14 @@ module.exports = merge(base, {
       'create-api': './create-api-server.js'
     }
   },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+      }
+    ]
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

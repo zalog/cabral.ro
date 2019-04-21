@@ -3,10 +3,29 @@ const merge = require('webpack-merge');
 const base = require('./webpack.base.config');
 const SWPrecachePlugin = require('sw-precache-webpack-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const isProd = process.env.NODE_ENV === 'production';
 
 const config = merge(base, {
   entry: {
     app: './src/entry-client.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: !isProd
+            }
+          },
+          'css-loader', 'postcss-loader', 'sass-loader'
+        ]
+      }
+    ]
   },
   plugins: [
     // strip dev-only code in Vue source
