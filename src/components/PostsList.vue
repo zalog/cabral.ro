@@ -4,7 +4,7 @@
       tag="div"
       class="card mb-5"
       v-ripple
-      v-for="(post, index) in posts.data" :key="index"
+      v-for="(post, index) in posts.data" :key="`posts-post-${index}`"
       :to="postTo(post.slug)"
     >
       <div v-if="post.featured_media_src" class="card-img-top">
@@ -18,7 +18,7 @@
       </div>
     </router-link>
 
-    <span v-for="(page, index) in posts.pagination.data" :key="index">
+    <span v-for="(page, index) in posts.pagination.data" :key="`pagination-page-${index}`">
       <router-link
         :to="paginationTo(page)"
         :class="{ 'active': [posts.pagination.currentPage] == page }"
