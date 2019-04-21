@@ -1,6 +1,6 @@
 const path = require('path');
-const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -45,19 +45,23 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: !isProd
+            }
+          },
+          'css-loader', 'postcss-loader', 'sass-loader'
+        ]
       }
     ]
   },
-  performance: {
-    hints: false
-  },
-  plugins: isProd
-    ? [
-      new VueLoaderPlugin(),
-      new webpack.optimize.ModuleConcatenationPlugin()
-    ]
-    : [
-      new VueLoaderPlugin()
-    ]
+  plugins: [
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: isProd ? '[name].[chunkhash].css' : '[name].css',
+      chunkFilename: isProd ? '[name].[chunkhash].css' : '[name].css'
+    })
+  ]
 };
