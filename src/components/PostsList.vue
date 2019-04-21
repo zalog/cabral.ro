@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cards-posts">
     <router-link
       tag="div"
       class="card mb-5"
@@ -57,3 +57,25 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "./../scss/app-component.scss";
+
+$card-border-radius:          $border-radius-lg;
+$card-border-color:           transparent;
+
+@import "~bootstrap/scss/card";
+
+.cards-posts /deep/ {
+  .card {
+    cursor: pointer;
+    box-shadow: $box-shadow-lg;
+  }
+  .card-title > a {
+    color: $body-color;
+  }
+  .card-text > *:last-child {
+    margin-bottom: 0;
+  }
+}
+</style>
