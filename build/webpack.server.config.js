@@ -20,7 +20,7 @@ module.exports = merge(base, {
     rules: [
       {
         test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: ['file-loader', 'vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
       }
     ]
   },
