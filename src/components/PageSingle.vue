@@ -1,7 +1,10 @@
 <template>
   <div v-if="data.data">
     <h1>{{ data.data.title.rendered }}</h1>
-    <div v-html="data.data.content.rendered" />
+    <div
+      v-html="data.data.content.rendered"
+      class="entry-content"
+    />
   </div>
 </template>
 

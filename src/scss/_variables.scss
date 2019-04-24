@@ -1,6 +1,9 @@
+// custom
+$font-family-serif:           'Merriweather', serif;
+
 // bootstrap
 $font-family-sans-serif:      'Open Sans', sans-serif;
-$headings-font-family:        'Merriweather', serif;
+$headings-font-family:        $font-family-serif;
 
 $border-radius:               .4rem;
 $border-radius-lg:            .5rem;
