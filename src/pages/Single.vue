@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="page-single">
     <div
       v-if="data.data"
-      class="container-fluid py-5 entry"
+      class="container-fluid py-5"
     >
       <h1 class="entry-title">{{ data.data.title.rendered }}</h1>
       <div
@@ -89,10 +89,8 @@ export default {
 <style lang="scss" scoped>
 @import "./../scss/app-component.scss";
 
-.entry {
+.container-fluid {
   max-width: 700px;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 /deep/ {
