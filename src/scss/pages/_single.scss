@@ -4,12 +4,16 @@
   font-family: $font-family-serif;
 }
 .entry-content {
+  font-size: $font-size-lg;
   line-height: 1.9;
 }
 
 
 
 // content
+.entry-title {
+  margin-bottom: map-get($spacers, 4);
+}
 .entry-content {
   > * {
     margin-bottom: $spacer;
@@ -18,5 +22,17 @@
   img {
     max-width: 100%;
     height: auto;
+  }
+  p > iframe {
+    max-width: 100%;
+  }
+
+  @include media-breakpoint-up(xl) {
+    > figure,
+    .wp-block-image {
+      margin-right: -180px;
+      margin-left: -180px;
+      text-align: center;
+    }
   }
 }

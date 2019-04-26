@@ -1,6 +1,9 @@
 <template>
-  <div v-if="data.data">
-    <h1>{{ data.data.title.rendered }}</h1>
+  <div
+    v-if="data.data"
+    class="entry"
+  >
+    <h1 class="entry-title">{{ data.data.title.rendered }}</h1>
     <div
       v-html="data.data.content.rendered"
       class="entry-content"
@@ -59,5 +62,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../scss/app-component.scss";
-@import "./../scss/pages/single";
+
+.entry {
+  max-width: 700px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/deep/ {
+  @import "./../scss/pages/single";
+}
 </style>
