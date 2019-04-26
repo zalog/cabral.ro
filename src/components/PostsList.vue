@@ -4,7 +4,7 @@
       tag="div"
       class="card mb-5"
       v-ripple
-      v-for="(post, index) in posts.data" :key="`posts-post-${index}`"
+      v-for="(post, index) in posts.data" :key="'posts-post-' + index"
       :to="postTo(post.slug)"
     >
       <div v-if="post.featured_media_src" class="card-img-top">
@@ -22,10 +22,11 @@
       <ul class="pagination justify-content-center">
         <router-link
           tag="li"
+          class="page-item"
           v-ripple="'rgba(00, 00, 00, 0.1)'"
-          v-for="(page, index) in posts.pagination.data" :key="`pagination-page-${index}`"
+          v-for="(page, index) in posts.pagination.data" :key="'pagination-page-' + index"
           :to="paginationTo(page)"
-          :class="{ 'page-item': true, 'active': [posts.pagination.currentPage] == page }"
+          :class="{ active: [posts.pagination.currentPage] == page }"
         >
           <a class="page-link">{{ page }}</a>
         </router-link>
