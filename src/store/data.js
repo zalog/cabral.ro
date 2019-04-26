@@ -1,5 +1,7 @@
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
+import { fetchComments } from '../services/comments';
+
 import paginate from 'jw-paginate';
 
 const pagesToKeep = 5;
@@ -40,6 +42,12 @@ export default {
       });
 
       if (state.length > pagesToKeep) state.shift();
+    },
+    addComments: (state, payload) => {
+      let page = state.find(obj => obj[payload.slug])[payload.slug];
+      if (!page.hasOwnProperty('comments') || !page.comments.length) page.comments = [];
+
+      page.comments.push(...payload.data);
     }
   },
 
@@ -108,6 +116,20 @@ export default {
               data: response.data[0]
             });
           });
+      });
+    },
+    fetchComments: ({ state, commit }, { slug }) => {
+      let page = state.find(obj => obj[slug])[slug];
+
+      if (page.hasOwnProperty('comments') && page.comments.length) return;
+
+      return fetchComments({
+        post: page.data.id
+      }).then((response) => {
+        commit('addComments', {
+          slug,
+          data: response
+        });
       });
     }
   }

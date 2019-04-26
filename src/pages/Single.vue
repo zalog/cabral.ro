@@ -8,6 +8,14 @@
       v-html="data.data.content.rendered"
       class="entry-content"
     />
+    <ul v-if="data.comments">
+      <li
+        v-for="comment in data.comments" :key="'comments-comment-' + comment.id"
+      >
+        <h3>{{ comment.author_name }}</h3>
+        <div v-html="comment.content.rendered" />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -26,7 +34,9 @@ export default {
 
   beforeMount() {
     this.currentPath = this.$route.fullPath;
-    this.fetchSingle();
+    this.fetchSingle().then(() => {
+      this.fetchComments();
+    });
   },
 
   watch: {
@@ -53,6 +63,13 @@ export default {
         slug: this.$route.fullPath
       }).then(() => {
         this.currentPath = this.$route.fullPath;
+        this.forceDataRecompute++;
+      });
+    },
+    fetchComments() {
+      this.$store.dispatch('data/fetchComments', {
+        slug: this.$route.fullPath
+      }).then(() => {
         this.forceDataRecompute++;
       });
     }
