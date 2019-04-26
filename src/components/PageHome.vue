@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Home</h1>
     <PostsList
       v-if="data"
       :posts="data.posts"
