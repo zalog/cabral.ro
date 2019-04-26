@@ -41,7 +41,9 @@ export default {
 
   watch: {
     $route() {
-      this.fetchSingle();
+      this.fetchSingle().then(() => {
+        this.fetchComments();
+      });
     }
   },
 
