@@ -56,3 +56,8 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "./../scss/app-component.scss";
+@import "./../scss/pages/single";
+</style>
