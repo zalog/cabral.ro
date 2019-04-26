@@ -1,5 +1,5 @@
 <template>
-  <div class="app-Header">
+  <div class="app-Header fixed-top">
     <TheHeaderMenu />
   </div>
 </template>
@@ -17,8 +17,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "./../scss/app-component.scss";
+
 /deep/ {
-  @import "./../scss/app-component.scss";
   @import "~bootstrap/scss/nav";
   @import "~bootstrap/scss/navbar";
 }
