@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="info">
+  <b-navbar toggleable="md" type="dark" variant="dark">
     <b-navbar-brand
       v-ripple="'rgba(255, 255, 255, 0.1)'"
       :to="'/'"
