@@ -1,11 +1,14 @@
 // typo
 .entry-content,
-.comment-content {
+.list-comments p {
   font-family: $font-family-serif;
 }
 .entry-content {
   font-size: $font-size-lg;
   line-height: 1.9;
+}
+.list-comments p {
+  line-height: 1.7;
 }
 
 
@@ -34,5 +37,15 @@
       margin-left: -180px;
       text-align: center;
     }
+  }
+}
+
+.list-comments {
+  @include list-unstyled;
+  li {
+    padding: $spacer;
+    margin-bottom: map-get($spacers, 4);
+    background-color: $white;
+    box-shadow: $box-shadow-sm;
   }
 }

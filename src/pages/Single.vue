@@ -13,7 +13,10 @@
 
     <div class="bg-light">
       <div class="container-fluid py-5">
-        <ul v-if="data.comments">
+        <ul
+          class="list-comments"
+          v-if="data.comments"
+        >
           <li
             v-for="comment in data.comments" :key="'comments-comment-' + comment.id"
           >
