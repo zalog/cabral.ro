@@ -1,21 +1,28 @@
 <template>
-  <div
-    v-if="data.data"
-    class="entry"
-  >
-    <h1 class="entry-title">{{ data.data.title.rendered }}</h1>
+  <div>
     <div
-      v-html="data.data.content.rendered"
-      class="entry-content"
-    />
-    <ul v-if="data.comments">
-      <li
-        v-for="comment in data.comments" :key="'comments-comment-' + comment.id"
-      >
-        <h3>{{ comment.author_name }}</h3>
-        <div v-html="comment.content.rendered" />
-      </li>
-    </ul>
+      v-if="data.data"
+      class="container-fluid py-5 entry"
+    >
+      <h1 class="entry-title">{{ data.data.title.rendered }}</h1>
+      <div
+        v-html="data.data.content.rendered"
+        class="entry-content"
+      />
+    </div>
+
+    <div class="bg-light">
+      <div class="container-fluid py-5">
+        <ul v-if="data.comments">
+          <li
+            v-for="comment in data.comments" :key="'comments-comment-' + comment.id"
+          >
+            <h3>{{ comment.author_name }}</h3>
+            <div v-html="comment.content.rendered" />
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 

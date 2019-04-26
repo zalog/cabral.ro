@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid py-5">
     <PostsList
       v-if="data"
       :posts="data.posts"

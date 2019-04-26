@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Category</h1>
+  <div class="container-fluid py-5">
+    <h1 class="mb-4">Category</h1>
     <PostsList
       v-if="data"
       :posts="data.posts"
