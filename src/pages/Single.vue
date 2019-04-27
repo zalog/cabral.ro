@@ -1,7 +1,9 @@
 <template>
-  <div class="page-single">
+  <div
+    v-if="data"
+    class="page-single"
+  >
     <div
-      v-if="data.data"
       class="container-fluid py-5"
     >
       <h1 class="entry-title">{{ data.data.title.rendered }}</h1>

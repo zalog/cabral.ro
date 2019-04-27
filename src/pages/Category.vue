@@ -1,8 +1,10 @@
 <template>
-  <div class="page-category container-fluid py-5">
+  <div
+    v-if="data"
+    class="page-category container-fluid py-5"
+  >
     <h1 class="mb-4">Category</h1>
     <PostsList
-      v-if="data"
       :posts="data.posts"
     />
   </div>

@@ -1,7 +1,9 @@
 <template>
-  <div class="page-home container-fluid py-5">
+  <div
+    v-if="data"
+    class="page-home container-fluid py-5"
+  >
     <PostsList
-      v-if="data"
       :posts="data.posts"
     />
   </div>
