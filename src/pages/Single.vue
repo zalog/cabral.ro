@@ -13,25 +13,23 @@
 
     <div class="bg-light">
       <div class="container-fluid py-5">
-        <ul
-          class="list-comments"
-          v-if="data.comments"
-        >
-          <li
-            v-for="comment in data.comments" :key="'comments-comment-' + comment.id"
-          >
-            <h3>{{ comment.author_name }}</h3>
-            <div v-html="comment.content.rendered" />
-          </li>
-        </ul>
+        <CommentsList
+          :data="data.comments"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import CommentsList from "./../components/CommentsList.vue";
+
 export default {
   name: 'Single',
+
+  components: {
+    CommentsList
+  },
 
   data: () => ({
     forceDataRecompute: 1,

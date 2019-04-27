@@ -43,13 +43,3 @@
     }
   }
 }
-
-.list-comments {
-  @include list-unstyled;
-  li {
-    padding: $spacer;
-    margin-bottom: map-get($spacers, 4);
-    background-color: $white;
-    box-shadow: $box-shadow-sm;
-  }
-}
