@@ -80,23 +80,25 @@ export default {
         });
       });
     },
-    fetchPost: ({ state, commit }, {slug}) => {
-      if (pageInData(state, slug)) return;
+    fetchPost: ({ state, commit }, payload) => {
+      if (pageInData(state, payload.slug)) return;
 
-      return fetchPost({slug}).then((response) => {
+      return fetchPost(payload).then((response) => {
         commit('addSingle', {
-          slug,
-          data: response.data[0]
+          slug: payload.slug,
+          data: response.data[0],
+          ...payload
         });
       });
     },
-    fetchPage: ({ state, commit }, {slug}) => {
-      if (pageInData(state, slug)) return;
+    fetchPage: ({ state, commit }, payload) => {
+      if (pageInData(state, payload.slug)) return;
 
-      return fetchPage({slug}).then((response) => {
+      return fetchPage(payload).then((response) => {
         commit('addSingle', {
-          slug,
-          data: response.data[0]
+          slug: payload.slug,
+          data: response.data[0],
+          ...payload
         });
       });
     },
