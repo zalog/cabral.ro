@@ -51,6 +51,7 @@ export default {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
         path: this.$route.fullPath,
+        pageLoading: true,
         categories: [this.$route.params.categorySlug]
       }).then(() => {
         this.currentPath = this.$route.fullPath;

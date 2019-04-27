@@ -7,11 +7,11 @@ NProgress.configure({
 
 if (typeof window !== 'undefined') {
   axios.interceptors.request.use((config) => {
-    NProgress.start();
+    if (config.params && config.params.pageLoading === true) NProgress.start();
     return config;
   });
   axios.interceptors.response.use((response) => {
-    NProgress.done();
+    if (response.config.params && response.config.params.pageLoading === true) NProgress.done();
     return response;
   });
 }

@@ -72,7 +72,8 @@ export default {
       else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
 
       return this.$store.dispatch(actionName, {
-        slug: this.$route.fullPath
+        slug: this.$route.fullPath,
+        pageLoading: true
       }).then(() => {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;
