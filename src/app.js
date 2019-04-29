@@ -6,12 +6,6 @@ import { createStore } from './store';
 import http from './plugins/http';
 Vue.use(http);
 
-import Ripple from 'vue-ripple-directive';
-Vue.directive('ripple', Ripple);
-
-import webfontloader from './plugins/webfontloader';
-webfontloader();
-
 import './scss/app.scss';
 
 export function createApp () {

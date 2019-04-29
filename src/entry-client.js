@@ -1,3 +1,11 @@
+import Vue from 'vue';
+
+import webfontloader from './plugins/webfontloader';
+webfontloader();
+
+import Ripple from 'vue-ripple-directive';
+Vue.directive('ripple', Ripple);
+
 import { createApp } from './app';
 
 const { app, router, store } = createApp();
