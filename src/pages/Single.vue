@@ -16,6 +16,7 @@
     <div class="bg-light">
       <div class="container-fluid py-5">
         <CommentsList
+          ref="comments"
           :data="data.comments"
         />
       </div>
@@ -35,7 +36,8 @@ export default {
 
   data: () => ({
     forceDataRecompute: 1,
-    currentPath: null
+    currentPath: null,
+    loadComments: false
   }),
 
   serverPrefetch() {
@@ -44,16 +46,23 @@ export default {
 
   beforeMount() {
     this.currentPath = this.$route.fullPath;
-    this.fetchSingle().then(() => {
-      this.fetchComments();
-    });
+    this.fetchSingle();
+  },
+
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
 
   watch: {
     $route() {
-      this.fetchSingle().then(() => {
-        this.fetchComments();
-      });
+      this.fetchSingle();
+    },
+    loadComments(load) {
+      load && this.fetchComments();
     }
   },
 
@@ -85,6 +94,18 @@ export default {
       }).then(() => {
         this.forceDataRecompute++;
       });
+    },
+    handleScroll() {
+      this.loadComments = this.isVisibleLastComment();
+    },
+    isVisibleLastComment() {
+      if (!this.$refs['comments']) return;
+
+      let comments = this.$refs['comments'].$el.getBoundingClientRect();
+      const visible = document.documentElement.clientHeight;
+      const commentsTop = comments.top + comments.height;
+
+      return (visible >= commentsTop);
     }
   }
 };
