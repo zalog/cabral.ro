@@ -8,8 +8,8 @@ import { fetchComments } from '../services/comments';
 
 const pagesToKeep = 5;
 const pageInData = (state, slug) => {
-  let page = state.find(obj => obj[slug]);
-  if (typeof page !== 'undefined') return true;
+  let pageData = state.find(obj => obj[slug]);
+  if (typeof pageData !== 'undefined') return true;
 };
 const commentsOnPage = 10;
 
@@ -31,8 +31,8 @@ export default {
       if (state.length > pagesToKeep) state.shift();
     },
     addPostsPagination: (state, payload) => {
-      let page = state.find(obj => obj[payload.path]);
-      page[payload.path].posts.pagination = {
+      let pageData = state.find(obj => obj[payload.path]);
+      pageData[payload.path].posts.pagination = {
         data: payload.data,
         currentPage: payload.currentPage
       };
@@ -47,10 +47,10 @@ export default {
       if (state.length > pagesToKeep) state.shift();
     },
     addComments: (state, payload) => {
-      let page = state.find(obj => obj[payload.slug])[payload.slug];
-      if (!page.hasOwnProperty('comments') || !page.comments.length) Vue.set(page, 'comments', []);
+      let pageData = state.find(obj => obj[payload.slug])[payload.slug];
+      if (!pageData.hasOwnProperty('comments') || !pageData.comments.length) Vue.set(pageData, 'comments', []);
 
-      page.comments.push(...payload.data);
+      pageData.comments.push(...payload.data);
     }
   },
 
@@ -124,12 +124,12 @@ export default {
       });
     },
     fetchComments: ({ state, commit }, { slug }) => {
-      let page = state.find(obj => obj[slug])[slug];
-      let nextCommentsPage = page.hasOwnProperty('comments') && (page.comments.length / commentsOnPage + 1) || 1;
+      let pageData = state.find(obj => obj[slug])[slug];
+      let nextCommentsPage = pageData.hasOwnProperty('comments') && (pageData.comments.length / commentsOnPage + 1) || 1;
       nextCommentsPage = Math.ceil(nextCommentsPage);
 
       return fetchComments({
-        post: page.single.id,
+        post: pageData.single.id,
         page: nextCommentsPage,
         per_page: commentsOnPage
       }).then((response) => {
