@@ -44,11 +44,12 @@ export default {
 
   beforeMount() {
     this.currentPath = this.$route.fullPath;
-    this.fetchSingle();
+    this.fetchSingle().then(() => {
+      this.fetchComments();
+    });
   },
 
   mounted() {
-    this.fetchComments();
     window.addEventListener('scroll', this.handleScroll);
   },
 
@@ -58,7 +59,9 @@ export default {
 
   watch: {
     $route() {
-      this.fetchSingle();
+      this.fetchSingle().then(() => {
+        this.fetchComments();
+      });
     }
   },
 
@@ -83,7 +86,7 @@ export default {
       });
     },
     fetchComments() {
-      if (!this.data.comments || this.data.comments.loading || !this.isVisibleLastComment()) return;
+      if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
 
       this.$store.dispatch('data/fetchComments', {
         slug: this.$route.fullPath
