@@ -11,6 +11,7 @@ const pageInData = (state, slug) => {
   let page = state.find(obj => obj[slug]);
   if (typeof page !== 'undefined') return true;
 };
+const commentsOnPage = 10;
 
 export default {
   namespaced: true,
@@ -124,9 +125,12 @@ export default {
     },
     fetchComments: ({ state, commit }, { slug }) => {
       let page = state.find(obj => obj[slug])[slug];
+      let nextCommentsPage = page.hasOwnProperty('comments') && (page.comments.length / commentsOnPage + 1) || 1;
 
       return fetchComments({
-        post: page.data.id
+        post: page.data.id,
+        page: nextCommentsPage,
+        per_page: commentsOnPage
       }).then((response) => {
         commit('addComments', {
           slug,
