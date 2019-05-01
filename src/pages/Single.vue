@@ -89,9 +89,13 @@ export default {
     fetchComments() {
       this.$store.dispatch('data/fetchComments', {
         slug: this.$route.fullPath
+      }).then(() => {
+        this.loadComments = false;
       });
     },
     handleScroll() {
+      if (this.loadComments) return;
+
       this.loadComments = this.isVisibleLastComment();
     },
     isVisibleLastComment() {
