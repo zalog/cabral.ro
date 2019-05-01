@@ -126,6 +126,7 @@ export default {
     fetchComments: ({ state, commit }, { slug }) => {
       let page = state.find(obj => obj[slug])[slug];
       let nextCommentsPage = page.hasOwnProperty('comments') && (page.comments.length / commentsOnPage + 1) || 1;
+      nextCommentsPage = Math.ceil(nextCommentsPage);
 
       return fetchComments({
         post: page.data.id,
