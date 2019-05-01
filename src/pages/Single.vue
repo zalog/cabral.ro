@@ -35,7 +35,6 @@ export default {
   },
 
   data: () => ({
-    forceDataRecompute: 1,
     currentPath: null,
     loadComments: false
   }),
@@ -68,7 +67,6 @@ export default {
 
   computed: {
     data() {
-      this.forceDataRecompute;
       let page = this.$store.state.data.find(obj => obj[this.currentPath]);
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
     }
@@ -85,14 +83,11 @@ export default {
         pageLoading: true
       }).then(() => {
         this.currentPath = this.$route.fullPath;
-        this.forceDataRecompute++;
       });
     },
     fetchComments() {
       this.$store.dispatch('data/fetchComments', {
         slug: this.$route.fullPath
-      }).then(() => {
-        this.forceDataRecompute++;
       });
     },
     handleScroll() {
