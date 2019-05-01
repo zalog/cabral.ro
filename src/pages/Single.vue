@@ -18,6 +18,7 @@
         <CommentsList
           ref="comments"
           :data="data.comments"
+          :loading="loadComments"
         />
       </div>
     </div>

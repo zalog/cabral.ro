@@ -1,6 +1,5 @@
 <template>
   <ul class="list-comments">
-    <li v-if="!data">loading...</li>
     <li
       v-for="comment in data" :key="'comments-comment-' + comment.id"
     >
@@ -13,16 +12,32 @@
         v-html="comment.content.rendered"
       />
     </li>
+    <li
+      v-if="!data || loading"
+      class="text-center"
+    >
+      <b-spinner variant="warning" label="Loading..."></b-spinner>
+    </li>
   </ul>
 </template>
 
 <script>
+import BSpinner from 'bootstrap-vue/es/components/spinner/spinner';
+
 export default {
   name: 'CommentsList',
+
+  components: {
+    'b-spinner': BSpinner
+  },
 
   props: {
     data: {
       type: [Array, Boolean],
+      default: false
+    },
+    loading: {
+      type: Boolean,
       default: false
     }
   },
@@ -45,6 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../scss/app-component.scss";
+@import "~bootstrap/scss/spinners";
 
 .list-comments /deep/ {
   @include list-unstyled;
