@@ -40,7 +40,8 @@ export default {
         [payload.slug]: {
           single: payload.single,
           comments: {
-            data: []
+            data: [],
+            loading: false
           }
         }
       });
@@ -51,6 +52,7 @@ export default {
       let pageData = state.find(obj => obj[payload.slug])[payload.slug];
 
       pageData.comments.data.push(...payload.data);
+      pageData.comments.loading = false;
     }
   },
 
@@ -127,6 +129,8 @@ export default {
       let pageData = state.find(obj => obj[slug])[slug];
       let nextCommentsPage = (pageData.comments.data.length / commentsOnPage + 1) || 1;
       nextCommentsPage = Math.ceil(nextCommentsPage);
+
+      pageData.comments.loading = true;
 
       return fetchComments({
         post: pageData.single.id,

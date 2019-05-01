@@ -18,7 +18,6 @@
         <CommentsList
           ref="comments"
           :comments="data.comments"
-          :loading="loadComments"
         />
       </div>
     </div>
@@ -36,8 +35,7 @@ export default {
   },
 
   data: () => ({
-    currentPath: null,
-    loadComments: false
+    currentPath: null
   }),
 
   serverPrefetch() {
@@ -50,7 +48,7 @@ export default {
   },
 
   mounted() {
-    this.loadComments = this.isVisibleLastComment();
+    this.fetchComments();
     window.addEventListener('scroll', this.handleScroll);
   },
 
@@ -61,9 +59,6 @@ export default {
   watch: {
     $route() {
       this.fetchSingle();
-    },
-    loadComments(load) {
-      load && this.fetchComments();
     }
   },
 
@@ -88,16 +83,14 @@ export default {
       });
     },
     fetchComments() {
+      if (!this.data.comments || this.data.comments.loading || !this.isVisibleLastComment()) return;
+
       this.$store.dispatch('data/fetchComments', {
         slug: this.$route.fullPath
-      }).then(() => {
-        this.loadComments = false;
       });
     },
     handleScroll() {
-      if (this.loadComments) return;
-
-      this.loadComments = this.isVisibleLastComment();
+      this.fetchComments();
     },
     isVisibleLastComment() {
       if (!this.$refs['comments']) return;

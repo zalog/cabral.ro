@@ -13,7 +13,7 @@
       />
     </li>
     <li
-      v-if="loading === true"
+      v-if="comments.loading === true"
       class="text-center"
     >
       <b-spinner variant="warning" label="Loading..."></b-spinner>
@@ -34,10 +34,6 @@ export default {
   props: {
     comments: {
       type: Object
-    },
-    loading: {
-      type: Boolean,
-      default: false
     }
   },
 
