@@ -125,8 +125,6 @@ export default {
     fetchComments: ({ state, commit }, { slug }) => {
       let page = state.find(obj => obj[slug])[slug];
 
-      if (page.hasOwnProperty('comments') && page.comments.length) return;
-
       return fetchComments({
         post: page.data.id
       }).then((response) => {
