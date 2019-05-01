@@ -13,7 +13,7 @@
       />
     </li>
     <li
-      v-if="!data || loading"
+      v-if="loading === true"
       class="text-center"
     >
       <b-spinner variant="warning" label="Loading..."></b-spinner>

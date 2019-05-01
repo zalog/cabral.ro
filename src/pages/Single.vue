@@ -50,6 +50,7 @@ export default {
   },
 
   mounted() {
+    this.loadComments = this.isVisibleLastComment();
     window.addEventListener('scroll', this.handleScroll);
   },
 
