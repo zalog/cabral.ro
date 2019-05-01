@@ -127,6 +127,9 @@ export default {
     },
     fetchComments: ({ state, commit }, { slug }) => {
       let pageData = state.find(obj => obj[slug])[slug];
+
+      if (pageData.comments.loading === null) return;
+
       let nextCommentsPage = (pageData.comments.data.length / commentsOnPage + 1) || 1;
       nextCommentsPage = Math.ceil(nextCommentsPage);
 
@@ -137,9 +140,14 @@ export default {
         page: nextCommentsPage,
         per_page: commentsOnPage
       }).then((response) => {
+        if (response.totalComments == pageData.comments.data.length) {
+          pageData.comments.loading = null;
+          return;
+        }
+
         commit('addComments', {
           slug,
-          data: response
+          data: response.data
         });
       });
     }

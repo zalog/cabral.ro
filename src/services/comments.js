@@ -13,7 +13,10 @@ export function fetchComments(payload) {
       url: `${API.COMMENTS}`,
       params
     })
-    .then((response) => resolve(response.data))
+    .then((response) => resolve({
+      data: response.data,
+      totalComments: response.headers['x-wp-total']
+    }))
     .catch((error) => reject(error));
   });
 }
