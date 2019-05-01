@@ -6,7 +6,10 @@
     <div
       class="container-fluid py-5"
     >
-      <h1 class="entry-title">{{ data.single.title.rendered }}</h1>
+      <h1
+        v-html="data.single.title.rendered"
+        class="entry-title"
+      />
       <div
         v-html="data.single.content.rendered"
         class="entry-content"
