@@ -1,8 +1,10 @@
+import Vue from 'vue';
+
+import paginate from 'jw-paginate';
+
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments } from '../services/comments';
-
-import paginate from 'jw-paginate';
 
 const pagesToKeep = 5;
 const pageInData = (state, slug) => {
@@ -45,7 +47,7 @@ export default {
     },
     addComments: (state, payload) => {
       let page = state.find(obj => obj[payload.slug])[payload.slug];
-      if (!page.hasOwnProperty('comments') || !page.comments.length) page.comments = [];
+      if (!page.hasOwnProperty('comments') || !page.comments.length) Vue.set(page, 'comments', []);
 
       page.comments.push(...payload.data);
     }
