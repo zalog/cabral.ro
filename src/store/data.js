@@ -40,7 +40,7 @@ export default {
     addSingle: (state, payload) => {
       state.push({
         [payload.slug]: {
-          data: payload.data
+          single: payload.single
         }
       });
 
@@ -89,7 +89,7 @@ export default {
       return fetchPost(payload).then((response) => {
         commit('addSingle', {
           slug: payload.slug,
-          data: response.data[0],
+          single: response.data[0],
           ...payload
         });
       });
@@ -100,7 +100,7 @@ export default {
       return fetchPage(payload).then((response) => {
         commit('addSingle', {
           slug: payload.slug,
-          data: response.data[0],
+          single: response.data[0],
           ...payload
         });
       });
@@ -112,13 +112,13 @@ export default {
         if (response.data.length)
           commit('addSingle', {
             slug,
-            data: response.data[0]
+            single: response.data[0]
           });
         else
           return fetchPage({slug}).then((response) => {
             commit('addSingle', {
               slug,
-              data: response.data[0]
+              single: response.data[0]
             });
           });
       });
@@ -129,7 +129,7 @@ export default {
       nextCommentsPage = Math.ceil(nextCommentsPage);
 
       return fetchComments({
-        post: page.data.id,
+        post: page.single.id,
         page: nextCommentsPage,
         per_page: commentsOnPage
       }).then((response) => {
