@@ -17,7 +17,7 @@
       <div class="container-fluid py-5">
         <CommentsList
           ref="comments"
-          :data="data.comments"
+          :comments="data.comments"
           :loading="loadComments"
         />
       </div>

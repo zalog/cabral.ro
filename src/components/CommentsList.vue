@@ -1,7 +1,7 @@
 <template>
   <ul class="list-comments">
     <li
-      v-for="comment in data" :key="'comments-comment-' + comment.id"
+      v-for="comment in comments.data" :key="'comments-comment-' + comment.id"
     >
       <div class="comment-header">
         <div v-html="printAuthor(comment)" />
@@ -32,9 +32,8 @@ export default {
   },
 
   props: {
-    data: {
-      type: [Array, Boolean],
-      default: false
+    comments: {
+      type: Object
     },
     loading: {
       type: Boolean,

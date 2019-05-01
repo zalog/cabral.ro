@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 import paginate from 'jw-paginate';
 
 import { fetchPosts } from './../services/posts';
@@ -40,7 +38,10 @@ export default {
     addSingle: (state, payload) => {
       state.push({
         [payload.slug]: {
-          single: payload.single
+          single: payload.single,
+          comments: {
+            data: []
+          }
         }
       });
 
@@ -48,9 +49,8 @@ export default {
     },
     addComments: (state, payload) => {
       let pageData = state.find(obj => obj[payload.slug])[payload.slug];
-      if (!pageData.hasOwnProperty('comments') || !pageData.comments.length) Vue.set(pageData, 'comments', []);
 
-      pageData.comments.push(...payload.data);
+      pageData.comments.data.push(...payload.data);
     }
   },
 
@@ -125,7 +125,7 @@ export default {
     },
     fetchComments: ({ state, commit }, { slug }) => {
       let pageData = state.find(obj => obj[slug])[slug];
-      let nextCommentsPage = pageData.hasOwnProperty('comments') && (pageData.comments.length / commentsOnPage + 1) || 1;
+      let nextCommentsPage = (pageData.comments.data.length / commentsOnPage + 1) || 1;
       nextCommentsPage = Math.ceil(nextCommentsPage);
 
       return fetchComments({
