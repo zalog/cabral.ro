@@ -3,7 +3,7 @@
     v-if="data"
     class="page-category container-fluid py-5"
   >
-    <h1 class="mb-4">Category</h1>
+    <h1 class="mb-4">{{ this.currentPath }}</h1>
     <PostsList
       :posts="data.posts"
     />
@@ -32,6 +32,12 @@ export default {
   beforeMount() {
     this.currentPath = this.$route.fullPath;
     this.fetchPosts();
+  },
+
+  metaInfo() {
+    return {
+      title: this.currentPath
+    };
   },
 
   watch: {

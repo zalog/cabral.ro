@@ -2,6 +2,7 @@ import { createApp } from './app';
 
 export default context => new Promise((resolve, reject) => {
   const { app, router, store } = createApp();
+  const meta = app.$meta();
 
   router.push(context.url);
 
@@ -11,6 +12,7 @@ export default context => new Promise((resolve, reject) => {
 
     context.rendered = () => {
       context.state = store.state;
+      context.meta = meta;
     };
 
     resolve(app);

@@ -60,6 +60,12 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
 
+  metaInfo() {
+    return {
+      title: this.data.single && this.data.single.title.rendered
+    };
+  },
+
   watch: {
     $route() {
       this.fetchSingle().then(() => {
