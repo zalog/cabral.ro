@@ -1,0 +1,45 @@
+// typo
+.entry-content,
+.list-comments p {
+  font-family: $font-family-serif;
+}
+.entry-content {
+  font-size: $font-size-lg;
+  line-height: 1.9;
+}
+.list-comments p {
+  line-height: 1.7;
+}
+
+
+
+// content
+.entry-title {
+  margin-bottom: map-get($spacers, 4);
+}
+.entry-content {
+  > * {
+    margin-bottom: $spacer;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  p > iframe {
+    max-width: 100%;
+  }
+
+  > figure,
+  .wp-block-image {
+    text-align: center;
+  }
+
+  @include media-breakpoint-up(xl) {
+    > figure,
+    .wp-block-image {
+      margin-right: -180px;
+      margin-left: -180px;
+    }
+  }
+}

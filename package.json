@@ -8,25 +8,31 @@
     "build": "rimraf dist && npm run build:client && npm run build:server",
     "build:client": "webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules",
-    "prod": "npm install && cross-env NODE_ENV=production npm run build && cross-env NODE_ENV=production pm2 start server --update-env"
+    "prod": "npm ci && npm run prod:build && cross-env NODE_ENV=production pm2 start server --update-env",
+    "prod:build": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.0-rc.18",
+    "bootstrap-vue": "^2.0.0-rc.19",
     "compression": "^1.7.4",
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.1",
     "jw-paginate": "^1.0.4",
+    "nprogress": "^0.2.0",
     "route-cache": "^0.4.4",
     "serve-favicon": "^2.5.0",
     "vue": "^2.6.10",
+    "vue-meta": "^1.6.0",
+    "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.0.6",
     "vue-server-renderer": "^2.6.10",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@vue/babel-preset-app": "^3.6.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
@@ -35,6 +41,7 @@
     "cssnano": "^4.1.10",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.2",
+    "file-loader": "^3.0.1",
     "lodash.merge": "^4.6.1",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.11.0",
@@ -45,9 +52,9 @@
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.0",
+    "webpack-cli": "^3.3.1",
     "webpack-dev-middleware": "^3.6.2",
-    "webpack-hot-middleware": "^2.24.3",
+    "webpack-hot-middleware": "^2.24.4",
     "webpack-merge": "^4.2.1"
   },
   "eslintConfig": {

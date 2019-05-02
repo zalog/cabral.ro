@@ -1,4 +1,8 @@
 @import './variables';
-@import './bootstrap';
-@import './bootstrap-vue';
-@import './style';
+
+@import './vendors/bootstrap';
+@import './vendors/bootstrap-vue';
+@import './vendors/nprogress';
+
+@import './globals';
+@import './structure';

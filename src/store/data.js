@@ -1,12 +1,15 @@
+import paginate from 'jw-paginate';
+
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
-import paginate from 'jw-paginate';
+import { fetchComments } from '../services/comments';
 
 const pagesToKeep = 5;
 const pageInData = (state, slug) => {
-  let page = state.find(obj => obj[slug]);
-  if (typeof page !== 'undefined') return true;
+  let pageData = state.find(obj => obj[slug]);
+  if (typeof pageData !== 'undefined') return true;
 };
+const commentsOnPage = 10;
 
 export default {
   namespaced: true,
@@ -26,8 +29,8 @@ export default {
       if (state.length > pagesToKeep) state.shift();
     },
     addPostsPagination: (state, payload) => {
-      let page = state.find(obj => obj[payload.path]);
-      page[payload.path].posts.pagination = {
+      let pageData = state.find(obj => obj[payload.path]);
+      pageData[payload.path].posts.pagination = {
         data: payload.data,
         currentPage: payload.currentPage
       };
@@ -35,18 +38,28 @@ export default {
     addSingle: (state, payload) => {
       state.push({
         [payload.slug]: {
-          data: payload.data
+          single: payload.single,
+          comments: {
+            data: [],
+            loading: false
+          }
         }
       });
 
       if (state.length > pagesToKeep) state.shift();
+    },
+    addComments: (state, payload) => {
+      let pageData = state.find(obj => obj[payload.slug])[payload.slug];
+
+      pageData.comments.data.push(...payload.data);
+      pageData.comments.loading = false;
     }
   },
 
   actions: {
     fetchPosts: ({ state, commit }, payload) => {
       payload = {
-        fields: ['title', 'slug'],
+        fields: ['title', 'slug', 'excerpt', 'featured_media_src'],
         itemsOnPage: 12,
         ...payload
       };
@@ -56,7 +69,7 @@ export default {
       return fetchPosts(payload).then((response) => {
         payload.currentPage = parseInt(payload.currentPage);
 
-        const maxPages = 10;
+        const maxPages = 8;
         const itemsTotal = parseInt(response.headers['x-wp-total']);
         const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
@@ -72,23 +85,25 @@ export default {
         });
       });
     },
-    fetchPost: ({ state, commit }, {slug}) => {
-      if (pageInData(state, slug)) return;
+    fetchPost: ({ state, commit }, payload) => {
+      if (pageInData(state, payload.slug)) return;
 
-      return fetchPost({slug}).then((response) => {
+      return fetchPost(payload).then((response) => {
         commit('addSingle', {
-          slug,
-          data: response.data[0]
+          slug: payload.slug,
+          single: response.data[0],
+          ...payload
         });
       });
     },
-    fetchPage: ({ state, commit }, {slug}) => {
-      if (pageInData(state, slug)) return;
+    fetchPage: ({ state, commit }, payload) => {
+      if (pageInData(state, payload.slug)) return;
 
-      return fetchPage({slug}).then((response) => {
+      return fetchPage(payload).then((response) => {
         commit('addSingle', {
-          slug,
-          data: response.data[0]
+          slug: payload.slug,
+          single: response.data[0],
+          ...payload
         });
       });
     },
@@ -99,15 +114,41 @@ export default {
         if (response.data.length)
           commit('addSingle', {
             slug,
-            data: response.data[0]
+            single: response.data[0]
           });
         else
           return fetchPage({slug}).then((response) => {
             commit('addSingle', {
               slug,
-              data: response.data[0]
+              single: response.data[0]
             });
           });
+      });
+    },
+    fetchComments: ({ state, commit }, { slug }) => {
+      let pageData = state.find(obj => obj[slug])[slug];
+
+      if (pageData.comments.loading === null) return;
+
+      let nextCommentsPage = (pageData.comments.data.length / commentsOnPage + 1) || 1;
+      nextCommentsPage = Math.ceil(nextCommentsPage);
+
+      pageData.comments.loading = true;
+
+      return fetchComments({
+        post: pageData.single.id,
+        page: nextCommentsPage,
+        per_page: commentsOnPage
+      }).then((response) => {
+        if (response.totalComments == pageData.comments.data.length) {
+          pageData.comments.loading = null;
+          return;
+        }
+
+        commit('addComments', {
+          slug,
+          data: response.data
+        });
       });
     }
   }

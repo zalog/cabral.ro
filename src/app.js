@@ -3,6 +3,9 @@ import App from './App.vue';
 import { createRouter } from './router';
 import { createStore } from './store';
 
+import VueMeta from 'vue-meta';
+Vue.use(VueMeta);
+
 import http from './plugins/http';
 Vue.use(http);
 

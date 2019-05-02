@@ -89,7 +89,6 @@ function render (req, res) {
   };
 
   const context = {
-    title: 'cabral.ro', // default title
     url: req.url
   };
   renderer.renderToString(context, (err, html) => {

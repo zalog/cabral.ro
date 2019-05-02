@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <h1>Home</h1>
+  <div
+    v-if="data"
+    class="page-home container-fluid py-5"
+  >
     <PostsList
-      v-if="data"
       :posts="data.posts"
     />
   </div>
 </template>
 
 <script>
-import PostsList from "./PostsList.vue";
+import PostsList from "./../components/PostsList.vue";
 
 export default {
-  name: 'PageHome',
+  name: 'Home',
 
   components: {
     PostsList
@@ -50,7 +51,8 @@ export default {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
-        path: this.$route.fullPath
+        path: this.$route.fullPath,
+        pageLoading: true
       }).then(() => {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;

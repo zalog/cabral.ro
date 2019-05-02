@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <h1>Category</h1>
+  <div
+    v-if="data"
+    class="page-category container-fluid py-5"
+  >
+    <h1 class="mb-4">{{ this.currentPath }}</h1>
     <PostsList
-      v-if="data"
       :posts="data.posts"
     />
   </div>
 </template>
 
 <script>
-import PostsList from "./PostsList.vue";
+import PostsList from "./../components/PostsList.vue";
 
 export default {
-  name: 'PageCategory',
+  name: 'Category',
 
   components: {
     PostsList
@@ -30,6 +32,12 @@ export default {
   beforeMount() {
     this.currentPath = this.$route.fullPath;
     this.fetchPosts();
+  },
+
+  metaInfo() {
+    return {
+      title: this.currentPath
+    };
   },
 
   watch: {
@@ -51,6 +59,7 @@ export default {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
         path: this.$route.fullPath,
+        pageLoading: true,
         categories: [this.$route.params.categorySlug]
       }).then(() => {
         this.currentPath = this.$route.fullPath;

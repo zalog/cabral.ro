@@ -1,0 +1,30 @@
+// structure app
+html, body, .app {
+  display: flex;
+  flex-direction: column;
+}
+html {
+  min-height: 100%;
+}
+body, .app {
+  flex: 1;
+}
+body {
+  // font-smoothing, this is non-standard
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.app {
+  padding-top: $nav-link-height + $navbar-padding-y * 2;
+}
+
+.app-Header {  }
+.app-Content {
+  flex: 1 0 auto;
+}
+.app-Footer {
+  padding: $spacer;
+  background-color: $light;
+  text-align: center;
+  font-size: $font-size-sm;
+}
