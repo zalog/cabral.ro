@@ -3,14 +3,15 @@
     <li
       v-for="(comment, index) in comments.data" :key="'comments-comment-' + index"
     >
-      <div class="comment-header">
-        <div v-html="printAuthor(comment)" />
-        <div>{{ printDate(comment) }}</div>
-      </div>
-      <div
-        class="comment-content"
-        v-html="comment.content"
-      />
+      <CommentsListComment :comment="comment" />
+
+      <ul v-if="comment.replies.nodes.length">
+        <li
+          v-for="(comment, index) in comment.replies.nodes" :key="'comments-comment-l1-' + index"
+        >
+          <CommentsListComment :comment="comment" />
+        </li>
+      </ul>
     </li>
     <li
       v-if="comments.loading === true"
@@ -23,31 +24,19 @@
 
 <script>
 import BSpinner from 'bootstrap-vue/es/components/spinner/spinner';
+import CommentsListComment from "./CommentsListComment.vue";
 
 export default {
   name: 'CommentsList',
 
   components: {
-    'b-spinner': BSpinner
+    BSpinner,
+    CommentsListComment
   },
 
   props: {
     comments: {
       type: Object
-    }
-  },
-
-  methods: {
-    printAuthor(comment) {
-      let output = comment.author.name;
-      if (comment.author.url) output = `<a href="${comment.author.url}" target="_blank">${output}</a>`;
-
-      return output;
-    },
-    printDate(comment) {
-      let format = { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute:'2-digit' };
-
-      return new Date(comment.date).toLocaleString("ro-RO", format);
     }
   }
 };
@@ -57,9 +46,14 @@ export default {
 @import "./../scss/app-component.scss";
 @import "~bootstrap/scss/spinners";
 
-.list-comments /deep/ {
+.list-comments {
   @include list-unstyled;
-  li {
+
+  ul {
+    @include list-unstyled;
+  }
+
+  > li {
     padding: map-get($spacers, 4);
     margin-bottom: map-get($spacers, 4);
     background-color: $white;
@@ -68,26 +62,14 @@ export default {
     > * + * {
       margin-top: $spacer;
     }
-  }
 
-  .comment-header {
-    div:first-child {
-      font-weight: bold;
-      color: $gray-700;
+    > ul {
+      padding-top: $spacer;
+      border-top: $border-width solid $border-color;
 
-      a {
-        color: $gray-700;
+      > li + li {
+        margin-top: $spacer;
       }
-    }
-    div:last-child {
-      font-size: $font-size-sm;
-      color: $gray-600;
-    }
-  }
-
-  .comment-content {
-    > p:last-child {
-      margin-bottom: 0;
     }
   }
 }
