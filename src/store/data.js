@@ -54,6 +54,7 @@ export default {
 
       pageData.comments.data.push(...payload.data);
       pageData.comments.loading = false;
+      pageData.comments.pageInfo = payload.pageInfo;
     }
   },
 
@@ -128,27 +129,25 @@ export default {
     },
     fetchComments: ({ state, commit }, { slug }) => {
       let pageData = state.find(obj => obj[slug])[slug];
+      let pageComments = pageData.comments;
+      let commentsFrom = null;
 
-      if (pageData.comments.loading === null) return;
+      if (pageComments.pageInfo) {
+        if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
+        else return;
+      }
 
-      let nextCommentsPage = (pageData.comments.data.length / commentsOnPage + 1) || 1;
-      nextCommentsPage = Math.ceil(nextCommentsPage);
-
-      pageData.comments.loading = true;
+      pageComments.loading = true;
 
       return fetchComments({
-        post: pageData.single.id,
-        page: nextCommentsPage,
-        per_page: commentsOnPage
+        singleId: pageData.single.id,
+        onPage: commentsOnPage,
+        after: commentsFrom
       }).then((response) => {
-        if (response.totalComments == pageData.comments.data.length) {
-          pageData.comments.loading = null;
-          return;
-        }
-
         commit('addComments', {
           slug,
-          data: response.data
+          data: response.nodes,
+          pageInfo: response.pageInfo
         });
       });
     }

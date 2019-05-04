@@ -9,7 +9,7 @@
       </div>
       <div
         class="comment-content"
-        v-html="comment.content.rendered"
+        v-html="comment.content"
       />
     </li>
     <li
@@ -39,8 +39,8 @@ export default {
 
   methods: {
     printAuthor(comment) {
-      let output = comment.author_name;
-      if (comment.author_url) output = `<a href="${comment.author_url}" target="_blank">${output}</a>`;
+      let output = comment.author.name;
+      if (comment.author.url) output = `<a href="${comment.author.url}" target="_blank">${output}</a>`;
 
       return output;
     },
