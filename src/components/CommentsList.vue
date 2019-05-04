@@ -1,7 +1,7 @@
 <template>
   <ul class="list-comments">
     <li
-      v-for="comment in comments.data" :key="'comments-comment-' + comment.id"
+      v-for="(comment, index) in comments.data" :key="'comments-comment-' + index"
     >
       <div class="comment-header">
         <div v-html="printAuthor(comment)" />
