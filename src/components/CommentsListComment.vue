@@ -62,6 +62,10 @@ export default {
 
 .comment-content {
   /deep/ {
+    p {
+      word-wrap: break-word;
+    }
+
     > p:last-child {
       margin-bottom: 0;
     }
