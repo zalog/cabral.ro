@@ -26,20 +26,61 @@
     max-width: 100%;
     height: auto;
   }
-  p > iframe {
+
+  p > iframe,
+  p > object {
+    display: block;
     max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   > figure,
-  .wp-block-image {
+  .wp-block-image,
+  .wp-block-embed {
     text-align: center;
   }
 
   @include media-breakpoint-up(xl) {
     > figure,
-    .wp-block-image {
+    .wp-block-image,
+    .wp-block-embed {
       margin-right: -180px;
       margin-left: -180px;
+    }
+  }
+}
+
+// content childs
+.wp-block-embed {
+  position: relative;
+  display: block;
+  padding: 0;
+  overflow: hidden;
+
+  &::before {
+    display: block;
+    content: "";
+  }
+
+  &.is-type-video {
+    &::before {
+      padding-top: percentage(9 / 16);
+    }
+
+    .wp-block-embed__wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+
+      > * {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

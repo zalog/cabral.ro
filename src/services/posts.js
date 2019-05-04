@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { API } from './../utils/constants';
+import { ENDPOINTS } from './../utils/constants';
 
 export function fetchPosts(payload) {
   let params = {
@@ -27,7 +27,7 @@ export function fetchPosts(payload) {
   return new Promise((resolve, reject) => {
     Vue.prototype.$http({
       method: 'get',
-      url: API.POSTS,
+      url: ENDPOINTS.POSTS,
       params
     })
     .then((response) => resolve(response))

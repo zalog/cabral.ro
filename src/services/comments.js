@@ -1,22 +1,63 @@
 import Vue from 'vue';
-import { API } from './../utils/constants';
+import { ENDPOINTS } from './../utils/constants';
 
 export function fetchComments(payload) {
   let params = {
-    fields: [],
+    onPage: 10,
+    after: null,
     ...payload
   };
 
   return new Promise((resolve, reject) => {
     Vue.prototype.$http({
-      method: 'get',
-      url: `${API.COMMENTS}`,
-      params
+      method: 'post',
+      url: ENDPOINTS.GRAPHQL,
+      data: {
+        query: `
+          query GET_COMMENTS_FOR_POST(
+            $id: ID,
+            $first: Int,
+            $after: String
+          ) {
+            comments(
+              first: $first,
+              after: $after,
+              where: {contentId: $id}
+            ) {
+              nodes {
+                ...CommentFields
+                replies: children {
+                  nodes {
+                    ...CommentFields
+                  }
+                }
+              }
+              pageInfo {
+                hasNextPage
+                endCursor
+              }
+            }
+          }
+
+          fragment CommentFields on Comment {
+            author {
+              ... on CommentAuthor {
+                name
+                url
+              }
+            }
+            date
+            content
+          }
+        `,
+        variables: {
+          "id": params.singleId,
+          "first": params.onPage,
+          "after": params.after
+        }
+      }
     })
-    .then((response) => resolve({
-      data: response.data,
-      totalComments: response.headers['x-wp-total']
-    }))
+    .then((response) => resolve(response.data.data.comments))
     .catch((error) => reject(error));
   });
 }
