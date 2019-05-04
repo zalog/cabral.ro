@@ -9,6 +9,7 @@ const pageInData = (state, slug) => {
   let pageData = state.find(obj => obj[slug]);
   if (typeof pageData !== 'undefined') return true;
 };
+const postsOnPage = 12;
 const commentsOnPage = 10;
 
 export default {
@@ -60,7 +61,7 @@ export default {
     fetchPosts: ({ state, commit }, payload) => {
       payload = {
         fields: ['title', 'slug', 'excerpt', 'featured_media_src'],
-        itemsOnPage: 12,
+        itemsOnPage: postsOnPage,
         ...payload
       };
 
