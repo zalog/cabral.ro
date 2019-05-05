@@ -8,23 +8,26 @@
     <div class="label text-muted">{{ label }}</div>
 
     <div class="form">
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for="form-reply-name" class="sr-only">Nume</label>
-          <input type="text" id="form-reply-name" class="form-control" placeholder="Nume" required>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="form-reply-email" class="sr-only">Email</label>
-          <input type="email" id="form-reply-email" class="form-control" placeholder="Email" required>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="form-reply-site" class="sr-only">Site</label>
-          <input type="url" id="form-reply-site" class="form-control" placeholder="Site">
-        </div>
-      </div>
       <div class="form-group">
         <label for="form-reply-message" class="sr-only">Mesaj</label>
-        <textarea id="form-reply-message" class="form-control" rows="4" placeholder="Mesajul tău..." required></textarea>
+        <textarea v-model="form.message" id="form-reply-message" class="form-control" rows="4" placeholder="Mesajul tău..." required></textarea>
+      </div>
+      <div
+        class="form-row"
+        v-if="form.message"
+      >
+        <div class="form-group col-sm-4">
+          <label for="form-reply-name" class="sr-only">Nume</label>
+          <input type="text" v-model="form.name" id="form-reply-name" class="form-control" placeholder="Nume" required>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="form-reply-email" class="sr-only">Email</label>
+          <input type="email" v-model="form.email" id="form-reply-email" class="form-control" placeholder="Email" required>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="form-reply-site" class="sr-only">Site</label>
+          <input type="url" v-model="form.site" id="form-reply-site" class="form-control" placeholder="Site">
+        </div>
       </div>
 
       <button
@@ -46,6 +49,10 @@ export default {
       default: 'Lasă un comentariu...'
     }
   },
+
+  data: () => ({
+    form: {}
+  }),
 
   methods: {
     formOpen() {
