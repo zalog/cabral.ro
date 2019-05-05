@@ -1,8 +1,6 @@
 <template>
   <div>
-    <form class="form-reply">
-      <div class="text-muted">Lasă un comentariu...</div>
-    </form>
+    <CommentsListForm label="Lasă un comentariu..." />
 
     <ul class="list-comments">
       <li
@@ -18,9 +16,7 @@
           </li>
         </ul>
 
-        <form class="form-reply">
-          <div class="text-muted">răspunde...</div>
-        </form>
+        <CommentsListForm label="răspunde..." />
       </li>
       <li
         v-if="comments.loading === true"
@@ -35,13 +31,15 @@
 <script>
 import BSpinner from 'bootstrap-vue/es/components/spinner/spinner';
 import CommentsListComment from "./CommentsListComment.vue";
+import CommentsListForm from "./CommentsListForm.vue";
 
 export default {
   name: 'CommentsList',
 
   components: {
     BSpinner,
-    CommentsListComment
+    CommentsListComment,
+    CommentsListForm
   },
 
   props: {
@@ -56,16 +54,8 @@ export default {
 @import "./../scss/app-component.scss";
 @import "~bootstrap/scss/spinners";
 
-.form-reply {
-  padding: map-get($spacers, 4);
-  margin-bottom: map-get($spacers, 4);
-  background-color: $white;
-  box-shadow: $box-shadow-sm;
-}
-
 .list-comments {
-  @include list-unstyled;
-
+  &,
   ul {
     @include list-unstyled;
   }
@@ -91,16 +81,6 @@ export default {
       > li + li {
         margin-top: $spacer;
       }
-    }
-  }
-
-  .form-reply {
-    padding: 0;
-    margin-bottom: 0;
-    box-shadow: none;
-
-    .text-muted {
-      font-size: $font-size-sm;
     }
   }
 }
