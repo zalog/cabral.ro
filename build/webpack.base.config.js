@@ -45,6 +45,21 @@ module.exports = {
       }
     ]
   },
+  stats: {
+    // copied from `'minimal'`
+    all: false,
+    modules: true,
+    maxModules: 0,
+    errors: true,
+    warnings: true,
+    // additional options
+    moduleTrace: true,
+    errorDetails: true,
+    assets: true
+  },
+  devServer: {
+    stats: 'normal'
+  },
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
