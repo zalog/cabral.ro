@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { postComment } from "./../services/comments.js";
+
 export default {
   name: 'CommentsListForm',
 
@@ -70,7 +72,7 @@ export default {
       document.body.removeEventListener('click', this.formClose);
     },
     formSubmit() {
-      console.log('formSubmit');
+      postComment({ ...this.form });
     }
   }
 };

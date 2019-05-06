@@ -61,3 +61,7 @@ export function fetchComments(payload) {
     .catch((error) => reject(error));
   });
 }
+
+export function postComment(payload) {
+  console.log('service postComment');
+}
