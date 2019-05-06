@@ -8,9 +8,20 @@
     <div class="label text-muted">{{ label }}</div>
 
     <div class="form">
+      <div
+         v-if="$v.form.$error"
+        class="alert alert-warning" role="alert"
+      >
+        Te rog, mai încearcă. Câmpurile marcate cu roșu conțin erori.
+      </div>
       <div class="form-group">
         <label for="form-reply-message" class="sr-only">Mesaj</label>
-        <textarea v-model="form.message" id="form-reply-message" class="form-control" rows="4" placeholder="Mesajul tău..." required></textarea>
+        <textarea
+          v-model="form.message"
+          id="form-reply-message"
+          :class="['form-control', {'is-invalid': $v.form.message.$error }]"
+          rows="4" placeholder="Mesajul tău..." required
+        ></textarea>
       </div>
       <div
         class="form-row"
@@ -18,15 +29,30 @@
       >
         <div class="form-group col-sm-4">
           <label for="form-reply-name" class="sr-only">Nume</label>
-          <input type="text" v-model="form.name" id="form-reply-name" class="form-control" placeholder="Nume" required>
+          <input type="text"
+            v-model="form.name"
+            id="form-reply-name"
+            :class="['form-control', {'is-invalid': $v.form.name.$error}]"
+            placeholder="Nume" required
+          >
         </div>
         <div class="form-group col-sm-4">
           <label for="form-reply-email" class="sr-only">Email</label>
-          <input type="email" v-model="form.email" id="form-reply-email" class="form-control" placeholder="Email" required>
+          <input type="email"
+            v-model="form.email"
+            id="form-reply-email"
+            :class="['form-control', {'is-invalid': $v.form.email.$error}]"
+            placeholder="Email" required
+          >
         </div>
         <div class="form-group col-sm-4">
           <label for="form-reply-site" class="sr-only">Site</label>
-          <input type="url" v-model="form.site" id="form-reply-site" class="form-control" placeholder="Site">
+          <input type="url"
+            v-model="form.site"
+            id="form-reply-site"
+            :class="['form-control', {'is-invalid': $v.form.site.$error}]"
+            placeholder="Site"
+          >
         </div>
       </div>
 
@@ -40,10 +66,14 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate';
+import { required, email, minLength, url } from "vuelidate/lib/validators";
 import { postComment } from "./../services/comments.js";
 
 export default {
   name: 'CommentsListForm',
+
+  mixins: [validationMixin],
 
   props: {
     label: {
@@ -55,6 +85,15 @@ export default {
   data: () => ({
     form: {}
   }),
+
+  validations: {
+    form: {
+      message: { required, min: minLength(3) },
+      name: { required, min: minLength(3) },
+      email: { required, email },
+      site: { url }
+    }
+  },
 
   methods: {
     formOpen() {
@@ -72,6 +111,9 @@ export default {
       document.body.removeEventListener('click', this.formClose);
     },
     formSubmit() {
+      this.$v.form.$touch();
+      if (this.$v.form.$error) return;
+
       postComment({ ...this.form });
     }
   }
@@ -82,6 +124,7 @@ export default {
 @import "./../scss/app-component.scss";
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/alert";
 
 .form-reply {
   padding: map-get($spacers, 4);
@@ -110,7 +153,7 @@ export default {
       opacity: 0;
     }
     .form {
-      max-height: 350px;
+      max-height: 500px;
       opacity: 1;
       overflow: visible;
     }
