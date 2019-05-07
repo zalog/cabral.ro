@@ -8,12 +8,6 @@
     <div class="label text-muted">{{ label }}</div>
 
     <div class="form">
-      <div
-         v-if="$v.form.$error"
-        class="alert alert-warning" role="alert"
-      >
-        Te rog, mai încearcă. Câmpurile marcate cu roșu conțin erori.
-      </div>
       <div class="form-group">
         <label for="form-reply-message" class="sr-only">Mesaj</label>
         <textarea
@@ -25,7 +19,7 @@
       </div>
       <div
         class="form-row"
-        v-if="form.message"
+        v-if="form.message || form.name || form.email || form.site"
       >
         <div class="form-group col-sm-4">
           <label for="form-reply-name" class="sr-only">Nume</label>
@@ -54,6 +48,13 @@
             placeholder="Site"
           >
         </div>
+      </div>
+
+      <div
+         v-if="$v.form.$error"
+        class="alert alert-warning" role="alert"
+      >
+        Câmpurile marcate cu roșu conțin erori.
       </div>
 
       <button
