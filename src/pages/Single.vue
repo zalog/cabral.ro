@@ -20,7 +20,7 @@
       <div class="container-fluid py-5">
         <CommentsList
           ref="comments"
-          :comments="data.comments"
+          :currentPath="currentPath"
         />
       </div>
     </div>

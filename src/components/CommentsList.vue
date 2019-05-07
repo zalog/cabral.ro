@@ -4,7 +4,7 @@
 
     <ul class="list-comments">
       <li
-        v-for="(comment, index) in comments.data" :key="'comments-comment-' + index"
+        v-for="(comment, index) in data.comments.data" :key="'comments-comment-' + index"
       >
         <CommentsListComment :comment="comment" />
 
@@ -19,7 +19,7 @@
         <CommentsListForm label="răspunde..." />
       </li>
       <li
-        v-if="comments.loading === true"
+        v-if="data.comments.loading === true"
         class="text-center"
       >
         <b-spinner variant="warning" label="Loading..."></b-spinner>
@@ -43,8 +43,15 @@ export default {
   },
 
   props: {
-    comments: {
-      type: Object
+    currentPath: {
+      type: String
+    }
+  },
+
+  computed: {
+    data() {
+      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
+      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
     }
   }
 };
