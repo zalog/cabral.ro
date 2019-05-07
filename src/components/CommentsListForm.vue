@@ -100,7 +100,9 @@ export default {
     formOpen() {
       if (this.$el.classList.contains('open')) return;
 
+
       this.$el.classList.add('open');
+      this.$el.querySelector('#form-reply-message').focus();
       document.body.addEventListener('click', this.formClose);
     },
     formClose(event) {
