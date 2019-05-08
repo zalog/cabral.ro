@@ -5,11 +5,11 @@ import ui from '../store/ui';
 
 Vue.use(Vuex);
 
-export function createStore() {
-  return new Vuex.Store({
-    modules: {
-      data,
-      ui
-    }
-  });
-}
+export const store = new Vuex.Store({
+  modules: {
+    data,
+    ui
+  }
+});
+
+export const createStore = () => store;
