@@ -1,1 +1,16 @@
 @import '~bootstrap-vue/src/index'; // to do: import only what's needed
+
+
+// Override bootstrap-vue
+.b-toaster.b-toaster-bottom-center .b-toaster-slot {
+  bottom: 0;
+
+  .toast {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: 0;
+  }
+}
+.b-toast {
+  background-color: $white;
+}
