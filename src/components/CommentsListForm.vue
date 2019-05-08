@@ -5,7 +5,7 @@
     @click="formOpen"
     @submit.prevent="formSubmit"
   >
-    <div class="label text-muted">{{ label }}</div>
+    <div class="label text-muted">{{ data.label || 'Lasă un comentariu...' }}</div>
 
     <div class="form">
       <div class="form-group">
@@ -77,9 +77,8 @@ export default {
   mixins: [validationMixin],
 
   props: {
-    label: {
-      type: String,
-      default: 'Lasă un comentariu...'
+    data: {
+      type: Object
     }
   },
 
@@ -117,7 +116,11 @@ export default {
       this.$v.form.$touch();
       if (this.$v.form.$error) return;
 
-      postComment({ ...this.form });
+      postComment({
+        singleId: this.data.singleId,
+        commentId: this.data.commentId,
+        ...this.form
+      });
     }
   }
 };

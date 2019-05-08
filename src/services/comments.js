@@ -40,6 +40,7 @@ export function fetchComments(payload) {
           }
 
           fragment CommentFields on Comment {
+            commentId
             author {
               ... on CommentAuthor {
                 name
@@ -63,5 +64,26 @@ export function fetchComments(payload) {
 }
 
 export function postComment(payload) {
-  console.log('service postComment');
+  // renames params keys to match wp-api
+  Object.entries({
+    'singleId': 'post',
+    'commentId': 'parent',
+    'name': 'author_name',
+    'email': 'author_email',
+    'site': 'author_url',
+    'message': 'content'
+  }).forEach(entry => {
+    payload[entry[1]] = payload[entry[0]];
+    delete payload[entry[0]];
+  });
+
+  return new Promise((resolve, reject) => {
+    Vue.prototype.$http({
+      method: 'post',
+      url: ENDPOINTS.COMMENTS,
+      params: payload
+    })
+    .then((response) => resolve(response))
+    .catch((error) => reject(error));
+  });
 }

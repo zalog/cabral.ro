@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CommentsListForm label="Lasă un comentariu..." />
+    <CommentsListForm :data="{singleId: data.single.id}" />
 
     <ul class="list-comments">
       <li
@@ -16,7 +16,7 @@
           </li>
         </ul>
 
-        <CommentsListForm label="răspunde..." />
+        <CommentsListForm :data="{label: 'răspunde...', singleId: data.single.id, commentId: comment.commentId}" />
       </li>
       <li
         v-if="data.comments.loading === true"
