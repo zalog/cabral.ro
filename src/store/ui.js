@@ -8,7 +8,7 @@ export default {
   }),
 
   mutations: {
-    menu: (state, playload) => state.menu = playload
+    menu: (state, payload) => state.menu = payload
   },
 
   actions: {
