@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { ENDPOINTS } from './../utils/constants';
+import { store } from "./../store/index";
 
 export function fetchComments(payload) {
   let params = {
@@ -83,7 +84,19 @@ export function postComment(payload) {
       url: ENDPOINTS.COMMENTS,
       params: payload
     })
-    .then((response) => resolve(response))
-    .catch((error) => reject(error));
+    .then((response) => {
+      store.commit('ui/addToast', {
+        message: 'Mesajul a fost trimis!',
+        variant: 'success'
+      });
+      resolve(response);
+    })
+    .catch((error) => {
+      store.commit('ui/addToast', {
+        message: 'Mesajul nu s-a trimis!',
+        variant: 'danger'
+      });
+      reject(error);
+    });
   });
 }
