@@ -60,8 +60,12 @@
       <button
         v-ripple
         type="submit"
-        class="btn btn-outline-secondary"
-      >Trimite</button>
+        class="btn btn-outline-secondary d-flex align-items-center"
+        :disabled="form.loading"
+      >
+        <span v-if="form.loading" class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+        <span v-text="(!form.loading) ? 'Trimite' : 'se trimite...'" />
+      </button>
     </div>
   </form>
 </template>
@@ -83,7 +87,9 @@ export default {
   },
 
   data: () => ({
-    form: {}
+    form: {
+      loading: false
+    }
   }),
 
   validations: {
@@ -116,11 +122,13 @@ export default {
       this.$v.form.$touch();
       if (this.$v.form.$error) return;
 
+      this.form.loading = true;
+
       postComment({
         singleId: this.data.singleId,
         commentId: this.data.commentId,
         ...this.form
-      });
+      }).finally(() => this.form.loading = false);
     }
   }
 };
