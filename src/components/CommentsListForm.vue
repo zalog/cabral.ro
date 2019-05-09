@@ -9,12 +9,12 @@
 
     <div class="form">
       <div class="form-group">
-        <label for="form-reply-message" class="sr-only">Mesaj</label>
+        <label for="form-reply-message" class="sr-only">Comentariu</label>
         <textarea
           v-model="form.message"
           id="form-reply-message"
           :class="['form-control', {'is-invalid': $v.form.message.$error }]"
-          rows="4" placeholder="Mesajul tău..." required
+          rows="4" placeholder="Scrie comentariul tău aici..." required
         ></textarea>
       </div>
       <div
