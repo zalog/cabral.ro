@@ -85,15 +85,18 @@ export function postComment(payload) {
       params: payload
     })
     .then((response) => {
+      let comment = `${response.data.author_name}, comentariul tău a fost trimis!`;
+      (response.data.status === 'hold') && (comment = `${response.data.author_name}, comentariul tău urmează să fie aprobat.`);
+
       store.commit('ui/addToast', {
-        message: 'Mesajul a fost trimis!',
+        message: comment,
         variant: 'success'
       });
       resolve(response);
     })
     .catch((error) => {
       store.commit('ui/addToast', {
-        message: 'Mesajul nu s-a trimis!',
+        message: error.response.data.message,
         variant: 'danger'
       });
       reject(error);
