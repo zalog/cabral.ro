@@ -128,7 +128,11 @@ export default {
         singleId: this.data.singleId,
         commentId: this.data.commentId,
         ...this.form
-      }).finally(() => this.form.loading = false);
+      }).then(() => {
+        setTimeout(() => this.$el.classList.remove('open'), 2000);
+      }).finally(() => {
+        this.form.loading = false;
+      });
     }
   }
 };
