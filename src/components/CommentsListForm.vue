@@ -73,7 +73,6 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, email, minLength, url } from "vuelidate/lib/validators";
-import { postComment } from "./../services/comments.js";
 
 export default {
   name: 'CommentsListForm',
@@ -124,7 +123,7 @@ export default {
 
       this.form.loading = true;
 
-      postComment({
+      this.$store.dispatch('data/postComment', {
         singleId: this.data.singleId,
         commentId: this.data.commentId,
         ...this.form

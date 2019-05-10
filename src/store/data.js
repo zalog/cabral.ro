@@ -1,8 +1,10 @@
 import paginate from 'jw-paginate';
 
+import { store } from "./index";
+
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
-import { fetchComments } from '../services/comments';
+import { fetchComments, postComment } from '../services/comments';
 
 const pagesToKeep = 5;
 const pageInData = (state, slug) => {
@@ -148,6 +150,22 @@ export default {
           slug,
           data: response.nodes,
           pageInfo: response.pageInfo
+        });
+      });
+    },
+    postComment: ({}, payload) => {
+      return postComment(payload).then((comment) => {
+        let message = `${comment.author_name}, comentariul tău a fost trimis!`;
+        (comment.status === 'hold') && (comment = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+
+        store.commit('ui/addToast', {
+          message,
+          variant: 'success'
+        });
+      }).catch((response) => {
+        store.commit('ui/addToast', {
+          message: response.data.message,
+          variant: 'danger'
         });
       });
     }
