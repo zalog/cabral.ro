@@ -55,6 +55,29 @@ export default {
       pageData.comments.data.push(...payload.data);
       pageData.comments.loading = false;
       pageData.comments.pageInfo = payload.pageInfo;
+    },
+    addComment: (state, payload) => {
+      let pageData = state.find(obj => obj[payload.slug])[payload.slug];
+      let pageComments = pageData.comments.data;
+      let comment = {
+        commentId: payload.comment.id,
+        author: {
+          name: payload.comment.author_name,
+          url: payload.comment.author_url
+        },
+        content: payload.comment.content.rendered,
+        date: payload.comment.date
+      };
+
+      if (typeof payload.index === 'undefined') {
+        comment.replies = {
+          nodes: []
+        };
+      } else {
+        pageComments = pageData.comments.data[payload.index].replies.nodes;
+      }
+
+      pageComments.unshift(comment);
     }
   },
 
@@ -153,8 +176,16 @@ export default {
     },
     postComment: ({ commit }, payload) => {
       return postComment(payload).then((comment) => {
-        let message = `${comment.author_name}, comentariul tău a fost trimis!`;
+        let message = `${comment.author_name}, comentariul tău a fost salvat!`;
         (comment.status === 'hold') && (comment = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+
+        if (comment.status === 'approved') {
+          commit('addComment', {
+            slug: payload.slug,
+            index: payload.index,
+            comment
+          });
+        }
 
         commit('ui/addToast', {
           message,

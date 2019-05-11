@@ -4,11 +4,11 @@
 
     <ul class="list-comments">
       <li
-        v-for="comment in data.comments.data" :key="'comments-comment-' + comment.commentId"
+        v-for="(comment, index) in data.comments.data" :key="'comments-comment-' + comment.commentId"
       >
         <CommentsListComment :comment="comment" />
 
-        <ul v-if="comment.replies.nodes.length">
+        <ul v-if="comment.replies && comment.replies.nodes.length">
           <li
             v-for="comment in comment.replies.nodes" :key="'comments-comment-l1-' + comment.commentId"
           >
@@ -16,7 +16,14 @@
           </li>
         </ul>
 
-        <CommentsListForm :data="{label: 'răspunde...', singleId: data.single.id, commentId: comment.commentId}" />
+        <CommentsListForm
+          :data="{
+            label: 'răspunde...',
+            singleId: data.single.id,
+            commentId: comment.commentId,
+            index
+          }"
+        />
       </li>
       <li
         v-if="data.comments.loading === true"

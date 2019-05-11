@@ -126,6 +126,8 @@ export default {
       this.$store.dispatch('data/postComment', {
         singleId: this.data.singleId,
         commentId: this.data.commentId,
+        slug: this.$route.fullPath,
+        index: this.data.index,
         ...this.form
       }).then(() => {
         setTimeout(() => this.$el.classList.remove('open'), 2000);
