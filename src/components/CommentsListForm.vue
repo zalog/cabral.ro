@@ -133,6 +133,8 @@ export default {
         index: this.data.index,
         ...this.form.data
       }).then(() => {
+        this.form.data.message = null;
+        this.$v.form.data.$reset();
         setTimeout(() => this.$el.classList.remove('open'), 2000);
       }).finally(() => {
         this.form.loading = false;
