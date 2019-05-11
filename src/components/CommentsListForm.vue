@@ -11,47 +11,47 @@
       <div class="form-group">
         <label for="form-reply-message" class="sr-only">Comentariu</label>
         <textarea
-          v-model="form.message"
+          v-model="form.data.message"
           id="form-reply-message"
-          :class="['form-control', {'is-invalid': $v.form.message.$error }]"
+          :class="['form-control', {'is-invalid': $v.form.data.message.$error }]"
           rows="4" placeholder="Scrie comentariul tău aici..." required
         ></textarea>
       </div>
       <div
         class="form-row"
-        v-if="form.message || form.name || form.email || form.site"
+        v-if="form.data.message || form.data.name || form.data.email || form.data.site"
       >
         <div class="form-group col-sm-4">
           <label for="form-reply-name" class="sr-only">Nume</label>
           <input type="text"
-            v-model="form.name"
+            v-model="form.data.name"
             id="form-reply-name"
-            :class="['form-control', {'is-invalid': $v.form.name.$error}]"
+            :class="['form-control', {'is-invalid': $v.form.data.name.$error}]"
             placeholder="Nume" required
           >
         </div>
         <div class="form-group col-sm-4">
           <label for="form-reply-email" class="sr-only">Email</label>
           <input type="email"
-            v-model="form.email"
+            v-model="form.data.email"
             id="form-reply-email"
-            :class="['form-control', {'is-invalid': $v.form.email.$error}]"
+            :class="['form-control', {'is-invalid': $v.form.data.email.$error}]"
             placeholder="Email" required
           >
         </div>
         <div class="form-group col-sm-4">
           <label for="form-reply-site" class="sr-only">Site</label>
           <input type="url"
-            v-model="form.site"
+            v-model="form.data.site"
             id="form-reply-site"
-            :class="['form-control', {'is-invalid': $v.form.site.$error}]"
+            :class="['form-control', {'is-invalid': $v.form.data.site.$error}]"
             placeholder="Site"
           >
         </div>
       </div>
 
       <div
-         v-if="$v.form.$error"
+         v-if="$v.form.data.$error"
         class="alert alert-warning" role="alert"
       >
         Câmpurile marcate cu roșu conțin erori.
@@ -87,16 +87,19 @@ export default {
 
   data: () => ({
     form: {
+      data: {},
       loading: false
     }
   }),
 
   validations: {
     form: {
-      message: { required, min: minLength(3) },
-      name: { required, min: minLength(3) },
-      email: { required, email },
-      site: { url }
+      data: {
+        message: { required, min: minLength(3) },
+        name: { required, min: minLength(3) },
+        email: { required, email },
+        site: { url }
+      }
     }
   },
 
@@ -118,8 +121,8 @@ export default {
       document.body.removeEventListener('click', this.formClose);
     },
     formSubmit() {
-      this.$v.form.$touch();
-      if (this.$v.form.$error) return;
+      this.$v.form.data.$touch();
+      if (this.$v.form.data.$error) return;
 
       this.form.loading = true;
 
@@ -128,7 +131,7 @@ export default {
         commentId: this.data.commentId,
         slug: this.$route.fullPath,
         index: this.data.index,
-        ...this.form
+        ...this.form.data
       }).then(() => {
         setTimeout(() => this.$el.classList.remove('open'), 2000);
       }).finally(() => {
