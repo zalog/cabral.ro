@@ -177,8 +177,13 @@ export default {
     postComment: ({ commit }, payload) => {
       return new Promise((resolve, reject) => {
         postComment(payload).then((comment) => {
-          let message = `${comment.author_name}, comentariul tău a fost salvat!`;
-          (comment.status === 'hold') && (message = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+          let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
+          let toastVariant = 'success';
+          (comment.status === 'hold') && (toastMessage = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+          if (comment.status === 'spam') {
+            toastMessage = `Comentariul tău a fost marcat ca spam.`;
+            toastVariant = 'danger';
+          }
 
           if (comment.status === 'approved') {
             commit('addComment', {
@@ -189,8 +194,8 @@ export default {
           }
 
           commit('ui/addToast', {
-            message,
-            variant: 'success'
+            message: toastMessage,
+            variant: toastVariant
           }, { root: true });
 
           resolve(comment.id);
