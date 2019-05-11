@@ -29,7 +29,7 @@
       </li>
       <li
         v-if="data.comments.loading === true"
-        class="text-center"
+        class="py-4 text-center"
       >
         <b-spinner variant="warning" label="Loading..."></b-spinner>
       </li>
