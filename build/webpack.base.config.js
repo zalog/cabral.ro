@@ -6,9 +6,6 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd
-    ? false
-    : '#cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
@@ -45,6 +42,33 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: 'commons',
+          chunks: 'all',
+          minChunks: 2
+        }
+      }
+    }
+  },
+  stats: {
+    // copied from `'minimal'`
+    all: false,
+    modules: true,
+    maxModules: 0,
+    errors: true,
+    warnings: true,
+    // additional options
+    moduleTrace: true,
+    errorDetails: true,
+    assets: true
+  },
+  devServer: {
+    stats: 'normal'
+  },
+  devtool: isProd ? false : 'cheap-module-eval-source-map',
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({

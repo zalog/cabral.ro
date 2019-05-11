@@ -28,6 +28,17 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
     ],
     titleTemplate: (titleChunk) => titleChunk ? `${titleChunk} - ${SITE.TITLE}` : SITE.TITLE
+  },
+
+  watch: {
+    '$store.state.ui.toast'(toast) {
+      this.$bvToast.toast(toast.message, {
+        toaster: 'b-toaster-bottom-center',
+        variant: toast.variant || 'info',
+        noCloseButton: true,
+        appendToast: true
+      });
+    }
   }
 };
 </script>

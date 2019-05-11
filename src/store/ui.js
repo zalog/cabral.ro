@@ -4,11 +4,13 @@ export default {
   namespaced: true,
 
   state: () => ({
-    menu: []
+    menu: [],
+    toast: {}
   }),
 
   mutations: {
-    menu: (state, playload) => state.menu = playload
+    menu: (state, payload) => state.menu = payload,
+    addToast: (state, payload) => state.toast = payload
   },
 
   actions: {

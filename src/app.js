@@ -9,6 +9,9 @@ Vue.use(VueMeta);
 import http from './plugins/http';
 Vue.use(http);
 
+import Toast from 'bootstrap-vue/es/components/toast';
+Vue.use(Toast);
+
 import './scss/app.scss';
 
 export function createApp () {

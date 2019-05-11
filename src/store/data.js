@@ -2,7 +2,7 @@ import paginate from 'jw-paginate';
 
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
-import { fetchComments } from '../services/comments';
+import { fetchComments, postComment } from '../services/comments';
 
 const pagesToKeep = 5;
 const pageInData = (state, slug) => {
@@ -55,6 +55,29 @@ export default {
       pageData.comments.data.push(...payload.data);
       pageData.comments.loading = false;
       pageData.comments.pageInfo = payload.pageInfo;
+    },
+    addComment: (state, payload) => {
+      let pageData = state.find(obj => obj[payload.slug])[payload.slug];
+      let pageComments = pageData.comments.data;
+      let comment = {
+        commentId: payload.comment.id,
+        author: {
+          name: payload.comment.author_name,
+          url: payload.comment.author_url
+        },
+        content: payload.comment.content.rendered,
+        date: payload.comment.date
+      };
+
+      if (typeof payload.index === 'undefined') {
+        comment.replies = {
+          nodes: []
+        };
+      } else {
+        pageComments = pageData.comments.data[payload.index].replies.nodes;
+      }
+
+      pageComments.unshift(comment);
     }
   },
 
@@ -148,6 +171,41 @@ export default {
           slug,
           data: response.nodes,
           pageInfo: response.pageInfo
+        });
+      });
+    },
+    postComment: ({ commit }, payload) => {
+      return new Promise((resolve, reject) => {
+        postComment(payload).then((comment) => {
+          let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
+          let toastVariant = 'success';
+          (comment.status === 'hold') && (toastMessage = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+          if (comment.status === 'spam') {
+            toastMessage = `Comentariul tău a fost marcat ca spam.`;
+            toastVariant = 'danger';
+          }
+
+          if (comment.status === 'approved') {
+            commit('addComment', {
+              slug: payload.slug,
+              index: payload.index,
+              comment
+            });
+          }
+
+          commit('ui/addToast', {
+            message: toastMessage,
+            variant: toastVariant
+          }, { root: true });
+
+          resolve(comment.id);
+        }).catch((response) => {
+          commit('ui/addToast', {
+            message: response.data.message,
+            variant: 'danger'
+          }, { root: true });
+
+          reject();
         });
       });
     }

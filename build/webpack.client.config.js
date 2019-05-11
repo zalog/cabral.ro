@@ -19,7 +19,8 @@ const config = merge(base, {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: !isProd
+              hmr: !isProd,
+              reloadAll: !isProd
             }
           },
           'css-loader', 'postcss-loader', 'sass-loader'
