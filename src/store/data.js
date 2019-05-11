@@ -178,7 +178,7 @@ export default {
       return new Promise((resolve, reject) => {
         postComment(payload).then((comment) => {
           let message = `${comment.author_name}, comentariul tău a fost salvat!`;
-          (comment.status === 'hold') && (comment = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+          (comment.status === 'hold') && (message = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
 
           if (comment.status === 'approved') {
             commit('addComment', {
