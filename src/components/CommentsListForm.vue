@@ -137,7 +137,7 @@ export default {
 
         this.form.data.message = null;
         this.$v.form.data.$reset();
-        elComment.classList.add('highlight-background');
+        elComment && elComment.classList.add('highlight-background');
         setTimeout(() => this.$el.classList.remove('open'), 2000);
       }).finally(() => {
         this.form.loading = false;
