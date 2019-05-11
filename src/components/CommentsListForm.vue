@@ -132,9 +132,12 @@ export default {
         slug: this.$route.fullPath,
         index: this.data.index,
         ...this.form.data
-      }).then(() => {
+      }).then((commentId) => {
+        let elComment = document.getElementById(`comment-${commentId}`);
+
         this.form.data.message = null;
         this.$v.form.data.$reset();
+        elComment.classList.add('highlight-background');
         setTimeout(() => this.$el.classList.remove('open'), 2000);
       }).finally(() => {
         this.form.loading = false;
@@ -152,7 +155,6 @@ export default {
 
 .form-reply {
   padding: map-get($spacers, 4);
-  margin-bottom: map-get($spacers, 4);
   background-color: $white;
   box-shadow: $box-shadow-sm;
 
@@ -186,9 +188,8 @@ export default {
 
 .list-comments {
   .form-reply {
-    padding: 0;
-    margin-bottom: 0;
     box-shadow: none;
+    background-color: transparent;
 
     .text-muted {
       font-size: $font-size-sm;

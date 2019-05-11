@@ -97,3 +97,18 @@ svg {
     display: none;
   }
 }
+
+
+
+// highlight animations
+.highlight-background {
+  animation: highlight .25s linear 0s 5 alternate;
+}
+@keyframes highlight {
+  0% {
+    background: $warning
+  }
+  100% {
+    background: none;
+  }
+}

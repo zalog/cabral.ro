@@ -76,27 +76,17 @@ export default {
     @include list-unstyled;
   }
 
-  > li {
+  .comment {
     padding: map-get($spacers, 4);
-    margin-bottom: map-get($spacers, 4);
+  }
+
+  > li {
+    margin-top: map-get($spacers, 4);
     background-color: $white;
     box-shadow: $box-shadow-sm;
 
-    > * + * {
-      margin-top: $spacer;
-    }
-
-    > ul {
-      padding-top: $spacer;
-      padding-right: map-get($spacers, 4);
-      padding-left: map-get($spacers, 4);
-      margin-right: -(map-get($spacers, 4));
-      margin-left: -(map-get($spacers, 4));
+    * + * {
       border-top: $border-width solid $border-color;
-
-      > li + li {
-        margin-top: $spacer;
-      }
     }
   }
 }

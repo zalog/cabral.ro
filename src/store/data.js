@@ -175,27 +175,33 @@ export default {
       });
     },
     postComment: ({ commit }, payload) => {
-      return postComment(payload).then((comment) => {
-        let message = `${comment.author_name}, comentariul tău a fost salvat!`;
-        (comment.status === 'hold') && (comment = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+      return new Promise((resolve, reject) => {
+        postComment(payload).then((comment) => {
+          let message = `${comment.author_name}, comentariul tău a fost salvat!`;
+          (comment.status === 'hold') && (comment = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
 
-        if (comment.status === 'approved') {
-          commit('addComment', {
-            slug: payload.slug,
-            index: payload.index,
-            comment
-          });
-        }
+          if (comment.status === 'approved') {
+            commit('addComment', {
+              slug: payload.slug,
+              index: payload.index,
+              comment
+            });
+          }
 
-        commit('ui/addToast', {
-          message,
-          variant: 'success'
-        }, { root: true });
-      }).catch((response) => {
-        commit('ui/addToast', {
-          message: response.data.message,
-          variant: 'danger'
-        }, { root: true });
+          commit('ui/addToast', {
+            message,
+            variant: 'success'
+          }, { root: true });
+
+          resolve(comment.id);
+        }).catch((response) => {
+          commit('ui/addToast', {
+            message: response.data.message,
+            variant: 'danger'
+          }, { root: true });
+
+          reject();
+        });
       });
     }
   }
