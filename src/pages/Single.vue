@@ -11,6 +11,7 @@
         class="entry-title"
       />
       <div
+        ref="content"
         v-html="data.single.content"
         class="entry-content"
       />
@@ -29,6 +30,7 @@
 
 <script>
 import CommentsList from "./../components/CommentsList.vue";
+import { postFormWpcf7 } from "./../services/forms";
 
 export default {
   name: 'Single',
@@ -49,6 +51,7 @@ export default {
     this.currentPath = this.$route.fullPath;
     this.fetchSingle().then(() => {
       this.fetchComments();
+      this.handleFormWpcf7();
     });
   },
 
@@ -70,6 +73,7 @@ export default {
     $route() {
       this.fetchSingle().then(() => {
         this.fetchComments();
+        this.handleFormWpcf7();
       });
     }
   },
@@ -112,6 +116,53 @@ export default {
       const commentsTop = comments.top + comments.height;
 
       return (visible >= commentsTop);
+    },
+    handleFormWpcf7() {
+      const elSpinner = document.createElement('div');
+      elSpinner.classList.add('spinner-border', 'spinner-border-sm', 'mr-1');
+
+      this.$refs['content'].querySelectorAll('.wpcf7').forEach((formWrap) => {
+        const elFormMessage = formWrap.querySelector('.screen-reader-response');
+        const elForm = formWrap.querySelector('.wpcf7-form');
+        const elBtnSubmit = formWrap.querySelector('.wpcf7-submit');
+        const formId = elForm.querySelector('input[name="_wpcf7"]').value;
+
+        elForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          elBtnSubmit.insertBefore(elSpinner, elBtnSubmit.querySelector('span'));
+          elFormMessage.classList = '';
+
+          const formData = new FormData(event.target);
+
+          postFormWpcf7(formId, formData).then((response) => {
+            let alertClass = 'danger';
+
+            if (response.status === 'mail_sent') {
+              alertClass = 'success';
+              elForm.querySelectorAll('input, textarea').forEach((el) => {
+                el.value = '';
+                el.classList.remove('is-invalid');
+              });
+            } else {
+              // console.log(response.invalidFields);
+              response.invalidFields.forEach((field) => {
+                elForm.querySelectorAll(field.into).forEach(el => {
+                  el.querySelector('.wpcf7-form-control').classList.add('is-invalid');
+                });
+              });
+            }
+
+            elFormMessage.textContent = response.message;
+            elFormMessage.classList.add('alert', `alert-${alertClass}`);
+          }).catch((error) => {
+            elFormMessage.textContent = error.message;
+            elFormMessage.classList.add('alert', 'alert-danger');
+          }).finally(() => {
+            elBtnSubmit.removeChild(elSpinner);
+          });
+        });
+      });
     }
   }
 };
@@ -125,6 +176,9 @@ export default {
 }
 
 /deep/ {
+  @import "~bootstrap/scss/forms";
+  @import "~bootstrap/scss/buttons";
+  @import "~bootstrap/scss/alert";
   @import "./../scss/pages/single";
 }
 </style>
