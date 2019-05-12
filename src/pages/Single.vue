@@ -11,7 +11,7 @@
         class="entry-title"
       />
       <div
-        v-html="data.single.content.rendered"
+        v-html="data.single.content"
         class="entry-content"
       />
     </div>
