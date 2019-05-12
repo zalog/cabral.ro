@@ -7,9 +7,11 @@
       v-for="(post, index) in posts.data" :key="'posts-post-' + index"
       :to="postTo(post.slug)"
     >
-      <div v-if="post.featured_media_src" class="card-img-top">
-        <img :src="post.featured_media_src">
-      </div>
+      <div
+        v-if="post.featured_media"
+        v-html="post.featured_media"
+        class="card-img-top"
+      />
       <div class="card-body" :to="postTo(post.slug)">
         <h2 class="card-title">
           <router-link v-html="post.title.rendered" :to="postTo(post.slug)" />

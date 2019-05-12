@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.1",
     "jw-paginate": "^1.0.4",
+    "lazysizes": "^5.0.0-rc2",
     "nprogress": "^0.2.0",
     "route-cache": "^0.4.4",
     "serve-favicon": "^2.5.0",
