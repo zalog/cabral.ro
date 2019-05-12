@@ -3,6 +3,8 @@ import Vue from 'vue';
 import webfontloader from './plugins/webfontloader';
 webfontloader();
 
+import 'lazysizes';
+
 import Ripple from 'vue-ripple-directive';
 Vue.directive('ripple', Ripple);
 
