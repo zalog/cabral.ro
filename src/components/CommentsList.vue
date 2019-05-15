@@ -68,7 +68,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../scss/app-component.scss";
-@import "~bootstrap/scss/spinners";
 
 .list-comments {
   &,
