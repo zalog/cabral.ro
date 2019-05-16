@@ -13,28 +13,33 @@ export function createRouter () {
         component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
       },
       {
-        path: '/page/1',
+        path: '/page/1/',
+        pathToRegexpOptions: { strict: true },
         redirect: '/'
       },
       {
-        path: '/page/:id',
+        path: '/page/:id/',
+        pathToRegexpOptions: { strict: true },
         component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
       },
       {
-        path: '/:singleSlug',
-        name: 'single',
+        path: '/:singleSlug/',
+        pathToRegexpOptions: { strict: true },
         component: () => import(/* webpackChunkName: "page-single" */ './pages/Single.vue')
       },
       {
-        path: '/category/:categorySlug',
+        path: '/category/:categorySlug/',
+        pathToRegexpOptions: { strict: true },
         component: () => import(/* webpackChunkName: "page-category" */ './pages/Category.vue')
       },
       {
-        path: '/category/:categorySlug/page/1',
-        redirect: '/category/:categorySlug'
+        path: '/category/:categorySlug/page/1/',
+        pathToRegexpOptions: { strict: true },
+        redirect: '/category/:categorySlug/'
       },
       {
-        path: '/category/:categorySlug/page/:id',
+        path: '/category/:categorySlug/page/:id/',
+        pathToRegexpOptions: { strict: true },
         component: () => import(/* webpackChunkName: "page-category" */ './pages/Category.vue')
       },
       {
