@@ -23,14 +23,24 @@ export function createRouter () {
         component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
       },
       {
+        name: 'single',
         path: '/:singleSlug/',
         pathToRegexpOptions: { strict: true },
         component: () => import(/* webpackChunkName: "page-single" */ './pages/Single.vue')
       },
       {
+        path: '/:singleSlug',
+        redirect: { name: 'single' }
+      },
+      {
+        name: 'category',
         path: '/category/:categorySlug/',
         pathToRegexpOptions: { strict: true },
         component: () => import(/* webpackChunkName: "page-category" */ './pages/Category.vue')
+      },
+      {
+        path: '/category/:categorySlug',
+        redirect: { name: 'category' }
       },
       {
         path: '/category/:categorySlug/page/1/',
