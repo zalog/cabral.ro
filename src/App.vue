@@ -23,7 +23,7 @@ export default {
     htmlAttrs: {
       lang: SITE.LANG
     },
-    titleTemplate: (titleChunk) => titleChunk ? `${titleChunk} - ${SITE.TITLE}` : SITE.TITLE,
+    titleTemplate: (titleChunk) => SITE.TITLE(titleChunk),
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
