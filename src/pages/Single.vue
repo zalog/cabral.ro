@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="data"
+    v-if="data.single"
     class="page-single"
   >
     <div
