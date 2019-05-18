@@ -51,7 +51,7 @@ export default {
   methods: {
     paginationTo(page) {
       const categorySlug = this.$route.params.categorySlug;
-      let url = `/page/${page}`;
+      let url = `/page/${page}/`;
 
       if (categorySlug) url = `/category/${categorySlug}${url}`;
 
