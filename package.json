@@ -24,7 +24,7 @@
     "route-cache": "^0.4.4",
     "serve-favicon": "^2.5.0",
     "vue": "^2.6.10",
-    "vue-meta": "^1.6.0",
+    "vue-meta": "^2.0.0-rc.1",
     "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.0.6",
     "vue-server-renderer": "^2.6.10",
