@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { SITE } from "./../utils/constants";
 import CommentsList from "./../components/CommentsList.vue";
 import { postFormWpcf7 } from "./../services/forms";
 
@@ -49,10 +50,7 @@ export default {
 
   beforeMount() {
     this.currentPath = this.$route.fullPath;
-    this.fetchSingle().then(() => {
-      this.fetchComments();
-      this.handleFormWpcf7();
-    });
+    this.fetchSingle();
   },
 
   mounted() {
@@ -65,23 +63,21 @@ export default {
 
   metaInfo() {
     return {
-      title: this.data.single && this.data.single.title.rendered
+      title: this.pageTitle
     };
   },
 
   watch: {
-    $route() {
-      this.fetchSingle().then(() => {
-        this.fetchComments();
-        this.handleFormWpcf7();
-      });
-    }
+    '$route': 'fetchSingle'
   },
 
   computed: {
     data() {
       let page = this.$store.state.data.find(obj => obj[this.currentPath]);
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      return this.data.single && this.data.single.title.rendered;
     }
   },
 
@@ -96,7 +92,18 @@ export default {
         pageLoading: true
       }).then(() => {
         this.currentPath = this.$route.fullPath;
+        this.afterDataLoaded();
       });
+    },
+    afterDataLoaded() {
+      if (typeof window === 'undefined') return;
+
+      this.sendPageView();
+      this.fetchComments();
+      this.handleFormWpcf7();
+    },
+    sendPageView() {
+      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE(this.pageTitle) });
     },
     fetchComments() {
       if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
