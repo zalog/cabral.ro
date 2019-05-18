@@ -16,7 +16,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.20",
     "compression": "^1.7.4",
-    "express": "^4.16.4",
+    "express": "^4.17.0",
     "http-proxy-middleware": "^0.19.1",
     "jw-paginate": "^1.0.4",
     "lazysizes": "^5.0.0",
