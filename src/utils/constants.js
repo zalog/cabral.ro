@@ -12,5 +12,6 @@ export const ENDPOINTS = {
 
 export const SITE = {
   LANG: 'ro-RO',
-  TITLE: 'Cabral.ro'
+  TITLE: 'Cabral.ro',
+  GTM_ID: 'GTM-59M55JB'
 };
