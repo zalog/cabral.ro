@@ -12,5 +12,7 @@ export const ENDPOINTS = {
 
 export const SITE = {
   LANG: 'ro-RO',
-  TITLE: 'Cabral.ro'
+  TITLE: 'Cabral.ro',
+  TITLE_TEMPLATE: (title) => (title) ? `${title} - ${SITE.TITLE}` : SITE.TITLE,
+  GTM_ID: 'GTM-59M55JB'
 };

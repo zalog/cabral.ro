@@ -11,10 +11,12 @@
 </template>
 
 <script>
+import { SITE } from "./../utils/constants";
+import decodeHtml from "./../utils/decodeHtml";
 import PostsList from "./../components/PostsList.vue";
 
 export default {
-  name: 'Category',
+  name: 'PageCategory',
 
   components: {
     PostsList
@@ -36,14 +38,12 @@ export default {
 
   metaInfo() {
     return {
-      title: this.currentPath
+      title: this.pageTitle
     };
   },
 
   watch: {
-    $route() {
-      this.fetchPosts();
-    }
+    '$route': 'fetchPosts'
   },
 
   computed: {
@@ -51,6 +51,10 @@ export default {
       this.forceDataRecompute;
       let page = this.$store.state.data.find(obj => obj[this.currentPath]);
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+      return decodeHtml(this.currentPath + page);
     }
   },
 
@@ -64,7 +68,16 @@ export default {
       }).then(() => {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;
+        this.afterDataLoaded();
       });
+    },
+    afterDataLoaded() {
+      if (typeof window === 'undefined') return;
+
+      this.sendPageView();
+    },
+    sendPageView() {
+      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
     }
   }
 };

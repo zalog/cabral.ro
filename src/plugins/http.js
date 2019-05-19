@@ -5,16 +5,15 @@ NProgress.configure({
   parent: '.app-Header'
 });
 
-if (typeof window !== 'undefined') {
-  axios.interceptors.request.use((config) => {
-    if (config.params && config.params.pageLoading === true) NProgress.start();
-    return config;
-  });
-  axios.interceptors.response.use((response) => {
-    if (response.config.params && response.config.params.pageLoading === true) NProgress.done();
-    return response;
-  });
-}
+axios.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined' && config.params && config.params.pageLoading === true) NProgress.start();
+  if (process.env.NODE_ENV === 'development') console.info(`axios.${config.method}('${config.url}')`);
+  return config;
+});
+axios.interceptors.response.use((response) => {
+  if (typeof window !== 'undefined' && response.config.params && response.config.params.pageLoading === true) NProgress.done();
+  return response;
+});
 
 const http = {
   install(Vue) {
