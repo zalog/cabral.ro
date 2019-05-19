@@ -103,7 +103,7 @@ export default {
       this.handleFormWpcf7();
     },
     sendPageView() {
-      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE(this.pageTitle) });
+      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
     },
     fetchComments() {
       if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;

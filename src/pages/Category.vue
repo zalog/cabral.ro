@@ -75,7 +75,7 @@ export default {
       this.sendPageView();
     },
     sendPageView() {
-      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE(this.pageTitle) });
+      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
     }
   }
 };
