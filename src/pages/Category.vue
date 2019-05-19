@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { SITE } from "./../utils/constants";
 import PostsList from "./../components/PostsList.vue";
 
 export default {
@@ -36,14 +37,12 @@ export default {
 
   metaInfo() {
     return {
-      title: this.currentPath
+      title: this.pageTitle
     };
   },
 
   watch: {
-    $route() {
-      this.fetchPosts();
-    }
+    '$route': 'fetchPosts'
   },
 
   computed: {
@@ -51,6 +50,9 @@ export default {
       this.forceDataRecompute;
       let page = this.$store.state.data.find(obj => obj[this.currentPath]);
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      return this.currentPath;
     }
   },
 
@@ -64,7 +66,16 @@ export default {
       }).then(() => {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;
+        this.afterDataLoaded();
       });
+    },
+    afterDataLoaded() {
+      if (typeof window === 'undefined') return;
+
+      this.sendPageView();
+    },
+    sendPageView() {
+      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE(this.pageTitle) });
     }
   }
 };
