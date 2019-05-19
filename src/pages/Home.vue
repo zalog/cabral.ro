@@ -37,12 +37,16 @@ export default {
 
   metaInfo() {
     return {
-      title: SITE.TITLE
+      title: this.pageTitle,
+      titleTemplate: false
     };
   },
 
   watch: {
-    '$route': 'fetchPosts'
+    '$route'() {
+      this.fetchPosts();
+      this.sendPageView();
+    }
   },
 
   computed: {
@@ -50,6 +54,10 @@ export default {
       this.forceDataRecompute;
       let page = this.$store.state.data.find(obj => obj[this.currentPath]);
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+      return SITE.TITLE + page;
     }
   },
 
@@ -65,7 +73,7 @@ export default {
       });
     },
     sendPageView() {
-      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE });
+      window.dataLayer.push({ event: 'pageview', title: this.pageTitle });
     }
   }
 };

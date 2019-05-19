@@ -52,7 +52,8 @@ export default {
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
     },
     pageTitle() {
-      return this.currentPath;
+      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+      return this.currentPath + page;
     }
   },
 
