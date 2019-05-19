@@ -30,6 +30,7 @@
 
 <script>
 import { SITE } from "./../utils/constants";
+import decodeHtml from "./../utils/decodeHtml";
 import CommentsList from "./../components/CommentsList.vue";
 import { postFormWpcf7 } from "./../services/forms";
 
@@ -77,7 +78,7 @@ export default {
       return (typeof page !== 'undefined') ? page[this.currentPath] : false;
     },
     pageTitle() {
-      return this.data.single && this.data.single.title.rendered;
+      return this.data.single && decodeHtml(this.data.single.title.rendered);
     }
   },
 

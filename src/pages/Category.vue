@@ -12,6 +12,7 @@
 
 <script>
 import { SITE } from "./../utils/constants";
+import decodeHtml from "./../utils/decodeHtml";
 import PostsList from "./../components/PostsList.vue";
 
 export default {
@@ -53,7 +54,7 @@ export default {
     },
     pageTitle() {
       let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return this.currentPath + page;
+      return decodeHtml(this.currentPath + page);
     }
   },
 
