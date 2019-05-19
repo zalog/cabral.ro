@@ -34,7 +34,7 @@ import CommentsList from "./../components/CommentsList.vue";
 import { postFormWpcf7 } from "./../services/forms";
 
 export default {
-  name: 'Single',
+  name: 'PageSingle',
 
   components: {
     CommentsList

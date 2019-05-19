@@ -14,7 +14,7 @@
 import PostsList from "./../components/PostsList.vue";
 
 export default {
-  name: 'Category',
+  name: 'PageCategory',
 
   components: {
     PostsList

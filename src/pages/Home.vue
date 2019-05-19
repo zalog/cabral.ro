@@ -13,7 +13,7 @@
 import PostsList from "./../components/PostsList.vue";
 
 export default {
-  name: 'Home',
+  name: 'PageHome',
 
   components: {
     PostsList
