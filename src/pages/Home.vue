@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { SITE } from "./../utils/constants";
 import PostsList from "./../components/PostsList.vue";
 
 export default {
@@ -31,12 +32,17 @@ export default {
   beforeMount() {
     this.currentPath = this.$route.fullPath;
     this.fetchPosts();
+    this.sendPageView();
+  },
+
+  metaInfo() {
+    return {
+      title: SITE.TITLE
+    };
   },
 
   watch: {
-    $route() {
-      this.fetchPosts();
-    }
+    '$route': 'fetchPosts'
   },
 
   computed: {
@@ -57,6 +63,9 @@ export default {
         this.currentPath = this.$route.fullPath;
         this.forceDataRecompute++;
       });
+    },
+    sendPageView() {
+      window.dataLayer.push({ event: 'pageview', title: SITE.TITLE });
     }
   }
 };
