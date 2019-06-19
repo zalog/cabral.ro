@@ -25,6 +25,13 @@
         />
       </div>
     </div>
+
+    <Photoswipe
+      v-if="photoswipe.show"
+      :items="photoswipe.items"
+      :index="photoswipe.index"
+      @closed="photoswipe.show = false"
+    />
   </div>
 </template>
 
@@ -34,15 +41,23 @@ import decodeHtml from "./../utils/decodeHtml";
 import CommentsList from "./../components/CommentsList.vue";
 import { postFormWpcf7 } from "./../services/forms";
 
+const Photoswipe = () => import(/* webpackChunkName: "photoswipe" */ "./../components/Photoswipe.vue");
+
 export default {
   name: 'PageSingle',
 
   components: {
-    CommentsList
+    CommentsList,
+    Photoswipe
   },
 
   data: () => ({
-    currentPath: null
+    currentPath: null,
+    photoswipe: {
+      show: false,
+      items: [],
+      index: 0
+    }
   }),
 
   serverPrefetch() {
@@ -56,6 +71,8 @@ export default {
 
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
+
+    this.photoswipeInit();
   },
 
   beforeDestroy() {
@@ -105,6 +122,22 @@ export default {
     },
     sendPageView() {
       window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
+    },
+    photoswipeInit() {
+      this.$refs['content'].querySelectorAll('img').forEach((img, index) => {
+        let src = img.getAttribute('data-src') || img.getAttribute('data-orig-file');
+        src = src.split('?')[0];
+        let size = img.getAttribute('data-orig-size') || '0,0';
+        size = size.split(',');
+
+        this.photoswipe.items.push({ src, w: size[0], h: size[1] });
+
+        img.addEventListener('click', (event) => {
+          event.preventDefault();
+          this.photoswipe.show = true;
+          this.photoswipe.index = index;
+        });
+      });
     },
     fetchComments() {
       if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
