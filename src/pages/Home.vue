@@ -26,6 +26,25 @@ export default {
     currentPath: null
   }),
 
+  computed: {
+    data() {
+      this.forceDataRecompute;
+      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
+      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+      return decodeHtml(SITE.TITLE + page);
+    }
+  },
+
+  watch: {
+    '$route'() {
+      this.fetchPosts();
+      this.sendPageView();
+    }
+  },
+
   serverPrefetch() {
     return this.fetchPosts();
   },
@@ -41,25 +60,6 @@ export default {
       title: this.pageTitle,
       titleTemplate: false
     };
-  },
-
-  watch: {
-    '$route'() {
-      this.fetchPosts();
-      this.sendPageView();
-    }
-  },
-
-  computed: {
-    data() {
-      this.forceDataRecompute;
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
-    },
-    pageTitle() {
-      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return decodeHtml(SITE.TITLE + page);
-    }
   },
 
   methods: {

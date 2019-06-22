@@ -72,15 +72,15 @@ export default {
       that.$emit('closed');
     });
     gallery.listen('gettingData', function(index, item) {
-        if (item.w < 1 || item.h < 1) {
-          var img = new Image();
-          img.onload = function() {
-            item.w = this.width;
-            item.h = this.height;
-            gallery.updateSize(true);
-          };
-          img.src = item.src;
-        }
+      if (item.w < 1 || item.h < 1) {
+        var img = new Image();
+        img.onload = function() {
+          item.w = this.width;
+          item.h = this.height;
+          gallery.updateSize(true);
+        };
+        img.src = item.src;
+      }
     });
 
     gallery.init();

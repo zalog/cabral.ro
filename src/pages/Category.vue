@@ -27,6 +27,22 @@ export default {
     currentPath: null
   }),
 
+  computed: {
+    data() {
+      this.forceDataRecompute;
+      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
+      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+      return decodeHtml(this.currentPath + page);
+    }
+  },
+
+  watch: {
+    '$route': 'fetchPosts'
+  },
+
   serverPrefetch() {
     return this.fetchPosts();
   },
@@ -40,22 +56,6 @@ export default {
     return {
       title: this.pageTitle
     };
-  },
-
-  watch: {
-    '$route': 'fetchPosts'
-  },
-
-  computed: {
-    data() {
-      this.forceDataRecompute;
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
-    },
-    pageTitle() {
-      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return decodeHtml(this.currentPath + page);
-    }
   },
 
   methods: {

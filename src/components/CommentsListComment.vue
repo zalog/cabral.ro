@@ -1,13 +1,13 @@
 <template>
   <div class="comment">
-      <div class="comment-header">
-        <div v-html="printAuthor(comment)" />
-        <div>{{ printDate(comment) }}</div>
-      </div>
-      <div
-        class="comment-content"
-        v-html="comment.content"
-      />
+    <div class="comment-header">
+      <div v-html="printAuthor(comment)" />
+      <div>{{ printDate(comment) }}</div>
+    </div>
+    <div
+      class="comment-content"
+      v-html="comment.content"
+    />
   </div>
 </template>
 

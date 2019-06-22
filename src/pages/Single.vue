@@ -60,6 +60,20 @@ export default {
     }
   }),
 
+  computed: {
+    data() {
+      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
+      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+    },
+    pageTitle() {
+      return this.data.single && decodeHtml(this.data.single.title.rendered);
+    }
+  },
+
+  watch: {
+    '$route': 'fetchSingle'
+  },
+
   serverPrefetch() {
     return this.fetchSingle();
   },
@@ -83,20 +97,6 @@ export default {
     return {
       title: this.pageTitle
     };
-  },
-
-  watch: {
-    '$route': 'fetchSingle'
-  },
-
-  computed: {
-    data() {
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
-    },
-    pageTitle() {
-      return this.data.single && decodeHtml(this.data.single.title.rendered);
-    }
   },
 
   methods: {
