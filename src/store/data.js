@@ -89,7 +89,7 @@ export default {
   },
 
   actions: {
-    fetchPosts: ({ getters, commit }, payload) => {
+    fetchPosts: ({ getters, commit, rootState }, payload) => {
       payload = {
         fields: ['title', 'slug', 'excerpt', 'featured_media'],
         itemsOnPage: postsOnPage,
@@ -106,12 +106,12 @@ export default {
         const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
         commit('addPosts', {
-          path: payload.path,
+          path: rootState.route.path,
           page: payload.currentPage,
           data: response.data
         });
         commit('addPostsPagination', {
-          path: payload.path,
+          path: rootState.route.path,
           data: pagination.pages,
           currentPage: pagination.currentPage
         });

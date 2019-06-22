@@ -61,7 +61,6 @@ export default {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
-        path: this.$route.path,
         pageLoading: true,
         categories: [this.$route.params.categorySlug]
       }).then(() => {
