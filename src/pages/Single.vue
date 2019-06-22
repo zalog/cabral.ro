@@ -79,7 +79,7 @@ export default {
   },
 
   beforeMount() {
-    this.currentPath = this.$route.fullPath;
+    this.currentPath = this.$route.path;
     this.fetchSingle();
   },
 
@@ -106,10 +106,10 @@ export default {
       else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
 
       return this.$store.dispatch(actionName, {
-        slug: this.$route.fullPath,
+        slug: this.$route.path,
         pageLoading: true
       }).then(() => {
-        this.currentPath = this.$route.fullPath;
+        this.currentPath = this.$route.path;
         this.afterDataLoaded();
       });
     },
@@ -143,7 +143,7 @@ export default {
       if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
 
       this.$store.dispatch('data/fetchComments', {
-        slug: this.$route.fullPath
+        slug: this.$route.path
       });
     },
     handleScroll() {

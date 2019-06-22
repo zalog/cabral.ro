@@ -50,7 +50,7 @@ export default {
   },
 
   beforeMount() {
-    this.currentPath = this.$route.fullPath;
+    this.currentPath = this.$route.path;
     this.fetchPosts();
     this.sendPageView();
   },
@@ -66,10 +66,10 @@ export default {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
-        path: this.$route.fullPath,
+        path: this.$route.path,
         pageLoading: true
       }).then(() => {
-        this.currentPath = this.$route.fullPath;
+        this.currentPath = this.$route.path;
         this.forceDataRecompute++;
       });
     },

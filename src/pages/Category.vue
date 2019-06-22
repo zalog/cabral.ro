@@ -48,7 +48,7 @@ export default {
   },
 
   beforeMount() {
-    this.currentPath = this.$route.fullPath;
+    this.currentPath = this.$route.path;
     this.fetchPosts();
   },
 
@@ -62,11 +62,11 @@ export default {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
-        path: this.$route.fullPath,
+        path: this.$route.path,
         pageLoading: true,
         categories: [this.$route.params.categorySlug]
       }).then(() => {
-        this.currentPath = this.$route.fullPath;
+        this.currentPath = this.$route.path;
         this.forceDataRecompute++;
         this.afterDataLoaded();
       });
