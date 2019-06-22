@@ -84,8 +84,6 @@ export default {
 
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
-
-    this.photoswipeInit();
   },
 
   beforeDestroy() {
@@ -116,6 +114,7 @@ export default {
       if (typeof window === 'undefined') return;
 
       this.sendPageView();
+      this.photoswipeInit();
       this.fetchComments();
       this.handleFormWpcf7();
     },
