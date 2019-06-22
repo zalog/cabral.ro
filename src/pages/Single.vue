@@ -21,7 +21,6 @@
       <div class="container-fluid py-5">
         <CommentsList
           ref="comments"
-          :currentPath="currentPath"
         />
       </div>
     </div>
