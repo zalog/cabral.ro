@@ -22,8 +22,7 @@ export default {
   },
 
   data: () => ({
-    forceDataRecompute: 1,
-    currentPath: null
+    forceDataRecompute: 1
   }),
 
   computed: {
@@ -49,7 +48,6 @@ export default {
   },
 
   beforeMount() {
-    this.currentPath = this.$route.path;
     this.fetchPosts();
     this.sendPageView();
   },
@@ -65,10 +63,8 @@ export default {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
         currentPage: this.$route.params.id || 1,
-        path: this.$route.path,
         pageLoading: true
       }).then(() => {
-        this.currentPath = this.$route.path;
         this.forceDataRecompute++;
       });
     },
