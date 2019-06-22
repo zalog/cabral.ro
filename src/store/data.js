@@ -5,10 +5,6 @@ import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
 
 const pagesToKeep = 5;
-const pageInData = (state, slug) => {
-  let pageData = state.find(obj => obj[slug]);
-  if (typeof pageData !== 'undefined') return true;
-};
 const postsOnPage = 12;
 const commentsOnPage = 10;
 
@@ -22,8 +18,9 @@ export default {
       const pages = state;
       const path = rootState.route.path;
       const page = pages.find(page => page[path]);
-      if (typeof page !== 'undefined') return page[path];
-      else return false;
+      let output = typeof page !== 'undefined' && page[path] || false;
+
+      return output;
     }
   },
 
@@ -92,14 +89,14 @@ export default {
   },
 
   actions: {
-    fetchPosts: ({ state, commit }, payload) => {
+    fetchPosts: ({ getters, commit }, payload) => {
       payload = {
         fields: ['title', 'slug', 'excerpt', 'featured_media'],
         itemsOnPage: postsOnPage,
         ...payload
       };
 
-      if (pageInData(state, payload.path)) return;
+      if (getters.currentPage) return;
 
       return fetchPosts(payload).then((response) => {
         payload.currentPage = parseInt(payload.currentPage);
@@ -120,8 +117,8 @@ export default {
         });
       });
     },
-    fetchPost: ({ state, commit }, payload) => {
-      if (pageInData(state, payload.slug)) return;
+    fetchPost: ({ getters, commit }, payload) => {
+      if (getters.currentPage) return;
 
       return fetchPost(payload).then((response) => {
         commit('addSingle', {
@@ -131,8 +128,8 @@ export default {
         });
       });
     },
-    fetchPage: ({ state, commit }, payload) => {
-      if (pageInData(state, payload.slug)) return;
+    fetchPage: ({ getters, commit }, payload) => {
+      if (getters.currentPage) return;
 
       return fetchPage(payload).then((response) => {
         commit('addSingle', {
@@ -142,8 +139,8 @@ export default {
         });
       });
     },
-    fetchSingle: ({ state, commit }, {slug}) => {
-      if (pageInData(state, slug)) return;
+    fetchSingle: ({ getters, commit }, {slug}) => {
+      if (getters.currentPage) return;
 
       return fetchPost({slug}).then((response) => {
         if (response.data.length)
