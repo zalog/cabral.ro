@@ -17,6 +17,16 @@ export default {
 
   state: () => ([]),
 
+  getters: {
+    currentPage: (state, getters, rootState) => {
+      const pages = state;
+      const path = rootState.route.path;
+      const page = pages.find(page => page[path]);
+      if (typeof page !== 'undefined') return page[path];
+      else return false;
+    }
+  },
+
   mutations: {
     addPosts: (state, payload) => {
       state.push({

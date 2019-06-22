@@ -29,8 +29,7 @@ export default {
   computed: {
     data() {
       this.forceDataRecompute;
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+      return this.$store.getters['data/currentPage'];
     },
     pageTitle() {
       let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';

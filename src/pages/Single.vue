@@ -62,8 +62,7 @@ export default {
 
   computed: {
     data() {
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
+      return this.$store.getters['data/currentPage'];
     },
     pageTitle() {
       return this.data.single && decodeHtml(this.data.single.title.rendered);
