@@ -157,9 +157,9 @@ export default {
           });
       });
     },
-    fetchComments: ({ state, commit }, { slug }) => {
-      let pageData = state.find(obj => obj[slug])[slug];
-      let pageComments = pageData.comments;
+    fetchComments: ({ getters, commit, rootState }) => {
+      let page = getters.currentPage;
+      let pageComments = page.comments;
       let commentsFrom = null;
 
       if (pageComments.pageInfo) {
@@ -170,12 +170,12 @@ export default {
       pageComments.loading = true;
 
       return fetchComments({
-        singleId: pageData.single.id,
+        singleId: page.single.id,
         onPage: commentsOnPage,
         after: commentsFrom
       }).then((response) => {
         commit('addComments', {
-          slug,
+          slug: rootState.route.path,
           data: response.nodes,
           pageInfo: response.pageInfo
         });

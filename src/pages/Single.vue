@@ -136,9 +136,7 @@ export default {
     fetchComments() {
       if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
 
-      this.$store.dispatch('data/fetchComments', {
-        slug: this.$route.path
-      });
+      this.$store.dispatch('data/fetchComments');
     },
     handleScroll() {
       this.fetchComments();
