@@ -3,7 +3,7 @@
     v-if="data"
     class="page-category container-fluid py-5"
   >
-    <h1 class="mb-4">{{ this.currentPath }}</h1>
+    <h1 class="mb-4">{{ this.pageTitle }}</h1>
     <PostsList
       :posts="data.posts"
     />
@@ -23,8 +23,7 @@ export default {
   },
 
   data: () => ({
-    forceDataRecompute: 1,
-    currentPath: null
+    forceDataRecompute: 1
   }),
 
   computed: {
@@ -34,7 +33,7 @@ export default {
     },
     pageTitle() {
       let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return decodeHtml(this.currentPath + page);
+      return decodeHtml(this.$route.path + page);
     }
   },
 
@@ -47,7 +46,6 @@ export default {
   },
 
   beforeMount() {
-    this.currentPath = this.$route.path;
     this.fetchPosts();
   },
 
@@ -64,7 +62,6 @@ export default {
         pageLoading: true,
         categories: [this.$route.params.categorySlug]
       }).then(() => {
-        this.currentPath = this.$route.path;
         this.forceDataRecompute++;
         this.afterDataLoaded();
       });
