@@ -51,7 +51,6 @@ export default {
   },
 
   data: () => ({
-    currentPath: null,
     photoswipe: {
       show: false,
       items: [],
@@ -77,7 +76,6 @@ export default {
   },
 
   beforeMount() {
-    this.currentPath = this.$route.path;
     this.fetchSingle();
   },
 
@@ -105,7 +103,6 @@ export default {
         slug: this.$route.path,
         pageLoading: true
       }).then(() => {
-        this.currentPath = this.$route.path;
         this.afterDataLoaded();
       });
     },
