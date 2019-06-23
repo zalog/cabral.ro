@@ -64,6 +64,7 @@ export default {
       PhotoSwipeUI_Default,
       this.items,
       {
+        history: false,
         index: this.index
       }
     );
