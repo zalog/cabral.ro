@@ -117,41 +117,47 @@ export default {
         });
       });
     },
-    fetchPost: ({ getters, commit }, payload) => {
+    fetchPost: ({ getters, commit, rootState }, payload) => {
       if (getters.currentPage) return;
 
       return fetchPost(payload).then((response) => {
         commit('addSingle', {
-          slug: payload.slug,
+          slug: rootState.route.path,
           single: response.data[0],
           ...payload
         });
       });
     },
-    fetchPage: ({ getters, commit }, payload) => {
+    fetchPage: ({ getters, commit, rootState }, payload) => {
       if (getters.currentPage) return;
 
       return fetchPage(payload).then((response) => {
         commit('addSingle', {
-          slug: payload.slug,
+          slug: rootState.route.path,
           single: response.data[0],
           ...payload
         });
       });
     },
-    fetchSingle: ({ getters, commit }, {slug}) => {
+    fetchSingle: ({ getters, commit, rootState }, payload) => {
       if (getters.currentPage) return;
 
-      return fetchPost({slug}).then((response) => {
+      return fetchPost({
+        slug: rootState.route.path,
+        ...payload
+      }).then((response) => {
         if (response.data.length)
           commit('addSingle', {
-            slug,
+            slug: rootState.route.path,
             single: response.data[0]
           });
         else
-          return fetchPage({slug}).then((response) => {
+          return fetchPage({
+            slug: rootState.route.path,
+            ...payload
+          }).then((response) => {
             commit('addSingle', {
-              slug,
+              slug: rootState.route.path,
               single: response.data[0]
             });
           });

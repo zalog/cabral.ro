@@ -100,7 +100,6 @@ export default {
       else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
 
       return this.$store.dispatch(actionName, {
-        slug: this.$route.path,
         pageLoading: true
       }).then(() => {
         this.afterDataLoaded();
