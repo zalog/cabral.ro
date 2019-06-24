@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { SITE } from "./../utils/constants";
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 
@@ -54,6 +55,31 @@ export default {
     index: {
       type: Number,
       default: 0
+    },
+    title: {
+      type: String
+    }
+  },
+
+  metaInfo() {
+    return {
+      title: this.pageTitle
+    };
+  },
+
+  data: () => ({
+    currentImage: null
+  }),
+
+  computed: {
+    pageTitle() {
+      return `${this.title} - Image ${this.currentImage}`;
+    }
+  },
+
+  watch: {
+    'currentImage': function(image) {
+      this.sendPageView(image);
     }
   },
 
@@ -64,7 +90,6 @@ export default {
       PhotoSwipeUI_Default,
       this.items,
       {
-        history: false,
         index: this.index
       }
     );
@@ -83,8 +108,20 @@ export default {
         img.src = item.src;
       }
     });
+    gallery.listen('afterChange', () => {
+      this.currentImage = gallery.getCurrentIndex() + 1;
+    });
 
     gallery.init();
+  },
+
+  methods: {
+    sendPageView(image) {
+      let title = SITE.TITLE_TEMPLATE(this.pageTitle);
+      let url = document.location.href.replace(/&pid=\d+/, `&pid=${image}`);
+
+      window.dataLayer.push({ event: 'pageview', title, url });
+    }
   }
 };
 </script>

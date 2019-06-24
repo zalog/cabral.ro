@@ -29,6 +29,7 @@
       v-if="photoswipe.show"
       :items="photoswipe.items"
       :index="photoswipe.index"
+      :title="pageTitle"
       @closed="photoswipe.show = false"
     />
   </div>
