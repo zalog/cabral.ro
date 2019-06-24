@@ -132,7 +132,6 @@ export default {
       this.$store.dispatch('data/postComment', {
         singleId: this.data.singleId,
         commentId: this.data.commentId,
-        slug: this.$route.fullPath,
         index: this.data.index,
         ...this.form.data
       }).then((commentId) => {

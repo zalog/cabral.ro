@@ -187,7 +187,7 @@ export default {
         });
       });
     },
-    postComment: ({ commit }, payload) => {
+    postComment: ({ commit, rootState }, payload) => {
       return new Promise((resolve, reject) => {
         postComment(payload).then((comment) => {
           let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
@@ -200,7 +200,7 @@ export default {
 
           if (comment.status === 'approved') {
             commit('addComment', {
-              slug: payload.slug,
+              slug: rootState.route.path,
               index: payload.index,
               comment
             });
