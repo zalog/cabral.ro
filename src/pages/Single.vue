@@ -21,10 +21,17 @@
       <div class="container-fluid py-5">
         <CommentsList
           ref="comments"
-          :currentPath="currentPath"
         />
       </div>
     </div>
+
+    <Photoswipe
+      v-if="photoswipe.show"
+      :items="photoswipe.items"
+      :index="photoswipe.index"
+      :title="pageTitle"
+      @closed="photoswipe.show = false; sendPageView();"
+    />
   </div>
 </template>
 
@@ -34,23 +41,42 @@ import decodeHtml from "./../utils/decodeHtml";
 import CommentsList from "./../components/CommentsList.vue";
 import { postFormWpcf7 } from "./../services/forms";
 
+const Photoswipe = () => import(/* webpackChunkName: "photoswipe" */ "./../components/Photoswipe.vue");
+
 export default {
   name: 'PageSingle',
 
   components: {
-    CommentsList
+    CommentsList,
+    Photoswipe
   },
 
   data: () => ({
-    currentPath: null
+    photoswipe: {
+      show: false,
+      items: [],
+      index: 0
+    }
   }),
+
+  computed: {
+    data() {
+      return this.$store.getters['data/currentPage'];
+    },
+    pageTitle() {
+      return this.data.single && decodeHtml(this.data.single.title.rendered);
+    }
+  },
+
+  watch: {
+    '$route': 'fetchSingle'
+  },
 
   serverPrefetch() {
     return this.fetchSingle();
   },
 
   beforeMount() {
-    this.currentPath = this.$route.fullPath;
     this.fetchSingle();
   },
 
@@ -68,31 +94,13 @@ export default {
     };
   },
 
-  watch: {
-    '$route': 'fetchSingle'
-  },
-
-  computed: {
-    data() {
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
-    },
-    pageTitle() {
-      return this.data.single && decodeHtml(this.data.single.title.rendered);
-    }
-  },
-
   methods: {
     fetchSingle() {
       let actionName = 'data/fetchSingle';
       if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
       else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
 
-      return this.$store.dispatch(actionName, {
-        slug: this.$route.fullPath,
-        pageLoading: true
-      }).then(() => {
-        this.currentPath = this.$route.fullPath;
+      return this.$store.dispatch(actionName).then(() => {
         this.afterDataLoaded();
       });
     },
@@ -100,18 +108,33 @@ export default {
       if (typeof window === 'undefined') return;
 
       this.sendPageView();
+      this.photoswipeInit();
       this.fetchComments();
       this.handleFormWpcf7();
     },
     sendPageView() {
       window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
     },
+    photoswipeInit() {
+      this.$refs['content'].querySelectorAll('img').forEach((img, index) => {
+        let src = img.getAttribute('data-src') || img.getAttribute('data-orig-file');
+        src = src.split('?')[0];
+        let size = img.getAttribute('data-orig-size') || '0,0';
+        size = size.split(',');
+
+        this.photoswipe.items.push({ src, w: size[0], h: size[1] });
+
+        img.addEventListener('click', (event) => {
+          event.preventDefault();
+          this.photoswipe.show = true;
+          this.photoswipe.index = index;
+        });
+      });
+    },
     fetchComments() {
       if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
 
-      this.$store.dispatch('data/fetchComments', {
-        slug: this.$route.fullPath
-      });
+      this.$store.dispatch('data/fetchComments');
     },
     handleScroll() {
       this.fetchComments();

@@ -23,7 +23,8 @@
       >
         <div class="form-group col-sm-4">
           <label for="form-reply-name" class="sr-only">Nume</label>
-          <input type="text"
+          <input
+            type="text"
             v-model="form.data.name"
             id="form-reply-name"
             :class="['form-control', {'is-invalid': $v.form.data.name.$error}]"
@@ -32,7 +33,8 @@
         </div>
         <div class="form-group col-sm-4">
           <label for="form-reply-email" class="sr-only">Email</label>
-          <input type="email"
+          <input
+            type="email"
             v-model="form.data.email"
             id="form-reply-email"
             :class="['form-control', {'is-invalid': $v.form.data.email.$error}]"
@@ -41,7 +43,8 @@
         </div>
         <div class="form-group col-sm-4">
           <label for="form-reply-site" class="sr-only">Site</label>
-          <input type="url"
+          <input
+            type="url"
             v-model="form.data.site"
             id="form-reply-site"
             :class="['form-control', {'is-invalid': $v.form.data.site.$error}]"
@@ -51,7 +54,7 @@
       </div>
 
       <div
-         v-if="$v.form.data.$error"
+        v-if="$v.form.data.$error"
         class="alert alert-warning" role="alert"
       >
         Câmpurile marcate cu roșu conțin erori.
@@ -129,7 +132,6 @@ export default {
       this.$store.dispatch('data/postComment', {
         singleId: this.data.singleId,
         commentId: this.data.commentId,
-        slug: this.$route.fullPath,
         index: this.data.index,
         ...this.form.data
       }).then((commentId) => {

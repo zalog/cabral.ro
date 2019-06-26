@@ -5,10 +5,6 @@ import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
 
 const pagesToKeep = 5;
-const pageInData = (state, slug) => {
-  let pageData = state.find(obj => obj[slug]);
-  if (typeof pageData !== 'undefined') return true;
-};
 const postsOnPage = 12;
 const commentsOnPage = 10;
 
@@ -16,6 +12,17 @@ export default {
   namespaced: true,
 
   state: () => ([]),
+
+  getters: {
+    currentPage: (state, getters, rootState) => {
+      const pages = state;
+      const path = rootState.route.path;
+      const page = pages.find(page => page[path]);
+      let output = typeof page !== 'undefined' && page[path] || false;
+
+      return output;
+    }
+  },
 
   mutations: {
     addPosts: (state, payload) => {
@@ -82,14 +89,16 @@ export default {
   },
 
   actions: {
-    fetchPosts: ({ state, commit }, payload) => {
+    fetchPosts: ({ getters, commit, rootState }, payload) => {
       payload = {
         fields: ['title', 'slug', 'excerpt', 'featured_media'],
         itemsOnPage: postsOnPage,
+        currentPage: rootState.route.params.id || 1,
+        pageLoading: true,
         ...payload
       };
 
-      if (pageInData(state, payload.path)) return;
+      if (getters.currentPage) return;
 
       return fetchPosts(payload).then((response) => {
         payload.currentPage = parseInt(payload.currentPage);
@@ -99,60 +108,70 @@ export default {
         const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
         commit('addPosts', {
-          path: payload.path,
+          path: rootState.route.path,
           page: payload.currentPage,
           data: response.data
         });
         commit('addPostsPagination', {
-          path: payload.path,
+          path: rootState.route.path,
           data: pagination.pages,
           currentPage: pagination.currentPage
         });
       });
     },
-    fetchPost: ({ state, commit }, payload) => {
-      if (pageInData(state, payload.slug)) return;
+    fetchPost: ({ getters, commit, rootState }) => {
+      if (getters.currentPage) return;
 
-      return fetchPost(payload).then((response) => {
+      return fetchPost({
+        slug:rootState.route.path,
+        pageLoading: true
+      }).then((response) => {
         commit('addSingle', {
-          slug: payload.slug,
-          single: response.data[0],
-          ...payload
+          slug: rootState.route.path,
+          single: response.data[0]
         });
       });
     },
-    fetchPage: ({ state, commit }, payload) => {
-      if (pageInData(state, payload.slug)) return;
+    fetchPage: ({ getters, commit, rootState }) => {
+      if (getters.currentPage) return;
 
-      return fetchPage(payload).then((response) => {
+      return fetchPage({
+        slug:rootState.route.path,
+        pageLoading: true
+      }).then((response) => {
         commit('addSingle', {
-          slug: payload.slug,
-          single: response.data[0],
-          ...payload
+          slug: rootState.route.path,
+          single: response.data[0]
         });
       });
     },
-    fetchSingle: ({ state, commit }, {slug}) => {
-      if (pageInData(state, slug)) return;
+    fetchSingle: ({ getters, commit, rootState }) => {
+      if (getters.currentPage) return;
 
-      return fetchPost({slug}).then((response) => {
+      return fetchPost({
+        slug: rootState.route.path,
+        pageLoading: true
+      }).then((response) => {
         if (response.data.length)
           commit('addSingle', {
-            slug,
+            slug: rootState.route.path,
             single: response.data[0]
           });
         else
-          return fetchPage({slug}).then((response) => {
+          return fetchPage({
+            slug: rootState.route.path,
+            pageLoading: true
+          }).then((response) => {
             commit('addSingle', {
-              slug,
+              slug: rootState.route.path,
               single: response.data[0]
             });
           });
       });
     },
-    fetchComments: ({ state, commit }, { slug }) => {
-      let pageData = state.find(obj => obj[slug])[slug];
-      let pageComments = pageData.comments;
+    fetchComments: ({ getters, commit, rootState }) => {
+      let page = getters.currentPage;
+      let pageComments = page.comments;
       let commentsFrom = null;
 
       if (pageComments.pageInfo) {
@@ -163,18 +182,18 @@ export default {
       pageComments.loading = true;
 
       return fetchComments({
-        singleId: pageData.single.id,
+        singleId: page.single.id,
         onPage: commentsOnPage,
         after: commentsFrom
       }).then((response) => {
         commit('addComments', {
-          slug,
+          slug: rootState.route.path,
           data: response.nodes,
           pageInfo: response.pageInfo
         });
       });
     },
-    postComment: ({ commit }, payload) => {
+    postComment: ({ commit, rootState }, payload) => {
       return new Promise((resolve, reject) => {
         postComment(payload).then((comment) => {
           let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
@@ -187,7 +206,7 @@ export default {
 
           if (comment.status === 'approved') {
             commit('addComment', {
-              slug: payload.slug,
+              slug: rootState.route.path,
               index: payload.index,
               comment
             });

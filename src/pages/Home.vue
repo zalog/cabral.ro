@@ -22,16 +22,32 @@ export default {
   },
 
   data: () => ({
-    forceDataRecompute: 1,
-    currentPath: null
+    forceDataRecompute: 1
   }),
+
+  computed: {
+    data() {
+      this.forceDataRecompute;
+      return this.$store.getters['data/currentPage'];
+    },
+    pageTitle() {
+      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+      return decodeHtml(SITE.TITLE + page);
+    }
+  },
+
+  watch: {
+    '$route'() {
+      this.fetchPosts();
+      this.sendPageView();
+    }
+  },
 
   serverPrefetch() {
     return this.fetchPosts();
   },
 
   beforeMount() {
-    this.currentPath = this.$route.fullPath;
     this.fetchPosts();
     this.sendPageView();
   },
@@ -43,33 +59,9 @@ export default {
     };
   },
 
-  watch: {
-    '$route'() {
-      this.fetchPosts();
-      this.sendPageView();
-    }
-  },
-
-  computed: {
-    data() {
-      this.forceDataRecompute;
-      let page = this.$store.state.data.find(obj => obj[this.currentPath]);
-      return (typeof page !== 'undefined') ? page[this.currentPath] : false;
-    },
-    pageTitle() {
-      let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return decodeHtml(SITE.TITLE + page);
-    }
-  },
-
   methods: {
     fetchPosts() {
-      return this.$store.dispatch('data/fetchPosts', {
-        currentPage: this.$route.params.id || 1,
-        path: this.$route.fullPath,
-        pageLoading: true
-      }).then(() => {
-        this.currentPath = this.$route.fullPath;
+      return this.$store.dispatch('data/fetchPosts').then(() => {
         this.forceDataRecompute++;
       });
     },
