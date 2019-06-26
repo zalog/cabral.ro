@@ -79,7 +79,7 @@ export default {
 
   watch: {
     'currentImage': function(image) {
-      this.sendPageView(image);
+      this.sendImageView(image);
     }
   },
 
@@ -116,11 +116,11 @@ export default {
   },
 
   methods: {
-    sendPageView(image) {
+    sendImageView(image) {
       let title = SITE.TITLE_TEMPLATE(this.pageTitle);
       let url = document.location.href.replace(/&pid=\d+/, `&pid=${image}`);
 
-      window.dataLayer.push({ event: 'pageview', title, url });
+      window.dataLayer.push({ event: 'imageview', title, url });
     }
   }
 };
