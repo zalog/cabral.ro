@@ -93,6 +93,7 @@ export default {
       payload = {
         fields: ['title', 'slug', 'excerpt', 'featured_media'],
         itemsOnPage: postsOnPage,
+        currentPage: rootState.route.params.id || 1,
         pageLoading: true,
         ...payload
       };

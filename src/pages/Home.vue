@@ -61,9 +61,7 @@ export default {
 
   methods: {
     fetchPosts() {
-      return this.$store.dispatch('data/fetchPosts', {
-        currentPage: this.$route.params.id || 1
-      }).then(() => {
+      return this.$store.dispatch('data/fetchPosts').then(() => {
         this.forceDataRecompute++;
       });
     },

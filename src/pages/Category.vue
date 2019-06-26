@@ -58,7 +58,6 @@ export default {
   methods: {
     fetchPosts() {
       return this.$store.dispatch('data/fetchPosts', {
-        currentPage: this.$route.params.id || 1,
         categories: [this.$route.params.categorySlug]
       }).then(() => {
         this.forceDataRecompute++;
