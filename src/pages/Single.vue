@@ -30,7 +30,7 @@
       :items="photoswipe.items"
       :index="photoswipe.index"
       :title="pageTitle"
-      @closed="photoswipe.show = false"
+      @closed="photoswipe.show = false; sendPageView();"
     />
   </div>
 </template>
