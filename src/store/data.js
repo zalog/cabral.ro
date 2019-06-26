@@ -120,22 +120,26 @@ export default {
     fetchPost: ({ getters, commit, rootState }, payload) => {
       if (getters.currentPage) return;
 
-      return fetchPost(payload).then((response) => {
+      return fetchPost({
+        slug:rootState.route.path,
+        ...payload
+      }).then((response) => {
         commit('addSingle', {
           slug: rootState.route.path,
-          single: response.data[0],
-          ...payload
+          single: response.data[0]
         });
       });
     },
     fetchPage: ({ getters, commit, rootState }, payload) => {
       if (getters.currentPage) return;
 
-      return fetchPage(payload).then((response) => {
+      return fetchPage({
+        slug:rootState.route.path,
+        ...payload
+      }).then((response) => {
         commit('addSingle', {
           slug: rootState.route.path,
-          single: response.data[0],
-          ...payload
+          single: response.data[0]
         });
       });
     },
