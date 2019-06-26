@@ -100,9 +100,7 @@ export default {
       if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
       else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
 
-      return this.$store.dispatch(actionName, {
-        pageLoading: true
-      }).then(() => {
+      return this.$store.dispatch(actionName).then(() => {
         this.afterDataLoaded();
       });
     },

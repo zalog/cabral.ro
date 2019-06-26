@@ -93,6 +93,7 @@ export default {
       payload = {
         fields: ['title', 'slug', 'excerpt', 'featured_media'],
         itemsOnPage: postsOnPage,
+        pageLoading: true,
         ...payload
       };
 
@@ -117,12 +118,12 @@ export default {
         });
       });
     },
-    fetchPost: ({ getters, commit, rootState }, payload) => {
+    fetchPost: ({ getters, commit, rootState }) => {
       if (getters.currentPage) return;
 
       return fetchPost({
         slug:rootState.route.path,
-        ...payload
+        pageLoading: true
       }).then((response) => {
         commit('addSingle', {
           slug: rootState.route.path,
@@ -130,12 +131,12 @@ export default {
         });
       });
     },
-    fetchPage: ({ getters, commit, rootState }, payload) => {
+    fetchPage: ({ getters, commit, rootState }) => {
       if (getters.currentPage) return;
 
       return fetchPage({
         slug:rootState.route.path,
-        ...payload
+        pageLoading: true
       }).then((response) => {
         commit('addSingle', {
           slug: rootState.route.path,
@@ -143,12 +144,12 @@ export default {
         });
       });
     },
-    fetchSingle: ({ getters, commit, rootState }, payload) => {
+    fetchSingle: ({ getters, commit, rootState }) => {
       if (getters.currentPage) return;
 
       return fetchPost({
         slug: rootState.route.path,
-        ...payload
+        pageLoading: true
       }).then((response) => {
         if (response.data.length)
           commit('addSingle', {
@@ -158,7 +159,7 @@ export default {
         else
           return fetchPage({
             slug: rootState.route.path,
-            ...payload
+            pageLoading: true
           }).then((response) => {
             commit('addSingle', {
               slug: rootState.route.path,
