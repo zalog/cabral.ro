@@ -3,6 +3,11 @@
     v-if="data"
     class="page-home container-fluid py-5"
   >
+    <h1
+      v-if="pageTitleSearch"
+      v-html="pageTitleSearch"
+      class="mb-4"
+    />
     <PostsList
       :posts="data.posts"
     />
@@ -32,7 +37,11 @@ export default {
     },
     pageTitle() {
       let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return decodeHtml(SITE.TITLE + page);
+      return decodeHtml(this.pageTitleSearch + ' - ' + SITE.TITLE + page);
+    },
+    pageTitleSearch() {
+      let s = this.$route.query.s;
+      return s && `Caută după "${s}"` || '';
     }
   },
 

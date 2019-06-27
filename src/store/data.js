@@ -95,6 +95,7 @@ export default {
         itemsOnPage: postsOnPage,
         currentPage: rootState.route.params.id || 1,
         pageLoading: true,
+        search: rootState.route.query.s,
         ...payload
       };
 
