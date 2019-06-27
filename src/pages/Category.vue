@@ -41,18 +41,18 @@ export default {
     '$route': 'fetchPosts'
   },
 
+  metaInfo() {
+    return {
+      title: this.pageTitle
+    };
+  },
+
   serverPrefetch() {
     return this.fetchPosts();
   },
 
   beforeMount() {
     this.fetchPosts();
-  },
-
-  metaInfo() {
-    return {
-      title: this.pageTitle
-    };
   },
 
   methods: {

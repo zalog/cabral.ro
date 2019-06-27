@@ -72,6 +72,12 @@ export default {
     '$route': 'fetchSingle'
   },
 
+  metaInfo() {
+    return {
+      title: this.pageTitle
+    };
+  },
+
   serverPrefetch() {
     return this.fetchSingle();
   },
@@ -86,12 +92,6 @@ export default {
 
   beforeDestroy() {
     window.removeEventListener('scroll', this.handleScroll);
-  },
-
-  metaInfo() {
-    return {
-      title: this.pageTitle
-    };
   },
 
   methods: {

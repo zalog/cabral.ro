@@ -43,6 +43,13 @@ export default {
     }
   },
 
+  metaInfo() {
+    return {
+      title: this.pageTitle,
+      titleTemplate: false
+    };
+  },
+
   serverPrefetch() {
     return this.fetchPosts();
   },
@@ -50,13 +57,6 @@ export default {
   beforeMount() {
     this.fetchPosts();
     this.sendPageView();
-  },
-
-  metaInfo() {
-    return {
-      title: this.pageTitle,
-      titleTemplate: false
-    };
   },
 
   methods: {
