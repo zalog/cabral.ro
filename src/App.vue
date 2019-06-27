@@ -19,6 +19,17 @@ export default {
     TheFooter: () => import(/* webpackChunkName: "app-footer" */ './components/TheFooter.vue')
   },
 
+  watch: {
+    '$store.state.ui.toast'(toast) {
+      this.$bvToast.toast(toast.message, {
+        toaster: 'b-toaster-bottom-center',
+        variant: toast.variant || 'info',
+        noCloseButton: true,
+        appendToast: true
+      });
+    }
+  },
+
   metaInfo: {
     htmlAttrs: {
       lang: SITE.LANG
@@ -39,17 +50,6 @@ export default {
     }],
     __dangerouslyDisableSanitizersByTagID: {
       'gtm': ['innerHTML']
-    }
-  },
-
-  watch: {
-    '$store.state.ui.toast'(toast) {
-      this.$bvToast.toast(toast.message, {
-        toaster: 'b-toaster-bottom-center',
-        variant: toast.variant || 'info',
-        noCloseButton: true,
-        appendToast: true
-      });
     }
   }
 };

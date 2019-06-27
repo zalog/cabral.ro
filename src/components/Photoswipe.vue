@@ -61,12 +61,6 @@ export default {
     }
   },
 
-  metaInfo() {
-    return {
-      title: this.pageTitle
-    };
-  },
-
   data: () => ({
     currentImage: null
   }),
@@ -81,6 +75,12 @@ export default {
     'currentImage': function(image) {
       this.sendImageView(image);
     }
+  },
+
+  metaInfo() {
+    return {
+      title: this.pageTitle
+    };
   },
 
   mounted() {
