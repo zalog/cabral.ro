@@ -22,12 +22,7 @@
 </template>
 
 <script>
-import BNavbar from 'bootstrap-vue/es/components/navbar/navbar';
-import BNavbarNav from 'bootstrap-vue/es/components/navbar/navbar-nav';
-import BNavbarBrand from 'bootstrap-vue/es/components/navbar/navbar-brand';
-import BNavbarToggle from 'bootstrap-vue/es/components/navbar/navbar-toggle';
-import BCollapse from 'bootstrap-vue/es/components/collapse/collapse';
-import BNavItem from 'bootstrap-vue/es/components/nav/nav-item';
+import { BNavbar, BNavbarNav, BNavbarBrand, BNavbarToggle, BCollapse, BNavItem } from 'bootstrap-vue';
 
 export default {
   name: 'TheHeaderMenu',

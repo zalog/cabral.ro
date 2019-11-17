@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import BSpinner from 'bootstrap-vue/es/components/spinner/spinner';
+import { BSpinner } from 'bootstrap-vue';
 import CommentsListComment from "./CommentsListComment.vue";
 import CommentsListForm from "./CommentsListForm.vue";
 

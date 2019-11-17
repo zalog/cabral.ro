@@ -10,8 +10,8 @@ Vue.use(VueMeta);
 import http from './plugins/http';
 Vue.use(http);
 
-import Toast from 'bootstrap-vue/es/components/toast';
-Vue.use(Toast);
+import { ToastPlugin } from 'bootstrap-vue';
+Vue.use(ToastPlugin);
 
 import './scss/app.scss';
 
