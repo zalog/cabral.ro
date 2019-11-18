@@ -37,7 +37,8 @@ export default {
     },
     pageTitle() {
       let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-      return decodeHtml(this.pageTitleSearch + ' - ' + SITE.TITLE + page);
+      let pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
+      return decodeHtml(pageTitleSearch + SITE.TITLE + page);
     },
     pageTitleSearch() {
       let s = this.$route.query.s;
