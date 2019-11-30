@@ -123,7 +123,7 @@ export default {
       if (getters.currentPage) return;
 
       return fetchPost({
-        slug:rootState.route.path,
+        slug: rootState.route.path,
         pageLoading: true
       }).then((response) => {
         commit('ADD_SINGLE', {
@@ -136,7 +136,7 @@ export default {
       if (getters.currentPage) return;
 
       return fetchPage({
-        slug:rootState.route.path,
+        slug: rootState.route.path,
         pageLoading: true
       }).then((response) => {
         commit('ADD_SINGLE', {
