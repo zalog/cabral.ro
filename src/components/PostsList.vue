@@ -1,5 +1,8 @@
 <template>
-  <div class="cards-posts">
+  <div
+    class="cards-posts"
+    v-if="posts.data.length"
+  >
     <router-link
       tag="div"
       class="card mb-5"
@@ -35,6 +38,9 @@
       </ul>
     </nav>
   </div>
+  <div v-else>
+    Niciun articol aici.
+  </div>
 </template>
 
 <script>
@@ -50,10 +56,11 @@ export default {
 
   methods: {
     paginationTo(page) {
-      const categorySlug = this.$route.params.categorySlug;
-      let url = `/page/${page}/`;
+      const routeCategory = this.$route.params.categorySlug;
+      const routeS = typeof this.$route.query.s !== 'undefined' && `?s=${this.$route.query.s}` || '';
+      let url = `/page/${page}/${routeS}`;
 
-      if (categorySlug) url = `/category/${categorySlug}${url}`;
+      if (routeCategory) url = `/category/${routeCategory}${url}`;
 
       return url;
     },

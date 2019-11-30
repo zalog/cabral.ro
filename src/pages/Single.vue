@@ -206,9 +206,11 @@ export default {
   max-width: 700px;
 }
 
+.entry-content {
+  word-wrap: break-word;
+}
+
 /deep/ {
-  @import "~bootstrap/scss/forms";
-  @import "~bootstrap/scss/buttons";
   @import "~bootstrap/scss/alert";
   @import "./../scss/pages/single";
 }

@@ -8,7 +8,21 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
+      <b-navbar-nav class="flex-grow-1">
+        <b-nav-form
+          @submit.prevent="goToSearch($event)"
+          action="/"
+          class="mr-md-auto order-last order-md-first py-3 py-md-0"
+          form-class="flex-grow-1"
+        >
+          <b-form-input
+            type="search"
+            size="sm"
+            class="flex-grow-1"
+            name="s"
+            placeholder="Caută aici..."
+          />
+        </b-nav-form>
         <b-nav-item
           v-ripple="'rgba(255, 255, 255, 0.1)'"
           v-for="item in menu"
@@ -22,18 +36,19 @@
 </template>
 
 <script>
-import { BNavbar, BNavbarNav, BNavbarBrand, BNavbarToggle, BCollapse, BNavItem } from 'bootstrap-vue';
+import {
+  BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavbarToggle, BNavItem,
+  BCollapse,
+  BFormInput
+} from 'bootstrap-vue';
 
 export default {
   name: 'TheHeaderMenu',
 
   components: {
-    BNavbar,
-    BNavbarNav,
-    BNavbarBrand,
-    BNavbarToggle,
+    BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavbarToggle, BNavItem,
     BCollapse,
-    BNavItem
+    BFormInput
   },
 
   computed: {
@@ -71,7 +86,33 @@ export default {
       item = this.menuItemTo(item);
       let itemPath = (typeof item === 'string') ? item : '/' + item.params.singleSlug + '/';
       return this.$route.path === itemPath;
+    },
+    goToSearch($event) {
+      const s = $event.target.elements.s.value;
+
+      if (!s) return;
+
+      this.$router.push({ path: '/', query: { s } });
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "./../scss/app-component.scss";
+
+/deep/ {
+  .form-inline {
+    .form-control {
+      background-color: rgba($white, .02);
+      border-color: transparent;
+      color: $navbar-dark-active-color;
+
+      &:focus {
+        box-shadow: none;
+        background-color: rgba($white, .06);
+      }
+    }
+  }
+}
+</style>

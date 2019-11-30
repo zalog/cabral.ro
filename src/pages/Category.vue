@@ -3,7 +3,10 @@
     v-if="data"
     class="page-category container-fluid py-5"
   >
-    <h1 class="mb-4">{{ this.pageTitle }}</h1>
+    <h1
+      v-html="this.pageTitle"
+      class="mb-4"
+    />
     <PostsList
       :posts="data.posts"
     />
