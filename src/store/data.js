@@ -25,7 +25,7 @@ export default {
   },
 
   mutations: {
-    addPosts: (state, payload) => {
+    ADD_POSTS: (state, payload) => {
       state.push({
         [payload.path]: {
           posts: {
@@ -36,14 +36,14 @@ export default {
 
       if (state.length > pagesToKeep) state.shift();
     },
-    addPostsPagination: (state, payload) => {
+    ADD_POSTS_PAGINATION: (state, payload) => {
       let pageData = state.find(obj => obj[payload.path]);
       pageData[payload.path].posts.pagination = {
         data: payload.data,
         currentPage: payload.currentPage
       };
     },
-    addSingle: (state, payload) => {
+    ADD_SINGLE: (state, payload) => {
       state.push({
         [payload.slug]: {
           single: payload.single,
@@ -56,14 +56,14 @@ export default {
 
       if (state.length > pagesToKeep) state.shift();
     },
-    addComments: (state, payload) => {
+    ADD_COMMENTS: (state, payload) => {
       let pageData = state.find(obj => obj[payload.slug])[payload.slug];
 
       pageData.comments.data.push(...payload.data);
       pageData.comments.loading = false;
       pageData.comments.pageInfo = payload.pageInfo;
     },
-    addComment: (state, payload) => {
+    ADD_COMMENT: (state, payload) => {
       let pageData = state.find(obj => obj[payload.slug])[payload.slug];
       let pageComments = pageData.comments.data;
       let comment = {
@@ -108,12 +108,12 @@ export default {
         const itemsTotal = parseInt(response.headers['x-wp-total']);
         const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
-        commit('addPosts', {
+        commit('ADD_POSTS', {
           path: rootState.route.path,
           page: payload.currentPage,
           data: response.data
         });
-        commit('addPostsPagination', {
+        commit('ADD_POSTS_PAGINATION', {
           path: rootState.route.path,
           data: pagination.pages,
           currentPage: pagination.currentPage
@@ -127,7 +127,7 @@ export default {
         slug:rootState.route.path,
         pageLoading: true
       }).then((response) => {
-        commit('addSingle', {
+        commit('ADD_SINGLE', {
           slug: rootState.route.path,
           single: response.data[0]
         });
@@ -140,7 +140,7 @@ export default {
         slug:rootState.route.path,
         pageLoading: true
       }).then((response) => {
-        commit('addSingle', {
+        commit('ADD_SINGLE', {
           slug: rootState.route.path,
           single: response.data[0]
         });
@@ -154,7 +154,7 @@ export default {
         pageLoading: true
       }).then((response) => {
         if (response.data.length)
-          commit('addSingle', {
+          commit('ADD_SINGLE', {
             slug: rootState.route.path,
             single: response.data[0]
           });
@@ -163,7 +163,7 @@ export default {
             slug: rootState.route.path,
             pageLoading: true
           }).then((response) => {
-            commit('addSingle', {
+            commit('ADD_SINGLE', {
               slug: rootState.route.path,
               single: response.data[0]
             });
@@ -187,7 +187,7 @@ export default {
         onPage: commentsOnPage,
         after: commentsFrom
       }).then((response) => {
-        commit('addComments', {
+        commit('ADD_COMMENTS', {
           slug: rootState.route.path,
           data: response.nodes,
           pageInfo: response.pageInfo
@@ -206,7 +206,7 @@ export default {
           }
 
           if (comment.status === 'approved') {
-            commit('addComment', {
+            commit('ADD_COMMENT', {
               slug: rootState.route.path,
               index: payload.index,
               comment
