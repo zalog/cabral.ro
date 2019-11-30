@@ -45,7 +45,7 @@ export default {
     },
     ADD_SINGLE: (state, payload) => {
       state.push({
-        [payload.slug]: {
+        [payload.fullPath]: {
           single: payload.single,
           comments: {
             data: [],
@@ -127,7 +127,7 @@ export default {
         pageLoading: true
       }).then((response) => {
         commit('ADD_SINGLE', {
-          slug: rootState.route.path,
+          fullPath: rootState.route.fullPath,
           single: response.data[0]
         });
       });
@@ -140,7 +140,7 @@ export default {
         pageLoading: true
       }).then((response) => {
         commit('ADD_SINGLE', {
-          slug: rootState.route.path,
+          fullPath: rootState.route.fullPath,
           single: response.data[0]
         });
       });
@@ -154,7 +154,7 @@ export default {
       }).then((response) => {
         if (response.data.length)
           commit('ADD_SINGLE', {
-            slug: rootState.route.path,
+            fullPath: rootState.route.fullPath,
             single: response.data[0]
           });
         else
@@ -163,7 +163,7 @@ export default {
             pageLoading: true
           }).then((response) => {
             commit('ADD_SINGLE', {
-              slug: rootState.route.path,
+              fullPath: rootState.route.fullPath,
               single: response.data[0]
             });
           });
