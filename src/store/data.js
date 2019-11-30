@@ -16,7 +16,7 @@ export default {
   getters: {
     currentPage: (state, getters, rootState) => {
       const pages = state;
-      const path = rootState.route.path;
+      const path = rootState.route.fullPath;
       const page = pages.find(page => page[path]);
       let output = typeof page !== 'undefined' && page[path] || false;
 
@@ -27,7 +27,7 @@ export default {
   mutations: {
     ADD_POSTS: (state, payload) => {
       state.push({
-        [payload.path]: {
+        [payload.fullPath]: {
           posts: {
             data: payload.data
           }
@@ -37,8 +37,8 @@ export default {
       if (state.length > pagesToKeep) state.shift();
     },
     ADD_POSTS_PAGINATION: (state, payload) => {
-      let pageData = state.find(obj => obj[payload.path]);
-      pageData[payload.path].posts.pagination = {
+      let pageData = state.find(obj => obj[payload.fullPath]);
+      pageData[payload.fullPath].posts.pagination = {
         data: payload.data,
         currentPage: payload.currentPage
       };
@@ -109,12 +109,11 @@ export default {
         const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
         commit('ADD_POSTS', {
-          path: rootState.route.path,
-          page: payload.currentPage,
+          fullPath: rootState.route.fullPath,
           data: response.data
         });
         commit('ADD_POSTS_PAGINATION', {
-          path: rootState.route.path,
+          fullPath: rootState.route.fullPath,
           data: pagination.pages,
           currentPage: pagination.currentPage
         });
