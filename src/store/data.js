@@ -213,14 +213,14 @@ export default {
             });
           }
 
-          commit('ui/addToast', {
+          commit('ui/ADD_TOAST', {
             message: toastMessage,
             variant: toastVariant
           }, { root: true });
 
           resolve(comment.id);
         }).catch((response) => {
-          commit('ui/addToast', {
+          commit('ui/ADD_TOAST', {
             message: response.data.message,
             variant: 'danger'
           }, { root: true });

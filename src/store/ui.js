@@ -9,14 +9,14 @@ export default {
   }),
 
   mutations: {
-    menu: (state, payload) => state.menu = payload,
-    addToast: (state, payload) => state.toast = payload
+    MENU: (state, payload) => state.menu = payload,
+    ADD_TOAST: (state, payload) => state.toast = payload
   },
 
   actions: {
     fetchMenu: ({ commit }) => {
       return fetchMenu().then((response) => {
-        commit('menu', response.data);
+        commit('MENU', response.data);
       });
     }
   }
