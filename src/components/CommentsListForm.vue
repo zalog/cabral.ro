@@ -153,8 +153,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../scss/app-component.scss";
-@import "~bootstrap/scss/forms";
-@import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/alert";
 
 .form-reply {

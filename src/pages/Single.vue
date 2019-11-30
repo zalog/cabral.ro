@@ -207,8 +207,6 @@ export default {
 }
 
 /deep/ {
-  @import "~bootstrap/scss/forms";
-  @import "~bootstrap/scss/buttons";
   @import "~bootstrap/scss/alert";
   @import "./../scss/pages/single";
 }
