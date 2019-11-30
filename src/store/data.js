@@ -57,7 +57,7 @@ export default {
       if (state.length > pagesToKeep) state.shift();
     },
     ADD_COMMENTS: (state, payload) => {
-      let pageData = state.find(obj => obj[payload.slug])[payload.slug];
+      let pageData = state.find(obj => obj[payload.fullPath])[payload.fullPath];
 
       pageData.comments.data.push(...payload.data);
       pageData.comments.loading = false;
@@ -187,7 +187,7 @@ export default {
         after: commentsFrom
       }).then((response) => {
         commit('ADD_COMMENTS', {
-          slug: rootState.route.path,
+          fullPath: rootState.route.fullPath,
           data: response.nodes,
           pageInfo: response.pageInfo
         });
