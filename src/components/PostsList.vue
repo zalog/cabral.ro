@@ -1,5 +1,8 @@
 <template>
-  <div class="cards-posts">
+  <div
+    class="cards-posts"
+    v-if="posts.data.length"
+  >
     <router-link
       tag="div"
       class="card mb-5"
@@ -34,6 +37,9 @@
         </router-link>
       </ul>
     </nav>
+  </div>
+  <div v-else>
+    Niciun articol aici.
   </div>
 </template>
 
