@@ -64,7 +64,7 @@ export default {
       pageData.comments.pageInfo = payload.pageInfo;
     },
     ADD_COMMENT: (state, payload) => {
-      let pageData = state.find(obj => obj[payload.slug])[payload.slug];
+      let pageData = state.find(obj => obj[payload.fullPath])[payload.fullPath];
       let pageComments = pageData.comments.data;
       let comment = {
         commentId: payload.comment.id,
@@ -206,7 +206,7 @@ export default {
 
           if (comment.status === 'approved') {
             commit('ADD_COMMENT', {
-              slug: rootState.route.path,
+              fullPath: rootState.route.fullPath,
               index: payload.index,
               comment
             });
