@@ -1,7 +1,5 @@
-export default (html) => {
-  if (typeof window === 'undefined') return;
-
-  let textarea = document.createElement('textarea');
-  textarea.innerHTML = html;
-  return textarea.value;
+export default (string) => {
+  return string.replace(
+    /&#(\d+);/g,
+    (match, dec) => String.fromCharCode(dec));
 };
