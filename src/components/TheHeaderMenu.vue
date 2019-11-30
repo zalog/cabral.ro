@@ -10,6 +10,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="flex-grow-1">
         <b-nav-form
+          @submit.prevent="goToSearch($event)"
           action="/"
           class="mr-md-auto order-last order-md-first py-3 py-md-0"
           form-class="flex-grow-1"
@@ -85,6 +86,13 @@ export default {
       item = this.menuItemTo(item);
       let itemPath = (typeof item === 'string') ? item : '/' + item.params.singleSlug + '/';
       return this.$route.path === itemPath;
+    },
+    goToSearch($event) {
+      const s = $event.target.elements.s.value;
+
+      if (!s) return;
+
+      this.$router.push({ path: '/', query: { s } });
     }
   }
 };
