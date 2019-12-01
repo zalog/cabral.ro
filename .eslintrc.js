@@ -11,10 +11,12 @@ module.exports = {
         // overwrite eslint:recommended
         "semi": ["error", "always"],
         "no-console": "off",
+        // other eslint
+        "indent": ["error", 4],
         // overwrite vue/essential
         "vue/mustache-interpolation-spacing": "error",
-        "vue/html-indent": ["error", 2],
-        "vue/script-indent": ["error", 2],
+        "vue/html-indent": ["error", 4],
+        "vue/script-indent": ["error", 4],
         "vue/order-in-components": "error"
     },
     "parserOptions": {
