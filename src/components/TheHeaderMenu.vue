@@ -5,9 +5,12 @@
             :to="'/'"
         >Cabral.ro</b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle
+            @click="navCollapse = !navCollapse"
+            target=""
+        />
 
-        <b-collapse id="nav-collapse" is-nav>
+        <b-collapse v-model="navCollapse" is-nav>
             <b-navbar-nav class="flex-grow-1">
                 <b-nav-form
                     @submit.prevent="goToSearch($event)"
@@ -51,6 +54,10 @@ export default {
         BFormInput
     },
 
+    data: () => ({
+        navCollapse: false
+    }),
+
     computed: {
         menu() {
             return this.$store.state.ui.menu;
@@ -93,7 +100,7 @@ export default {
             if (!s) return;
 
             this.$router.push({ path: '/', query: { s } });
-            this.$root.$emit('bv::toggle::collapse', 'nav-collapse');
+            this.navCollapse = false;
         }
     }
 };
