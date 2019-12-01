@@ -9,7 +9,8 @@
     "build:client": "webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules",
     "prod": "npm ci && npm run prod:build && cross-env NODE_ENV=production pm2 start server --update-env",
-    "prod:build": "cross-env NODE_ENV=production npm run build"
+    "prod:build": "cross-env NODE_ENV=production npm run build",
+    "lint:js": "./node_modules/.bin/eslint --ignore-pattern '/dist/' --ext .js,.vue ."
   },
   "dependencies": {
     "axios": "^0.19.0",
