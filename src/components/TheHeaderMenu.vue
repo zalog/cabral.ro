@@ -93,6 +93,7 @@ export default {
       if (!s) return;
 
       this.$router.push({ path: '/', query: { s } });
+      this.$root.$emit('bv::toggle::collapse', 'nav-collapse');
     }
   }
 };
