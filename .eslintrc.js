@@ -9,7 +9,7 @@ module.exports = {
     ],
     "rules": {
         // overwrite eslint:recommended
-        "semi": [2, "always"],
+        "semi": ["error", "always"],
         "no-console": "off",
         // overwrite vue/essential
         "vue/mustache-interpolation-spacing": "error",
