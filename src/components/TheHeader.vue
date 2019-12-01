@@ -1,18 +1,18 @@
 <template>
-  <div class="app-Header fixed-top">
-    <TheHeaderMenu />
-  </div>
+    <div class="app-Header fixed-top">
+        <TheHeaderMenu />
+    </div>
 </template>
 
 <script>
 import TheHeaderMenu from './TheHeaderMenu.vue';
 
 export default {
-  name: 'TheHeader',
+    name: 'TheHeader',
 
-  components: {
-    TheHeaderMenu
-  }
+    components: {
+        TheHeaderMenu
+    }
 };
 </script>
 
@@ -20,7 +20,7 @@ export default {
 @import "./../scss/app-component.scss";
 
 /deep/ {
-  @import "~bootstrap/scss/nav";
-  @import "~bootstrap/scss/navbar";
+    @import "~bootstrap/scss/nav";
+    @import "~bootstrap/scss/navbar";
 }
 </style>

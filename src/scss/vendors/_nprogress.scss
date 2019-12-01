@@ -3,40 +3,40 @@
 $component-bar-color: $warning;
 
 .nprogress-custom-parent {
-  overflow: visible;
+    overflow: visible;
 }
 
 #nprogress {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border: 0;
-
-  .bar {
-    background: $component-bar-color;
-    top: 100%;
-  }
-  .spinner {
-    display: none;
     position: absolute;
-    top: 50%;
-    right: $grid-gutter-width;
-    transform: translateY(-50%);
-  }
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 0;
 
-  .peg {
-    display: none;
-  }
-  .spinner-icon {
-    border-top-color: $component-bar-color;
-    border-left-color: $component-bar-color;
-  }
-
-  @include media-breakpoint-up(lg) {
-    .spinner {
-      display: block;
+    .bar {
+        background: $component-bar-color;
+        top: 100%;
     }
-  }
+    .spinner {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: $grid-gutter-width;
+        transform: translateY(-50%);
+    }
+
+    .peg {
+        display: none;
+    }
+    .spinner-icon {
+        border-top-color: $component-bar-color;
+        border-left-color: $component-bar-color;
+    }
+
+    @include media-breakpoint-up(lg) {
+        .spinner {
+            display: block;
+        }
+    }
 }

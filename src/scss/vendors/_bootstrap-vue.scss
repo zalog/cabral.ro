@@ -3,16 +3,16 @@
 
 // Override bootstrap-vue
 .b-toaster.b-toaster-bottom-center .b-toaster-slot {
-  bottom: 0;
+    bottom: 0;
 
-  .b-toast:last-child {
-    .toast {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      border-bottom: 0;
+    .b-toast:last-child {
+        .toast {
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            border-bottom: 0;
+        }
     }
-  }
 }
 .b-toast {
-  background-color: $white;
+    background-color: $white;
 }

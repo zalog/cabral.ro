@@ -1,61 +1,61 @@
 <template>
-  <div>
-    <CommentsListForm :data="{singleId: data.single.id}" />
+    <div>
+        <CommentsListForm :data="{singleId: data.single.id}" />
 
-    <ul class="list-comments">
-      <li
-        v-for="(comment, index) in data.comments.data" :key="'comments-comment-' + comment.commentId"
-        :id="`comment-${comment.commentId}`"
-      >
-        <CommentsListComment :comment="comment" />
+        <ul class="list-comments">
+            <li
+                v-for="(comment, index) in data.comments.data" :key="'comments-comment-' + comment.commentId"
+                :id="`comment-${comment.commentId}`"
+            >
+                <CommentsListComment :comment="comment" />
 
-        <ul v-if="comment.replies && comment.replies.nodes.length">
-          <li
-            v-for="comment in comment.replies.nodes" :key="'comments-comment-l1-' + comment.commentId"
-            :id="`comment-${comment.commentId}`"
-          >
-            <CommentsListComment :comment="comment" />
-          </li>
+                <ul v-if="comment.replies && comment.replies.nodes.length">
+                    <li
+                        v-for="comment in comment.replies.nodes" :key="'comments-comment-l1-' + comment.commentId"
+                        :id="`comment-${comment.commentId}`"
+                    >
+                        <CommentsListComment :comment="comment" />
+                    </li>
+                </ul>
+
+                <CommentsListForm
+                    :data="{
+                        label: 'răspunde...',
+                        singleId: data.single.id,
+                        commentId: comment.commentId,
+                        index
+                    }"
+                />
+            </li>
+            <li
+                v-if="data.comments.loading === true"
+                class="py-4 text-center"
+            >
+                <b-spinner variant="warning" label="Loading..."></b-spinner>
+            </li>
         </ul>
-
-        <CommentsListForm
-          :data="{
-            label: 'răspunde...',
-            singleId: data.single.id,
-            commentId: comment.commentId,
-            index
-          }"
-        />
-      </li>
-      <li
-        v-if="data.comments.loading === true"
-        class="py-4 text-center"
-      >
-        <b-spinner variant="warning" label="Loading..."></b-spinner>
-      </li>
-    </ul>
-  </div>
+    </div>
 </template>
 
 <script>
 import { BSpinner } from 'bootstrap-vue';
-import CommentsListComment from "./CommentsListComment.vue";
-import CommentsListForm from "./CommentsListForm.vue";
+import CommentsListComment from './CommentsListComment.vue';
+import CommentsListForm from './CommentsListForm.vue';
 
 export default {
-  name: 'CommentsList',
+    name: 'CommentsList',
 
-  components: {
-    BSpinner,
-    CommentsListComment,
-    CommentsListForm
-  },
+    components: {
+        BSpinner,
+        CommentsListComment,
+        CommentsListForm
+    },
 
-  computed: {
-    data() {
-      return this.$store.getters['data/currentPage'];
+    computed: {
+        data() {
+            return this.$store.getters['data/currentPage'];
+        }
     }
-  }
 };
 </script>
 
@@ -63,23 +63,23 @@ export default {
 @import "./../scss/app-component.scss";
 
 .list-comments {
-  &,
-  ul {
-    @include list-unstyled;
-  }
-
-  .comment {
-    padding: map-get($spacers, 4);
-  }
-
-  > li {
-    margin-top: map-get($spacers, 4);
-    background-color: $white;
-    box-shadow: $box-shadow-sm;
-
-    * + * {
-      border-top: $border-width solid $border-color;
+    &,
+    ul {
+        @include list-unstyled;
     }
-  }
+
+    .comment {
+        padding: map-get($spacers, 4);
+    }
+
+    > li {
+        margin-top: map-get($spacers, 4);
+        background-color: $white;
+        box-shadow: $box-shadow-sm;
+
+        * + * {
+            border-top: $border-width solid $border-color;
+        }
+    }
 }
 </style>

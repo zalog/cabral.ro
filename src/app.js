@@ -16,15 +16,15 @@ Vue.use(ToastPlugin);
 import './scss/app.scss';
 
 export function createApp () {
-  const store = createStore();
-  const router = createRouter();
-  sync(store, router);
+    const store = createStore();
+    const router = createRouter();
+    sync(store, router);
 
-  const app = new Vue({
-    router,
-    store,
-    render: h => h(App)
-  });
+    const app = new Vue({
+        router,
+        store,
+        render: h => h(App)
+    });
 
-  return { app, router, store };
+    return { app, router, store };
 }
