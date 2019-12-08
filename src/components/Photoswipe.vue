@@ -75,12 +75,6 @@ export default {
         }
     },
 
-    metaInfo() {
-        return {
-            title: this.pageTitle
-        };
-    },
-
     mounted() {
         const that = this;
         const gallery = new PhotoSwipe(
@@ -120,6 +114,12 @@ export default {
 
             window.dataLayer.push({ event: 'imageview', title, url });
         }
+    },
+
+    metaInfo() {
+        return {
+            title: this.pageTitle
+        };
     }
 };
 </script>

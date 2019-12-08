@@ -72,12 +72,6 @@ export default {
         '$route': 'fetchSingle'
     },
 
-    metaInfo() {
-        return {
-            title: this.pageTitle
-        };
-    },
-
     serverPrefetch() {
         return this.fetchSingle();
     },
@@ -195,6 +189,12 @@ export default {
                 });
             });
         }
+    },
+
+    metaInfo() {
+        return {
+            title: this.pageTitle
+        };
     }
 };
 </script>

@@ -44,12 +44,6 @@ export default {
         '$route': 'fetchPosts'
     },
 
-    metaInfo() {
-        return {
-            title: this.pageTitle
-        };
-    },
-
     serverPrefetch() {
         return this.fetchPosts();
     },
@@ -75,6 +69,12 @@ export default {
         sendPageView() {
             window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
         }
+    },
+
+    metaInfo() {
+        return {
+            title: this.pageTitle
+        };
     }
 };
 </script>
