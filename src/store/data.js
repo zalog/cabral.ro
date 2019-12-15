@@ -89,11 +89,11 @@ export default {
     },
 
     actions: {
-        fetchPosts: ({ getters, commit, rootState }, payload) => {
+        fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
                 fields: ['title', 'slug', 'excerpt', 'featured_media', 'comments_number'],
                 itemsOnPage: postsOnPage,
-                currentPage: rootState.route.params.id || 1,
+                currentPage: parseInt(rootState.route.params.id) || 1,
                 pageLoading: true,
                 search: rootState.route.query.s,
                 ...payload
@@ -101,22 +101,20 @@ export default {
 
             if (getters.currentPage) return;
 
-            return fetchPosts(payload).then((response) => {
-                payload.currentPage = parseInt(payload.currentPage);
+            const response = await fetchPosts(payload);
 
-                const maxPages = 8;
-                const itemsTotal = parseInt(response.headers['x-wp-total']);
-                const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
+            const maxPages = 8;
+            const itemsTotal = parseInt(response.headers['x-wp-total']);
+            const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
-                commit('ADD_POSTS', {
-                    fullPath: rootState.route.fullPath,
-                    data: response.data
-                });
-                commit('ADD_POSTS_PAGINATION', {
-                    fullPath: rootState.route.fullPath,
-                    data: pagination.pages,
-                    currentPage: pagination.currentPage
-                });
+            commit('ADD_POSTS', {
+                fullPath: rootState.route.fullPath,
+                data: response.data
+            });
+            commit('ADD_POSTS_PAGINATION', {
+                fullPath: rootState.route.fullPath,
+                data: pagination.pages,
+                currentPage: pagination.currentPage
             });
         },
         fetchPost: async ({ getters, commit, rootState }) => {
