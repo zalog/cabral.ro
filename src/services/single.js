@@ -13,7 +13,13 @@ export function fetchPost(payload) {
             url: `${ENDPOINTS.POSTS}`,
             params
         })
-            .then((response) => resolve(response))
+            .then((response) => {
+                if (response.status != 200) return false;
+
+                response = response.data[0];
+
+                return resolve(response);
+            })
             .catch((error) => reject(error));
     });
 }
@@ -30,7 +36,13 @@ export function fetchPage(payload) {
             url: `${ENDPOINTS.PAGES}`,
             params
         })
-            .then((response) => resolve(response))
+            .then((response) => {
+                if (response.status != 200) return false;
+
+                response = response.data[0];
+
+                return resolve(response);
+            })
             .catch((error) => reject(error));
     });
 }

@@ -125,10 +125,10 @@ export default {
             return fetchPost({
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((response) => {
+            }).then((post) => {
                 commit('ADD_SINGLE', {
                     fullPath: rootState.route.fullPath,
-                    single: response.data[0]
+                    single: post
                 });
             });
         },
@@ -138,10 +138,10 @@ export default {
             return fetchPage({
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((response) => {
+            }).then((page) => {
                 commit('ADD_SINGLE', {
                     fullPath: rootState.route.fullPath,
-                    single: response.data[0]
+                    single: page
                 });
             });
         },
@@ -151,20 +151,20 @@ export default {
             return fetchPost({
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((response) => {
-                if (response.data.length)
+            }).then((post) => {
+                if (post)
                     commit('ADD_SINGLE', {
                         fullPath: rootState.route.fullPath,
-                        single: response.data[0]
+                        single: post
                     });
                 else
                     return fetchPage({
                         slug: rootState.route.path,
                         pageLoading: true
-                    }).then((response) => {
+                    }).then((page) => {
                         commit('ADD_SINGLE', {
                             fullPath: rootState.route.fullPath,
-                            single: response.data[0]
+                            single: page
                         });
                     });
             });
