@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { ENDPOINTS } from './../utils/constants';
 
 export async function fetchPost(payload) {
-    let params = {
+    const params = {
         fields: [],
         ...payload
     };
@@ -19,7 +19,7 @@ export async function fetchPost(payload) {
 }
 
 export async function fetchPage(payload) {
-    let params = {
+    const params = {
         fields: [],
         ...payload
     };
