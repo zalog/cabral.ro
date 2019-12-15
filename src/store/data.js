@@ -145,28 +145,20 @@ export default {
                 });
             });
         },
-        fetchSingle: ({ getters, commit, rootState }) => {
+        fetchSingle: async ({ getters, commit, rootState }) => {
             if (getters.currentPage) return;
 
-            return fetchPost({
+            const payload = {
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((post) => {
-                if (post)
-                    commit('ADD_SINGLE', {
-                        fullPath: rootState.route.fullPath,
-                        single: post
-                    });
-                else
-                    return fetchPage({
-                        slug: rootState.route.path,
-                        pageLoading: true
-                    }).then((page) => {
-                        commit('ADD_SINGLE', {
-                            fullPath: rootState.route.fullPath,
-                            single: page
-                        });
-                    });
+            };
+
+            let response = await fetchPost(payload);
+            !response && (response = await fetchPage(payload));
+
+            return commit('ADD_SINGLE', {
+                fullPath: rootState.route.fullPath,
+                single: response
             });
         },
         fetchComments: ({ getters, commit, rootState }) => {
