@@ -61,7 +61,7 @@ export async function fetchComments(payload) {
     return response.data.data.comments;
 }
 
-export function postComment(payload) {
+export async function postComment(payload) {
     // renames params keys to match wp-api
     Object.entries({
         'singleId': 'post',
@@ -75,13 +75,15 @@ export function postComment(payload) {
         delete payload[entry[0]];
     });
 
-    return new Promise((resolve, reject) => {
-        Vue.prototype.$http({
+    try {
+        const response = await Vue.prototype.$http({
             method: 'post',
             url: ENDPOINTS.COMMENTS,
             params: payload
-        })
-            .then((response) => resolve(response.data))
-            .catch((error) => reject(error.response));
-    });
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error.response;
+    }
 }
