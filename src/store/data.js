@@ -159,7 +159,7 @@ export default {
                 single: response
             });
         },
-        fetchComments: ({ getters, commit, rootState }) => {
+        fetchComments: async ({ getters, commit, rootState }) => {
             const page = getters.currentPage;
             const pageComments = page.comments;
             const pageSingleId = page.single.id;
@@ -174,16 +174,16 @@ export default {
 
             pageComments.loading = true;
 
-            return fetchComments({
+            const response = await fetchComments({
                 singleId: pageSingleId,
                 onPage: commentsOnPage,
                 after: commentsFrom
-            }).then((response) => {
-                commit('ADD_COMMENTS', {
-                    fullPath: rootState.route.fullPath,
-                    data: response.nodes,
-                    pageInfo: response.pageInfo
-                });
+            });
+
+            commit('ADD_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                data: response.nodes,
+                pageInfo: response.pageInfo
             });
         },
         postComment: ({ commit, rootState }, payload) => {
