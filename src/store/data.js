@@ -91,7 +91,7 @@ export default {
     actions: {
         fetchPosts: ({ getters, commit, rootState }, payload) => {
             payload = {
-                fields: ['title', 'slug', 'excerpt', 'featured_media'],
+                fields: ['title', 'slug', 'excerpt', 'featured_media', 'comments_number'],
                 itemsOnPage: postsOnPage,
                 currentPage: rootState.route.params.id || 1,
                 pageLoading: true,
