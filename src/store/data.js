@@ -186,40 +186,38 @@ export default {
                 pageInfo: response.pageInfo
             });
         },
-        postComment: ({ commit, rootState }, payload) => {
-            return new Promise((resolve, reject) => {
-                postComment(payload).then((comment) => {
-                    let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
-                    let toastVariant = 'success';
-                    (comment.status === 'hold') && (toastMessage = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
-                    if (comment.status === 'spam') {
-                        toastMessage = 'Comentariul tău a fost marcat ca spam.';
-                        toastVariant = 'danger';
-                    }
+        postComment: async ({ commit, rootState }, payload) => {
+            try {
+                const comment = await postComment(payload);
 
-                    if (comment.status === 'approved') {
-                        commit('ADD_COMMENT', {
-                            fullPath: rootState.route.fullPath,
-                            index: payload.index,
-                            comment
-                        });
-                    }
+                let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
+                let toastVariant = 'success';
+                (comment.status === 'hold') && (toastMessage = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+                if (comment.status === 'spam') {
+                    toastMessage = 'Comentariul tău a fost marcat ca spam.';
+                    toastVariant = 'danger';
+                }
 
-                    commit('ui/ADD_TOAST', {
-                        message: toastMessage,
-                        variant: toastVariant
-                    }, { root: true });
+                if (comment.status === 'approved') {
+                    commit('ADD_COMMENT', {
+                        fullPath: rootState.route.fullPath,
+                        index: payload.index,
+                        comment
+                    });
+                }
 
-                    resolve(comment.id);
-                }).catch((response) => {
-                    commit('ui/ADD_TOAST', {
-                        message: response.data.message,
-                        variant: 'danger'
-                    }, { root: true });
+                commit('ui/ADD_TOAST', {
+                    message: toastMessage,
+                    variant: toastVariant
+                }, { root: true });
 
-                    reject();
-                });
-            });
+                return comment.id;
+            } catch (error) {
+                commit('ui/ADD_TOAST', {
+                    message: error.data.message,
+                    variant: 'danger'
+                }, { root: true });
+            }
         }
     }
 };
