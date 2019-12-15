@@ -164,7 +164,10 @@ export default {
         fetchComments: ({ getters, commit, rootState }) => {
             const page = getters.currentPage;
             const pageComments = page.comments;
+            const pageSingleId = page.single.id;
             let commentsFrom = null;
+
+            if (!page || !pageSingleId) throw Error('`fetchComments` needs `page` or `pageSingleId`.');
 
             if (pageComments.pageInfo) {
                 if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
@@ -174,7 +177,7 @@ export default {
             pageComments.loading = true;
 
             return fetchComments({
-                singleId: page.single.id,
+                singleId: pageSingleId,
                 onPage: commentsOnPage,
                 after: commentsFrom
             }).then((response) => {
