@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { ENDPOINTS } from './../utils/constants';
-import { singlePost } from './../utils/adaptors';
+import { singlePost, singlePage } from './../utils/adaptors';
 
 export async function fetchPost(payload) {
     const params = {
@@ -33,5 +33,5 @@ export async function fetchPage(payload) {
 
     if (!response.data.length) return false;
 
-    return response.data[0];
+    return singlePage(response.data[0]);
 }
