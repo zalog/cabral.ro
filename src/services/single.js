@@ -14,7 +14,7 @@ export function fetchPost(payload) {
             params
         })
             .then((response) => {
-                if (response.status != 200) return false;
+                if (!response.data.length) return resolve(false);
 
                 response = response.data[0];
 
@@ -37,7 +37,7 @@ export function fetchPage(payload) {
             params
         })
             .then((response) => {
-                if (response.status != 200) return false;
+                if (!response.data.length) return resolve(false);
 
                 response = response.data[0];
 
