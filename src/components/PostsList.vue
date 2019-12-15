@@ -96,22 +96,28 @@ $pagination-focus-box-shadow: none;
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/pagination";
 
-/deep/ .img {
-    position: relative;
-    padding-top: percentage(9/16);
-    overflow: hidden;
+.cards-posts /deep/ {
+    .img {
+        position: relative;
+        padding-top: percentage(9/16);
+        overflow: hidden;
 
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: auto;
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .card-text > *:last-child {
+        margin-bottom: 0;
     }
 }
 
-.cards-posts /deep/ {
+.cards-posts {
     .card {
         cursor: pointer;
         box-shadow: $box-shadow-lg;
@@ -123,9 +129,6 @@ $pagination-focus-box-shadow: none;
     }
     .card-title > a {
         color: $body-color;
-    }
-    .card-text > *:last-child {
-        margin-bottom: 0;
     }
 
     .pagination {
