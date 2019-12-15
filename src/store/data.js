@@ -162,8 +162,8 @@ export default {
             });
         },
         fetchComments: ({ getters, commit, rootState }) => {
-            let page = getters.currentPage;
-            let pageComments = page.comments;
+            const page = getters.currentPage;
+            const pageComments = page.comments;
             let commentsFrom = null;
 
             if (pageComments.pageInfo) {
