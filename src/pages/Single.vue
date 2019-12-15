@@ -7,7 +7,7 @@
             class="container-fluid py-5"
         >
             <h1
-                v-html="data.single.title.rendered"
+                v-html="data.single.title"
                 class="entry-title"
             />
             <div
