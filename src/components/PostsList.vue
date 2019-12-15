@@ -12,9 +12,10 @@
         >
             <div
                 v-if="post.featured_media"
-                v-html="post.featured_media"
                 class="card-img-top"
-            />
+            >
+                <div class="img" v-html="post.featured_media" />
+            </div>
             <div class="card-body" :to="postTo(post.slug)">
                 <h2 class="card-title">
                     <router-link v-html="post.title.rendered" :to="postTo(post.slug)" />
@@ -95,6 +96,21 @@ $pagination-focus-box-shadow: none;
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/pagination";
 
+/deep/ .img {
+    position: relative;
+    padding-top: percentage(9/16);
+    overflow: hidden;
+
+    img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: auto;
+    }
+}
+
 .cards-posts /deep/ {
     .card {
         cursor: pointer;
@@ -103,17 +119,7 @@ $pagination-focus-box-shadow: none;
     }
     .card-img-top {
         position: relative;
-        padding-top: percentage(9/16);
         overflow: hidden;
-
-        img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: auto;
-        }
     }
     .card-title > a {
         color: $body-color;
