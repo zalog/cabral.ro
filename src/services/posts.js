@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { ENDPOINTS } from './../utils/constants';
+import { itemPost } from './../utils/adaptors';
 
 export function fetchPosts(payload) {
     let params = {
@@ -30,7 +31,13 @@ export function fetchPosts(payload) {
             url: ENDPOINTS.POSTS,
             params
         })
-            .then((response) => resolve(response))
+            .then((response) => {
+                delete response.config;
+                delete response.request;
+                response.data = response.data.map(post => itemPost(post));
+
+                return resolve(response);
+            })
             .catch((error) => reject(error));
     });
 }

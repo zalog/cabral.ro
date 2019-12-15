@@ -11,16 +11,16 @@
             :to="postTo(post.slug)"
         >
             <div
-                v-if="post.featured_media"
+                v-if="post.featuredMedia"
                 class="card-img-top"
             >
-                <div class="img" v-html="post.featured_media" />
+                <div class="img" v-html="post.featuredMedia" />
             </div>
             <div class="card-body" :to="postTo(post.slug)">
                 <h2 class="card-title">
-                    <router-link v-html="post.title.rendered" :to="postTo(post.slug)" />
+                    <router-link v-html="post.title" :to="postTo(post.slug)" />
                 </h2>
-                <div class="card-text" v-html="post.excerpt.rendered" />
+                <div class="card-text" v-html="post.excerpt" />
             </div>
         </router-link>
 
