@@ -15,6 +15,12 @@
                 class="card-img-top"
             >
                 <div class="img" v-html="post.featuredMedia" />
+                <ul class="list-info">
+                    <li>
+                        <base-icon name="comment" class="icon-sm" />
+                        {{ post.commentsNumber }}
+                    </li>
+                </ul>
             </div>
             <div class="card-body" :to="postTo(post.slug)">
                 <h2 class="card-title">
@@ -117,6 +123,23 @@ $pagination-focus-box-shadow: none;
     }
 }
 
+.list-info {
+    @include list-unstyled;
+    display: flex;
+
+    li {
+        padding: $badge-padding-y $badge-padding-x;
+        font-size: $badge-font-size;
+        border-radius: $badge-border-radius;
+        background-color: rgba($white, .75);
+        color: $gray-800;
+    }
+
+    li + li {
+        margin-left: $spacer;
+    }
+}
+
 .cards-posts {
     .card {
         cursor: pointer;
@@ -126,6 +149,12 @@ $pagination-focus-box-shadow: none;
     .card-img-top {
         position: relative;
         overflow: hidden;
+
+        .list-info {
+            position: absolute;
+            top: $spacer;
+            right: $spacer;
+        }
     }
     .card-title > a {
         color: $body-color;
