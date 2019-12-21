@@ -3,5 +3,6 @@ export default (payload) => ({
     featuredMedia: payload.featured_media,
     slug: payload.slug,
     title: payload.title.rendered,
-    commentsNumber: payload.comments_number
+    commentsNumber: payload.comments_number,
+    categories: payload.embed.categories
 });
