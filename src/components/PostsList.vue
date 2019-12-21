@@ -25,6 +25,7 @@
             <div class="card-body" :to="postTo(post.slug)">
                 <ul class="list-card-info">
                     <li v-for="(category, index) in post.categories" :key="`post-category-${index}`">
+                        <base-icon v-if="!index" name="folder" />
                         <router-link
                             :to="category.link"
                         >
@@ -32,6 +33,7 @@
                         </router-link>
                     </li>
                     <li>
+                        <base-icon name="date" />
                         {{ post.date | formatDate }}
                     </li>
                 </ul>
