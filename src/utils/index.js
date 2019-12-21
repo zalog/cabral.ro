@@ -1,1 +1,1 @@
-export { default as decodeHtml } from './decodeHtml';
+export { default as decodeHtml } from './functions/decodeHtml';
