@@ -31,6 +31,9 @@
                             {{ category.name }}
                         </router-link>
                     </li>
+                    <li>
+                        {{ post.date }}
+                    </li>
                 </ul>
                 <h2 class="card-title">
                     <router-link v-html="post.title" :to="postTo(post.slug)" />
@@ -156,6 +159,7 @@ $pagination-focus-box-shadow: none;
     margin-bottom: map-get($spacers, 2);
     font-size: $font-size-sm;
 
+    &,
     a {
         color: $text-muted;
     }
