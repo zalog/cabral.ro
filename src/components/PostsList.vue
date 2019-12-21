@@ -32,7 +32,7 @@
                         </router-link>
                     </li>
                     <li>
-                        {{ post.date }}
+                        {{ post.date | formatDate }}
                     </li>
                 </ul>
                 <h2 class="card-title">
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import './../utils/filters/formatDate';
+
 export default {
     name: 'PostsList',
 
