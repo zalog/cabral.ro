@@ -1,1 +1,1 @@
-export { decodeHtml } from './functions/decodeHtml';
+export * from './functions';
