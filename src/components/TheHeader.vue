@@ -1,6 +1,6 @@
 <template>
     <div class="app-Header fixed-top">
-        <TheHeaderMenu />
+        <the-header-menu />
     </div>
 </template>
 

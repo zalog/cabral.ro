@@ -8,7 +8,7 @@
             v-html="pageTitleSearch"
             class="mb-4"
         />
-        <PostsList
+        <posts-list
             :posts="data.posts"
         />
     </div>

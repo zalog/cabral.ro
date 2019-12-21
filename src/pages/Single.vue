@@ -19,13 +19,13 @@
 
         <div class="bg-light">
             <div class="container-fluid py-5">
-                <CommentsList
+                <comments-list
                     ref="comments"
                 />
             </div>
         </div>
 
-        <Photoswipe
+        <photoswipe
             v-if="photoswipe.show"
             :items="photoswipe.items"
             :index="photoswipe.index"
