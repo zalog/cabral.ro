@@ -37,7 +37,7 @@
 
 <script>
 import { SITE } from './../utils/constants';
-import decodeHtml from './../utils/decodeHtml';
+import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import { postFormWpcf7 } from './../services/forms';
 
