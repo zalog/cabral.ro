@@ -134,8 +134,14 @@ $pagination-focus-box-shadow: none;
         }
     }
 
-    .card-text > *:last-child {
-        margin-bottom: 0;
+    .card-text > {
+        p a {
+            display: none;
+        }
+
+        *:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 
