@@ -15,7 +15,7 @@
                 class="card-img-top"
             >
                 <div class="img" v-html="post.featuredMedia" />
-                <ul class="list-info">
+                <ul class="list-img-info">
                     <li>
                         <base-icon name="comment" class="icon-sm" />
                         {{ post.commentsNumber }}
@@ -145,7 +145,7 @@ $pagination-focus-box-shadow: none;
     }
 }
 
-.list-info {
+.list-img-info {
     @include list-unstyled;
     display: flex;
 
@@ -190,7 +190,7 @@ $pagination-focus-box-shadow: none;
         position: relative;
         overflow: hidden;
 
-        .list-info {
+        .list-img-info {
             position: absolute;
             top: $spacer;
             right: $spacer;
