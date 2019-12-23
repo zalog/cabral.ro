@@ -23,6 +23,9 @@
                 </ul>
             </div>
             <div class="card-body" :to="postTo(post.slug)">
+                <h2 class="card-title">
+                    <router-link v-html="post.title" :to="postTo(post.slug)" />
+                </h2>
                 <ul class="list-card-info">
                     <li v-for="(category, index) in post.categories" :key="`post-category-${index}`">
                         <base-icon v-if="!index" name="folder" />
@@ -37,9 +40,6 @@
                         {{ post.date | formatDate }}
                     </li>
                 </ul>
-                <h2 class="card-title">
-                    <router-link v-html="post.title" :to="postTo(post.slug)" />
-                </h2>
                 <div class="card-text" v-html="post.excerpt" />
             </div>
         </router-link>
@@ -160,7 +160,8 @@ $pagination-focus-box-shadow: none;
     @include list-unstyled;
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: map-get($spacers, 2);
+    margin-top: -(map-get($spacers, 2));
+    margin-bottom: $spacer;
     font-size: $font-size-sm;
 
     &,
