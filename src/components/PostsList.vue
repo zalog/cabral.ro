@@ -150,10 +150,10 @@ $pagination-focus-box-shadow: none;
     display: flex;
 
     li {
-        padding: $badge-padding-y $badge-padding-x;
+        padding: $badge-padding-y * 1.5 $badge-padding-x * 2;
         font-size: $badge-font-size;
         border-radius: $badge-border-radius;
-        background-color: rgba($white, .75);
+        background-color: rgba($white, .6);
         color: $gray-800;
     }
 
