@@ -53,9 +53,10 @@ export default {
 }
 
 .comment-header {
-    margin-bottom: map-get($spacers, 2);
+    margin-bottom: $spacer;
 
     div:first-child {
+        margin-bottom: map-get($spacers, 1);
         font-weight: bold;
     }
 }
