@@ -9,10 +9,10 @@
 
         <div class="form">
             <div class="form-group">
-                <label for="form-reply-message" class="sr-only">Comentariu</label>
+                <label :for="getIdSuffix('form-reply-message')" class="sr-only">Comentariu</label>
                 <textarea
                     v-model="form.data.message"
-                    id="form-reply-message"
+                    :id="getIdSuffix('form-reply-message')"
                     :class="['form-control', {'is-invalid': $v.form.data.message.$error }]"
                     rows="4" placeholder="Scrie comentariul tău aici..." required
                 />
@@ -111,7 +111,7 @@ export default {
             if (this.$el.classList.contains('open')) return;
 
             this.$el.classList.add('open');
-            this.$el.querySelector('#form-reply-message').focus();
+            this.$el.querySelector('textarea').focus();
             document.body.addEventListener('click', this.formClose);
         },
         formClose(event) {
@@ -145,6 +145,9 @@ export default {
             }).finally(() => {
                 this.form.loading = false;
             });
+        },
+        getIdSuffix(string, commentId = this.data.commentId) {
+            return (commentId) && `${string}-${commentId}` || string;
         }
     }
 };

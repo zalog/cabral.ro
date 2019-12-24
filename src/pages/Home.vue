@@ -8,7 +8,7 @@
             v-html="pageTitleSearch"
             class="mb-4"
         />
-        <PostsList
+        <posts-list
             :posts="data.posts"
         />
     </div>
@@ -16,7 +16,7 @@
 
 <script>
 import { SITE } from './../utils/constants';
-import decodeHtml from './../utils/decodeHtml';
+import { decodeHtml } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {

@@ -7,7 +7,7 @@
             class="container-fluid py-5"
         >
             <h1
-                v-html="data.single.title.rendered"
+                v-html="data.single.title"
                 class="entry-title"
             />
             <div
@@ -19,13 +19,13 @@
 
         <div class="bg-light">
             <div class="container-fluid py-5">
-                <CommentsList
+                <comments-list
                     ref="comments"
                 />
             </div>
         </div>
 
-        <Photoswipe
+        <photoswipe
             v-if="photoswipe.show"
             :items="photoswipe.items"
             :index="photoswipe.index"
@@ -37,7 +37,7 @@
 
 <script>
 import { SITE } from './../utils/constants';
-import decodeHtml from './../utils/decodeHtml';
+import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import { postFormWpcf7 } from './../services/forms';
 

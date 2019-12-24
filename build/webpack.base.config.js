@@ -38,11 +38,25 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/,
+                exclude: path.resolve(__dirname, '../src/assets/icons'),
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
                     name: '[name].[ext]?[hash]'
                 }
+            },
+            {
+                test: /\.svg$/,
+                include: path.resolve(__dirname, '../src/assets/icons'),
+                use: [
+                    {
+                        loader: 'svg-sprite-loader',
+                        options: {
+                            symbolId: 'icon-[name]'
+                        }
+                    },
+                    'svgo-loader'
+                ]
             }
         ]
     },

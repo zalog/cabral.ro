@@ -89,11 +89,11 @@ export default {
     },
 
     actions: {
-        fetchPosts: ({ getters, commit, rootState }, payload) => {
+        fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
-                fields: ['title', 'slug', 'excerpt', 'featured_media'],
+                fields: ['title', 'slug', 'excerpt', 'featured_media', 'comments_number', 'embed', 'date', 'modified'],
                 itemsOnPage: postsOnPage,
-                currentPage: rootState.route.params.id || 1,
+                currentPage: parseInt(rootState.route.params.id) || 1,
                 pageLoading: true,
                 search: rootState.route.query.s,
                 ...payload
@@ -101,78 +101,71 @@ export default {
 
             if (getters.currentPage) return;
 
-            return fetchPosts(payload).then((response) => {
-                payload.currentPage = parseInt(payload.currentPage);
+            const response = await fetchPosts(payload);
 
-                const maxPages = 8;
-                const itemsTotal = parseInt(response.headers['x-wp-total']);
-                const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
+            const maxPages = 8;
+            const itemsTotal = parseInt(response.headers['x-wp-total']);
+            const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
 
-                commit('ADD_POSTS', {
-                    fullPath: rootState.route.fullPath,
-                    data: response.data
-                });
-                commit('ADD_POSTS_PAGINATION', {
-                    fullPath: rootState.route.fullPath,
-                    data: pagination.pages,
-                    currentPage: pagination.currentPage
-                });
+            commit('ADD_POSTS', {
+                fullPath: rootState.route.fullPath,
+                data: response.data
+            });
+            commit('ADD_POSTS_PAGINATION', {
+                fullPath: rootState.route.fullPath,
+                data: pagination.pages,
+                currentPage: pagination.currentPage
             });
         },
-        fetchPost: ({ getters, commit, rootState }) => {
+        fetchPost: async ({ getters, commit, rootState }) => {
             if (getters.currentPage) return;
 
-            return fetchPost({
+            const response = await fetchPost({
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((response) => {
-                commit('ADD_SINGLE', {
-                    fullPath: rootState.route.fullPath,
-                    single: response.data[0]
-                });
+            });
+
+            commit('ADD_SINGLE', {
+                fullPath: rootState.route.fullPath,
+                single: response
             });
         },
-        fetchPage: ({ getters, commit, rootState }) => {
+        fetchPage: async ({ getters, commit, rootState }) => {
             if (getters.currentPage) return;
 
-            return fetchPage({
+            const response = await fetchPage({
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((response) => {
-                commit('ADD_SINGLE', {
-                    fullPath: rootState.route.fullPath,
-                    single: response.data[0]
-                });
+            });
+
+            commit('ADD_SINGLE', {
+                fullPath: rootState.route.fullPath,
+                single: response
             });
         },
-        fetchSingle: ({ getters, commit, rootState }) => {
+        fetchSingle: async ({ getters, commit, rootState }) => {
             if (getters.currentPage) return;
 
-            return fetchPost({
+            const payload = {
                 slug: rootState.route.path,
                 pageLoading: true
-            }).then((response) => {
-                if (response.data.length)
-                    commit('ADD_SINGLE', {
-                        fullPath: rootState.route.fullPath,
-                        single: response.data[0]
-                    });
-                else
-                    return fetchPage({
-                        slug: rootState.route.path,
-                        pageLoading: true
-                    }).then((response) => {
-                        commit('ADD_SINGLE', {
-                            fullPath: rootState.route.fullPath,
-                            single: response.data[0]
-                        });
-                    });
+            };
+
+            let response = await fetchPost(payload);
+            !response && (response = await fetchPage(payload));
+
+            return commit('ADD_SINGLE', {
+                fullPath: rootState.route.fullPath,
+                single: response
             });
         },
-        fetchComments: ({ getters, commit, rootState }) => {
-            let page = getters.currentPage;
-            let pageComments = page.comments;
+        fetchComments: async ({ getters, commit, rootState }) => {
+            const page = getters.currentPage;
+            const pageComments = page.comments;
+            const pageSingleId = page.single.id;
             let commentsFrom = null;
+
+            if (!page || !pageSingleId) throw Error('`fetchComments` needs `page` or `pageSingleId`.');
 
             if (pageComments.pageInfo) {
                 if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
@@ -181,52 +174,50 @@ export default {
 
             pageComments.loading = true;
 
-            return fetchComments({
-                singleId: page.single.id,
+            const response = await fetchComments({
+                singleId: pageSingleId,
                 onPage: commentsOnPage,
                 after: commentsFrom
-            }).then((response) => {
-                commit('ADD_COMMENTS', {
-                    fullPath: rootState.route.fullPath,
-                    data: response.nodes,
-                    pageInfo: response.pageInfo
-                });
+            });
+
+            commit('ADD_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                data: response.nodes,
+                pageInfo: response.pageInfo
             });
         },
-        postComment: ({ commit, rootState }, payload) => {
-            return new Promise((resolve, reject) => {
-                postComment(payload).then((comment) => {
-                    let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
-                    let toastVariant = 'success';
-                    (comment.status === 'hold') && (toastMessage = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
-                    if (comment.status === 'spam') {
-                        toastMessage = 'Comentariul tău a fost marcat ca spam.';
-                        toastVariant = 'danger';
-                    }
+        postComment: async ({ commit, rootState }, payload) => {
+            try {
+                const comment = await postComment(payload);
 
-                    if (comment.status === 'approved') {
-                        commit('ADD_COMMENT', {
-                            fullPath: rootState.route.fullPath,
-                            index: payload.index,
-                            comment
-                        });
-                    }
+                let toastMessage = `${comment.author_name}, comentariul tău a fost salvat!`;
+                let toastVariant = 'success';
+                (comment.status === 'hold') && (toastMessage = `${comment.author_name}, comentariul tău urmează să fie aprobat.`);
+                if (comment.status === 'spam') {
+                    toastMessage = 'Comentariul tău a fost marcat ca spam.';
+                    toastVariant = 'danger';
+                }
 
-                    commit('ui/ADD_TOAST', {
-                        message: toastMessage,
-                        variant: toastVariant
-                    }, { root: true });
+                if (comment.status === 'approved') {
+                    commit('ADD_COMMENT', {
+                        fullPath: rootState.route.fullPath,
+                        index: payload.index,
+                        comment
+                    });
+                }
 
-                    resolve(comment.id);
-                }).catch((response) => {
-                    commit('ui/ADD_TOAST', {
-                        message: response.data.message,
-                        variant: 'danger'
-                    }, { root: true });
+                commit('ui/ADD_TOAST', {
+                    message: toastMessage,
+                    variant: toastVariant
+                }, { root: true });
 
-                    reject();
-                });
-            });
+                return comment.id;
+            } catch (error) {
+                commit('ui/ADD_TOAST', {
+                    message: error.data.message,
+                    variant: 'danger'
+                }, { root: true });
+            }
         }
     }
 };

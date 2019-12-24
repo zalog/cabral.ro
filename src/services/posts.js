@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import { ENDPOINTS } from './../utils/constants';
+import { itemPost } from './../utils/adaptors';
 
-export function fetchPosts(payload) {
+export async function fetchPosts(payload) {
     let params = {
         fields: [],
         itemsOnPage: 10,
@@ -24,13 +25,15 @@ export function fetchPosts(payload) {
         delete params[entry[0]];
     });
 
-    return new Promise((resolve, reject) => {
-        Vue.prototype.$http({
-            method: 'get',
-            url: ENDPOINTS.POSTS,
-            params
-        })
-            .then((response) => resolve(response))
-            .catch((error) => reject(error));
+    const response = await Vue.prototype.$http({
+        method: 'get',
+        url: ENDPOINTS.POSTS,
+        params
     });
+
+    delete response.config;
+    delete response.request;
+    response.data = response.data.map(post => itemPost(post));
+
+    return response;
 }

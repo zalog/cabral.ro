@@ -8,6 +8,7 @@ export function createRouter () {
     return new Router({
         mode: 'history',
         routes: [
+            // homepage
             {
                 path: '/',
                 component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
@@ -22,6 +23,8 @@ export function createRouter () {
                 pathToRegexpOptions: { strict: true },
                 component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
             },
+
+            // single
             {
                 name: 'single',
                 path: '/:singleSlug/',
@@ -32,26 +35,38 @@ export function createRouter () {
                 path: '/:singleSlug',
                 redirect: { name: 'single' }
             },
+
+            // category: redirect page 1
             {
-                name: 'category',
-                path: '/category/:categorySlug/',
+                path: '/category/:categorySlug+/page/1',
+                redirect: to => `/category/${to.params.categorySlug}/`
+            },
+            // category: pagination
+            {
+                path: '/category/:categorySlug+/page/:id',
+                pathToRegexpOptions: { strict: true },
+                redirect: to => `/category/${to.params.categorySlug}/page/${to.params.id}/`
+            },
+            {
+                name: 'CategoryPage',
+                path: '/category/:categorySlug+/page/:id/',
                 pathToRegexpOptions: { strict: true },
                 component: () => import(/* webpackChunkName: "page-category" */ './pages/Category.vue')
             },
+            // category
             {
-                path: '/category/:categorySlug',
-                redirect: { name: 'category' }
-            },
-            {
-                path: '/category/:categorySlug/page/1/',
+                path: '/category/:categorySlug+',
                 pathToRegexpOptions: { strict: true },
-                redirect: '/category/:categorySlug/'
+                redirect: to => `/category/${to.params.categorySlug}/`
             },
             {
-                path: '/category/:categorySlug/page/:id/',
+                name: 'Category',
+                path: '/category/:categorySlug+/',
                 pathToRegexpOptions: { strict: true },
                 component: () => import(/* webpackChunkName: "page-category" */ './pages/Category.vue')
             },
+
+            // other
             {
                 path: '*',
                 redirect: '/'
