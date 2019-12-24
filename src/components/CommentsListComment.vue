@@ -2,10 +2,12 @@
     <div class="comment">
         <div class="comment-header">
             <div v-html="printAuthor(comment)" />
-            <div>
-                <base-icon name="date" />
-                {{ comment.date | formatDate }}
-            </div>
+            <ul class="list-item-info">
+                <li>
+                    <base-icon name="date" />
+                    {{ comment.date | formatDate }}
+                </li>
+            </ul>
         </div>
         <div
             class="comment-content"
@@ -51,12 +53,10 @@ export default {
 }
 
 .comment-header {
+    margin-bottom: map-get($spacers, 2);
+
     div:first-child {
         font-weight: bold;
-    }
-    div:last-child {
-        font-size: $font-size-sm;
-        color: $gray-600;
     }
 }
 

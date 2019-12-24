@@ -26,7 +26,7 @@
                 <h2 class="card-title">
                     <router-link v-html="post.title" :to="postTo(post.slug)" />
                 </h2>
-                <ul class="list-card-info">
+                <ul class="list-item-info">
                     <li v-for="(category, index) in post.categories" :key="`post-category-${index}`">
                         <base-icon v-if="!index" name="folder" />
                         <router-link
@@ -162,24 +162,6 @@ $pagination-focus-box-shadow: none;
     }
 }
 
-.list-card-info {
-    @include list-unstyled;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: -(map-get($spacers, 2));
-    margin-bottom: $spacer;
-    font-size: $font-size-sm;
-
-    &,
-    a {
-        color: $text-muted;
-    }
-
-    li {
-        margin-right: map-get($spacers, 2);
-    }
-}
-
 .cards-posts {
     .card {
         cursor: pointer;
@@ -198,6 +180,9 @@ $pagination-focus-box-shadow: none;
     }
     .card-title > a {
         color: $body-color;
+    }
+    .list-item-info {
+        margin-top: -(map-get($spacers, 2));
     }
 
     .pagination {
