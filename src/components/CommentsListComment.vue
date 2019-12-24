@@ -2,7 +2,12 @@
     <div class="comment">
         <div class="comment-header">
             <div v-html="printAuthor(comment)" />
-            <div>{{ printDate(comment) }}</div>
+            <ul class="list-item-info">
+                <li>
+                    <base-icon name="date" />
+                    {{ comment.date | formatDate }}
+                </li>
+            </ul>
         </div>
         <div
             class="comment-content"
@@ -12,6 +17,8 @@
 </template>
 
 <script>
+import './../utils/filters/formatDate';
+
 export default {
     name: 'CommentsListComment',
 
@@ -27,11 +34,6 @@ export default {
             if (comment.author.url) output = `<a href="${comment.author.url}" target="_blank">${output}</a>`;
 
             return output;
-        },
-        printDate(comment) {
-            let format = { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute:'2-digit' };
-
-            return new Date(comment.date).toLocaleString('ro-RO', format);
         }
     }
 };
@@ -51,12 +53,11 @@ export default {
 }
 
 .comment-header {
+    margin-bottom: $spacer;
+
     div:first-child {
+        margin-bottom: map-get($spacers, 1);
         font-weight: bold;
-    }
-    div:last-child {
-        font-size: $font-size-sm;
-        color: $gray-600;
     }
 }
 

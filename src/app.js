@@ -4,15 +4,19 @@ import createStore from './store';
 import { createRouter } from './router';
 import { sync } from 'vuex-router-sync';
 
+// plugins
 import VueMeta from 'vue-meta';
 Vue.use(VueMeta);
-
 import http from './plugins/http';
 Vue.use(http);
-
 import { ToastPlugin } from 'bootstrap-vue';
 Vue.use(ToastPlugin);
 
+// components
+import BaseIcon from './components/BaseIcon.vue';
+Vue.component('BaseIcon', BaseIcon);
+
+// other
 import './scss/app.scss';
 
 export function createApp () {

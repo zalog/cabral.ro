@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { SITE } from './../utils/constants';
 import {
     BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavbarToggle, BNavItem,
     BCollapse,
@@ -73,7 +74,7 @@ export default {
             return this.$store.dispatch('ui/fetchMenu');
         },
         menuItemTo: (item) => {
-            let url = new URL(item.url, 'https://www.cabral.ro');
+            let url = new URL(item.url, SITE.LINK);
 
             let output = url.pathname;
 

@@ -11,15 +11,36 @@
             :to="postTo(post.slug)"
         >
             <div
-                v-if="post.featured_media"
-                v-html="post.featured_media"
+                v-if="post.featuredMedia"
                 class="card-img-top"
-            />
+            >
+                <div class="img" v-html="post.featuredMedia" />
+                <ul class="list-img-info">
+                    <li>
+                        <base-icon name="comment" class="icon-sm" />
+                        {{ post.commentsNumber }}
+                    </li>
+                </ul>
+            </div>
             <div class="card-body" :to="postTo(post.slug)">
                 <h2 class="card-title">
-                    <router-link v-html="post.title.rendered" :to="postTo(post.slug)" />
+                    <router-link v-html="post.title" :to="postTo(post.slug)" />
                 </h2>
-                <div class="card-text" v-html="post.excerpt.rendered" />
+                <ul class="list-item-info">
+                    <li v-for="(category, index) in post.categories" :key="`post-category-${index}`">
+                        <base-icon v-if="!index" name="folder" />
+                        <router-link
+                            :to="category.link"
+                        >
+                            {{ category.name }}
+                        </router-link>
+                    </li>
+                    <li>
+                        <base-icon name="date" />
+                        {{ post.date | formatDate }}
+                    </li>
+                </ul>
+                <div class="card-text" v-html="post.excerpt" />
             </div>
         </router-link>
 
@@ -44,6 +65,8 @@
 </template>
 
 <script>
+import './../utils/filters/formatDate';
+
 export default {
     name: 'PostsList',
 
@@ -96,12 +119,7 @@ $pagination-focus-box-shadow: none;
 @import "~bootstrap/scss/pagination";
 
 .cards-posts /deep/ {
-    .card {
-        cursor: pointer;
-        box-shadow: $box-shadow-lg;
-        border: 0;
-    }
-    .card-img-top {
+    .img {
         position: relative;
         padding-top: percentage(9/16);
         overflow: hidden;
@@ -115,11 +133,56 @@ $pagination-focus-box-shadow: none;
             height: auto;
         }
     }
+
+    .card-text > {
+        p a {
+            display: none;
+        }
+
+        *:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.list-img-info {
+    @include list-unstyled;
+    display: flex;
+
+    li {
+        padding: $badge-padding-y * 1.5 $badge-padding-x * 2;
+        font-size: $badge-font-size;
+        border-radius: $badge-border-radius;
+        background-color: rgba($white, .6);
+        color: $gray-800;
+    }
+
+    li + li {
+        margin-left: $spacer;
+    }
+}
+
+.cards-posts {
+    .card {
+        cursor: pointer;
+        box-shadow: $box-shadow-lg;
+        border: 0;
+    }
+    .card-img-top {
+        position: relative;
+        overflow: hidden;
+
+        .list-img-info {
+            position: absolute;
+            top: $spacer;
+            right: $spacer;
+        }
+    }
     .card-title > a {
         color: $body-color;
     }
-    .card-text > *:last-child {
-        margin-bottom: 0;
+    .list-item-info {
+        margin-top: -(map-get($spacers, 2));
     }
 
     .pagination {
