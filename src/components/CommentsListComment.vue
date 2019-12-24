@@ -2,7 +2,10 @@
     <div class="comment">
         <div class="comment-header">
             <div v-html="printAuthor(comment)" />
-            <div>{{ comment.date | formatDate }}</div>
+            <div>
+                <base-icon name="date" />
+                {{ comment.date | formatDate }}
+            </div>
         </div>
         <div
             class="comment-content"
