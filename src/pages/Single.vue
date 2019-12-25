@@ -245,8 +245,8 @@ export default {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: auto;
-            min-height: 100%;
+            min-width: 100%;
+            height: auto;
         }
     }
 }
