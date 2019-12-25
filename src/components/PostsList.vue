@@ -26,20 +26,15 @@
                 <h2 class="card-title">
                     <router-link v-html="post.title" :to="postTo(post.slug)" />
                 </h2>
-                <ul class="list-item-info">
-                    <li v-for="(category, index) in post.categories" :key="`post-category-${index}`">
-                        <base-icon v-if="!index" name="folder" />
-                        <router-link
-                            :to="category.link"
-                        >
-                            {{ category.name }}
-                        </router-link>
-                    </li>
-                    <li>
-                        <base-icon name="date" />
-                        {{ post.date | formatDate }}
-                    </li>
-                </ul>
+                <list-item-info
+                    :data="[{
+                        icon: 'date',
+                        text: $options.filters.formatDate(post.date)
+                    }, {
+                        icon: 'folder',
+                        links: post.categories
+                    }]"
+                />
                 <div class="card-text" v-html="post.excerpt" />
             </div>
         </router-link>
@@ -66,9 +61,14 @@
 
 <script>
 import './../utils/filters/formatDate';
+import ListItemInfo from './ListItemInfo.vue';
 
 export default {
     name: 'PostsList',
+
+    components: {
+        ListItemInfo
+    },
 
     props: {
         posts: {
