@@ -11,6 +11,7 @@ export default (payload) => {
 
     const output = {
         id: payload.id,
+        featuredMedia: payload.featured_media,
         title: payload.title.rendered,
         content: payload.content,
         commentsNumber: payload.comments_number,
