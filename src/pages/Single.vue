@@ -10,24 +10,18 @@
                 v-html="data.single.title"
                 class="entry-title"
             />
-            <ul class="list-item-info">
-                <li>
-                    <base-icon name="date" />
-                    {{ data.single.date | formatDate }}
-                </li>
-                <li v-for="(category, index) in data.single.categories" :key="`post-category-${index}`">
-                    <base-icon v-if="!index" name="folder" />
-                    <router-link
-                        :to="category.link"
-                    >
-                        {{ category.name }}
-                    </router-link>
-                </li>
-                <li>
-                    <base-icon name="comment" class="icon-sm" />
-                    {{ data.single.commentsNumber }}
-                </li>
-            </ul>
+            <list-item-info
+                :data="[{
+                    icon: 'date',
+                    text: $options.filters.formatDate(data.single.date)
+                }, {
+                    icon: 'folder',
+                    links: data.single.categories
+                }, {
+                    icon: 'comment',
+                    text: data.single.commentsNumber
+                }]"
+            />
             <div
                 ref="content"
                 v-html="data.single.content"
@@ -58,6 +52,7 @@ import './../utils/filters/formatDate';
 import { SITE } from './../utils/constants';
 import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
+import ListItemInfo from './../components/ListItemInfo.vue';
 import { postFormWpcf7 } from './../services/forms';
 
 const Photoswipe = () => import(/* webpackChunkName: "photoswipe" */ './../components/Photoswipe.vue');
@@ -67,6 +62,7 @@ export default {
 
     components: {
         CommentsList,
+        ListItemInfo,
         Photoswipe
     },
 
