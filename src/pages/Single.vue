@@ -4,6 +4,10 @@
         class="page-single"
     >
         <div
+            class="entry-img-hero"
+            v-html="data.single.featuredMedia"
+        />
+        <div
             class="container-fluid py-5"
         >
             <h1
@@ -219,6 +223,32 @@ export default {
 
 .container-fluid {
     max-width: 700px;
+}
+
+.entry-img-hero {
+    position: relative;
+    height: calc(100vh - 56px);
+    overflow: hidden;
+    background-color: $black;
+
+    &::after {
+        content: " ";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($black, .25);
+    }
+
+    /deep/ {
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            min-height: 100%;
+        }
+    }
 }
 
 .entry-content {
