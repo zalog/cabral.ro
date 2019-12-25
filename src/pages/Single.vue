@@ -10,6 +10,24 @@
                 v-html="data.single.title"
                 class="entry-title"
             />
+            <ul class="list-item-info">
+                <li>
+                    <base-icon name="date" />
+                    {{ data.single.date | formatDate }}
+                </li>
+                <li v-for="(category, index) in data.single.categories" :key="`post-category-${index}`">
+                    <base-icon v-if="!index" name="folder" />
+                    <router-link
+                        :to="category.link"
+                    >
+                        {{ category.name }}
+                    </router-link>
+                </li>
+                <li>
+                    <base-icon name="comment" class="icon-sm" />
+                    {{ data.single.commentsNumber }}
+                </li>
+            </ul>
             <div
                 ref="content"
                 v-html="data.single.content"
@@ -36,6 +54,7 @@
 </template>
 
 <script>
+import './../utils/filters/formatDate';
 import { SITE } from './../utils/constants';
 import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
