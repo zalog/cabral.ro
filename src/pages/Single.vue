@@ -4,11 +4,12 @@
         class="page-single"
     >
         <div
+            v-if="data.single.featuredMedia"
             class="entry-img-hero"
             v-html="data.single.featuredMedia"
         />
         <div
-            class="container-fluid py-5"
+            class="container-fluid"
         >
             <h1
                 v-html="data.single.title"
@@ -34,7 +35,7 @@
         </div>
 
         <div class="bg-light">
-            <div class="container-fluid py-5">
+            <div class="container-fluid">
                 <comments-list
                     ref="comments"
                 />
@@ -222,12 +223,20 @@ export default {
 @import "./../scss/app-component.scss";
 
 .container-fluid {
-    max-width: 700px;
+    max-width: 800px;
+    padding-top: $grid-gutter-width;
+    padding-bottom: $grid-gutter-width;
+
+    @include media-breakpoint-up(md) {
+        padding: map-get($spacers, 5);
+    }
 }
 
 .entry-img-hero {
     position: relative;
+    z-index: -1;
     height: calc(100vh - 56px);
+    margin-bottom: -40vh;
     overflow: hidden;
     background-color: $black;
 
@@ -236,7 +245,6 @@ export default {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba($black, .25);
     }
 
     /deep/ {
@@ -248,6 +256,16 @@ export default {
             min-width: 100%;
             height: auto;
         }
+    }
+}
+
+.entry-img-hero + .container-fluid {
+    background-color: $body-bg;
+    border-top-left-radius: $border-radius-lg;
+    border-top-right-radius: $border-radius-lg;
+
+    @include media-breakpoint-up(md) {
+        border-radius: 0;
     }
 }
 
