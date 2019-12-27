@@ -121,6 +121,10 @@ export default {
             if (getters.currentPage) return;
 
             const response = await fetchPost({
+                fields: [
+                    'id', 'title', 'date', 'modified', 'content',
+                    'embed', 'embed_featured_media', 'comments_number'
+                ],
                 slug: rootState.route.path,
                 pageLoading: true
             });
