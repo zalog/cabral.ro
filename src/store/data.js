@@ -91,7 +91,7 @@ export default {
     actions: {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
-                fields: ['title', 'slug', 'excerpt', 'featured_media', 'comments_number', 'embed', 'date', 'modified'],
+                fields: ['title', 'slug', 'excerpt', 'embed_featured_media', 'comments_number', 'embed', 'date', 'modified'],
                 itemsOnPage: postsOnPage,
                 currentPage: parseInt(rootState.route.params.id) || 1,
                 pageLoading: true,
