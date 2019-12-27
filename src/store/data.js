@@ -125,10 +125,14 @@ export default {
                 pageLoading: true
             });
 
+            if (!response) return;
+
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
                 single: response
             });
+
+            return true;
         },
         fetchPage: async ({ getters, commit, rootState }) => {
             if (getters.currentPage) return;
@@ -138,26 +142,20 @@ export default {
                 pageLoading: true
             });
 
+            if (!response) return;
+
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
                 single: response
             });
+
+            return true;
         },
-        fetchSingle: async ({ getters, commit, rootState }) => {
+        fetchSingle: async ({ dispatch, getters, commit, rootState }) => {
             if (getters.currentPage) return;
 
-            const payload = {
-                slug: rootState.route.path,
-                pageLoading: true
-            };
-
-            let response = await fetchPost(payload);
-            !response && (response = await fetchPage(payload));
-
-            return commit('ADD_SINGLE', {
-                fullPath: rootState.route.fullPath,
-                single: response
-            });
+            let response = await dispatch('fetchPost');
+            !response && (response = await dispatch('fetchPage'));
         },
         fetchComments: async ({ getters, commit, rootState }) => {
             const page = getters.currentPage;
