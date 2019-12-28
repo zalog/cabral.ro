@@ -6,6 +6,7 @@ import { fetchComments, postComment } from '../services/comments';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
+const paginationMaxPages = 8;
 const commentsOnPage = 10;
 
 export default {
@@ -41,8 +42,8 @@ export default {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
             currentPage.posts.pagination = {
-                data: payload.data,
-                currentPage: payload.currentPage
+                data: payload.pagination.data,
+                currentPage: payload.pagination.currentPage
             };
         },
         ADD_SINGLE: (state, payload) => {
@@ -94,8 +95,10 @@ export default {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
                 fields: ['title', 'slug', 'excerpt', 'embed_featured_media', 'comments_number', 'embed', 'date', 'modified'],
-                itemsOnPage: postsOnPage,
-                currentPage: parseInt(rootState.route.params.id) || 1,
+                pagination: {
+                    itemsOnPage: postsOnPage,
+                    currentPage: parseInt(rootState.route.params.id) || 1
+                },
                 pageLoading: true,
                 search: rootState.route.query.s,
                 ...payload
@@ -105,9 +108,8 @@ export default {
 
             const response = await fetchPosts(payload);
 
-            const maxPages = 8;
-            const itemsTotal = parseInt(response.headers['x-wp-total']);
-            const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
+            const paginationItemsTotal = parseInt(response.headers['x-wp-total']);
+            const pagination = paginate(paginationItemsTotal, payload.pagination.currentPage, payload.pagination.itemsOnPage, paginationMaxPages);
 
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
@@ -115,8 +117,10 @@ export default {
             });
             commit('ADD_POSTS_PAGINATION', {
                 fullPath: rootState.route.fullPath,
-                data: pagination.pages,
-                currentPage: pagination.currentPage,
+                pagination: {
+                    data: pagination.pages,
+                    currentPage: pagination.currentPage
+                },
                 getters
             });
         },
