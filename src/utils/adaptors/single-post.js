@@ -19,7 +19,8 @@ export default (payload) => {
         content: payload.content,
         commentsNumber: payload.comments_number,
         categories,
-        date
+        date,
+        meta: payload.yoast_meta
     };
 
     return output;

@@ -19,6 +19,12 @@ export default {
         TheFooter: () => import(/* webpackChunkName: "app-footer" */ './components/TheFooter.vue')
     },
 
+    computed: {
+        currentPage: function() {
+            return this.$store.getters['data/currentPage']();
+        }
+    },
+
     watch: {
         '$store.state.ui.toast'(toast) {
             this.$bvToast.toast(toast.message, {
@@ -53,6 +59,11 @@ export default {
                 'gtm': ['innerHTML']
             }
         };
+
+        this.currentPage.single && this.currentPage.single.meta &&
+            this.currentPage.single.meta.forEach((meta) => {
+                output.meta.push(meta);
+            });
 
         return output;
     }
