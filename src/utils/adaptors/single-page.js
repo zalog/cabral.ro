@@ -4,11 +4,14 @@ export default (payload) => {
     const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
 
     const output = {
-        id: payload.id,
-        title: payload.title.rendered,
-        content: payload.content,
-        commentsNumber: payload.comments_number,
-        date
+        single: {
+            id: payload.id,
+            title: payload.title.rendered,
+            content: payload.content,
+            commentsNumber: payload.comments_number,
+            date
+        },
+        meta: payload.yoast_meta
     };
 
     return output;
