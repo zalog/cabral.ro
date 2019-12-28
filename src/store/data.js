@@ -101,7 +101,10 @@ export default {
     actions: {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
-                fields: ['title', 'slug', 'excerpt', 'embed_featured_media', 'comments_number', 'embed', 'date', 'modified'],
+                fields: [
+                    'title', 'slug', 'excerpt', 'date', 'modified',
+                    'embed', 'embed_featured_media', 'comments_number'
+                ],
                 pagination: {
                     itemsOnPage: postsOnPage,
                     currentPage: parseInt(rootState.route.params.id) || 1
@@ -136,7 +139,7 @@ export default {
 
             const response = await fetchPost({
                 fields: [
-                    'id', 'title', 'date', 'modified', 'content',
+                    'id', 'link', 'title', 'date', 'modified', 'content',
                     'embed', 'embed_featured_media', 'comments_number', 'yoast_meta'
                 ],
                 embed_featured_media_size: 'full',
@@ -164,7 +167,7 @@ export default {
 
             const response = await fetchPage({
                 fields: [
-                    'id', 'title', 'date', 'modified', 'content',
+                    'id', 'link', 'title', 'date', 'modified', 'content',
                     'comments_number', 'yoast_meta'
                 ],
                 slug: rootState.route.path,
