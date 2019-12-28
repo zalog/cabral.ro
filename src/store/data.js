@@ -216,10 +216,11 @@ export default {
             commit('ADD_COMMENTS', {
                 fullPath: rootState.route.fullPath,
                 data: response.nodes,
-                pageInfo: response.pageInfo
+                pageInfo: response.pageInfo,
+                getters
             });
         },
-        postComment: async ({ commit, rootState }, payload) => {
+        postComment: async ({ getters, commit, rootState }, payload) => {
             try {
                 const comment = await postComment(payload);
 
@@ -235,7 +236,8 @@ export default {
                     commit('ADD_COMMENT', {
                         fullPath: rootState.route.fullPath,
                         index: payload.index,
-                        comment
+                        comment,
+                        getters
                     });
                 }
 
