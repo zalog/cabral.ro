@@ -60,8 +60,8 @@ export default {
             }
         };
 
-        this.currentPage.single && this.currentPage.single.meta &&
-            this.currentPage.single.meta.forEach((meta) => {
+        this.currentPage.meta &&
+            this.currentPage.meta.forEach((meta) => {
                 output.meta.push(meta);
             });
 

@@ -13,13 +13,15 @@ export default (payload) => {
     const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
 
     const output = {
-        id: payload.id,
-        featuredMedia: featuredMediaValid && featuredMedia.html || false,
-        title: payload.title.rendered,
-        content: payload.content,
-        commentsNumber: payload.comments_number,
-        categories,
-        date,
+        single: {
+            id: payload.id,
+            featuredMedia: featuredMediaValid && featuredMedia.html || false,
+            title: payload.title.rendered,
+            content: payload.content,
+            commentsNumber: payload.comments_number,
+            categories,
+            date
+        },
         meta: payload.yoast_meta
     };
 

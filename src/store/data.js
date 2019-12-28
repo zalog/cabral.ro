@@ -59,6 +59,12 @@ export default {
 
             if (state.length > pagesToKeep) state.shift();
         },
+        ADD_METAS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+            const data = payload.data;
+
+            currentPage.meta = data;
+        },
         ADD_COMMENTS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
@@ -142,7 +148,13 @@ export default {
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response
+                single: response.single
+            });
+
+            commit('ADD_METAS', {
+                fullPath: rootState.route.fullPath,
+                data: response.meta,
+                getters
             });
 
             return true;
