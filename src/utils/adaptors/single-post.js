@@ -8,10 +8,13 @@ export default (payload) => {
         ...category,
         link: category.link.replace(SITE.LINK, '')
     }));
+    const featuredMedia = payload.embed_featured_media;
+    const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
+    const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
 
     const output = {
         id: payload.id,
-        featuredMedia: payload.embed_featured_media.html,
+        featuredMedia: featuredMediaValid && featuredMedia.html || false,
         title: payload.title.rendered,
         content: payload.content,
         commentsNumber: payload.comments_number,

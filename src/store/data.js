@@ -125,6 +125,7 @@ export default {
                     'id', 'title', 'date', 'modified', 'content',
                     'embed', 'embed_featured_media', 'comments_number'
                 ],
+                embed_featured_media_size: 'full',
                 slug: rootState.route.path,
                 pageLoading: true
             });
