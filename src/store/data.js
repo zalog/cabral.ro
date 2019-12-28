@@ -60,16 +60,17 @@ export default {
             if (state.length > pagesToKeep) state.shift();
         },
         ADD_COMMENTS: (state, payload) => {
-            let pageData = state.find(obj => obj[payload.fullPath])[payload.fullPath];
+            const currentPage = payload.getters.currentPage(payload.fullPath);
 
-            pageData.comments.data.push(...payload.data);
-            pageData.comments.loading = false;
-            pageData.comments.pageInfo = payload.pageInfo;
+            currentPage.comments.data.push(...payload.data);
+            currentPage.comments.loading = false;
+            currentPage.comments.pageInfo = payload.pageInfo;
         },
         ADD_COMMENT: (state, payload) => {
-            let pageData = state.find(obj => obj[payload.fullPath])[payload.fullPath];
-            let pageComments = pageData.comments.data;
-            let comment = {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+            let pageComments = currentPage.comments.data;
+
+            const comment = {
                 commentId: payload.comment.id,
                 author: {
                     name: payload.comment.author_name,
@@ -84,7 +85,7 @@ export default {
                     nodes: []
                 };
             } else {
-                pageComments = pageData.comments.data[payload.index].replies.nodes;
+                pageComments = currentPage.comments.data[payload.index].replies.nodes;
             }
 
             pageComments.unshift(comment);
