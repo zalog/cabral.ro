@@ -81,4 +81,14 @@ export default {
         }
     }
 }
+
+.icon-facebook {
+    color: map-get($social-colors, 'facebook');
+}
+.icon-whatsapp {
+    color: map-get($social-colors, 'whatsapp');
+}
+.icon-twitter {
+    color: map-get($social-colors, 'twitter');
+}
 </style>
