@@ -42,6 +42,7 @@ export default {
                 lang: SITE.LANG
             },
             titleTemplate: (titleChunk) => SITE.TITLE_TEMPLATE(titleChunk),
+            link: [],
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
@@ -59,6 +60,11 @@ export default {
                 'gtm': ['innerHTML']
             }
         };
+
+        const pageCanonical = this.currentPage.single && this.currentPage.single.link;
+        if (pageCanonical) {
+            output.link.push({rel: 'canonical', href: this.currentPage.single.link});
+        }
 
         this.currentPage.meta &&
             this.currentPage.meta.forEach((meta) => {
