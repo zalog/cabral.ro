@@ -160,7 +160,7 @@ export default {
 
             return true;
         },
-        fetchSingle: async ({ dispatch, getters, commit, rootState }) => {
+        fetchSingle: async ({ dispatch, getters }) => {
             if (getters.currentPage) return;
 
             let response = await dispatch('fetchPost');
