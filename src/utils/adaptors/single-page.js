@@ -1,6 +1,15 @@
-export default (payload) => ({
-    id: payload.id,
-    title: payload.title.rendered,
-    content: payload.content,
-    commentsNumber: payload.comments_number
-});
+export default (payload) => {
+    const payloadDate = new Date(payload.date);
+    const payloadModified = new Date(payload.modified);
+    const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
+
+    const output = {
+        id: payload.id,
+        title: payload.title.rendered,
+        content: payload.content,
+        commentsNumber: payload.comments_number,
+        date
+    };
+
+    return output;
+};
