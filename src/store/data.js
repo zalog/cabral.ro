@@ -165,7 +165,7 @@ export default {
             const response = await fetchPage({
                 fields: [
                     'id', 'title', 'date', 'modified', 'content',
-                    'comments_number'
+                    'comments_number', 'yoast_meta'
                 ],
                 slug: rootState.route.path,
                 pageLoading: true
@@ -175,7 +175,13 @@ export default {
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response
+                single: response.single
+            });
+
+            commit('ADD_METAS', {
+                fullPath: rootState.route.fullPath,
+                data: response.meta,
+                getters
             });
 
             return true;
