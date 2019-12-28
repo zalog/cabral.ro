@@ -142,6 +142,10 @@ export default {
             if (getters.currentPage) return;
 
             const response = await fetchPage({
+                fields: [
+                    'id', 'title', 'date', 'modified', 'content',
+                    'comments_number'
+                ],
                 slug: rootState.route.path,
                 pageLoading: true
             });
