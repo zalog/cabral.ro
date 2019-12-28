@@ -53,7 +53,7 @@ export default {
 
     computed: {
         data() {
-            return this.$store.getters['data/currentPage'];
+            return this.$store.getters['data/currentPage']();
         }
     }
 };
