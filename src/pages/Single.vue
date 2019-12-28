@@ -32,6 +32,7 @@
                 v-html="data.single.content"
                 class="entry-content"
             />
+            <list-share :url="data.single.link" />
         </div>
 
         <div class="bg-light">
@@ -58,6 +59,7 @@ import { SITE } from './../utils/constants';
 import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
+import ListShare from './../components/ListShare.vue';
 import { postFormWpcf7 } from './../services/forms';
 
 const Photoswipe = () => import(/* webpackChunkName: "photoswipe" */ './../components/Photoswipe.vue');
@@ -68,6 +70,7 @@ export default {
     components: {
         CommentsList,
         ListItemInfo,
+        ListShare,
         Photoswipe
     },
 

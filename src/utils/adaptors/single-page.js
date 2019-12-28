@@ -6,6 +6,7 @@ export default (payload) => {
     const output = {
         single: {
             id: payload.id,
+            link: payload.link,
             title: payload.title.rendered,
             content: payload.content,
             commentsNumber: payload.comments_number,

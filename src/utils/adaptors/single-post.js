@@ -15,6 +15,7 @@ export default (payload) => {
     const output = {
         single: {
             id: payload.id,
+            link: payload.link,
             featuredMedia: featuredMediaValid && featuredMedia.html || false,
             title: payload.title.rendered,
             content: payload.content,
