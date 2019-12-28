@@ -14,11 +14,12 @@ export default {
     state: () => ([]),
 
     getters: {
-        currentPage: (state, getters, rootState) => {
+        currentPage: (state, getters, rootState) => (path) => {
+            path = path || rootState.route.fullPath;
+
             const pages = state;
-            const path = rootState.route.fullPath;
             const page = pages.find(page => page[path]);
-            let output = typeof page !== 'undefined' && page[path] || false;
+            const output = typeof page !== 'undefined' && page[path] || false;
 
             return output;
         }
@@ -37,8 +38,9 @@ export default {
             if (state.length > pagesToKeep) state.shift();
         },
         ADD_POSTS_PAGINATION: (state, payload) => {
-            let pageData = state.find(obj => obj[payload.fullPath]);
-            pageData[payload.fullPath].posts.pagination = {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.posts.pagination = {
                 data: payload.data,
                 currentPage: payload.currentPage
             };
@@ -99,7 +101,7 @@ export default {
                 ...payload
             };
 
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             const response = await fetchPosts(payload);
 
@@ -114,11 +116,12 @@ export default {
             commit('ADD_POSTS_PAGINATION', {
                 fullPath: rootState.route.fullPath,
                 data: pagination.pages,
-                currentPage: pagination.currentPage
+                currentPage: pagination.currentPage,
+                getters
             });
         },
         fetchPost: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             const response = await fetchPost({
                 fields: [
@@ -140,7 +143,7 @@ export default {
             return true;
         },
         fetchPage: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             const response = await fetchPage({
                 fields: [
@@ -161,13 +164,13 @@ export default {
             return true;
         },
         fetchSingle: async ({ dispatch, getters }) => {
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             let response = await dispatch('fetchPost');
             !response && (response = await dispatch('fetchPage'));
         },
         fetchComments: async ({ getters, commit, rootState }) => {
-            const page = getters.currentPage;
+            const page = getters.currentPage();
             const pageComments = page.comments;
             const pageSingleId = page.single.id;
             let commentsFrom = null;
