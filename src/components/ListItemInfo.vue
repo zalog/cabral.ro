@@ -3,7 +3,7 @@
         v-if="data"
         class="list-item-info"
     >
-        <li v-for="(item, index) in data" :key="`list-item-${index}`">
+        <li v-for="(item, index) in getData" :key="`list-item-${index}`">
             <base-icon
                 v-if="item.icon"
                 :name="item.icon"
@@ -34,6 +34,12 @@ export default {
     props: {
         data: {
             type: Array
+        }
+    },
+
+    computed: {
+        getData() {
+            return this.data.filter(object => object.text || object.links);
         }
     }
 };
