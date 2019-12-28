@@ -11,6 +11,15 @@ export default (payload) => {
     const featuredMedia = payload.embed_featured_media;
     const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
     const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
+    const related = payload['jetpack-related-posts']
+        .filter((post) => {
+            return post.img.src !== '';
+        })
+        .map((post) => ({
+            title: post.title,
+            link: post.url.replace(SITE.LINK, ''),
+            img: post.img.src
+        }));
 
     const output = {
         single: {
@@ -23,7 +32,8 @@ export default (payload) => {
             categories,
             date
         },
-        meta: payload.yoast_meta
+        meta: payload.yoast_meta,
+        related
     };
 
     return output;

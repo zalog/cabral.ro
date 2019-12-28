@@ -65,6 +65,12 @@ export default {
 
             currentPage.meta = data;
         },
+        ADD_RELATED: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+            const data = payload.data;
+
+            currentPage.related = data;
+        },
         ADD_COMMENTS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
@@ -140,7 +146,7 @@ export default {
             const response = await fetchPost({
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
-                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta'
+                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
                 ],
                 embed_featured_media_size: 'full',
                 slug: rootState.route.path,
@@ -157,6 +163,12 @@ export default {
             commit('ADD_METAS', {
                 fullPath: rootState.route.fullPath,
                 data: response.meta,
+                getters
+            });
+
+            commit('ADD_RELATED', {
+                fullPath: rootState.route.fullPath,
+                data: response.related,
                 getters
             });
 
