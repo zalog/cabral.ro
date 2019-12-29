@@ -11,15 +11,21 @@ export default (payload) => {
     const featuredMedia = payload.embed_featured_media;
     const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
     const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
-    const related = payload['jetpack-related-posts']
+    let related = payload['jetpack-related-posts']
         .filter((post) => {
             return post.img.src !== '';
-        })
-        .map((post) => ({
+        });
+    if (related.length > 3) related.splice(3);
+    related = related.map((post) => {
+        let slug = post.url.replace(SITE.LINK, '');
+        slug = slug.replace(/\//g, '');
+
+        return {
             title: post.title,
-            link: post.url.replace(SITE.LINK, ''),
+            slug,
             img: post.img.src
-        }));
+        };
+    });
 
     const output = {
         single: {
