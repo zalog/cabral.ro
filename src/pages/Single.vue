@@ -35,15 +35,13 @@
             <list-share :url="data.single.link" />
         </div>
 
-        <div class="container-fluid">
-            <list-related :data="data.related" />
-        </div>
-
         <div class="bg-light">
             <div class="container-fluid">
-                <comments-list
-                    ref="comments"
-                />
+                <list-related :data="data.related" />
+            </div>
+
+            <div class="container-fluid">
+                <comments-list ref="comments" />
             </div>
         </div>
 
