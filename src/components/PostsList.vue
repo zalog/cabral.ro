@@ -77,6 +77,10 @@ $pagination-focus-box-shadow: none;
 @import "~bootstrap/scss/pagination";
 
 .cards-posts {
+    .card {
+        margin-bottom: map-get($spacers, 5);
+    }
+
     .pagination {
         .active {
             font-weight: bold;

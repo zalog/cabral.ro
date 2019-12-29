@@ -1,7 +1,7 @@
 <template>
     <router-link
         tag="div"
-        class="card mb-5"
+        class="card"
         v-ripple
         :to="postTo(post.slug)"
     >
