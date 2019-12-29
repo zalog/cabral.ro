@@ -10,12 +10,12 @@
             class="card-img-top"
         >
             <div class="img" v-html="post.featuredMedia" />
-            <ul class="list-img-info">
-                <li>
-                    <base-icon name="comment" class="icon-sm" />
-                    {{ post.commentsNumber }}
-                </li>
-            </ul>
+            <list-item-info
+                :data="[{
+                    icon: 'comment',
+                    text: post.commentsNumber
+                }]"
+            />
         </div>
         <div class="card-body" :to="postTo(post.slug)">
             <h2 class="card-title">
@@ -91,23 +91,6 @@ $card-border-color:           transparent;
     }
 }
 
-.list-img-info {
-    @include list-unstyled;
-    display: flex;
-
-    li {
-        padding: $badge-padding-y * 1.5 $badge-padding-x * 2;
-        font-size: $badge-font-size;
-        border-radius: $badge-border-radius;
-        background-color: rgba($white, .6);
-        color: $gray-800;
-    }
-
-    li + li {
-        margin-left: $spacer;
-    }
-}
-
 .card-text {
     /deep/ {
         > p a {
@@ -129,18 +112,33 @@ $card-border-color:           transparent;
         position: relative;
         overflow: hidden;
 
-        .list-img-info {
+        .list-item-info {
             position: absolute;
             top: $spacer;
             right: $spacer;
+
+            /deep/ {
+                .icon {
+                    width: 1rem;
+                }
+
+                li {
+                    padding: $badge-padding-y * 1.8 $badge-padding-x * 2;
+                    font-size: $badge-font-size;
+                    border-radius: $badge-border-radius;
+                    background-color: rgba($white, .6);
+                    color: $gray-800;
+                }
+            }
         }
     }
-    .card-title > a {
-        color: $body-color;
-    }
-    .list-item-info {
-        margin-top: -(map-get($spacers, 2));
+    .card-body {
+        .card-title > a {
+            color: $body-color;
+        }
+        .list-item-info {
+            margin-top: -(map-get($spacers, 2));
+        }
     }
 }
-
 </style>

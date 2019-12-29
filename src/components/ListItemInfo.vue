@@ -63,8 +63,8 @@ export default {
         color: rgba($text-muted, .8);
     }
 
-    li {
-        margin-right: map-get($spacers, 2);
+    li + li {
+        margin-left: map-get($spacers, 2);
     }
 }
 </style>
