@@ -3,34 +3,32 @@
         tag="div"
         class="card"
         v-ripple
-        :to="postTo(post.slug)"
+        :to="postTo(slug)"
     >
         <div
-            v-if="post.featuredMedia"
+            v-if="img"
             class="card-img-top"
         >
-            <div class="img" v-html="post.featuredMedia" />
+            <div
+                v-html="img"
+                class="img"
+            />
             <list-item-info
-                :data="[{
-                    icon: 'comment',
-                    text: post.commentsNumber
-                }]"
+                :data="imgInfo"
             />
         </div>
-        <div class="card-body" :to="postTo(post.slug)">
+        <div class="card-body" :to="postTo(slug)">
             <h2 class="card-title">
-                <router-link v-html="post.title" :to="postTo(post.slug)" />
+                <router-link v-html="title" :to="postTo(slug)" />
             </h2>
             <list-item-info
-                :data="[{
-                    icon: 'date',
-                    text: $options.filters.formatDate(post.date)
-                }, {
-                    icon: 'folder',
-                    links: post.categories
-                }]"
+                :data="bodyInfo"
             />
-            <div class="card-text" v-html="post.excerpt" />
+            <div
+                v-if="bodyText"
+                v-html="bodyText"
+                class="card-text"
+            />
         </div>
     </router-link>
 </template>
@@ -46,10 +44,18 @@ export default {
     },
 
     props: {
-        post: {
-            type: Object,
+        img: String,
+        imgInfo: Array,
+        title: {
+            type: String,
             required: true
-        }
+        },
+        slug: {
+            type: String,
+            required: true
+        },
+        bodyInfo: Array,
+        bodyText: String
     },
 
     methods: {

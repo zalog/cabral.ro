@@ -7,6 +7,21 @@
             <base-item-post
                 :key="`post-${index}`"
                 :post="post"
+                :img="post.featuredMedia"
+                :img-info="[{
+                    icon: 'comment',
+                    text: post.commentsNumber
+                }]"
+                :title="post.title"
+                :slug="post.slug"
+                :body-info="[{
+                    icon: 'date',
+                    text: $options.filters.formatDate(post.date)
+                }, {
+                    icon: 'folder',
+                    links: post.categories
+                }]"
+                :body-text="post.excerpt"
             />
         </template>
 
