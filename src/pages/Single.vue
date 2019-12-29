@@ -35,6 +35,10 @@
             <list-share :url="data.single.link" />
         </div>
 
+        <div class="container-fluid">
+            <list-related :data="data.related" />
+        </div>
+
         <div class="bg-light">
             <div class="container-fluid">
                 <comments-list
@@ -60,6 +64,7 @@ import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
 import ListShare from './../components/ListShare.vue';
+import ListRelated from './../components/ListRelated.vue';
 import { postFormWpcf7 } from './../services/forms';
 
 const Photoswipe = () => import(/* webpackChunkName: "photoswipe" */ './../components/Photoswipe.vue');
@@ -71,6 +76,7 @@ export default {
         CommentsList,
         ListItemInfo,
         ListShare,
+        ListRelated,
         Photoswipe
     },
 
