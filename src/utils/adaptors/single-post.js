@@ -4,13 +4,16 @@ export default (payload) => {
     const payloadDate = new Date(payload.date);
     const payloadModified = new Date(payload.modified);
     const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
+
     const categories = payload.embed.categories.map(category => ({
         ...category,
         link: category.link.replace(SITE.LINK, '')
     }));
+
     const featuredMedia = payload.embed_featured_media;
     const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
     const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
+
     let related = payload['jetpack-related-posts']
         .filter((post) => {
             return post.img.src !== '';
