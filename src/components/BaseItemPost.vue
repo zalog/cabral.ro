@@ -1,6 +1,6 @@
 <template>
     <router-link
-        tag="div"
+        :tag="tag"
         class="card"
         v-ripple
         :to="postTo(slug)"
@@ -45,6 +45,10 @@ export default {
 
     props: {
         img: String,
+        tag: {
+            type: String,
+            default: 'div'
+        },
         imgInfo: Array,
         title: {
             type: String,
