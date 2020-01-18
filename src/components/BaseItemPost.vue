@@ -10,8 +10,13 @@
             class="card-img-top"
         >
             <div
+                v-if="typeof img === 'string'"
                 v-html="img"
                 class="img"
+            />
+            <img
+                v-else-if="typeof img ==='object'"
+                :src="img.src"
             />
             <list-item-info
                 :data="imgInfo"
@@ -44,11 +49,11 @@ export default {
     },
 
     props: {
-        img: String,
         tag: {
             type: String,
             default: 'div'
         },
+        img: [String, Object],
         imgInfo: Array,
         title: {
             type: String,
