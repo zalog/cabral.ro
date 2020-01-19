@@ -53,13 +53,21 @@ export default {
     },
 
     methods: {
-        fetchPosts() {
-            return this.$store.dispatch('data/fetchPosts', {
-                categories: [this.$route.params.categorySlug]
-            }).then(() => {
-                this.forceDataRecompute++;
-                this.afterDataLoaded();
+        async fetchPosts() {
+            const categorySlug = this.$route.params.categorySlug.split('/').pop();
+
+            await this.$store.dispatch('data/fetchPosts', {
+                categories: [categorySlug]
             });
+
+            await this.$store.dispatch('data/fetchCategory', {
+                params: {
+                    slug: categorySlug
+                }
+            });
+
+            this.forceDataRecompute++;
+            this.afterDataLoaded();
         },
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
