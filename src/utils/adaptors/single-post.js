@@ -26,7 +26,7 @@ export default (payload) => {
         return {
             title: post.title,
             slug,
-            img: post.img.src
+            featuredMedia: `<img src="${post.img.src}" alt="${post.img.alt_text || 'post featured image'}" />`
         };
     });
 

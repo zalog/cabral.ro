@@ -10,16 +10,9 @@
             class="card-img-top"
         >
             <div
-                v-if="typeof img === 'string'"
                 v-html="img"
                 class="img"
             />
-            <div
-                v-else-if="typeof img ==='object'"
-                class="img"
-            >
-                <img :src="img.src" />
-            </div>
             <list-item-info
                 :data="imgInfo"
             />

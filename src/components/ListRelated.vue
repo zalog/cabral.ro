@@ -6,7 +6,7 @@
         >
             <base-item-post
                 :post="post"
-                :img="{src: post.img}"
+                :img="post.featuredMedia"
                 :title="post.title"
                 :slug="post.slug"
                 :body-text="post.excerpt"
