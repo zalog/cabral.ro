@@ -4,24 +4,50 @@
         class="page-single"
     >
         <div
-            class="container-fluid py-5"
+            v-if="data.single.featuredMedia"
+            class="entry-img-hero"
+            v-html="data.single.featuredMedia"
+        />
+        <div
+            class="container-fluid"
         >
             <h1
                 v-html="data.single.title"
                 class="entry-title"
+            />
+            <list-item-info
+                :data="[{
+                    icon: 'date',
+                    text: $options.filters.formatDate(data.single.date)
+                }, {
+                    icon: 'folder',
+                    links: data.single.categories
+                }, {
+                    icon: 'comment',
+                    text: data.single.commentsNumber
+                }]"
             />
             <div
                 ref="content"
                 v-html="data.single.content"
                 class="entry-content"
             />
+            <list-share :url="data.single.link" />
         </div>
 
         <div class="bg-light">
-            <div class="container-fluid py-5">
-                <comments-list
-                    ref="comments"
-                />
+            <template
+                v-if="data.related"
+            >
+                <div class="container-fluid">
+                    <list-related :data="data.related" />
+                </div>
+
+                <hr class="d-none d-lg-block" />
+            </template>
+
+            <div class="container-fluid">
+                <comments-list ref="comments" />
             </div>
         </div>
 
@@ -36,9 +62,13 @@
 </template>
 
 <script>
+import './../utils/filters/formatDate';
 import { SITE } from './../utils/constants';
 import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
+import ListItemInfo from './../components/ListItemInfo.vue';
+import ListShare from './../components/ListShare.vue';
+import ListRelated from './../components/ListRelated.vue';
 import { postFormWpcf7 } from './../services/forms';
 
 const Photoswipe = () => import(/* webpackChunkName: "photoswipe" */ './../components/Photoswipe.vue');
@@ -48,6 +78,9 @@ export default {
 
     components: {
         CommentsList,
+        ListItemInfo,
+        ListShare,
+        ListRelated,
         Photoswipe
     },
 
@@ -61,10 +94,10 @@ export default {
 
     computed: {
         data() {
-            return this.$store.getters['data/currentPage'];
+            return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            return this.data.single && decodeHtml(this.data.single.title.rendered);
+            return this.data.single && decodeHtml(this.data.single.title);
         }
     },
 
@@ -203,7 +236,50 @@ export default {
 @import "./../scss/app-component.scss";
 
 .container-fluid {
-    max-width: 700px;
+    max-width: 800px;
+    padding-top: $grid-gutter-width;
+    padding-bottom: $grid-gutter-width;
+
+    @include media-breakpoint-up(md) {
+        padding: map-get($spacers, 5);
+    }
+}
+
+.entry-img-hero {
+    position: relative;
+    z-index: -1;
+    height: calc(100vh - 56px);
+    margin-bottom: -40vh;
+    overflow: hidden;
+    background-color: $black;
+
+    &::after {
+        content: " ";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    /deep/ {
+        img {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            min-width: 100%;
+            height: auto;
+        }
+    }
+}
+
+.entry-img-hero + .container-fluid {
+    background-color: $body-bg;
+    border-top-left-radius: $border-radius-lg;
+    border-top-right-radius: $border-radius-lg;
+
+    @include media-breakpoint-up(md) {
+        border-radius: 0;
+    }
 }
 
 .entry-content {
