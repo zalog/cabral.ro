@@ -2,12 +2,12 @@
     <div class="comment">
         <div class="comment-header">
             <div v-html="printAuthor(comment)" />
-            <ul class="list-item-info">
-                <li>
-                    <base-icon name="date" />
-                    {{ comment.date | formatDate }}
-                </li>
-            </ul>
+            <list-item-info
+                :data="[{
+                    icon: 'date',
+                    text: $options.filters.formatDate(comment.date)
+                }]"
+            />
         </div>
         <div
             class="comment-content"
@@ -18,9 +18,14 @@
 
 <script>
 import './../utils/filters/formatDate';
+import ListItemInfo from './ListItemInfo.vue';
 
 export default {
     name: 'CommentsListComment',
+
+    components: {
+        ListItemInfo
+    },
 
     props: {
         comment: {

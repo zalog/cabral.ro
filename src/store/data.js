@@ -6,6 +6,7 @@ import { fetchComments, postComment } from '../services/comments';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
+const paginationMaxPages = 8;
 const commentsOnPage = 10;
 
 export default {
@@ -14,11 +15,12 @@ export default {
     state: () => ([]),
 
     getters: {
-        currentPage: (state, getters, rootState) => {
+        currentPage: (state, getters, rootState) => (path) => {
+            path = path || rootState.route.fullPath;
+
             const pages = state;
-            const path = rootState.route.fullPath;
             const page = pages.find(page => page[path]);
-            let output = typeof page !== 'undefined' && page[path] || false;
+            const output = typeof page !== 'undefined' && page[path] || false;
 
             return output;
         }
@@ -37,10 +39,11 @@ export default {
             if (state.length > pagesToKeep) state.shift();
         },
         ADD_POSTS_PAGINATION: (state, payload) => {
-            let pageData = state.find(obj => obj[payload.fullPath]);
-            pageData[payload.fullPath].posts.pagination = {
-                data: payload.data,
-                currentPage: payload.currentPage
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.posts.pagination = {
+                data: payload.pagination.data,
+                currentPage: payload.pagination.currentPage
             };
         },
         ADD_SINGLE: (state, payload) => {
@@ -56,17 +59,30 @@ export default {
 
             if (state.length > pagesToKeep) state.shift();
         },
-        ADD_COMMENTS: (state, payload) => {
-            let pageData = state.find(obj => obj[payload.fullPath])[payload.fullPath];
+        ADD_METAS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+            const data = payload.data;
 
-            pageData.comments.data.push(...payload.data);
-            pageData.comments.loading = false;
-            pageData.comments.pageInfo = payload.pageInfo;
+            currentPage.meta = data;
+        },
+        ADD_RELATED: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+            const data = payload.data;
+
+            currentPage.related = data;
+        },
+        ADD_COMMENTS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.comments.data.push(...payload.data);
+            currentPage.comments.loading = false;
+            currentPage.comments.pageInfo = payload.pageInfo;
         },
         ADD_COMMENT: (state, payload) => {
-            let pageData = state.find(obj => obj[payload.fullPath])[payload.fullPath];
-            let pageComments = pageData.comments.data;
-            let comment = {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+            let pageComments = currentPage.comments.data;
+
+            const comment = {
                 commentId: payload.comment.id,
                 author: {
                     name: payload.comment.author_name,
@@ -81,7 +97,7 @@ export default {
                     nodes: []
                 };
             } else {
-                pageComments = pageData.comments.data[payload.index].replies.nodes;
+                pageComments = currentPage.comments.data[payload.index].replies.nodes;
             }
 
             pageComments.unshift(comment);
@@ -91,21 +107,25 @@ export default {
     actions: {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
-                fields: ['title', 'slug', 'excerpt', 'featured_media', 'comments_number', 'embed', 'date', 'modified'],
-                itemsOnPage: postsOnPage,
-                currentPage: parseInt(rootState.route.params.id) || 1,
+                fields: [
+                    'title', 'slug', 'excerpt', 'date', 'modified',
+                    'embed', 'embed_featured_media', 'comments_number'
+                ],
+                pagination: {
+                    itemsOnPage: postsOnPage,
+                    currentPage: parseInt(rootState.route.params.id) || 1
+                },
                 pageLoading: true,
                 search: rootState.route.query.s,
                 ...payload
             };
 
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             const response = await fetchPosts(payload);
 
-            const maxPages = 8;
-            const itemsTotal = parseInt(response.headers['x-wp-total']);
-            const pagination = paginate(itemsTotal, payload.currentPage, payload.itemsOnPage, maxPages);
+            const paginationItemsTotal = parseInt(response.headers['x-wp-total']);
+            const pagination = paginate(paginationItemsTotal, payload.pagination.currentPage, payload.pagination.itemsOnPage, paginationMaxPages);
 
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
@@ -113,54 +133,82 @@ export default {
             });
             commit('ADD_POSTS_PAGINATION', {
                 fullPath: rootState.route.fullPath,
-                data: pagination.pages,
-                currentPage: pagination.currentPage
+                pagination: {
+                    data: pagination.pages,
+                    currentPage: pagination.currentPage
+                },
+                getters
             });
         },
         fetchPost: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             const response = await fetchPost({
+                fields: [
+                    'id', 'link', 'title', 'date', 'modified', 'content',
+                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
+                ],
+                embed_featured_media_size: 'full',
                 slug: rootState.route.path,
                 pageLoading: true
             });
 
+            if (!response) return;
+
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response
+                single: response.single
             });
+
+            commit('ADD_METAS', {
+                fullPath: rootState.route.fullPath,
+                data: response.meta,
+                getters
+            });
+
+            commit('ADD_RELATED', {
+                fullPath: rootState.route.fullPath,
+                data: response.related,
+                getters
+            });
+
+            return true;
         },
         fetchPage: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage) return;
+            if (getters.currentPage()) return;
 
             const response = await fetchPage({
+                fields: [
+                    'id', 'link', 'title', 'date', 'modified', 'content',
+                    'comments_number', 'yoast_meta'
+                ],
                 slug: rootState.route.path,
                 pageLoading: true
             });
+
+            if (!response) return;
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response
+                single: response.single
             });
-        },
-        fetchSingle: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage) return;
 
-            const payload = {
-                slug: rootState.route.path,
-                pageLoading: true
-            };
-
-            let response = await fetchPost(payload);
-            !response && (response = await fetchPage(payload));
-
-            return commit('ADD_SINGLE', {
+            commit('ADD_METAS', {
                 fullPath: rootState.route.fullPath,
-                single: response
+                data: response.meta,
+                getters
             });
+
+            return true;
+        },
+        fetchSingle: async ({ dispatch, getters }) => {
+            if (getters.currentPage()) return;
+
+            let response = await dispatch('fetchPost');
+            !response && (response = await dispatch('fetchPage'));
         },
         fetchComments: async ({ getters, commit, rootState }) => {
-            const page = getters.currentPage;
+            const page = getters.currentPage();
             const pageComments = page.comments;
             const pageSingleId = page.single.id;
             let commentsFrom = null;
@@ -183,10 +231,11 @@ export default {
             commit('ADD_COMMENTS', {
                 fullPath: rootState.route.fullPath,
                 data: response.nodes,
-                pageInfo: response.pageInfo
+                pageInfo: response.pageInfo,
+                getters
             });
         },
-        postComment: async ({ commit, rootState }, payload) => {
+        postComment: async ({ getters, commit, rootState }, payload) => {
             try {
                 const comment = await postComment(payload);
 
@@ -202,7 +251,8 @@ export default {
                     commit('ADD_COMMENT', {
                         fullPath: rootState.route.fullPath,
                         index: payload.index,
-                        comment
+                        comment,
+                        getters
                     });
                 }
 

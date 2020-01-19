@@ -8,6 +8,9 @@ export async function fetchPost(payload) {
         ...payload
     };
 
+    // prepare params data values
+    params.fields.length && ( params.fields = params.fields.join(',') );
+
     const response = await Vue.prototype.$http({
         method: 'get',
         url: `${ENDPOINTS.POSTS}`,
@@ -24,6 +27,9 @@ export async function fetchPage(payload) {
         fields: [],
         ...payload
     };
+
+    // prepare params data values
+    params.fields.length && ( params.fields = params.fields.join(',') );
 
     const response = await Vue.prototype.$http({
         method: 'get',

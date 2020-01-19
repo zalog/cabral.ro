@@ -32,7 +32,7 @@ export default {
     computed: {
         data() {
             this.forceDataRecompute;
-            return this.$store.getters['data/currentPage'];
+            return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
             let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';

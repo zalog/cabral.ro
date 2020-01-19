@@ -1,5 +1,8 @@
 <template>
-    <span class="icon"><svg
+    <span
+        class="icon"
+        :class="`icon-${name}`"
+    ><svg
         aria-hidden="true"
     >
         <use :xlink:href="`#icon-${name}`"></use>
@@ -32,6 +35,7 @@ export default {
     align-items: center;
     vertical-align: middle;
     line-height: 0; // keep this square if children is text
+    margin-top: -3px; // TODO: find a way to remove fixed px
 
     &::before {
         display: block;
@@ -77,5 +81,15 @@ export default {
             height: 75%;
         }
     }
+}
+
+.icon-facebook {
+    color: map-get($social-colors, 'facebook');
+}
+.icon-whatsapp {
+    color: map-get($social-colors, 'whatsapp');
+}
+.icon-twitter {
+    color: map-get($social-colors, 'twitter');
 }
 </style>

@@ -11,7 +11,7 @@ export default (payload) => {
 
     const output = {
         excerpt: payload.excerpt.rendered,
-        featuredMedia: payload.featured_media,
+        featuredMedia: payload.embed_featured_media.html,
         slug: payload.slug,
         title: payload.title.rendered,
         commentsNumber: payload.comments_number,
