@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h3>Comentarii</h3>
+
         <comments-list-form :data="{singleId: data.single.id}" />
 
         <ul class="list-comments">
