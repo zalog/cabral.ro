@@ -149,10 +149,20 @@ $card-border-color:           transparent;
             }
         }
     }
+
     .card-body {
+        > * {
+            margin-bottom: $spacer;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
         .card-title > a {
             color: $body-color;
         }
+
         .list-item-info {
             margin-top: -(map-get($spacers, 2));
         }
