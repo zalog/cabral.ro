@@ -3,6 +3,7 @@ import paginate from 'jw-paginate';
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
+import { fetchCategory } from '../services/category';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
@@ -44,6 +45,13 @@ export default {
             currentPage.posts.pagination = {
                 data: payload.pagination.data,
                 currentPage: payload.pagination.currentPage
+            };
+        },
+        ADD_CATEGORY: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.category = {
+                ...payload.data
             };
         },
         ADD_SINGLE: (state, payload) => {
@@ -137,6 +145,15 @@ export default {
                     data: pagination.pages,
                     currentPage: pagination.currentPage
                 },
+                getters
+            });
+        },
+        fetchCategory: async ({ getters, commit, rootState }, payload) => {
+            const category = await fetchCategory(payload);
+
+            commit('ADD_CATEGORY', {
+                fullPath: rootState.route.fullPath,
+                data: category,
                 getters
             });
         },
