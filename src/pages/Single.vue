@@ -40,6 +40,8 @@
                 <list-related :data="data.related" />
             </div>
 
+            <hr class="d-none d-lg-block" />
+
             <div class="container-fluid">
                 <comments-list ref="comments" />
             </div>

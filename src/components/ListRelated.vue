@@ -1,16 +1,20 @@
 <template>
-    <div class="row row-related">
-        <div
-            v-for="(post, index) in data" :key="`related-${index}`"
-            class="col-sm-4 mb-3 mb-sm-0"
-        >
-            <base-item-post
-                :post="post"
-                :img="post.featuredMedia"
-                :title="post.title"
-                :slug="post.slug"
-                :body-text="post.excerpt"
-            />
+    <div>
+        <h3>Pe aceeași temă</h3>
+
+        <div class="row row-related">
+            <div
+                v-for="(post, index) in data" :key="`related-${index}`"
+                class="col-sm-4 mb-3 mb-sm-0"
+            >
+                <base-item-post
+                    :post="post"
+                    :img="post.featuredMedia"
+                    :title="post.title"
+                    :slug="post.slug"
+                    :body-text="post.excerpt"
+                />
+            </div>
         </div>
     </div>
 </template>
