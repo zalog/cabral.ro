@@ -14,10 +14,12 @@
                 v-html="img"
                 class="img"
             />
-            <img
+            <div
                 v-else-if="typeof img ==='object'"
-                :src="img.src"
-            />
+                class="img"
+            >
+                <img :src="img.src" />
+            </div>
             <list-item-info
                 :data="imgInfo"
             />
