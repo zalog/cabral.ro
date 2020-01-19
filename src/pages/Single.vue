@@ -36,11 +36,15 @@
         </div>
 
         <div class="bg-light">
-            <div class="container-fluid">
-                <list-related :data="data.related" />
-            </div>
+            <template
+                v-if="data.related"
+            >
+                <div class="container-fluid">
+                    <list-related :data="data.related" />
+                </div>
 
-            <hr class="d-none d-lg-block" />
+                <hr class="d-none d-lg-block" />
+            </template>
 
             <div class="container-fluid">
                 <comments-list ref="comments" />
