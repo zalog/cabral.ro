@@ -1,29 +1,29 @@
 <template>
-    <ul class="list-related">
-        <router-link
-            tag="li"
+    <div class="row row-related">
+        <div
             v-for="(post, index) in data" :key="`related-${index}`"
-            :to="postTo(post.slug)"
+            class="col-sm-4 mb-3 mb-sm-0"
         >
-            <div class="card">
-                <div class="card-img-top">
-                    <img :src="post.img" />
-                </div>
-                <div class="card-body">
-                    <h4 class="cart-title">
-                        <router-link :to="postTo(post.slug)">
-                            {{ post.title }}
-                        </router-link>
-                    </h4>
-                </div>
-            </div>
-        </router-link>
-    </ul>
+            <base-item-post
+                :post="post"
+                :img="{src: post.img}"
+                :title="post.title"
+                :slug="post.slug"
+                :body-text="post.excerpt"
+            />
+        </div>
+    </div>
 </template>
 
 <script>
+import BaseItemPost from './BaseItemPost.vue';
+
 export default {
     name: 'ListRelated',
+
+    components: {
+        BaseItemPost
+    },
 
     props: {
         data: {
@@ -48,38 +48,15 @@ export default {
 @import "./../scss/app-component.scss";
 @import "~bootstrap/scss/card";
 
-.list-related {
-    @include list-unstyled;
-    display: flex;
-    flex-wrap: wrap;
-
-    li {
-        flex: 1;
+.row-related {
+    > div > div {
+        height: 100%;
     }
-}
 
-.card-img-top {
-    position: relative;
-    padding-top: percentage(9/16);
-    overflow: hidden;
-
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: auto;
-    }
-}
-
-.cart-title {
-    margin-bottom: 0;
-    font-size: $font-size-base;
-
-    &,
-    a {
-        color: $body-color;
+    /deep/ {
+        .card-title {
+            font-size: $font-size-base;
+        }
     }
 }
 </style>
