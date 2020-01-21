@@ -25,13 +25,8 @@ export default {
         PostsList
     },
 
-    data: () => ({
-        forceDataRecompute: 1
-    }),
-
     computed: {
         data() {
-            this.forceDataRecompute;
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
@@ -66,7 +61,6 @@ export default {
                 }
             });
 
-            this.forceDataRecompute++;
             this.afterDataLoaded();
         },
         afterDataLoaded() {

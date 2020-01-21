@@ -26,13 +26,8 @@ export default {
         PostsList
     },
 
-    data: () => ({
-        forceDataRecompute: 1
-    }),
-
     computed: {
         data() {
-            this.forceDataRecompute;
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
@@ -64,9 +59,7 @@ export default {
 
     methods: {
         fetchPosts() {
-            return this.$store.dispatch('data/fetchPosts').then(() => {
-                this.forceDataRecompute++;
-            });
+            return this.$store.dispatch('data/fetchPosts');
         },
         sendPageView() {
             window.dataLayer.push({ event: 'pageview', title: this.pageTitle });
