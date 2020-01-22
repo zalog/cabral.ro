@@ -114,6 +114,8 @@ export default {
 
     actions: {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
+            if (getters.currentPage()) return;
+
             payload = {
                 fields: [
                     'title', 'slug', 'excerpt', 'date', 'modified',
@@ -127,8 +129,6 @@ export default {
                 search: rootState.route.query.s,
                 ...payload
             };
-
-            if (getters.currentPage()) return;
 
             const response = await fetchPosts(payload);
 
