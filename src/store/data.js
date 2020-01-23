@@ -28,14 +28,15 @@ export default {
     },
 
     mutations: {
+        ADD_PAGE: (state, payload) => {
+            state.push({[payload.fullPath]: {}});
+        },
         ADD_POSTS: (state, payload) => {
-            state.push({
-                [payload.fullPath]: {
-                    posts: {
-                        data: payload.data
-                    }
-                }
-            });
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.posts = {
+                data: payload.data
+            };
 
             if (state.length > pagesToKeep) state.shift();
         },
@@ -114,7 +115,11 @@ export default {
 
     actions: {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
-            if (getters.currentPage()) return;
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.posts) return;
 
             payload = {
                 fields: [
@@ -137,7 +142,8 @@ export default {
 
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
-                data: response.data
+                data: response.data,
+                getters
             });
             commit('ADD_POSTS_PAGINATION', {
                 fullPath: rootState.route.fullPath,
@@ -149,11 +155,17 @@ export default {
             });
         },
         fetchCategory: async ({ getters, commit, rootState }, payload) => {
-            const category = await fetchCategory(payload);
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.category) return;
+
+            const response = await fetchCategory(payload);
 
             commit('ADD_CATEGORY', {
                 fullPath: rootState.route.fullPath,
-                data: category,
+                data: response,
                 getters
             });
         },
