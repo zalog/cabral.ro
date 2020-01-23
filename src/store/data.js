@@ -16,8 +16,9 @@ export default {
     state: () => ([]),
 
     getters: {
-        currentPage: (state, getters, rootState) => (path) => {
+        currentPage: (state, getters, rootState) => (path, passedState) => {
             path = path || rootState.route.fullPath;
+            state = passedState || state;
 
             const pages = state;
             const page = pages.find(page => page[path]);
