@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import paginate from 'jw-paginate';
 
 import { fetchPosts } from './../services/posts';
@@ -35,9 +36,9 @@ export default {
         ADD_POSTS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
-            currentPage.posts = {
+            Vue.set(currentPage, 'posts', {
                 data: payload.data
-            };
+            });
 
             if (state.length > pagesToKeep) state.shift();
         },
@@ -52,19 +53,23 @@ export default {
         ADD_CATEGORY: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
-            currentPage.category = {
+            Vue.set(currentPage, 'category', {
                 ...payload.data
-            };
+            });
         },
         ADD_SINGLE: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
-            currentPage.single = payload.single;
+            Vue.set(currentPage, 'single', {
+                ...payload.single
+            });
+
             // sets comments default state
-            currentPage.comments = {
+            // todo: move this in a mutation
+            Vue.set(currentPage, 'comments', {
                 data: [],
                 loading: false
-            };
+            });
 
             if (state.length > pagesToKeep) state.shift();
         },
