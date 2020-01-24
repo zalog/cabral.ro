@@ -81,14 +81,14 @@ export default {
 
             currentPage.related = data;
         },
-        ADD_COMMENTS: (state, payload) => {
+        ADD_SINGLE_COMMENTS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
             currentPage.comments.data.push(...payload.data);
             currentPage.comments.loading = false;
             currentPage.comments.pageInfo = payload.pageInfo;
         },
-        ADD_COMMENT: (state, payload) => {
+        ADD_SINGLE_COMMENT: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
             let pageComments = currentPage.comments.data;
 
@@ -237,13 +237,13 @@ export default {
             let response = await dispatch('fetchPost');
             !response && (response = await dispatch('fetchPage'));
         },
-        fetchComments: async ({ getters, commit, rootState }) => {
+        fetchSingleComments: async ({ getters, commit, rootState }) => {
             const page = getters.currentPage();
             const pageComments = page.comments;
             const pageSingleId = page.single.id;
             let commentsFrom = null;
 
-            if (!page || !pageSingleId) throw Error('`fetchComments` needs `page` or `pageSingleId`.');
+            if (!page || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
 
             if (pageComments.pageInfo) {
                 if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
@@ -258,7 +258,7 @@ export default {
                 after: commentsFrom
             });
 
-            commit('ADD_COMMENTS', {
+            commit('ADD_SINGLE_COMMENTS', {
                 fullPath: rootState.route.fullPath,
                 data: response.nodes,
                 pageInfo: response.pageInfo,
@@ -278,7 +278,7 @@ export default {
                 }
 
                 if (comment.status === 'approved') {
-                    commit('ADD_COMMENT', {
+                    commit('ADD_SINGLE_COMMENT', {
                         fullPath: rootState.route.fullPath,
                         index: payload.index,
                         comment,
