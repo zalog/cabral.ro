@@ -13,7 +13,7 @@
     "lint:js": "./node_modules/.bin/eslint --ignore-pattern '/dist/' --ext .js,.vue ."
   },
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.2.2",
     "compression": "^1.7.4",
