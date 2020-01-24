@@ -57,15 +57,14 @@ export default {
             };
         },
         ADD_SINGLE: (state, payload) => {
-            state.push({
-                [payload.fullPath]: {
-                    single: payload.single,
-                    comments: {
-                        data: [],
-                        loading: false
-                    }
-                }
-            });
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.single = payload.single;
+            // sets comments default state
+            currentPage.comments = {
+                data: [],
+                loading: false
+            };
 
             if (state.length > pagesToKeep) state.shift();
         },
@@ -171,7 +170,11 @@ export default {
             });
         },
         fetchPost: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage()) return;
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
 
             const response = await fetchPost({
                 fields: [
@@ -187,7 +190,8 @@ export default {
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response.single
+                single: response.single,
+                getters
             });
 
             commit('ADD_METAS', {
@@ -205,7 +209,11 @@ export default {
             return true;
         },
         fetchPage: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage()) return;
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
 
             const response = await fetchPage({
                 fields: [
@@ -220,7 +228,8 @@ export default {
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response.single
+                single: response.single,
+                getters
             });
 
             commit('ADD_METAS', {
@@ -231,19 +240,23 @@ export default {
 
             return true;
         },
-        fetchSingle: async ({ dispatch, getters }) => {
-            if (getters.currentPage()) return;
+        fetchSingle: async ({ dispatch, getters, commit, rootState }) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
 
             let response = await dispatch('fetchPost');
             !response && (response = await dispatch('fetchPage'));
         },
         fetchSingleComments: async ({ getters, commit, rootState }) => {
-            const page = getters.currentPage();
-            const pageComments = page.comments;
-            const pageSingleId = page.single.id;
+            const currentPage = getters.currentPage();
+            const pageComments = currentPage.comments;
+            const pageSingleId = currentPage.single.id;
             let commentsFrom = null;
 
-            if (!page || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
+            if (!currentPage || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
 
             if (pageComments.pageInfo) {
                 if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
