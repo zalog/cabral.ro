@@ -43,22 +43,22 @@ export default {
 
     watch: {
         '$route'() {
-            this.fetchPosts();
+            this.fetchPage();
             this.sendPageView();
         }
     },
 
     serverPrefetch() {
-        return this.fetchPosts();
+        return this.fetchPage();
     },
 
     beforeMount() {
-        this.fetchPosts();
+        this.fetchPage();
         this.sendPageView();
     },
 
     methods: {
-        fetchPosts() {
+        fetchPage() {
             return this.$store.dispatch('data/fetchPosts');
         },
         sendPageView() {

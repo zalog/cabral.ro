@@ -36,19 +36,19 @@ export default {
     },
 
     watch: {
-        '$route': 'fetchPosts'
+        '$route': 'fetchPage'
     },
 
     serverPrefetch() {
-        return this.fetchPosts();
+        return this.fetchPage();
     },
 
     beforeMount() {
-        this.fetchPosts();
+        this.fetchPage();
     },
 
     methods: {
-        async fetchPosts() {
+        async fetchPage() {
             const categorySlug = this.$route.params.categorySlug.split('/').pop();
 
             await this.$store.dispatch('data/fetchPosts', {

@@ -102,15 +102,15 @@ export default {
     },
 
     watch: {
-        '$route': 'fetchSingle'
+        '$route': 'fetchPage'
     },
 
     serverPrefetch() {
-        return this.fetchSingle();
+        return this.fetchPage();
     },
 
     beforeMount() {
-        this.fetchSingle();
+        this.fetchPage();
     },
 
     mounted() {
@@ -122,7 +122,7 @@ export default {
     },
 
     methods: {
-        fetchSingle() {
+        fetchPage() {
             let actionName = 'data/fetchSingle';
             if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
             else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
