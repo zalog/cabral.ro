@@ -161,7 +161,7 @@ export default {
         fetchComments() {
             if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
 
-            this.$store.dispatch('data/fetchComments');
+            this.$store.dispatch('data/fetchSingleComments');
         },
         handleScroll() {
             this.fetchComments();
