@@ -31,7 +31,7 @@ export default {
         },
         pageTitle() {
             const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            return decodeHtml(this.$route.path + page);
+            return decodeHtml(this.data.category.name + page);
         }
     },
 
