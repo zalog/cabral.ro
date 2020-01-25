@@ -4,8 +4,13 @@
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="this.pageTitle"
+            v-html="pageTitle"
             class="mb-4"
+        />
+        <div
+            v-if="data.category.description"
+            v-html="data.category.description"
+            class="mt-n3 mb-4"
         />
         <posts-list
             :posts="data.posts"
