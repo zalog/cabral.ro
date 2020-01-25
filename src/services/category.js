@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { ENDPOINTS } from './../utils/constants';
+import { itemCategory } from './../utils/adaptors';
 
 export async function fetchCategory(payload) {
     const response = await Vue.prototype.$http({
@@ -8,5 +9,5 @@ export async function fetchCategory(payload) {
         params: payload.params
     });
 
-    return response.data[0];
+    return itemCategory(response.data[0]);
 }
