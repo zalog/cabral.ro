@@ -64,13 +64,6 @@ export default {
                 ...payload.single
             });
 
-            // sets comments default state
-            // todo: move this in a mutation
-            Vue.set(currentPage, 'comments', {
-                data: [],
-                loading: false
-            });
-
             if (state.length > pagesToKeep) state.shift();
         },
         ADD_METAS: (state, payload) => {
@@ -85,12 +78,27 @@ export default {
 
             currentPage.related = data;
         },
-        ADD_SINGLE_COMMENTS: (state, payload) => {
+        INIT_SINGLE_COMMENTS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Vue.set(currentPage, 'comments', {
+                data: [],
+                loading: null,
+                pageInfo: {}
+            });
+        },
+        SET_SINGLE_COMMENTS_PROPS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Object.keys(payload.data).forEach((key) => {
+                const value = payload.data[key];
+                currentPage.comments[key] = value;
+            });
+        },
+        PUSH_SINGLE_COMMENTS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
             currentPage.comments.data.push(...payload.data);
-            currentPage.comments.loading = false;
-            currentPage.comments.pageInfo = payload.pageInfo;
         },
         ADD_SINGLE_COMMENT: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
@@ -211,6 +219,11 @@ export default {
                 getters
             });
 
+            commit('INIT_SINGLE_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                getters
+            });
+
             return true;
         },
         fetchPage: async ({ getters, commit, rootState }) => {
@@ -243,6 +256,11 @@ export default {
                 getters
             });
 
+            commit('INIT_SINGLE_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                getters
+            });
+
             return true;
         },
         fetchSingle: async ({ dispatch, getters, commit, rootState }) => {
@@ -263,12 +281,18 @@ export default {
 
             if (!currentPage || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
 
-            if (pageComments.pageInfo) {
+            if (Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
                 else return;
             }
 
-            pageComments.loading = true;
+            commit('SET_SINGLE_COMMENTS_PROPS', {
+                fullPath: rootState.route.fullPath,
+                data: {
+                    loading: true
+                },
+                getters
+            });
 
             const response = await fetchComments({
                 singleId: pageSingleId,
@@ -276,10 +300,17 @@ export default {
                 after: commentsFrom
             });
 
-            commit('ADD_SINGLE_COMMENTS', {
+            commit('PUSH_SINGLE_COMMENTS', {
                 fullPath: rootState.route.fullPath,
                 data: response.nodes,
-                pageInfo: response.pageInfo,
+                getters
+            });
+            commit('SET_SINGLE_COMMENTS_PROPS', {
+                fullPath: rootState.route.fullPath,
+                data: {
+                    loading: false,
+                    pageInfo: response.pageInfo
+                },
                 getters
             });
         },
