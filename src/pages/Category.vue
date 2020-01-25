@@ -35,6 +35,8 @@ export default {
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
+            if (!this.data.category) return;
+
             const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
             return decodeHtml(this.data.category.name + page);
         }

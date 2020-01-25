@@ -97,7 +97,9 @@ export default {
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            return this.data.single && decodeHtml(this.data.single.title);
+            if (!this.data.single) return;
+
+            return decodeHtml(this.data.single.title);
         }
     },
 
