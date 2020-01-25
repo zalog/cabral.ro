@@ -1,8 +1,10 @@
+import Vue from 'vue';
 import paginate from 'jw-paginate';
 
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
+import { fetchCategory } from '../services/category';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
@@ -15,8 +17,9 @@ export default {
     state: () => ([]),
 
     getters: {
-        currentPage: (state, getters, rootState) => (path) => {
+        currentPage: (state, getters, rootState) => (path, passedState) => {
             path = path || rootState.route.fullPath;
+            state = passedState || state;
 
             const pages = state;
             const page = pages.find(page => page[path]);
@@ -27,13 +30,14 @@ export default {
     },
 
     mutations: {
+        ADD_PAGE: (state, payload) => {
+            state.push({[payload.fullPath]: {}});
+        },
         ADD_POSTS: (state, payload) => {
-            state.push({
-                [payload.fullPath]: {
-                    posts: {
-                        data: payload.data
-                    }
-                }
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Vue.set(currentPage, 'posts', {
+                data: payload.data
             });
 
             if (state.length > pagesToKeep) state.shift();
@@ -46,15 +50,18 @@ export default {
                 currentPage: payload.pagination.currentPage
             };
         },
+        ADD_CATEGORY: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Vue.set(currentPage, 'category', {
+                ...payload.data
+            });
+        },
         ADD_SINGLE: (state, payload) => {
-            state.push({
-                [payload.fullPath]: {
-                    single: payload.single,
-                    comments: {
-                        data: [],
-                        loading: false
-                    }
-                }
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Vue.set(currentPage, 'single', {
+                ...payload.single
             });
 
             if (state.length > pagesToKeep) state.shift();
@@ -71,14 +78,29 @@ export default {
 
             currentPage.related = data;
         },
-        ADD_COMMENTS: (state, payload) => {
+        INIT_SINGLE_COMMENTS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Vue.set(currentPage, 'comments', {
+                data: [],
+                loading: null,
+                pageInfo: {}
+            });
+        },
+        SET_SINGLE_COMMENTS_PROPS: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            Object.keys(payload.data).forEach((key) => {
+                const value = payload.data[key];
+                currentPage.comments[key] = value;
+            });
+        },
+        PUSH_SINGLE_COMMENTS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
             currentPage.comments.data.push(...payload.data);
-            currentPage.comments.loading = false;
-            currentPage.comments.pageInfo = payload.pageInfo;
         },
-        ADD_COMMENT: (state, payload) => {
+        ADD_SINGLE_COMMENT: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
             let pageComments = currentPage.comments.data;
 
@@ -106,6 +128,12 @@ export default {
 
     actions: {
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.posts) return;
+
             payload = {
                 fields: [
                     'title', 'slug', 'excerpt', 'date', 'modified',
@@ -120,8 +148,6 @@ export default {
                 ...payload
             };
 
-            if (getters.currentPage()) return;
-
             const response = await fetchPosts(payload);
 
             const paginationItemsTotal = parseInt(response.headers['x-wp-total']);
@@ -129,7 +155,8 @@ export default {
 
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
-                data: response.data
+                data: response.data,
+                getters
             });
             commit('ADD_POSTS_PAGINATION', {
                 fullPath: rootState.route.fullPath,
@@ -140,8 +167,27 @@ export default {
                 getters
             });
         },
+        fetchCategory: async ({ getters, commit, rootState }, payload) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.category) return;
+
+            const response = await fetchCategory(payload);
+
+            commit('ADD_CATEGORY', {
+                fullPath: rootState.route.fullPath,
+                data: response,
+                getters
+            });
+        },
         fetchPost: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage()) return;
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
 
             const response = await fetchPost({
                 fields: [
@@ -157,7 +203,8 @@ export default {
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response.single
+                single: response.single,
+                getters
             });
 
             commit('ADD_METAS', {
@@ -172,10 +219,19 @@ export default {
                 getters
             });
 
+            commit('INIT_SINGLE_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                getters
+            });
+
             return true;
         },
         fetchPage: async ({ getters, commit, rootState }) => {
-            if (getters.currentPage()) return;
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
 
             const response = await fetchPage({
                 fields: [
@@ -190,7 +246,8 @@ export default {
 
             commit('ADD_SINGLE', {
                 fullPath: rootState.route.fullPath,
-                single: response.single
+                single: response.single,
+                getters
             });
 
             commit('ADD_METAS', {
@@ -199,28 +256,43 @@ export default {
                 getters
             });
 
+            commit('INIT_SINGLE_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                getters
+            });
+
             return true;
         },
-        fetchSingle: async ({ dispatch, getters }) => {
-            if (getters.currentPage()) return;
+        fetchSingle: async ({ dispatch, getters, commit, rootState }) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
 
             let response = await dispatch('fetchPost');
             !response && (response = await dispatch('fetchPage'));
         },
-        fetchComments: async ({ getters, commit, rootState }) => {
-            const page = getters.currentPage();
-            const pageComments = page.comments;
-            const pageSingleId = page.single.id;
+        fetchSingleComments: async ({ getters, commit, rootState }) => {
+            const currentPage = getters.currentPage();
+            const pageComments = currentPage.comments;
+            const pageSingleId = currentPage.single.id;
             let commentsFrom = null;
 
-            if (!page || !pageSingleId) throw Error('`fetchComments` needs `page` or `pageSingleId`.');
+            if (!currentPage || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
 
-            if (pageComments.pageInfo) {
+            if (Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
                 else return;
             }
 
-            pageComments.loading = true;
+            commit('SET_SINGLE_COMMENTS_PROPS', {
+                fullPath: rootState.route.fullPath,
+                data: {
+                    loading: true
+                },
+                getters
+            });
 
             const response = await fetchComments({
                 singleId: pageSingleId,
@@ -228,10 +300,17 @@ export default {
                 after: commentsFrom
             });
 
-            commit('ADD_COMMENTS', {
+            commit('PUSH_SINGLE_COMMENTS', {
                 fullPath: rootState.route.fullPath,
                 data: response.nodes,
-                pageInfo: response.pageInfo,
+                getters
+            });
+            commit('SET_SINGLE_COMMENTS_PROPS', {
+                fullPath: rootState.route.fullPath,
+                data: {
+                    loading: false,
+                    pageInfo: response.pageInfo
+                },
                 getters
             });
         },
@@ -248,7 +327,7 @@ export default {
                 }
 
                 if (comment.status === 'approved') {
-                    commit('ADD_COMMENT', {
+                    commit('ADD_SINGLE_COMMENT', {
                         fullPath: rootState.route.fullPath,
                         index: payload.index,
                         comment,
