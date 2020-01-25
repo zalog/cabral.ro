@@ -31,12 +31,12 @@ export default {
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            let pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
+            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+            const pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
             return decodeHtml(pageTitleSearch + SITE.TITLE + page);
         },
         pageTitleSearch() {
-            let s = this.$route.query.s;
+            const s = this.$route.query.s;
             return s && `Caută după "${s}"` || '';
         }
     },

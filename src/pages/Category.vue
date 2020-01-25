@@ -30,7 +30,7 @@ export default {
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
             return decodeHtml(this.$route.path + page);
         }
     },
