@@ -97,20 +97,22 @@ export default {
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            return this.data.single && decodeHtml(this.data.single.title);
+            if (!this.data.single) return;
+
+            return decodeHtml(this.data.single.title);
         }
     },
 
     watch: {
-        '$route': 'fetchSingle'
+        '$route': 'fetchPage'
     },
 
     serverPrefetch() {
-        return this.fetchSingle();
+        return this.fetchPage();
     },
 
     beforeMount() {
-        this.fetchSingle();
+        this.fetchPage();
     },
 
     mounted() {
@@ -122,7 +124,7 @@ export default {
     },
 
     methods: {
-        fetchSingle() {
+        fetchPage() {
             let actionName = 'data/fetchSingle';
             if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
             else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
@@ -161,7 +163,7 @@ export default {
         fetchComments() {
             if (this.data.comments && this.data.comments.loading || !this.isVisibleLastComment()) return;
 
-            this.$store.dispatch('data/fetchComments');
+            this.$store.dispatch('data/fetchSingleComments');
         },
         handleScroll() {
             this.fetchComments();

@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="data"
+        v-if="data.posts"
         class="page-home container-fluid py-5"
     >
         <h1
@@ -26,47 +26,40 @@ export default {
         PostsList
     },
 
-    data: () => ({
-        forceDataRecompute: 1
-    }),
-
     computed: {
         data() {
-            this.forceDataRecompute;
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            let pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
+            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+            const pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
             return decodeHtml(pageTitleSearch + SITE.TITLE + page);
         },
         pageTitleSearch() {
-            let s = this.$route.query.s;
+            const s = this.$route.query.s;
             return s && `Caută după "${s}"` || '';
         }
     },
 
     watch: {
         '$route'() {
-            this.fetchPosts();
+            this.fetchPage();
             this.sendPageView();
         }
     },
 
     serverPrefetch() {
-        return this.fetchPosts();
+        return this.fetchPage();
     },
 
     beforeMount() {
-        this.fetchPosts();
+        this.fetchPage();
         this.sendPageView();
     },
 
     methods: {
-        fetchPosts() {
-            return this.$store.dispatch('data/fetchPosts').then(() => {
-                this.forceDataRecompute++;
-            });
+        fetchPage() {
+            return this.$store.dispatch('data/fetchPosts');
         },
         sendPageView() {
             window.dataLayer.push({ event: 'pageview', title: this.pageTitle });

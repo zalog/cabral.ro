@@ -1,11 +1,16 @@
 <template>
     <div
-        v-if="data"
+        v-if="data.posts && data.category"
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="this.pageTitle"
+            v-html="pageTitle"
             class="mb-4"
+        />
+        <div
+            v-if="data.category.description"
+            v-html="data.category.description"
+            class="mt-n3 mb-4"
         />
         <posts-list
             :posts="data.posts"
@@ -25,41 +30,45 @@ export default {
         PostsList
     },
 
-    data: () => ({
-        forceDataRecompute: 1
-    }),
-
     computed: {
         data() {
-            this.forceDataRecompute;
             return this.$store.getters['data/currentPage']();
         },
         pageTitle() {
-            let page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            return decodeHtml(this.$route.path + page);
+            if (!this.data.category) return;
+
+            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
+            return decodeHtml(this.data.category.name + page);
         }
     },
 
     watch: {
-        '$route': 'fetchPosts'
+        '$route': 'fetchPage'
     },
 
     serverPrefetch() {
-        return this.fetchPosts();
+        return this.fetchPage();
     },
 
     beforeMount() {
-        this.fetchPosts();
+        this.fetchPage();
     },
 
     methods: {
-        fetchPosts() {
-            return this.$store.dispatch('data/fetchPosts', {
-                categories: [this.$route.params.categorySlug]
-            }).then(() => {
-                this.forceDataRecompute++;
-                this.afterDataLoaded();
+        async fetchPage() {
+            const categorySlug = this.$route.params.categorySlug.split('/').pop();
+
+            await this.$store.dispatch('data/fetchPosts', {
+                categories: [categorySlug]
             });
+
+            await this.$store.dispatch('data/fetchCategory', {
+                params: {
+                    slug: categorySlug
+                }
+            });
+
+            this.afterDataLoaded();
         },
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
