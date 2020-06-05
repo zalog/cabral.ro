@@ -124,7 +124,10 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-@import "~photoswipe/dist/photoswipe.css";
-@import "~photoswipe/dist/default-skin/default-skin.css";
+<style lang="scss" scoped>
+/deep/ {
+    @import "~photoswipe/dist/photoswipe.css";
+    $pswp__assets-path: "/node_modules/photoswipe/src/css/default-skin/";
+    @import "/node_modules/photoswipe/src/css/default-skin/default-skin.scss";
+}
 </style>
