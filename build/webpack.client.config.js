@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const webpackMerge = require('webpack-merge');
 const base = require('./webpack.base.config');
 const SWPrecachePlugin = require('sw-precache-webpack-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const config = merge(base, {
+const config = webpackMerge.merge(base, {
     entry: {
         app: './src/entry-client.js'
     },
@@ -19,6 +19,7 @@ const config = merge(base, {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
+                            esModule: false,
                             hmr: !isProd,
                             reloadAll: !isProd
                         }
