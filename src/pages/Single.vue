@@ -64,7 +64,6 @@
 <script>
 import './../utils/filters/formatDate';
 import { SITE } from './../utils/constants';
-import { decodeHtml } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
 import ListShare from './../components/ListShare.vue';
@@ -99,7 +98,7 @@ export default {
         pageTitle() {
             if (!this.data.single) return;
 
-            return decodeHtml(this.data.single.title);
+            return this.data.single.title;
         }
     },
 

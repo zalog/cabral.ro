@@ -16,7 +16,6 @@
 
 <script>
 import { SITE } from './../utils/constants';
-import { decodeHtml } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -33,7 +32,7 @@ export default {
         pageTitle() {
             const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
             const pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
-            return decodeHtml(pageTitleSearch + SITE.TITLE + page);
+            return pageTitleSearch + SITE.TITLE + page;
         },
         pageTitleSearch() {
             const s = this.$route.query.s;
