@@ -20,6 +20,7 @@
 
 <script>
 import { SITE } from './../utils/constants';
+import { formatTitle } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -75,7 +76,7 @@ export default {
             this.sendPageView();
         },
         sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
+            window.dataLayer.push({ event: 'pageview', title: formatTitle(this.pageTitle) });
         }
     },
 
