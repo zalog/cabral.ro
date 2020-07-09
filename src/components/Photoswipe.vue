@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { SITE } from './../utils/constants';
 import { formatTitle } from './../utils';
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
