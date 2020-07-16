@@ -1,6 +1,6 @@
 import { SITE } from './../constants';
 
-export function formatTitle(title) {
+export function formatHtmlTitle(title) {
     if (!title) return SITE.TITLE;
 
     const separator = '-';

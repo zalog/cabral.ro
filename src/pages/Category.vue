@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { formatTitle } from './../utils';
+import { formatHtmlTitle } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -69,7 +69,7 @@ export default {
             this.sendPageView();
         },
         sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: formatTitle(this.getPageTitle()) });
+            window.dataLayer.push({ event: 'pageview', title: formatHtmlTitle(this.getPageTitle()) });
         },
         getPageTitle() {
             const output = [];
