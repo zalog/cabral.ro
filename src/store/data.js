@@ -66,11 +66,13 @@ export default {
 
             if (state.length > pagesToKeep) state.shift();
         },
-        ADD_METAS: (state, payload) => {
+        ADD_HEAD_TAGS: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
             const data = payload.data;
 
-            currentPage.meta = data;
+            currentPage.head = {
+                metas: data
+            };
         },
         ADD_RELATED: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
@@ -207,9 +209,9 @@ export default {
                 getters
             });
 
-            commit('ADD_METAS', {
+            commit('ADD_HEAD_TAGS', {
                 fullPath: rootState.route.fullPath,
-                data: response.meta,
+                data: response.head.metas,
                 getters
             });
 
@@ -250,9 +252,9 @@ export default {
                 getters
             });
 
-            commit('ADD_METAS', {
+            commit('ADD_HEAD_TAGS', {
                 fullPath: rootState.route.fullPath,
-                data: response.meta,
+                data: response.head.metas,
                 getters
             });
 

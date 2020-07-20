@@ -12,7 +12,9 @@ export default (payload) => {
             commentsNumber: payload.comments_number,
             date
         },
-        meta: payload.yoast_meta
+        head: {
+            metas: payload.yoast_meta
+        }
     };
 
     return output;

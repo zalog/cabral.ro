@@ -67,8 +67,8 @@ export default {
             output.link.push({rel: 'canonical', href: this.currentPage.single.link});
         }
 
-        this.currentPage.meta &&
-            this.currentPage.meta.forEach((meta) => {
+        this.currentPage.head && this.currentPage.head.metas &&
+            this.currentPage.head.metas.forEach((meta) => {
                 output.meta.push(meta);
             });
 
