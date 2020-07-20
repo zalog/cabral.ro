@@ -11,3 +11,13 @@ export function formatHtmlTitle(title) {
 
     return title.reduce((acc, cur) => `${acc} ${separator} ${cur}`);
 }
+
+export function formatPageTitle(title) {
+    if (!title || !title.length) return;
+
+    const separator = ' ';
+
+    if (typeof title === 'string') title = [title];
+
+    return title.join(separator);
+}

@@ -4,7 +4,7 @@
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="getPageTitle()"
+            v-html="getPageTitle('string')"
             class="mb-4"
         />
         <div
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { formatHtmlTitle } from './../utils';
+import { formatHtmlTitle, formatPageTitle } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -71,8 +71,8 @@ export default {
         sendPageView() {
             window.dataLayer.push({ event: 'pageview', title: formatHtmlTitle(this.getPageTitle()) });
         },
-        getPageTitle() {
-            const output = [];
+        getPageTitle(returnType = 'array') {
+            let output = [];
             const pageName = this.data.category && this.data.category.name || false;
             const pageNumber = this.$route.params.id && `pagina ${this.$route.params.id}` || '';
 
@@ -80,6 +80,8 @@ export default {
 
             output.push(pageName);
             pageNumber && output.push(pageNumber);
+
+            if (returnType === 'string') output = formatPageTitle(output);
 
             return output;
         }
