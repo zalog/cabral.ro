@@ -62,15 +62,11 @@ export default {
             }
         };
 
-        const pageCanonical = this.currentPage.single && this.currentPage.single.link;
-        if (pageCanonical) {
-            output.link.push({rel: 'canonical', href: this.currentPage.single.link});
-        }
-
-        this.currentPage.head && this.currentPage.head.metas &&
-            this.currentPage.head.metas.forEach((meta) => {
-                output.meta.push(meta);
+        this.currentPage.head && Object.keys(this.currentPage.head).forEach((key) => {
+            this.currentPage.head[key].forEach((tag) => {
+                output[key].push(tag);
             });
+        });
 
         return output;
     }
