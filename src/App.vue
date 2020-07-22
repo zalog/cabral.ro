@@ -49,7 +49,7 @@ export default {
                 { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
             ],
             script: [{
-                vmid: 'gtm',
+                vmid: 'script-gtm',
                 innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -58,13 +58,22 @@ export default {
                 type: 'text/javascript'
             }],
             __dangerouslyDisableSanitizersByTagID: {
-                'gtm': ['innerHTML']
+                'script-gtm': ['innerHTML']
             }
         };
 
         this.currentPage.head && Object.keys(this.currentPage.head).forEach((key) => {
             this.currentPage.head[key].forEach((tag) => {
                 output[key].push(tag);
+            });
+        });
+
+        // prevents duplicate tags after hydration
+        ['link', 'meta', 'script'].forEach((key) => {
+            output[key].forEach((tag, index) => {
+                if (tag.vmid) return;
+
+                tag.vmid = `${key}-${index}`;
             });
         });
 
