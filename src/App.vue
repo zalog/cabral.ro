@@ -63,7 +63,11 @@ export default {
         };
 
         this.currentPage.head && Object.keys(this.currentPage.head).forEach((key) => {
-            this.currentPage.head[key].forEach((tag) => {
+            const tags = this.currentPage.head[key];
+
+            if (typeof tags !== 'object') return;
+
+            tags.forEach((tag) => {
                 output[key].push(tag);
             });
         });
