@@ -42,10 +42,11 @@ export default (payload) => {
             date
         },
         head: {
-            meta: payload.yoast_meta,
+            title: payload.title.rendered,
             link: [
                 {rel: 'canonical', href: payload.link}
-            ]
+            ],
+            meta: payload.yoast_meta
         },
         related
     };

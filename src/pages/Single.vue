@@ -223,12 +223,6 @@ export default {
                 });
             });
         }
-    },
-
-    metaInfo() {
-        return {
-            title: this.pageTitle
-        };
     }
 };
 </script>
