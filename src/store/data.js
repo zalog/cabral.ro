@@ -127,13 +127,36 @@ export default {
     },
 
     actions: {
-        fetchPosts: async ({ getters, commit, rootState }, payload) => {
+        fetchPageHome: async({ getters, commit, rootState, dispatch }) => {
             const currentPage = getters.currentPage();
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
             if (currentPage.posts) return;
 
+            await dispatch('fetchPosts', {
+                pageLoading: true
+            });
+        },
+        fetchPageCategory: async({ getters, commit, rootState, dispatch }, payload) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.posts) return;
+
+            await dispatch('fetchPosts', {
+                categories: [payload.slug],
+                pageLoading: true
+            });
+
+            await dispatch('fetchCategory', {
+                params: {
+                    slug: payload.slug
+                }
+            });
+        },
+        fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
                 fields: [
                     'title', 'slug', 'excerpt', 'date', 'modified',
@@ -143,7 +166,6 @@ export default {
                     itemsOnPage: postsOnPage,
                     currentPage: parseInt(rootState.route.params.id) || 1
                 },
-                pageLoading: true,
                 search: rootState.route.query.s,
                 ...payload
             };
@@ -168,12 +190,6 @@ export default {
             });
         },
         fetchCategory: async ({ getters, commit, rootState }, payload) => {
-            const currentPage = getters.currentPage();
-
-            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
-
-            if (currentPage.category) return;
-
             const response = await fetchCategory(payload);
 
             commit('ADD_CATEGORY', {

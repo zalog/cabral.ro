@@ -51,14 +51,8 @@ export default {
         async fetchPage() {
             const categorySlug = this.$route.params.categorySlug.split('/').pop();
 
-            await this.$store.dispatch('data/fetchPosts', {
-                categories: [categorySlug]
-            });
-
-            await this.$store.dispatch('data/fetchCategory', {
-                params: {
-                    slug: categorySlug
-                }
+            await this.$store.dispatch('data/fetchPageCategory', {
+                slug: categorySlug
             });
 
             this.afterDataLoaded();
