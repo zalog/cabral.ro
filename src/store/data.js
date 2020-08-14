@@ -244,8 +244,6 @@ export default {
                 fullPath: rootState.route.fullPath,
                 getters
             });
-
-            return true;
         },
         fetchPagePage: async({ getters, commit, rootState, dispatch }) => {
             const currentPage = getters.currentPage();
@@ -286,8 +284,6 @@ export default {
                 fullPath: rootState.route.fullPath,
                 getters
             });
-
-            return true;
         },
         fetchPageSingle: async ({ dispatch, getters, commit, rootState }) => {
             const currentPage = getters.currentPage();
