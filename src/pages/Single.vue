@@ -123,14 +123,14 @@ export default {
     },
 
     methods: {
-        fetchPage() {
+        async fetchPage() {
             let actionName = 'data/fetchPageSingle';
             if (this.$route.params.singleType === 'post') actionName = 'data/fetchPagePost';
             else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPagePage';
 
-            return this.$store.dispatch(actionName).then(() => {
-                this.afterDataLoaded();
-            });
+            await this.$store.dispatch(actionName);
+
+            this.afterDataLoaded();
         },
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
