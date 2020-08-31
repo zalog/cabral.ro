@@ -161,7 +161,7 @@ export default {
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (currentPage.posts) return;
+            if (currentPage.single) return;
 
             await dispatch('fetchPost', {
                 pageLoading: true
@@ -172,7 +172,7 @@ export default {
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (currentPage.posts) return;
+            if (currentPage.single) return;
 
             await dispatch('fetchPage', {
                 pageLoading: true
