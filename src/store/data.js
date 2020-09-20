@@ -150,10 +150,22 @@ export default {
                 pageLoading: true
             });
 
-            await dispatch('fetchCategory', {
+            const responseCategory = await fetchCategory({
                 params: {
                     slug: payload.slug
                 }
+            });
+
+            commit('ADD_CATEGORY', {
+                fullPath: rootState.route.fullPath,
+                data: responseCategory.category,
+                getters
+            });
+
+            commit('ADD_HEAD_TAGS', {
+                fullPath: rootState.route.fullPath,
+                data: responseCategory.head,
+                getters
             });
         },
         fetchPagePost: async({ getters, commit, rootState, dispatch }) => {
@@ -222,21 +234,6 @@ export default {
                     data: pagination.pages,
                     currentPage: pagination.currentPage
                 },
-                getters
-            });
-        },
-        fetchCategory: async ({ getters, commit, rootState }, payload) => {
-            const response = await fetchCategory(payload);
-
-            commit('ADD_CATEGORY', {
-                fullPath: rootState.route.fullPath,
-                data: response.category,
-                getters
-            });
-
-            commit('ADD_HEAD_TAGS', {
-                fullPath: rootState.route.fullPath,
-                data: response.head,
                 getters
             });
         },
