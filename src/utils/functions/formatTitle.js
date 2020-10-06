@@ -1,11 +1,17 @@
 import { SITE } from './../constants';
 
+const separator = ' - ';
+
+export function formatTitle(title) {
+    if (typeof title === 'string') title = [title];
+
+    return title.join(separator);
+}
+
 export function formatHtmlTitle(title) {
     if (!title) return SITE.TITLE;
 
-    const separator = ' - ';
-
-    if (typeof title === 'string') title = [title];
+    title = [formatTitle(title)];
 
     title.push(SITE.TITLE);
 

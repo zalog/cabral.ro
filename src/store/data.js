@@ -5,6 +5,7 @@ import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
 import { fetchCategory } from '../services/category';
+import { formatTitle } from './../utils';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
@@ -71,6 +72,11 @@ export default {
             const data = payload.data;
 
             currentPage.head = {...data};
+        },
+        SET_HEAD_TITLE: (state, payload) => {
+            const currentPage = payload.getters.currentPage(payload.fullPath);
+
+            currentPage.head.title = payload.data;
         },
         ADD_RELATED: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
@@ -167,6 +173,19 @@ export default {
                 data: responseCategory.head,
                 getters
             });
+
+            const pageNumber = rootState.route.params.id;
+            if (pageNumber) {
+                const pageTitle = formatTitle([
+                    responseCategory.category.name,
+                    `pagina ${pageNumber}`
+                ]);
+                commit('SET_HEAD_TITLE', {
+                    fullPath: rootState.route.fullPath,
+                    data: pageTitle,
+                    getters
+                });
+            }
         },
         fetchPagePost: async({ getters, commit, rootState }) => {
             const currentPage = getters.currentPage();
