@@ -53,7 +53,6 @@ export default {
 
     beforeMount() {
         this.fetchPage();
-        this.sendPageView();
     },
 
     methods: {
