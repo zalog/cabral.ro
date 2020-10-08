@@ -4,7 +4,7 @@
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="getPageTitle('string')"
+            v-html="currentPageTitle"
             class="mb-4"
         />
         <div
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { formatHtmlTitle, formatPageTitle } from './../utils';
+import { formatHtmlTitle } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -32,6 +32,9 @@ export default {
     computed: {
         data() {
             return this.$store.getters['data/currentPage']();
+        },
+        currentPageTitle() {
+            return this.$store.getters['data/currentPageTitle']();
         }
     },
 
@@ -63,21 +66,7 @@ export default {
             this.sendPageView();
         },
         sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: formatHtmlTitle(this.getPageTitle()) });
-        },
-        getPageTitle(returnType = 'array') {
-            let output = [];
-            const pageName = this.data.category && this.data.category.name || false;
-            const pageNumber = this.$route.params.id && `pagina ${this.$route.params.id}` || '';
-
-            if (!pageName) return;
-
-            output.push(pageName);
-            pageNumber && output.push(pageNumber);
-
-            if (returnType === 'string') output = formatPageTitle(output);
-
-            return output;
+            window.dataLayer.push({ event: 'pageview', title: formatHtmlTitle(this.currentPageTitle) });
         }
     }
 };

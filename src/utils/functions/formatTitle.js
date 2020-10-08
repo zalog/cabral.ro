@@ -19,11 +19,9 @@ export function formatHtmlTitle(title) {
 }
 
 export function formatPageTitle(title) {
-    if (!title || !title.length) return;
+    if (!title) return;
 
-    const separator = ' ';
+    let titleSeparator = ' ';
 
-    if (typeof title === 'string') title = [title];
-
-    return title.join(separator);
+    return title.replace(separator, titleSeparator);
 }

@@ -5,7 +5,7 @@ import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
 import { fetchCategory } from '../services/category';
-import { formatTitle } from './../utils';
+import { formatTitle, formatPageTitle } from './../utils';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
@@ -27,6 +27,11 @@ export default {
             const output = typeof page !== 'undefined' && page[path] || false;
 
             return output;
+        },
+        currentPageTitle: (state, getters) => () => {
+            const page = getters.currentPage();
+
+            return formatPageTitle(page.head.title);
         }
     },
 
