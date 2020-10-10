@@ -69,13 +69,6 @@ export default {
         sendPageView() {
             window.dataLayer.push({ event: 'pageview', title: this.pageTitle });
         }
-    },
-
-    metaInfo() {
-        return {
-            title: this.pageTitle,
-            titleTemplate: false
-        };
     }
 };
 </script>
