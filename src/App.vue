@@ -10,7 +10,6 @@
 
 <script>
 import { SITE } from './utils/constants';
-import { formatHtmlTitle, decodeHtml } from './utils';
 
 export default {
     name: 'app',
@@ -42,7 +41,6 @@ export default {
             htmlAttrs: {
                 lang: SITE.LANG
             },
-            titleTemplate: (titleChunk) => decodeHtml(formatHtmlTitle(titleChunk)),
             link: [],
             meta: [
                 { charset: 'utf-8' },
