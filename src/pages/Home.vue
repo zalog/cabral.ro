@@ -43,7 +43,6 @@ export default {
     watch: {
         '$route'() {
             this.fetchPage();
-            this.sendPageView();
         }
     },
 
