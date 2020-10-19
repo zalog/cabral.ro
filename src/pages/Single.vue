@@ -55,15 +55,15 @@
             v-if="photoswipe.show"
             :items="photoswipe.items"
             :index="photoswipe.index"
-            :title="pageTitle"
-            @closed="photoswipe.show = false; sendPageView();"
+            :title="currentPageTitle"
+            @closed="photoswipe.show = false; datalayerPageview(currentPageTitle)"
         />
     </div>
 </template>
 
 <script>
 import './../utils/filters/formatDate';
-import { formatHtmlTitle } from './../utils';
+import { datalayerPage } from './../utils/mixins';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
 import ListShare from './../components/ListShare.vue';
@@ -83,6 +83,10 @@ export default {
         Photoswipe
     },
 
+    mixins: [
+        datalayerPage
+    ],
+
     data: () => ({
         photoswipe: {
             show: false,
@@ -95,10 +99,8 @@ export default {
         data() {
             return this.$store.getters['data/currentPage']();
         },
-        pageTitle() {
-            if (!this.data.single) return;
-
-            return this.data.single.title;
+        currentPageTitle() {
+            return this.$store.getters['data/currentPageTitle']();
         }
     },
 
@@ -135,13 +137,10 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.sendPageView();
+            this.datalayerPageview(this.currentPageTitle);
             this.photoswipeInit();
             this.fetchComments();
             this.handleFormWpcf7();
-        },
-        sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: formatHtmlTitle(this.pageTitle) });
         },
         photoswipeInit() {
             this.$refs['content'].querySelectorAll('img').forEach((img, index) => {

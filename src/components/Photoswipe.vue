@@ -38,12 +38,16 @@
 </template>
 
 <script>
-import { formatHtmlTitle } from './../utils';
+import { datalayerPage } from './../utils/mixins';
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 
 export default {
     name: 'Photoswipe',
+
+    mixins: [
+        datalayerPage
+    ],
 
     props: {
         items: {
@@ -71,7 +75,10 @@ export default {
 
     watch: {
         'currentImage': function(image) {
-            this.sendImageView(image);
+            this.datalayerImageView({
+                title: this.pageTitle,
+                image
+            });
         }
     },
 
@@ -105,15 +112,6 @@ export default {
         });
 
         gallery.init();
-    },
-
-    methods: {
-        sendImageView(image) {
-            let title = formatHtmlTitle(this.pageTitle);
-            let url = document.location.href.replace(/&pid=\d+/, `&pid=${image}`);
-
-            window.dataLayer.push({ event: 'imageview', title, url });
-        }
     },
 
     metaInfo() {

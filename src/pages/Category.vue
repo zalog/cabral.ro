@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { formatHtmlTitle } from './../utils';
+import { datalayerPage } from './../utils/mixins';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -28,6 +28,10 @@ export default {
     components: {
         PostsList
     },
+
+    mixins: [
+        datalayerPage
+    ],
 
     computed: {
         data() {
@@ -63,10 +67,7 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.sendPageView();
-        },
-        sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: formatHtmlTitle(this.currentPageTitle) });
+            this.datalayerPageview(this.currentPageTitle);
         }
     }
 };
