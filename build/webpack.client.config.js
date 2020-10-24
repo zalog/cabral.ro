@@ -19,6 +19,7 @@ const config = merge(base, {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
+                            esModule: false,
                             hmr: !isProd,
                             reloadAll: !isProd
                         }
