@@ -168,15 +168,46 @@ export default {
                 getters
             });
         },
-        fetchPagePost: async({ getters, commit, rootState, dispatch }) => {
+        fetchPagePost: async({ getters, commit, rootState }) => {
             const currentPage = getters.currentPage();
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
             if (currentPage.single) return;
 
-            await dispatch('fetchPost', {
+            const responsePost = await fetchPost({
+                fields: [
+                    'id', 'link', 'title', 'date', 'modified', 'content',
+                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
+                ],
+                embed_featured_media_size: 'full',
+                slug: rootState.route.path,
                 pageLoading: true
+            });
+
+            if (!responsePost) return;
+
+            commit('ADD_SINGLE', {
+                fullPath: rootState.route.fullPath,
+                single: responsePost.single,
+                getters
+            });
+
+            commit('ADD_HEAD_TAGS', {
+                fullPath: rootState.route.fullPath,
+                data: responsePost.head,
+                getters
+            });
+
+            commit('ADD_RELATED', {
+                fullPath: rootState.route.fullPath,
+                data: responsePost.related,
+                getters
+            });
+
+            commit('INIT_SINGLE_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                getters
             });
         },
         fetchPagePage: async({ getters, commit, rootState, dispatch }) => {
@@ -190,19 +221,9 @@ export default {
                 pageLoading: true
             });
         },
-        fetchPageSingle: async ({ dispatch, getters, commit, rootState }) => {
-            const currentPage = getters.currentPage();
-
-            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
-
-            if (currentPage.single) return;
-
-            let response = await dispatch('fetchPost', {
-                pageLoading: true
-            });
-            !response && (response = await dispatch('fetchPage', {
-                pageLoading: true
-            }));
+        fetchPageSingle: async ({ dispatch }) => {
+            let response = await dispatch('fetchPagePost');
+            !response && (response = await dispatch('fetchPagePage'));
         },
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
@@ -234,42 +255,6 @@ export default {
                     data: pagination.pages,
                     currentPage: pagination.currentPage
                 },
-                getters
-            });
-        },
-        fetchPost: async ({ getters, commit, rootState }, payload) => {
-            const response = await fetchPost({
-                fields: [
-                    'id', 'link', 'title', 'date', 'modified', 'content',
-                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
-                ],
-                embed_featured_media_size: 'full',
-                slug: rootState.route.path,
-                ...payload
-            });
-
-            if (!response) return;
-
-            commit('ADD_SINGLE', {
-                fullPath: rootState.route.fullPath,
-                single: response.single,
-                getters
-            });
-
-            commit('ADD_HEAD_TAGS', {
-                fullPath: rootState.route.fullPath,
-                data: response.head,
-                getters
-            });
-
-            commit('ADD_RELATED', {
-                fullPath: rootState.route.fullPath,
-                data: response.related,
-                getters
-            });
-
-            commit('INIT_SINGLE_COMMENTS', {
-                fullPath: rootState.route.fullPath,
                 getters
             });
         },
