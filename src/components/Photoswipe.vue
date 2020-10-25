@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { formatTitle } from './../utils';
+import { formatHtmlTitle } from './../utils';
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 
@@ -109,7 +109,7 @@ export default {
 
     methods: {
         sendImageView(image) {
-            let title = formatTitle(this.pageTitle);
+            let title = formatHtmlTitle(this.pageTitle);
             let url = document.location.href.replace(/&pid=\d+/, `&pid=${image}`);
 
             window.dataLayer.push({ event: 'imageview', title, url });
