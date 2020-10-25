@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import paginate from 'jw-paginate';
 
 import { fetchPosts } from './../services/posts';
 import { fetchPost, fetchPage } from './../services/single';
@@ -10,7 +9,6 @@ import { SITE } from './../utils/constants';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
-const paginationMaxPages = 8;
 const commentsOnPage = 10;
 
 export default {
@@ -314,20 +312,14 @@ export default {
 
             const response = await fetchPosts(payload);
 
-            const paginationItemsTotal = parseInt(response.headers['x-wp-total']);
-            const pagination = paginate(paginationItemsTotal, payload.pagination.currentPage, payload.pagination.itemsOnPage, paginationMaxPages);
-
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
-                data: response.data.posts,
+                data: response.posts,
                 getters
             });
             commit('ADD_POSTS_PAGINATION', {
                 fullPath: rootState.route.fullPath,
-                pagination: {
-                    data: pagination.pages,
-                    currentPage: pagination.currentPage
-                },
+                pagination: response.pagination,
                 getters
             });
         },

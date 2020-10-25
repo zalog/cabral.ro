@@ -1,12 +1,16 @@
 import Vue from 'vue';
+import paginate from 'jw-paginate';
 import { ENDPOINTS } from './../utils/constants';
 import { itemPost } from './../utils/adaptors';
+
+const paginationMaxPages = 8;
+const itemsOnPage = 10;
 
 export async function fetchPosts(payload) {
     const params = {
         fields: [],
         pagination: {
-            itemsOnPage: 10,
+            itemsOnPage: itemsOnPage,
             currentPage: 1
         },
         categories: [],
@@ -28,16 +32,26 @@ export async function fetchPosts(payload) {
         delete params[entry[0]];
     });
 
-    const response = await Vue.prototype.$http({
+    // posts: fetch
+    const responsePosts = await Vue.prototype.$http({
         method: 'get',
         url: ENDPOINTS.POSTS,
-        params
+        params: params
     });
 
+    // posts: pagination
+    const responsePagination = paginate(
+        parseInt(responsePosts.headers['x-wp-total']),
+        payload.pagination.currentPage,
+        payload.pagination.itemsOnPage,
+        paginationMaxPages
+    );
+
     return {
-        headers: response.headers,
-        data: {
-            posts: response.data.map(post => itemPost(post))
+        posts: responsePosts.data.map(post => itemPost(post)),
+        pagination: {
+            data: responsePagination.pages,
+            currentPage: responsePagination.currentPage
         }
     };
 }
