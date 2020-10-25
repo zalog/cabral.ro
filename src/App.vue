@@ -62,15 +62,21 @@ export default {
             }
         };
 
-        this.currentPage.head && Object.keys(this.currentPage.head).forEach((key) => {
-            const tags = this.currentPage.head[key];
+        if (this.currentPage.head) {
+            // adds title
+            output.title = this.currentPage.head.title;
 
-            if (typeof tags !== 'object') return;
+            // adds tags
+            Object.keys(this.currentPage.head).forEach((key) => {
+                const tags = this.currentPage.head[key];
 
-            tags.forEach((tag) => {
-                output[key].push(tag);
+                if (typeof tags !== 'object') return;
+
+                tags.forEach((tag) => {
+                    output[key].push(tag);
+                });
             });
-        });
+        }
 
         // prevents duplicate tags after hydration
         ['link', 'meta', 'script'].forEach((key) => {
