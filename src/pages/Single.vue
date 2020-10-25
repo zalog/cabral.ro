@@ -64,6 +64,7 @@
 <script>
 import './../utils/filters/formatDate';
 import { SITE } from './../utils/constants';
+import { formatTitle } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
 import ListShare from './../components/ListShare.vue';
@@ -141,7 +142,7 @@ export default {
             this.handleFormWpcf7();
         },
         sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
+            window.dataLayer.push({ event: 'pageview', title: formatTitle(this.pageTitle) });
         },
         photoswipeInit() {
             this.$refs['content'].querySelectorAll('img').forEach((img, index) => {
