@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { datalayerPage } from './../utils/mixins';
+import { currentPage, datalayerPage } from './../utils/mixins';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -26,13 +26,11 @@ export default {
     },
 
     mixins: [
+        currentPage,
         datalayerPage
     ],
 
     computed: {
-        data() {
-            return this.$store.getters['data/currentPage']();
-        },
         pageTitleSearch() {
             const s = this.$route.query.s;
             return s && `Caută după "${s}"` || '';

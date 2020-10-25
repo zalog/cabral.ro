@@ -63,7 +63,7 @@
 
 <script>
 import './../utils/filters/formatDate';
-import { datalayerPage } from './../utils/mixins';
+import { currentPage, datalayerPage } from './../utils/mixins';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
 import ListShare from './../components/ListShare.vue';
@@ -84,6 +84,7 @@ export default {
     },
 
     mixins: [
+        currentPage,
         datalayerPage
     ],
 
@@ -94,15 +95,6 @@ export default {
             index: 0
         }
     }),
-
-    computed: {
-        data() {
-            return this.$store.getters['data/currentPage']();
-        },
-        currentPageTitle() {
-            return this.$store.getters['data/currentPageTitle']();
-        }
-    },
 
     watch: {
         '$route': 'fetchPage'
