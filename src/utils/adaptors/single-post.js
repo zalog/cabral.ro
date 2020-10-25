@@ -41,7 +41,9 @@ export default (payload) => {
             categories,
             date
         },
-        meta: payload.yoast_meta,
+        head: {
+            metas: payload.yoast_meta
+        },
         related
     };
 
