@@ -10,6 +10,7 @@
 
 <script>
 import { SITE } from './utils/constants';
+import { currentPage } from './utils/mixins';
 
 export default {
     name: 'app',
@@ -19,11 +20,9 @@ export default {
         TheFooter: () => import(/* webpackChunkName: "app-footer" */ './components/TheFooter.vue')
     },
 
-    computed: {
-        currentPage: function() {
-            return this.$store.getters['data/currentPage']();
-        }
-    },
+    mixins: [
+        currentPage
+    ],
 
     watch: {
         '$store.state.ui.toast'(toast) {
@@ -60,7 +59,7 @@ export default {
             }
         };
 
-        const pageHead = this.currentPage.head;
+        const pageHead = this.data.head;
         if (pageHead) {
             // adds title
             pageHead.title && (output.title = pageHead.title);
