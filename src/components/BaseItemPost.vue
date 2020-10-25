@@ -65,7 +65,7 @@ export default {
     methods: {
         postTo(slug) {
             return {
-                name: 'single',
+                name: 'Single',
                 params: {
                     singleSlug: slug,
                     singleType: 'post'
