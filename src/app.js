@@ -17,6 +17,7 @@ import BaseIcon from './components/BaseIcon.vue';
 Vue.component('BaseIcon', BaseIcon);
 
 // other
+import { formatHtmlTitle, decodeHtml } from './utils';
 import './scss/app.scss';
 
 export function createApp () {
@@ -27,7 +28,9 @@ export function createApp () {
     const app = new Vue({
         router,
         store,
-        metaInfo: {},
+        metaInfo: {
+            titleTemplate: (titleChunk) => decodeHtml(formatHtmlTitle(titleChunk)),
+        },
         render: h => h(App)
     });
 
