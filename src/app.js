@@ -27,6 +27,7 @@ export function createApp () {
     const app = new Vue({
         router,
         store,
+        metaInfo: {},
         render: h => h(App)
     });
 
