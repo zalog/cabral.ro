@@ -198,13 +198,18 @@ export default {
                 getters
             });
         },
-        fetchPost: async ({ getters, commit, rootState }) => {
+        fetchPagePost: async({ getters, commit, rootState, dispatch }) => {
             const currentPage = getters.currentPage();
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (currentPage.single) return;
+            if (currentPage.posts) return;
 
+            await dispatch('fetchPost', {
+                pageLoading: true
+            });
+        },
+        fetchPost: async ({ getters, commit, rootState }, payload) => {
             const response = await fetchPost({
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
@@ -212,7 +217,7 @@ export default {
                 ],
                 embed_featured_media_size: 'full',
                 slug: rootState.route.path,
-                pageLoading: true
+                ...payload
             });
 
             if (!response) return;
@@ -242,20 +247,25 @@ export default {
 
             return true;
         },
-        fetchPage: async ({ getters, commit, rootState }) => {
+        fetchPagePage: async({ getters, commit, rootState, dispatch }) => {
             const currentPage = getters.currentPage();
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (currentPage.single) return;
+            if (currentPage.posts) return;
 
+            await dispatch('fetchPage', {
+                pageLoading: true
+            });
+        },
+        fetchPage: async ({ getters, commit, rootState }, payload) => {
             const response = await fetchPage({
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
                     'comments_number', 'yoast_meta'
                 ],
                 slug: rootState.route.path,
-                pageLoading: true
+                ...payload
             });
 
             if (!response) return;
@@ -279,7 +289,7 @@ export default {
 
             return true;
         },
-        fetchSingle: async ({ dispatch, getters, commit, rootState }) => {
+        fetchPageSingle: async ({ dispatch, getters, commit, rootState }) => {
             const currentPage = getters.currentPage();
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});

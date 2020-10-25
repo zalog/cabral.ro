@@ -124,9 +124,9 @@ export default {
 
     methods: {
         fetchPage() {
-            let actionName = 'data/fetchSingle';
-            if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
-            else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
+            let actionName = 'data/fetchPageSingle';
+            if (this.$route.params.singleType === 'post') actionName = 'data/fetchPagePost';
+            else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPagePage';
 
             return this.$store.dispatch(actionName).then(() => {
                 this.afterDataLoaded();
