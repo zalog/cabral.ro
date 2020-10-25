@@ -4,8 +4,8 @@
         class="page-home container-fluid py-5"
     >
         <h1
-            v-if="showPageTitle()"
-            v-html="pageTitle"
+            v-if="showPageTitle(data.sections.main.title)"
+            v-html="data.sections.main.title"
             class="mb-4"
         />
         <posts-list
@@ -56,8 +56,8 @@ export default {
 
             this.datalayerPageview(this.pageTitle);
         },
-        showPageTitle() {
-            return this.pageTitle !== SITE.TITLE;
+        showPageTitle(title) {
+            return title !== SITE.TITLE;
         }
     }
 };
