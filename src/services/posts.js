@@ -24,6 +24,8 @@ export async function fetchPosts(payload) {
 
     // posts: params
     const paramsPosts = {
+        per_page: payloadDefault.pagination.itemsOnPage,
+        page: payloadDefault.pagination.currentPage,
         ...(payloadDefault.params.fields.length && {
             fields: payloadDefault.params.fields.join(',')
         }),
@@ -33,8 +35,9 @@ export async function fetchPosts(payload) {
         ...(payloadDefault.params.search && {
             search: payloadDefault.params.search
         }),
-        per_page: payloadDefault.pagination.itemsOnPage,
-        page: payloadDefault.pagination.currentPage
+
+        // not needed for api
+        pageLoading: payloadDefault.pageLoading
     };
 
     // posts: fetch
