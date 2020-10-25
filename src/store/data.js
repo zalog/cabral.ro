@@ -156,6 +156,38 @@ export default {
                 }
             });
         },
+        fetchPagePost: async({ getters, commit, rootState, dispatch }) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.posts) return;
+
+            await dispatch('fetchPost', {
+                pageLoading: true
+            });
+        },
+        fetchPagePage: async({ getters, commit, rootState, dispatch }) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.posts) return;
+
+            await dispatch('fetchPage', {
+                pageLoading: true
+            });
+        },
+        fetchPageSingle: async ({ dispatch, getters, commit, rootState }) => {
+            const currentPage = getters.currentPage();
+
+            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
+
+            if (currentPage.single) return;
+
+            let response = await dispatch('fetchPost');
+            !response && (response = await dispatch('fetchPage'));
+        },
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
                 fields: [
@@ -198,17 +230,6 @@ export default {
                 getters
             });
         },
-        fetchPagePost: async({ getters, commit, rootState, dispatch }) => {
-            const currentPage = getters.currentPage();
-
-            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
-
-            if (currentPage.posts) return;
-
-            await dispatch('fetchPost', {
-                pageLoading: true
-            });
-        },
         fetchPost: async ({ getters, commit, rootState }, payload) => {
             const response = await fetchPost({
                 fields: [
@@ -245,17 +266,6 @@ export default {
                 getters
             });
         },
-        fetchPagePage: async({ getters, commit, rootState, dispatch }) => {
-            const currentPage = getters.currentPage();
-
-            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
-
-            if (currentPage.posts) return;
-
-            await dispatch('fetchPage', {
-                pageLoading: true
-            });
-        },
         fetchPage: async ({ getters, commit, rootState }, payload) => {
             const response = await fetchPage({
                 fields: [
@@ -284,16 +294,6 @@ export default {
                 fullPath: rootState.route.fullPath,
                 getters
             });
-        },
-        fetchPageSingle: async ({ dispatch, getters, commit, rootState }) => {
-            const currentPage = getters.currentPage();
-
-            if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
-
-            if (currentPage.single) return;
-
-            let response = await dispatch('fetchPost');
-            !response && (response = await dispatch('fetchPage'));
         },
         fetchSingleComments: async ({ getters, commit, rootState }) => {
             const currentPage = getters.currentPage();
