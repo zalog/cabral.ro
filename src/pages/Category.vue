@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { SITE } from './../utils/constants';
 import { formatTitle } from './../utils';
 import PostsList from './../components/PostsList.vue';
 

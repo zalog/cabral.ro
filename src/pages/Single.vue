@@ -63,7 +63,6 @@
 
 <script>
 import './../utils/filters/formatDate';
-import { SITE } from './../utils/constants';
 import { formatTitle } from './../utils';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
