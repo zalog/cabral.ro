@@ -56,15 +56,14 @@
             :items="photoswipe.items"
             :index="photoswipe.index"
             :title="pageTitle"
-            @closed="photoswipe.show = false; sendPageView();"
+            @closed="photoswipe.show = false; datalayerPageview(pageTitle)"
         />
     </div>
 </template>
 
 <script>
 import './../utils/filters/formatDate';
-import { SITE } from './../utils/constants';
-import { decodeHtml } from './../utils';
+import { currentPage, datalayerPage } from './../utils/mixins';
 import CommentsList from './../components/CommentsList.vue';
 import ListItemInfo from './../components/ListItemInfo.vue';
 import ListShare from './../components/ListShare.vue';
@@ -84,6 +83,11 @@ export default {
         Photoswipe
     },
 
+    mixins: [
+        currentPage,
+        datalayerPage
+    ],
+
     data: () => ({
         photoswipe: {
             show: false,
@@ -91,17 +95,6 @@ export default {
             index: 0
         }
     }),
-
-    computed: {
-        data() {
-            return this.$store.getters['data/currentPage']();
-        },
-        pageTitle() {
-            if (!this.data.single) return;
-
-            return decodeHtml(this.data.single.title);
-        }
-    },
 
     watch: {
         '$route': 'fetchPage'
@@ -124,25 +117,22 @@ export default {
     },
 
     methods: {
-        fetchPage() {
-            let actionName = 'data/fetchSingle';
-            if (this.$route.params.singleType === 'post') actionName = 'data/fetchPost';
-            else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPage';
+        async fetchPage() {
+            let actionName = 'data/fetchPageSingle';
+            if (this.$route.params.singleType === 'post') actionName = 'data/fetchPagePost';
+            else if (this.$route.params.singleType === 'page') actionName = 'data/fetchPagePage';
 
-            return this.$store.dispatch(actionName).then(() => {
-                this.afterDataLoaded();
-            });
+            await this.$store.dispatch(actionName);
+
+            this.afterDataLoaded();
         },
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.sendPageView();
+            this.datalayerPageview(this.pageTitle);
             this.photoswipeInit();
             this.fetchComments();
             this.handleFormWpcf7();
-        },
-        sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
         },
         photoswipeInit() {
             this.$refs['content'].querySelectorAll('img').forEach((img, index) => {
@@ -224,12 +214,6 @@ export default {
                 });
             });
         }
-    },
-
-    metaInfo() {
-        return {
-            title: this.pageTitle
-        };
     }
 };
 </script>

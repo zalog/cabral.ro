@@ -10,6 +10,7 @@ export function createRouter () {
         routes: [
             // homepage
             {
+                name: 'Home',
                 path: '/',
                 component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
             },
@@ -19,6 +20,7 @@ export function createRouter () {
                 redirect: '/'
             },
             {
+                name: 'HomePaged',
                 path: '/page/:id/',
                 pathToRegexpOptions: { strict: true },
                 component: () => import(/* webpackChunkName: "page-home" */ './pages/Home.vue')
@@ -26,14 +28,14 @@ export function createRouter () {
 
             // single
             {
-                name: 'single',
+                name: 'Single',
                 path: '/:singleSlug/',
                 pathToRegexpOptions: { strict: true },
                 component: () => import(/* webpackChunkName: "page-single" */ './pages/Single.vue')
             },
             {
                 path: '/:singleSlug',
-                redirect: { name: 'single' }
+                redirect: { name: 'Single' }
             },
 
             // category: redirect page 1
