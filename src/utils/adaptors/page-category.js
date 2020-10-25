@@ -5,7 +5,10 @@ export default (payload) => {
             description: payload.description
         },
         head: {
-            title: payload.name
+            title: payload.name,
+            link: [
+                {rel: 'canonical', href: payload.link}
+            ]
         }
     };
 
