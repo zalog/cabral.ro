@@ -44,17 +44,15 @@ export default {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
             Vue.set(currentPage, 'sections', {
-                [payload.section]: {...payload.data}
+                [payload.section]: {
+                    ...(currentPage.sections && {
+                        ...currentPage.sections[payload.section]
+                    }),
+                    ...payload.data
+                }
             });
 
             if (state.length > pagesToKeep) state.shift();
-        },
-        ADD_CATEGORY: (state, payload) => {
-            const currentPage = payload.getters.currentPage(payload.fullPath);
-
-            Vue.set(currentPage, 'category', {
-                ...payload.data
-            });
         },
         ADD_SINGLE: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
@@ -172,9 +170,7 @@ export default {
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (
-                currentPage.sections && currentPage.sections.main.posts
-            ) return;
+            if (currentPage.sections) return;
 
             await dispatch('fetchPosts', {
                 categories: [payload.slug],
@@ -187,9 +183,13 @@ export default {
                 }
             });
 
-            commit('ADD_CATEGORY', {
+            commit('ADD_PAGE_SECTION', {
                 fullPath: rootState.route.fullPath,
-                data: responseCategory.category,
+                section: 'main',
+                data: {
+                    title: responseCategory.category.name,
+                    description: responseCategory.category.description
+                },
                 getters
             });
 
