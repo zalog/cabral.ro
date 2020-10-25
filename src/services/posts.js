@@ -7,36 +7,41 @@ const paginationMaxPages = 8;
 const itemsOnPage = 10;
 
 export async function fetchPosts(payload) {
-    const params = {
-        fields: [],
+    const payloadDefault = {
+        params: {
+            fields: [],
+            search: '',
+            ...payload.params
+        },
+        categories: [],
         pagination: {
             itemsOnPage: itemsOnPage,
             currentPage: 1
-        },
-        categories: [],
-        ...payload
+        }
     };
+    delete payload.params;
+    Object.assign(payloadDefault, payload);
 
-    // prepare params keys to match wp-api
-    params.fields.length && ( params.fields = params.fields.join(',') );
-    params.categories.length && ( params.categories = params.categories.join(',') );
-
-    params.per_page = params.pagination.itemsOnPage;
-    params.page = params.pagination.currentPage;
-    delete params.pagination;
-
-    Object.entries({
-        'categories': 'filter[category_name]'
-    }).forEach(entry => {
-        params[entry[1]] = params[entry[0]];
-        delete params[entry[0]];
-    });
+    // posts: params
+    const paramsPosts = {
+        ...(payloadDefault.params.fields.length && {
+            fields: payloadDefault.params.fields.join(',')
+        }),
+        ...(payloadDefault.categories.length && {
+            'filter[category_name]': payloadDefault.categories.join(',')
+        }),
+        ...(payloadDefault.params.search && {
+            search: payloadDefault.params.search
+        }),
+        per_page: payloadDefault.pagination.itemsOnPage,
+        page: payloadDefault.pagination.currentPage
+    };
 
     // posts: fetch
     const responsePosts = await Vue.prototype.$http({
         method: 'get',
         url: ENDPOINTS.POSTS,
-        params: params
+        params: paramsPosts
     });
 
     // posts: pagination
