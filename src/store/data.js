@@ -210,15 +210,39 @@ export default {
                 getters
             });
         },
-        fetchPagePage: async({ getters, commit, rootState, dispatch }) => {
+        fetchPagePage: async({ getters, commit, rootState }) => {
             const currentPage = getters.currentPage();
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
             if (currentPage.single) return;
 
-            await dispatch('fetchPage', {
+            const responsePage = await fetchPage({
+                fields: [
+                    'id', 'link', 'title', 'date', 'modified', 'content',
+                    'comments_number', 'yoast_meta'
+                ],
+                slug: rootState.route.path,
                 pageLoading: true
+            });
+
+            if (!responsePage) return;
+
+            commit('ADD_SINGLE', {
+                fullPath: rootState.route.fullPath,
+                single: responsePage.single,
+                getters
+            });
+
+            commit('ADD_HEAD_TAGS', {
+                fullPath: rootState.route.fullPath,
+                data: responsePage.head,
+                getters
+            });
+
+            commit('INIT_SINGLE_COMMENTS', {
+                fullPath: rootState.route.fullPath,
+                getters
             });
         },
         fetchPageSingle: async ({ dispatch }) => {
@@ -254,35 +278,6 @@ export default {
                     data: pagination.pages,
                     currentPage: pagination.currentPage
                 },
-                getters
-            });
-        },
-        fetchPage: async ({ getters, commit, rootState }, payload) => {
-            const response = await fetchPage({
-                fields: [
-                    'id', 'link', 'title', 'date', 'modified', 'content',
-                    'comments_number', 'yoast_meta'
-                ],
-                slug: rootState.route.path,
-                ...payload
-            });
-
-            if (!response) return;
-
-            commit('ADD_SINGLE', {
-                fullPath: rootState.route.fullPath,
-                single: response.single,
-                getters
-            });
-
-            commit('ADD_HEAD_TAGS', {
-                fullPath: rootState.route.fullPath,
-                data: response.head,
-                getters
-            });
-
-            commit('INIT_SINGLE_COMMENTS', {
-                fullPath: rootState.route.fullPath,
                 getters
             });
         },
