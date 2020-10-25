@@ -20,7 +20,6 @@
 
 <script>
 import { SITE } from './../utils/constants';
-import { decodeHtml } from './../utils';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -38,7 +37,7 @@ export default {
             if (!this.data.category) return;
 
             const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            return decodeHtml(this.data.category.name + page);
+            return this.data.category.name + page;
         }
     },
 
