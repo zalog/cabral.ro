@@ -222,8 +222,7 @@ export default {
             });
         },
         fetchPageSingle: async ({ dispatch }) => {
-            let response = await dispatch('fetchPagePost');
-            !response && (response = await dispatch('fetchPagePage'));
+            await dispatch('fetchPagePost') || await dispatch('fetchPagePage');
         },
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
