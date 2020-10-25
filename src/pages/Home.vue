@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { SITE } from './../utils/constants';
+import { datalayerPage } from './../utils/mixins';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -25,14 +25,13 @@ export default {
         PostsList
     },
 
+    mixins: [
+        datalayerPage
+    ],
+
     computed: {
         data() {
             return this.$store.getters['data/currentPage']();
-        },
-        pageTitle() {
-            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            const pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
-            return pageTitleSearch + SITE.TITLE + page;
         },
         pageTitleSearch() {
             const s = this.$route.query.s;
@@ -63,10 +62,7 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.sendPageView();
-        },
-        sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: this.pageTitle });
+            this.datalayerPageview();
         }
     }
 };
