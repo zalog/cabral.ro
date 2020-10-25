@@ -57,8 +57,8 @@ export default {
     },
 
     methods: {
-        fetchPage() {
-            return this.$store.dispatch('data/fetchPageHome');
+        async fetchPage() {
+            await this.$store.dispatch('data/fetchPageHome');
         },
         sendPageView() {
             window.dataLayer.push({ event: 'pageview', title: this.pageTitle });
