@@ -70,9 +70,7 @@ export default {
             const currentPage = payload.getters.currentPage(payload.fullPath);
             const data = payload.data;
 
-            currentPage.head = {
-                metas: data
-            };
+            currentPage.head = {...data};
         },
         ADD_RELATED: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
@@ -211,7 +209,7 @@ export default {
 
             commit('ADD_HEAD_TAGS', {
                 fullPath: rootState.route.fullPath,
-                data: response.head.metas,
+                data: response.head,
                 getters
             });
 
@@ -254,7 +252,7 @@ export default {
 
             commit('ADD_HEAD_TAGS', {
                 fullPath: rootState.route.fullPath,
-                data: response.head.metas,
+                data: response.head,
                 getters
             });
 
