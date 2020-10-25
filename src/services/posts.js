@@ -59,7 +59,7 @@ export async function fetchPosts(payload) {
     );
 
     output.pagination = {
-        data: responsePagination.pages,
+        pages: responsePagination.pages,
         currentPage: responsePagination.currentPage
     };
 
