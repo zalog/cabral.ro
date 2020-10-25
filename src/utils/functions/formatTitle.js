@@ -1,11 +1,12 @@
 import { SITE } from './../constants';
 
-const separator = ' - ';
+const htmlTitleSeparator = ' - ';
+const pageTitleSeparator = ' ';
 
 export function formatTitle(title) {
     if (typeof title === 'string') title = [title];
 
-    return title.join(separator);
+    return title.join(htmlTitleSeparator);
 }
 
 export function formatHtmlTitle(title) {
@@ -15,13 +16,11 @@ export function formatHtmlTitle(title) {
 
     title.push(SITE.TITLE);
 
-    return title.join(separator);
+    return title.join(htmlTitleSeparator);
 }
 
 export function formatPageTitle(title) {
     if (!title) return;
 
-    let titleSeparator = ' ';
-
-    return title.replace(separator, titleSeparator);
+    return title.replace(htmlTitleSeparator, pageTitleSeparator);
 }
