@@ -185,8 +185,12 @@ export default {
 
             if (currentPage.single) return;
 
-            let response = await dispatch('fetchPost');
-            !response && (response = await dispatch('fetchPage'));
+            let response = await dispatch('fetchPost', {
+                pageLoading: true
+            });
+            !response && (response = await dispatch('fetchPage', {
+                pageLoading: true
+            }));
         },
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
             payload = {
