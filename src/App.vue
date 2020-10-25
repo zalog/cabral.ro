@@ -61,22 +61,17 @@ export default {
 
         const pageHead = this.data.head;
         if (pageHead) {
-            // adds title
-            pageHead.title && (output.title = pageHead.title);
-
-            // adds/modify titleTemplate
-            if (Object.prototype.hasOwnProperty.call(pageHead, 'titleTemplate'))
-                output.titleTemplate = pageHead.titleTemplate;
-
             // adds tags
             Object.keys(pageHead).forEach((key) => {
-                const tags = pageHead[key];
+                const entry = pageHead[key];
 
-                if (typeof tags !== 'object') return;
-
-                tags.forEach((tag) => {
-                    output[key].push(tag);
-                });
+                if (typeof entry === 'object') {
+                    entry.forEach((tag) => {
+                        output[key].push(tag);
+                    });
+                } else {
+                    output[key] = entry;
+                }
             });
         }
 
