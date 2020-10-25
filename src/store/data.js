@@ -319,7 +319,7 @@ export default {
 
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
-                data: response.data,
+                data: response.data.posts,
                 getters
             });
             commit('ADD_POSTS_PAGINATION', {

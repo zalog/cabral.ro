@@ -34,9 +34,10 @@ export async function fetchPosts(payload) {
         params
     });
 
-    delete response.config;
-    delete response.request;
-    response.data = response.data.map(post => itemPost(post));
-
-    return response;
+    return {
+        headers: response.headers,
+        data: {
+            posts: response.data.map(post => itemPost(post))
+        }
+    };
 }
