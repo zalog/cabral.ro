@@ -4,7 +4,7 @@
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="pageTitle"
+            v-html="getPageTitle()"
             class="mb-4"
         />
         <div
@@ -32,12 +32,6 @@ export default {
     computed: {
         data() {
             return this.$store.getters['data/currentPage']();
-        },
-        pageTitle() {
-            if (!this.data.category) return;
-
-            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            return this.data.category.name + page;
         }
     },
 
@@ -75,13 +69,25 @@ export default {
             this.sendPageView();
         },
         sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: formatTitle(this.pageTitle) });
+            window.dataLayer.push({ event: 'pageview', title: formatTitle(this.getPageTitle()) });
+        },
+        getPageTitle() {
+            const output = [];
+            const pageName = this.data.category && this.data.category.name || false;
+            const pageNumber = this.$route.params.id && `pagina ${this.$route.params.id}` || '';
+
+            if (!pageName) return;
+
+            output.push(pageName);
+            pageNumber && output.push(pageNumber);
+
+            return output;
         }
     },
 
     metaInfo() {
         return {
-            title: this.pageTitle
+            title: this.getPageTitle()
         };
     }
 };
