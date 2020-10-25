@@ -30,6 +30,8 @@ export default {
         currentPageTitle: (state, getters) => () => {
             const page = getters.currentPage();
 
+            if (!page.head) return;
+
             return formatPageTitle(page.head.title);
         }
     },
