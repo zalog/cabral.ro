@@ -6,6 +6,7 @@ import { fetchPost, fetchPage } from './../services/single';
 import { fetchComments, postComment } from '../services/comments';
 import { fetchCategory } from '../services/category';
 import { formatTitle, formatPageTitle } from './../utils';
+import { SITE } from './../utils/constants';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;
@@ -144,6 +145,31 @@ export default {
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
             if (currentPage.posts) return;
+
+            const headTags = {
+                title: SITE.TITLE,
+                titleTemplate: false
+            };
+
+            const pageS = rootState.route.query.s;
+            if (pageS) {
+                headTags.title = `Caută după "${pageS}"`;
+                delete headTags.titleTemplate;
+            }
+
+            const pageNumber = rootState.route.params.id;
+            if (pageNumber) {
+                headTags.title = formatTitle([
+                    headTags.title,
+                    `pagina ${pageNumber}`
+                ]);
+            }
+
+            commit('ADD_HEAD_TAGS', {
+                fullPath: rootState.route.fullPath,
+                data: headTags,
+                getters
+            });
 
             await dispatch('fetchPosts', {
                 pageLoading: true
