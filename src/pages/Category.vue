@@ -79,12 +79,6 @@ export default {
 
             return output;
         }
-    },
-
-    metaInfo() {
-        return {
-            title: this.getPageTitle()
-        };
     }
 };
 </script>

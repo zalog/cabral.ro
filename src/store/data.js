@@ -230,7 +230,13 @@ export default {
 
             commit('ADD_CATEGORY', {
                 fullPath: rootState.route.fullPath,
-                data: response,
+                data: response.category,
+                getters
+            });
+
+            commit('ADD_HEAD_TAGS', {
+                fullPath: rootState.route.fullPath,
+                data: response.head,
                 getters
             });
         },
