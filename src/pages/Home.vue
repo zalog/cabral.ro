@@ -60,7 +60,7 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.datalayerPageview();
+            this.datalayerPageview(this.currentPageTitle);
         }
     }
 };
