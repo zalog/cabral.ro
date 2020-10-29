@@ -12,11 +12,9 @@ export default {
             const titleTemplate = this.$root.$options.metaInfo.titleTemplate;
             const url = document.location.href.replace(/&pid=\d+/, `&pid=${image}`);
 
-            title = titleTemplate(title);
-
             window.dataLayer.push({
                 event: 'imageview',
-                title,
+                title: titleTemplate(title),
                 url
             });
         }
