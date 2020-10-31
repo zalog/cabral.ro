@@ -76,7 +76,7 @@ export default {
             const currentPage = payload.getters.currentPage(payload.fullPath);
             const data = payload.data;
 
-            currentPage.head = {...data};
+            Vue.set(currentPage, 'head', {...data});
         },
         SET_HEAD_TITLE: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
