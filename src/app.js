@@ -29,7 +29,7 @@ export function createApp () {
         router,
         store,
         metaInfo: {
-            titleTemplate: (titleChunk) => decodeHtml(formatHtmlTitle(titleChunk)),
+            titleTemplate: (titleChunk) => decodeHtml(formatHtmlTitle(titleChunk))
         },
         render: h => h(App)
     });
