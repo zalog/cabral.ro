@@ -4,8 +4,8 @@
         class="page-home container-fluid py-5"
     >
         <h1
-            v-if="pageTitleSearch"
-            v-html="pageTitleSearch"
+            v-if="showPageTitle()"
+            v-html="currentPageTitle"
             class="mb-4"
         />
         <posts-list
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { SITE } from './../utils/constants';
 import { currentPage, datalayerPage } from './../utils/mixins';
 import PostsList from './../components/PostsList.vue';
 
@@ -29,13 +30,6 @@ export default {
         currentPage,
         datalayerPage
     ],
-
-    computed: {
-        pageTitleSearch() {
-            const s = this.$route.query.s;
-            return s && `Caută după "${s}"` || '';
-        }
-    },
 
     watch: {
         '$route'() {
@@ -61,6 +55,9 @@ export default {
             if (typeof window === 'undefined') return;
 
             this.datalayerPageview(this.currentPageTitle);
+        },
+        showPageTitle() {
+            return this.currentPageTitle !== SITE.TITLE;
         }
     }
 };
