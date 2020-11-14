@@ -55,8 +55,8 @@
             v-if="photoswipe.show"
             :items="photoswipe.items"
             :index="photoswipe.index"
-            :title="currentPageTitle"
-            @closed="photoswipe.show = false; datalayerPageview(currentPageTitle)"
+            :title="pageTitle"
+            @closed="photoswipe.show = false; datalayerPageview(pageTitle)"
         />
     </div>
 </template>
@@ -129,7 +129,7 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.datalayerPageview(this.currentPageTitle);
+            this.datalayerPageview(this.pageTitle);
             this.photoswipeInit();
             this.fetchComments();
             this.handleFormWpcf7();

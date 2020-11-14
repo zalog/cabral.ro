@@ -3,7 +3,7 @@ export default {
         data() {
             return this.$store.getters['data/currentPage']();
         },
-        currentPageTitle() {
+        pageTitle() {
             return this.$store.getters['data/currentPageTitle']();
         }
     }

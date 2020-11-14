@@ -5,7 +5,7 @@
     >
         <h1
             v-if="showPageTitle()"
-            v-html="currentPageTitle"
+            v-html="pageTitle"
             class="mb-4"
         />
         <posts-list
@@ -54,10 +54,10 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.datalayerPageview(this.currentPageTitle);
+            this.datalayerPageview(this.pageTitle);
         },
         showPageTitle() {
-            return this.currentPageTitle !== SITE.TITLE;
+            return this.pageTitle !== SITE.TITLE;
         }
     }
 };

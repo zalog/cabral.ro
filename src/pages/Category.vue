@@ -4,7 +4,7 @@
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="currentPageTitle"
+            v-html="pageTitle"
             class="mb-4"
         />
         <div
@@ -59,7 +59,7 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.datalayerPageview(this.currentPageTitle);
+            this.datalayerPageview(this.pageTitle);
         }
     }
 };
