@@ -297,20 +297,26 @@ export default {
             await dispatch('fetchPagePost') || await dispatch('fetchPagePage');
         },
         fetchPosts: async ({ getters, commit, rootState }, payload) => {
-            payload = {
-                fields: [
-                    'title', 'slug', 'excerpt', 'date', 'modified',
-                    'embed', 'embed_featured_media', 'comments_number'
-                ],
+            const payloadPosts = {
+                params: {
+                    fields: [
+                        'title', 'slug', 'excerpt', 'date', 'modified',
+                        'embed', 'embed_featured_media', 'comments_number'
+                    ],
+                    ...(rootState.route.query.s && {
+                        search: rootState.route.query.s
+                    }),
+                    ...payload.params
+                },
                 pagination: {
                     itemsOnPage: postsOnPage,
                     currentPage: parseInt(rootState.route.params.id) || 1
-                },
-                search: rootState.route.query.s,
-                ...payload
+                }
             };
+            delete payload.params;
+            Object.assign(payloadPosts, payload);
 
-            const response = await fetchPosts(payload);
+            const response = await fetchPosts(payloadPosts);
 
             commit('ADD_POSTS', {
                 fullPath: rootState.route.fullPath,
