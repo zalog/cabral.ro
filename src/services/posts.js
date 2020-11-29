@@ -7,6 +7,7 @@ const paginationMaxPages = 8;
 const itemsOnPage = 10;
 
 export async function fetchPosts(payload) {
+    const output = {};
     const payloadDefault = {
         params: {
             fields: [],
@@ -47,6 +48,8 @@ export async function fetchPosts(payload) {
         params: paramsPosts
     });
 
+    output.posts = responsePosts.data.map(post => itemPost(post));
+
     // posts: pagination
     const responsePagination = paginate(
         parseInt(responsePosts.headers['x-wp-total']),
@@ -55,11 +58,10 @@ export async function fetchPosts(payload) {
         paginationMaxPages
     );
 
-    return {
-        posts: responsePosts.data.map(post => itemPost(post)),
-        pagination: {
-            data: responsePagination.pages,
-            currentPage: responsePagination.currentPage
-        }
+    output.pagination = {
+        data: responsePagination.pages,
+        currentPage: responsePagination.currentPage
     };
+
+    return output;
 }
