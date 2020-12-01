@@ -40,22 +40,14 @@ export default {
         ADD_PAGE: (state, payload) => {
             state.push({[payload.fullPath]: {}});
         },
-        ADD_POSTS: (state, payload) => {
+        ADD_PAGE_SECTION: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
 
-            Vue.set(currentPage, 'posts', {
-                data: payload.data
+            Vue.set(currentPage, 'sections', {
+                [payload.section]: {...payload.data}
             });
 
             if (state.length > pagesToKeep) state.shift();
-        },
-        ADD_POSTS_PAGINATION: (state, payload) => {
-            const currentPage = payload.getters.currentPage(payload.fullPath);
-
-            currentPage.posts.pagination = {
-                data: payload.pagination.data,
-                currentPage: payload.pagination.currentPage
-            };
         },
         ADD_CATEGORY: (state, payload) => {
             const currentPage = payload.getters.currentPage(payload.fullPath);
@@ -180,7 +172,9 @@ export default {
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (currentPage.posts) return;
+            if (
+                currentPage.sections && currentPage.sections.main.posts
+            ) return;
 
             await dispatch('fetchPosts', {
                 categories: [payload.slug],
@@ -320,14 +314,15 @@ export default {
 
             const response = await fetchPosts(payloadPosts);
 
-            commit('ADD_POSTS', {
+            commit('ADD_PAGE_SECTION', {
                 fullPath: rootState.route.fullPath,
-                data: response.posts,
-                getters
-            });
-            commit('ADD_POSTS_PAGINATION', {
-                fullPath: rootState.route.fullPath,
-                pagination: response.pagination,
+                section: 'main',
+                data: {
+                    posts: {
+                        posts: response.posts,
+                        pagination: response.pagination
+                    }
+                },
                 getters
             });
         },

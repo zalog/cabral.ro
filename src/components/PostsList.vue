@@ -1,9 +1,9 @@
 <template>
     <div
         class="cards-posts"
-        v-if="posts.data.length"
+        v-if="posts.posts.length"
     >
-        <template v-for="(post, index) in posts.data">
+        <template v-for="(post, index) in posts.posts">
             <base-item-post
                 :key="`post-${index}`"
                 :post="post"
@@ -31,7 +31,7 @@
                     tag="li"
                     class="page-item"
                     v-ripple="'rgba(00, 00, 00, 0.1)'"
-                    v-for="(page, index) in posts.pagination.data" :key="'pagination-page-' + index"
+                    v-for="(page, index) in posts.pagination.pages" :key="'pagination-page-' + index"
                     :to="paginationTo(page)"
                     :class="{ active: [posts.pagination.currentPage] == page }"
                 >
