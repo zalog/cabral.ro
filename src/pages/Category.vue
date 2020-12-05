@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="data.sections && data.category"
+        v-if="data.sections"
         class="page-category container-fluid py-5"
     >
         <h1
@@ -8,8 +8,8 @@
             class="mb-4"
         />
         <div
-            v-if="data.category.description"
-            v-html="data.category.description"
+            v-if="data.sections.main.description"
+            v-html="data.sections.main.description"
             class="mt-n3 mb-4"
         />
         <posts-list
