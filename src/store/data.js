@@ -134,7 +134,7 @@ export default {
 
             if (!currentPage) commit('ADD_PAGE', {fullPath: rootState.route.fullPath});
 
-            if (currentPage.posts) return;
+            if (currentPage.sections) return;
 
             const headTags = {
                 title: SITE.TITLE,

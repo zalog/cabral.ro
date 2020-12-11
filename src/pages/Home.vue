@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="data.posts"
+        v-if="data.sections"
         class="page-home container-fluid py-5"
     >
         <h1
@@ -9,7 +9,7 @@
             class="mb-4"
         />
         <posts-list
-            :posts="data.posts"
+            :posts="data.sections.main.posts"
         />
     </div>
 </template>
