@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="data.sections"
+        v-if="data.sections && data.sections.main.posts"
         class="page-home container-fluid py-5"
     >
         <h1

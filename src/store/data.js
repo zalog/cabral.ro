@@ -155,6 +155,15 @@ export default {
                 ]);
             }
 
+            commit('ADD_PAGE_SECTION', {
+                fullPath: rootState.route.fullPath,
+                section: 'main',
+                data: {
+                    title: formatPageTitle(headTags.title)
+                },
+                getters
+            });
+
             commit('ADD_HEAD_TAGS', {
                 fullPath: rootState.route.fullPath,
                 data: headTags,
