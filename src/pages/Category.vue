@@ -4,7 +4,7 @@
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="pageTitle"
+            v-html="data.sections.main.title"
             class="mb-4"
         />
         <div
