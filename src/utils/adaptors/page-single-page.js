@@ -12,7 +12,13 @@ export default (payload) => {
             commentsNumber: payload.comments_number,
             date
         },
-        meta: payload.yoast_meta
+        head: {
+            title: payload.title.rendered,
+            link: [
+                {rel: 'canonical', href: payload.link}
+            ],
+            meta: payload.yoast_meta
+        }
     };
 
     return output;

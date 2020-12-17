@@ -1,26 +1,25 @@
 <template>
     <div
-        v-if="data.posts && data.category"
+        v-if="data.sections"
         class="page-category container-fluid py-5"
     >
         <h1
-            v-html="pageTitle"
+            v-html="data.sections.main.title"
             class="mb-4"
         />
         <div
-            v-if="data.category.description"
-            v-html="data.category.description"
+            v-if="data.sections.main.description"
+            v-html="data.sections.main.description"
             class="mt-n3 mb-4"
         />
         <posts-list
-            :posts="data.posts"
+            :posts="data.sections.main.posts"
         />
     </div>
 </template>
 
 <script>
-import { SITE } from './../utils/constants';
-import { decodeHtml } from './../utils';
+import { currentPage, datalayerPage } from './../utils/mixins';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -30,17 +29,10 @@ export default {
         PostsList
     },
 
-    computed: {
-        data() {
-            return this.$store.getters['data/currentPage']();
-        },
-        pageTitle() {
-            if (!this.data.category) return;
-
-            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            return decodeHtml(this.data.category.name + page);
-        }
-    },
+    mixins: [
+        currentPage,
+        datalayerPage
+    ],
 
     watch: {
         '$route': 'fetchPage'
@@ -58,14 +50,8 @@ export default {
         async fetchPage() {
             const categorySlug = this.$route.params.categorySlug.split('/').pop();
 
-            await this.$store.dispatch('data/fetchPosts', {
-                categories: [categorySlug]
-            });
-
-            await this.$store.dispatch('data/fetchCategory', {
-                params: {
-                    slug: categorySlug
-                }
+            await this.$store.dispatch('data/fetchPageCategory', {
+                slug: categorySlug
             });
 
             this.afterDataLoaded();
@@ -73,17 +59,8 @@ export default {
         afterDataLoaded() {
             if (typeof window === 'undefined') return;
 
-            this.sendPageView();
-        },
-        sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: SITE.TITLE_TEMPLATE(this.pageTitle) });
+            this.datalayerPageview(this.pageTitle);
         }
-    },
-
-    metaInfo() {
-        return {
-            title: this.pageTitle
-        };
     }
 };
 </script>

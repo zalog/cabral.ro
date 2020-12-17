@@ -41,7 +41,13 @@ export default (payload) => {
             categories,
             date
         },
-        meta: payload.yoast_meta,
+        head: {
+            title: payload.title.rendered,
+            link: [
+                {rel: 'canonical', href: payload.link}
+            ],
+            meta: payload.yoast_meta
+        },
         related
     };
 

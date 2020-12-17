@@ -1,22 +1,22 @@
 <template>
     <div
-        v-if="data.posts"
+        v-if="data.sections && data.sections.main.posts"
         class="page-home container-fluid py-5"
     >
         <h1
-            v-if="pageTitleSearch"
-            v-html="pageTitleSearch"
+            v-if="showPageTitle(data.sections.main.title)"
+            v-html="data.sections.main.title"
             class="mb-4"
         />
         <posts-list
-            :posts="data.posts"
+            :posts="data.sections.main.posts"
         />
     </div>
 </template>
 
 <script>
 import { SITE } from './../utils/constants';
-import { decodeHtml } from './../utils';
+import { currentPage, datalayerPage } from './../utils/mixins';
 import PostsList from './../components/PostsList.vue';
 
 export default {
@@ -26,25 +26,14 @@ export default {
         PostsList
     },
 
-    computed: {
-        data() {
-            return this.$store.getters['data/currentPage']();
-        },
-        pageTitle() {
-            const page = (this.$route.params.id) ? ` - pagina ${this.$route.params.id}` : '';
-            const pageTitleSearch = this.pageTitleSearch && `${this.pageTitleSearch} - `;
-            return decodeHtml(pageTitleSearch + SITE.TITLE + page);
-        },
-        pageTitleSearch() {
-            const s = this.$route.query.s;
-            return s && `Caută după "${s}"` || '';
-        }
-    },
+    mixins: [
+        currentPage,
+        datalayerPage
+    ],
 
     watch: {
         '$route'() {
             this.fetchPage();
-            this.sendPageView();
         }
     },
 
@@ -54,23 +43,22 @@ export default {
 
     beforeMount() {
         this.fetchPage();
-        this.sendPageView();
     },
 
     methods: {
-        fetchPage() {
-            return this.$store.dispatch('data/fetchPosts');
-        },
-        sendPageView() {
-            window.dataLayer.push({ event: 'pageview', title: this.pageTitle });
-        }
-    },
+        async fetchPage() {
+            await this.$store.dispatch('data/fetchPageHome');
 
-    metaInfo() {
-        return {
-            title: this.pageTitle,
-            titleTemplate: false
-        };
+            this.afterDataLoaded();
+        },
+        afterDataLoaded() {
+            if (typeof window === 'undefined') return;
+
+            this.datalayerPageview(this.pageTitle);
+        },
+        showPageTitle(title) {
+            return title !== SITE.TITLE;
+        }
     }
 };
 </script>

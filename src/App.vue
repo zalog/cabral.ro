@@ -10,6 +10,7 @@
 
 <script>
 import { SITE } from './utils/constants';
+import { currentPage } from './utils/mixins';
 
 export default {
     name: 'app',
@@ -19,11 +20,9 @@ export default {
         TheFooter: () => import(/* webpackChunkName: "app-footer" */ './components/TheFooter.vue')
     },
 
-    computed: {
-        currentPage: function() {
-            return this.$store.getters['data/currentPage']();
-        }
-    },
+    mixins: [
+        currentPage
+    ],
 
     watch: {
         '$store.state.ui.toast'(toast) {
@@ -41,14 +40,13 @@ export default {
             htmlAttrs: {
                 lang: SITE.LANG
             },
-            titleTemplate: (titleChunk) => SITE.TITLE_TEMPLATE(titleChunk),
             link: [],
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
             ],
             script: [{
-                vmid: 'gtm',
+                vmid: 'script-gtm',
                 innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -57,19 +55,34 @@ export default {
                 type: 'text/javascript'
             }],
             __dangerouslyDisableSanitizersByTagID: {
-                'gtm': ['innerHTML']
+                'script-gtm': ['innerHTML']
             }
         };
 
-        const pageCanonical = this.currentPage.single && this.currentPage.single.link;
-        if (pageCanonical) {
-            output.link.push({rel: 'canonical', href: this.currentPage.single.link});
+        const pageHead = this.data.head;
+        if (pageHead) {
+            // adds tags
+            Object.keys(pageHead).forEach((key) => {
+                const entry = pageHead[key];
+
+                if (typeof entry === 'object') {
+                    entry.forEach((tag) => {
+                        output[key].push(tag);
+                    });
+                } else {
+                    output[key] = entry;
+                }
+            });
         }
 
-        this.currentPage.meta &&
-            this.currentPage.meta.forEach((meta) => {
-                output.meta.push(meta);
+        // prevents duplicate tags after hydration
+        ['link', 'meta', 'script'].forEach((key) => {
+            output[key].forEach((tag, index) => {
+                if (tag.vmid) return;
+
+                tag.vmid = `${key}-${index}`;
             });
+        });
 
         return output;
     }
