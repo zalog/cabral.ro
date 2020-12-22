@@ -17,6 +17,7 @@
     "lint:js": "./node_modules/.bin/eslint --ignore-pattern '/dist/' --ext .js,.vue ."
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/svg-sprite": "^0.5.0",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
