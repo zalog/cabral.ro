@@ -20,6 +20,7 @@ export default {
     css: [
         '~/assets/scss/app.scss'
     ],
+    plugins: ['~/plugins/vue-lazysizes.client.js'],
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/svg-sprite'
