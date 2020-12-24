@@ -29,11 +29,10 @@ export default {
         currentPage
     ],
 
-    async asyncData({ store, route, $axios }) {
+    async asyncData({ store, route }) {
         local.registerModule({ store, preserveState: false });
 
         await store.dispatch('data/fetchPageHome', {
-            $axios: $axios,
             route
         });
     },

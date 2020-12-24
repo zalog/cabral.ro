@@ -8,7 +8,7 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchPageHome: async ({ getters, commit, dispatch }, payload) => {
+        fetchPageHome: async function({ getters, commit, dispatch }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
 
@@ -51,11 +51,10 @@ export default {
             });
 
             await dispatch('fetchPosts', {
-                $axios: payload.$axios,
                 route: payload.route
             });
         },
-        fetchPosts: async ({ getters, commit }, payload) => {
+        fetchPosts: async function({ getters, commit }, payload) {
             const payloadPosts = {
                 params: {
                     fields: [
@@ -73,7 +72,7 @@ export default {
                 }
             };
             delete payload.params;
-            Object.assign(payloadPosts, payload, { $axios: payload.$axios });
+            Object.assign(payloadPosts, payload, { $axios: this.$axios });
 
             const response = await fetchPosts(payloadPosts);
 
