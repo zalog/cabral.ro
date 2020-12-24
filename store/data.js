@@ -1,8 +1,8 @@
 import Vue from 'vue';
 
 import { fetchPosts } from '~/services/posts';
-import { formatTitle, formatPageTitle } from '~/src/utils';
-import { SITE } from '~/src//utils/constants';
+import { formatTitle, formatPageTitle } from '~/utils';
+import { SITE } from '~/utils/constants';
 
 const pagesToKeep = 5;
 const postsOnPage = 12;

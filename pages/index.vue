@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { SITE } from '~/src/utils/constants';
+import { SITE } from '~/utils/constants';
 import { currentPage } from '~/mixins';
 import PostsList from '~/components/PostsList.vue';
 

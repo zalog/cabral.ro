@@ -1,6 +1,6 @@
 import paginate from 'jw-paginate';
-import { ENDPOINTS } from '~/src/utils/constants';
-import { itemPost } from '~/src/utils/adaptors';
+import { ENDPOINTS } from '~/utils/constants';
+import { itemPost } from '~/utils/adaptors';
 
 const paginationMaxPages = 8;
 const itemsOnPage = 10;

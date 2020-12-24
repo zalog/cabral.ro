@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import '~/src/utils/filters/formatDate';
 import BaseItemPost from '~/components/BaseItemPost.vue';
 
 export default {
