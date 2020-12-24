@@ -16,6 +16,7 @@
 
 <script>
 import { SITE } from '~/utils/constants';
+import dataPosts from '~/store-lazy/data-posts';
 import { currentPage } from '~/mixins';
 import PostsList from '~/components/PostsList.vue';
 
@@ -29,6 +30,8 @@ export default {
     ],
 
     async asyncData({ store, route, $axios }) {
+        local.registerModule({ store, preserveState: false });
+
         await store.dispatch('data/fetchPageHome', {
             $axios: $axios,
             route
@@ -38,6 +41,14 @@ export default {
     methods: {
         showPageTitle(title) {
             return title !== SITE.TITLE;
+        }
+    }
+};
+
+const local = {
+    registerModule: function({ store, preserveState }) {
+        if (!store.hasModule(['data', 'dataPosts'])) {
+            store.registerModule(['data', 'dataPosts'], dataPosts, { preserveState });
         }
     }
 };
