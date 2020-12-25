@@ -37,6 +37,10 @@ export default {
         });
     },
 
+    beforeDestroy() {
+        this.$store.unregisterModule(['data', 'dataPosts']);
+    },
+
     methods: {
         showPageTitle(title) {
             return title !== SITE.TITLE;
