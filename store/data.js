@@ -26,27 +26,37 @@ export const getters = {
 };
 
 export const mutations = {
-    ADD_PAGE: (state, payload) => {
-        state.push({[payload.fullPath]: {}});
-    },
-    ADD_PAGE_SECTION: (state, payload) => {
-        const currentPage = payload.getters.currentPage(payload.fullPath);
+    SET_PAGE_DATA: (state, payload) => {
+        const timestamp = new Date().getTime();
 
-        Vue.set(currentPage, 'sections', {
-            [payload.section]: {
-                ...(currentPage.sections && {
-                    ...currentPage.sections[payload.section]
-                }),
-                ...payload.data
+        if (payload.currentPage) {
+            const payloadData = payload.currentPage[payload.prop];
+            let data = null;
+
+            if (!payloadData) {
+                data = payload.data;
+            } else if (Array.isArray(payloadData)) {
+                data = payloadData.concat(payload.data);
+            } else if (typeof payloadData === 'object' && payloadData !== null) {
+                data = { ...payloadData, ...payload.data };
             }
-        });
+
+            Vue.set(payload.currentPage, payload.prop, data);
+            Vue.set(payload.currentPage, 'timestamp', {
+                ...payload.currentPage.timestamp,
+                [payload.prop]: timestamp
+            });
+        } else {
+            state.push({
+                [payload.routePath]: {
+                    [payload.prop]: payload.data,
+                    'timestamp': {
+                        [payload.prop]: timestamp
+                    }
+                }
+            });
+        }
 
         if (state.length > pagesToKeep) state.shift();
-    },
-    ADD_HEAD_TAGS: (state, payload) => {
-        const currentPage = payload.getters.currentPage(payload.fullPath);
-        const data = payload.data;
-
-        Vue.set(currentPage, 'head', {...data});
     }
 };

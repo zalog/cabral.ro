@@ -1,15 +1,15 @@
 <template>
     <div
-        v-if="data.sections && data.sections.main.posts"
+        v-if="data.main.posts"
         class="page-home container-fluid py-5"
     >
         <h1
-            v-if="showPageTitle(data.sections.main.title)"
-            v-html="data.sections.main.title"
+            v-if="showPageTitle(data.main.title)"
+            v-html="data.main.title"
             class="mb-4"
         />
         <posts-list
-            :posts="data.sections.main.posts"
+            :posts="data.main.posts"
         />
     </div>
 </template>

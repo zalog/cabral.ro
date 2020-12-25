@@ -1,5 +1,6 @@
 import { fetchPosts } from '~/services/posts';
 import { formatTitle, formatPageTitle } from '~/utils';
+import { isValidPropData } from '~/utils/store';
 import { SITE } from '~/utils/constants';
 
 const postsOnPage = 12;
@@ -11,10 +12,6 @@ export default {
         fetchPageHome: async function({ getters, commit, dispatch }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
-
-            if (!currentPage) commit('ADD_PAGE', {fullPath: pageKey});
-
-            if (currentPage.sections) return;
 
             const headTags = {
                 title: SITE.TITLE,
@@ -35,26 +32,25 @@ export default {
                 ]);
             }
 
-            commit('ADD_PAGE_SECTION', {
-                fullPath: pageKey,
-                section: 'main',
-                data: {
-                    title: formatPageTitle(headTags.title)
-                },
-                getters
-            });
-
-            commit('ADD_HEAD_TAGS', {
-                fullPath: pageKey,
+            commit('SET_PAGE_DATA', {
+                prop: 'head',
                 data: headTags,
-                getters
+                routePath: pageKey,
+                currentPage
             });
 
             await dispatch('fetchPosts', {
-                route: payload.route
+                route: payload.route,
+                data: {
+                    title: formatPageTitle(headTags.title)
+                }
             });
         },
         fetchPosts: async function({ getters, commit }, payload) {
+            const pageKey = payload.route.fullPath;
+            const currentPage = getters.currentPage(pageKey);
+            const prop = 'main';
+
             const payloadPosts = {
                 params: {
                     fields: [
@@ -74,18 +70,21 @@ export default {
             delete payload.params;
             Object.assign(payloadPosts, payload, { $axios: this.$axios });
 
+            if (isValidPropData(currentPage, prop)) return;
+
             const response = await fetchPosts(payloadPosts);
 
-            commit('ADD_PAGE_SECTION', {
-                fullPath: payload.route.fullPath,
-                section: 'main',
+            commit('SET_PAGE_DATA', {
+                prop,
                 data: {
+                    title: payload.data.title,
                     posts: {
                         posts: response.posts,
                         pagination: response.pagination
                     }
                 },
-                getters
+                routePath: pageKey,
+                currentPage
             });
         }
     }
