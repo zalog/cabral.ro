@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="data.main.posts"
+        v-if="data"
         class="page-home container-fluid py-5"
     >
         <h1
