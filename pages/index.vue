@@ -16,7 +16,7 @@
 
 <script>
 import { SITE } from '~/utils/constants';
-import dataPosts from '~/store-lazy/data-posts';
+import dataPosts from '~/store/lazy/data-posts';
 import { currentPage } from '~/mixins';
 import PostsList from '~/components/PostsList.vue';
 
