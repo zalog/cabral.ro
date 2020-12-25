@@ -3,14 +3,18 @@ export default {
     components: true,
     router: {
         extendRoutes(routes, resolve) {
-            routes.push(
+            // index
+            const routeIndexIndex = routes.findIndex(route => route.name === 'index');
+            routes.splice(routeIndexIndex + 1, 0,
                 {
                     path: '/page/1/',
+                    pathToRegexpOptions: { strict: true },
                     redirect: '/'
                 },
                 {
                     name: 'page-id',
-                    path: '/page/:id?',
+                    path: '/page/:id/',
+                    pathToRegexpOptions: { strict: true },
                     component: resolve(__dirname, 'pages/index.vue'),
                     chunkName: 'pages/index'
                 }
