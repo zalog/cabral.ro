@@ -30,7 +30,7 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        local.registerModule({ store, preserveState: false });
+        store.registerModule(['data', 'dataPosts'], dataPosts);
 
         await store.dispatch('data/fetchPageHome', {
             route
@@ -44,14 +44,6 @@ export default {
     methods: {
         showPageTitle(title) {
             return title !== SITE.TITLE;
-        }
-    }
-};
-
-const local = {
-    registerModule: function({ store, preserveState }) {
-        if (!store.hasModule(['data', 'dataPosts'])) {
-            store.registerModule(['data', 'dataPosts'], dataPosts, { preserveState });
         }
     }
 };
