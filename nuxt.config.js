@@ -19,6 +19,21 @@ export default {
                     chunkName: 'pages/index'
                 }
             );
+
+            // single
+            const routeSingleIndex = routes.findIndex(route => route.name === 'singleSlug');
+            routes[routeSingleIndex] = {
+                ...routes[routeSingleIndex],
+                path: '/:singleSlug/',
+                pathToRegexpOptions: { strict: true }
+            };
+
+            routes.splice(routeSingleIndex + 1, 0,
+                {
+                    path: '/:singleSlug',
+                    redirect: { name: 'singleSlug' }
+                }
+            );
         }
     },
     css: [
