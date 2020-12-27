@@ -34,6 +34,7 @@
     "vanilla-sharing": "^6.0.4",
     "vue": "^2.6.12",
     "vue-meta": "^2.4.0",
+    "vue-observe-visibility": "^0.4.6",
     "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.4.7",
     "vue-server-renderer": "^2.6.12",
