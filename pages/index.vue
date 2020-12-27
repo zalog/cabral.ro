@@ -30,7 +30,7 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        store.registerModule(['data', 'dataPosts'], dataPosts);
+        store.registerModule(['data', 'dataPosts'], dataPosts, { preserveState: true });
 
         await store.dispatch('data/fetchPageHome', {
             route

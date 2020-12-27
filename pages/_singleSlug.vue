@@ -68,7 +68,7 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        store.registerModule(['data', 'dataSingle'], dataSingle);
+        store.registerModule(['data', 'dataSingle'], dataSingle, { preserveState: true });
 
         let actionName = 'data/fetchPageSingle';
         if (route.params.singleType === 'post') actionName = 'data/fetchPagePost';
