@@ -32,7 +32,7 @@ export const mutations = {
 
         const currentPageData = payload.currentPage[payload.prop];
         if (currentPageData instanceof Array) {
-            data = currentPageData.concat(payload.data);
+            data = [ ...currentPageData, ...payload.data ];
         } else if (currentPageData instanceof Object) {
             data = { ...currentPageData, ...payload.data };
         } else {
