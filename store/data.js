@@ -30,11 +30,11 @@ export const mutations = {
         const timestamp = new Date().getTime();
         let data = null;
 
-        const payloadData = payload.currentPage[payload.prop];
-        if (payloadData instanceof Array) {
-            data = payloadData.concat(payload.data);
-        } else if (payloadData instanceof Object) {
-            data = { ...payloadData, ...payload.data };
+        const currentPageData = payload.currentPage[payload.prop];
+        if (currentPageData instanceof Array) {
+            data = currentPageData.concat(payload.data);
+        } else if (currentPageData instanceof Object) {
+            data = { ...currentPageData, ...payload.data };
         } else {
             data = payload.data;
         }
