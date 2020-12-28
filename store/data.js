@@ -28,19 +28,18 @@ export const getters = {
 export const mutations = {
     SET_PAGE_DATA: (state, payload) => {
         const timestamp = new Date().getTime();
+        let data = null;
+
+        const payloadData = payload.currentPage[payload.prop];
+        if (payloadData instanceof Array) {
+            data = payloadData.concat(payload.data);
+        } else if (payloadData instanceof Object) {
+            data = { ...payloadData, ...payload.data };
+        } else {
+            data = payload.data;
+        }
 
         if (payload.currentPage) {
-            const payloadData = payload.currentPage[payload.prop];
-            let data = null;
-
-            if (!payloadData) {
-                data = payload.data;
-            } else if (Array.isArray(payloadData)) {
-                data = payloadData.concat(payload.data);
-            } else if (typeof payloadData === 'object' && payloadData !== null) {
-                data = { ...payloadData, ...payload.data };
-            }
-
             Vue.set(payload.currentPage, payload.prop, data);
             Vue.set(payload.currentPage, 'timestamp', {
                 ...payload.currentPage.timestamp,
@@ -49,7 +48,7 @@ export const mutations = {
         } else {
             state.push({
                 [payload.routePath]: {
-                    [payload.prop]: payload.data,
+                    [payload.prop]: data,
                     'timestamp': {
                         [payload.prop]: timestamp
                     }
