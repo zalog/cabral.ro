@@ -28,6 +28,7 @@ export const getters = {
 export const mutations = {
     SET_PAGE_DATA: (state, payload) => {
         const timestamp = new Date().getTime();
+        const pageProp = payload.routePath;
         let data = null;
 
         const currentPageData = payload.currentPage[payload.prop];
@@ -47,7 +48,7 @@ export const mutations = {
             });
         } else {
             state.push({
-                [payload.routePath]: {
+                [pageProp]: {
                     [payload.prop]: data,
                     'timestamp': {
                         [payload.prop]: timestamp
