@@ -29,9 +29,10 @@ export const mutations = {
     SET_PAGE_DATA: (state, payload) => {
         const timestamp = new Date().getTime();
         const pageProp = payload.routePath;
+        const rootProp = payload.prop;
         let data = null;
 
-        const currentPageData = payload.currentPage[payload.prop];
+        const currentPageData = payload.currentPage[rootProp];
         if (currentPageData instanceof Array) {
             data = [ ...currentPageData, ...payload.data ];
         } else if (currentPageData instanceof Object) {
@@ -41,17 +42,17 @@ export const mutations = {
         }
 
         if (payload.currentPage) {
-            Vue.set(payload.currentPage, payload.prop, data);
+            Vue.set(payload.currentPage, rootProp, data);
             Vue.set(payload.currentPage, 'timestamp', {
                 ...payload.currentPage.timestamp,
-                [payload.prop]: timestamp
+                [rootProp]: timestamp
             });
         } else {
             state.push({
                 [pageProp]: {
-                    [payload.prop]: data,
+                    [rootProp]: data,
                     'timestamp': {
-                        [payload.prop]: timestamp
+                        [rootProp]: timestamp
                     }
                 }
             });
