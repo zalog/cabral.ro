@@ -32,7 +32,15 @@ export const mutations = {
         const rootProp = payload.prop;
         let data = null;
 
-        const currentPageData = payload.currentPage[rootProp];
+        let currentPage = state.find(page => page[pageProp]);
+        if (!currentPage) {
+            state.push({
+                [pageProp]: {}
+            });
+            currentPage = state[state.length - 1];
+        }
+
+        const currentPageData = currentPage[pageProp];
         if (currentPageData instanceof Array) {
             data = [ ...currentPageData, ...payload.data ];
         } else if (currentPageData instanceof Object) {
@@ -41,22 +49,11 @@ export const mutations = {
             data = payload.data;
         }
 
-        if (payload.currentPage) {
-            Vue.set(payload.currentPage, rootProp, data);
-            Vue.set(payload.currentPage, 'timestamp', {
-                ...payload.currentPage.timestamp,
-                [rootProp]: timestamp
-            });
-        } else {
-            state.push({
-                [pageProp]: {
-                    [rootProp]: data,
-                    'timestamp': {
-                        [rootProp]: timestamp
-                    }
-                }
-            });
-        }
+        Vue.set(currentPageData, rootProp, data);
+        Vue.set(currentPageData, 'timestamp', {
+            ...currentPageData.timestamp,
+            [rootProp]: timestamp
+        });
 
         if (state.length > pagesToKeep) state.shift();
     }
