@@ -28,31 +28,31 @@ export const getters = {
 export const mutations = {
     SET_PAGE_DATA: (state, payload) => {
         const timestamp = new Date().getTime();
-        const pageProp = payload.routePath;
-        const rootProp = payload.prop;
+        const key = payload.routePath;
+        const dataKey = payload.prop;
         let data = null;
 
-        let currentPage = state.find(page => page[pageProp]);
-        if (!currentPage) {
+        let page = state.find(page => page[key]);
+        if (!page) {
             state.push({
-                [pageProp]: {}
+                [key]: {}
             });
-            currentPage = state[state.length - 1];
+            page = state[state.length - 1];
         }
 
-        const currentPageData = currentPage[pageProp];
-        if (currentPageData instanceof Array) {
-            data = [ ...currentPageData, ...payload.data ];
-        } else if (currentPageData instanceof Object) {
-            data = { ...currentPageData, ...payload.data };
+        const pageData = page[key];
+        if (pageData instanceof Array) {
+            data = [ ...pageData, ...payload.data ];
+        } else if (pageData instanceof Object) {
+            data = { ...pageData, ...payload.data };
         } else {
             data = payload.data;
         }
 
-        Vue.set(currentPageData, rootProp, data);
-        Vue.set(currentPageData, 'timestamp', {
-            ...currentPageData.timestamp,
-            [rootProp]: timestamp
+        Vue.set(pageData, dataKey, data);
+        Vue.set(pageData, 'timestamp', {
+            ...pageData.timestamp,
+            [dataKey]: timestamp
         });
 
         if (state.length > pagesToKeep) state.shift();
