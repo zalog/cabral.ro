@@ -31,7 +31,8 @@ export const mutations = {
         let data = null;
 
         if (dataCurrent instanceof Array) {
-            data = [ ...dataCurrent, ...payload.data ];
+            const payloadData = (payload.data instanceof Array) ? payload.data : [payload.data];
+            data = [ ...dataCurrent, ...payloadData ];
         } else if (dataCurrent instanceof Object) {
             data = { ...dataCurrent, ...payload.data };
         } else {
