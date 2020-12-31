@@ -1,6 +1,5 @@
-import Vue from 'vue';
-
 import { formatPageTitle } from '~/utils';
+import { get, set } from './../utils/store';
 
 const pagesToKeep = 5;
 
@@ -25,28 +24,23 @@ export const getters = {
 
 export const mutations = {
     SET_PAGE_DATA: (state, payload) => {
-        const timestamp = new Date().getTime();
-        const key = payload.routePath;
-        const dataKey = payload.prop;
+        const dataKeys = [payload.routePath, ...payload.prop.split('.')];
+        const dataKeyPage = dataKeys[0];
+        const dataKeyFirst = dataKeys[1];
+        const dataCurrent = get(state, dataKeys);
         let data = null;
 
-        if (!state[key]) Vue.set(state, key, {});
-
-        const page = state[key];
-
-        if (page instanceof Array) {
-            data = [ ...page, ...payload.data ];
-        } else if (page instanceof Object) {
-            data = { ...page, ...payload.data };
+        if (dataCurrent instanceof Array) {
+            data = [ ...dataCurrent, ...payload.data ];
+        } else if (dataCurrent instanceof Object) {
+            data = { ...dataCurrent, ...payload.data };
         } else {
             data = payload.data;
         }
 
-        Vue.set(page, dataKey, data);
-        Vue.set(page, 'timestamp', {
-            ...page.timestamp,
-            [dataKey]: timestamp
-        });
+        set(state, dataKeys, data);
+
+        set(state, [dataKeyPage, 'timestamp', dataKeyFirst], new Date().getTime());
 
         if (Object.keys(state).length > pagesToKeep) {
             const keyToDelete = Object.keys(state).reduce((prev, curr) =>
