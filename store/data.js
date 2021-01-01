@@ -39,6 +39,9 @@ export const mutations = {
             }
         } else if (dataCurrent instanceof Object) {
             data = { ...dataCurrent, ...payload.data };
+        } else if (payload.type === 'array') {
+            const payloadData = (payload.data instanceof Array) ? payload.data : [payload.data];
+            data = payloadData;
         } else {
             data = payload.data;
         }
