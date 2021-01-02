@@ -30,18 +30,17 @@ export const mutations = {
         const dataCurrent = get(state, dataKeys);
         let data = null;
 
-        if (dataCurrent instanceof Array) {
-            const payloadData = (payload.data instanceof Array) ? payload.data : [payload.data];
-            if (!payload.unshift) {
-                data = [ ...dataCurrent, ...payloadData ];
+        if (dataCurrent instanceof Array || payload.type === 'array') {
+            const payloadData = (payload.data instanceof Array) ? payload.data : [ payload.data ];
+
+            if (dataCurrent) {
+                if (!payload.unshift) data = [ ...dataCurrent, ...payloadData ];
+                else data = [ ...payloadData, ...dataCurrent ];
             } else {
-                data = [ ...payloadData, ...dataCurrent ];
+                data = payloadData;
             }
-        } else if (dataCurrent instanceof Object) {
+        } else if (dataCurrent instanceof Object || payload.type === 'object') {
             data = { ...dataCurrent, ...payload.data };
-        } else if (payload.type === 'array') {
-            const payloadData = (payload.data instanceof Array) ? payload.data : [payload.data];
-            data = payloadData;
         } else {
             data = payload.data;
         }
