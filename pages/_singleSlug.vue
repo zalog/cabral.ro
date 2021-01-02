@@ -45,22 +45,39 @@
 
                 <hr class="d-none d-lg-block" />
             </template>
+
+            <div
+                class="container-fluid"
+                v-observe-visibility="!comments.shown ? isVisible => fetchComments(isVisible) : false"
+            >
+                <comments-list
+                    :loading="comments.loading"
+                    @is-visible-last="fetchComments(true)"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import dataSingle from '~/store/lazy/data-single';
+import dataComments from './../store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
+import CommentsList from './../components/CommentsList';
+import { ObserveVisibility } from 'vue-observe-visibility';
+
+Vue.directive('observe-visibility', ObserveVisibility);
 
 export default {
     components: {
         ListItemInfo,
         ListShare,
-        ListRelated
+        ListRelated,
+        CommentsList
     },
 
     mixins: [
@@ -79,8 +96,40 @@ export default {
         });
     },
 
+    data: () => ({
+        comments: {
+            shown: false,
+            loading: false
+        }
+    }),
+
     beforeDestroy() {
         this.$store.unregisterModule(['data', 'dataSingle']);
+        if (this.$store.hasModule(['data', 'dataComments'])) {
+            this.$store.unregisterModule(['data', 'dataComments']);
+        }
+    },
+
+    methods: {
+        async fetchComments(isVisible) {
+            if (!isVisible && !this.comments.loading) return;
+
+            const hasNextPage = this.data.comments && this.data.comments.pageInfo && this.data.comments.pageInfo.hasNextPage;
+
+            if (hasNextPage === false) return;
+
+            this.comments.loading = true;
+            this.comments.shown = true;
+
+            if (!this.$store.hasModule(['data', 'dataComments'])) {
+                this.$store.registerModule(['data', 'dataComments'], dataComments, { preserveState: true });
+            }
+            await this.$store.dispatch('data/fetchComments', {
+                route: this.$route
+            });
+
+            this.comments.loading = false;
+        }
     }
 };
 </script>
