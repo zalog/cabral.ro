@@ -3,6 +3,7 @@
         v-model="computedVisible"
         toaster="b-toaster-bottom-left"
         no-close-button
+        @hide="$emit('hide')"
     >
         <slot></slot>
     </b-toast>
