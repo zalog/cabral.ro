@@ -12,6 +12,9 @@ export default {
     mutations: {
         PUSH: (state, payload) => {
             state.push(payload);
+        },
+        DELETE: (state, payloadIndex) => {
+            state.splice(payloadIndex, 1);
         }
     },
 
@@ -22,6 +25,11 @@ export default {
             if (findIndex > -1) return;
 
             commit('PUSH', payload);
+        },
+        delete: ({state, commit}, payloadIndex) => {
+            if (!state[payloadIndex]) return;
+
+            commit('DELETE', payloadIndex);
         }
     }
 };
