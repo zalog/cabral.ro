@@ -67,7 +67,6 @@ export default {
                 else toastMessage += ' a fost salvat!';
 
                 dispatch('notifications/push', {
-                    visible: true,
                     message: toastMessage
                 }, { root: true });
 
