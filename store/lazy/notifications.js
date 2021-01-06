@@ -24,6 +24,8 @@ export default {
 
             if (findIndex > -1) return;
 
+            if (typeof payload.visible === 'undefined') payload.visible = true;
+
             commit('PUSH', payload);
         },
         delete: ({state, commit}, payloadIndex) => {
