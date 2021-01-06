@@ -1,6 +1,7 @@
 <template>
     <b-toast
         v-model="computedVisible"
+        :variant="variant"
         toaster="b-toaster-bottom-left"
         no-close-button
         @hide="$emit('hide')"
@@ -26,7 +27,8 @@ export default {
         visible: {
             type: Boolean,
             default: true
-        }
+        },
+        variant: String
     },
 
     computed: {
