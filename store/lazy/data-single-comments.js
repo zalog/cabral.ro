@@ -35,7 +35,7 @@ export default {
                 data: response.pageInfo
             });
         },
-        postComment: async function({ commit }, payload) {
+        postComment: async function({ commit, dispatch }, payload) {
             const pageKey = payload.route.fullPath;
 
             try {
@@ -61,7 +61,15 @@ export default {
                     commit('SET_PAGE_DATA', payloadCommit);
                 }
 
-                // TODO ux: show toast
+                let toastMessage = `${comment.author.name}, comentariul tău`;
+                if (comment.status === 'hold') toastMessage += ' urmează să fie aprobat.';
+                else if (comment.status === 'spam') toastMessage = ' a fost marcat ca spam.';
+                else toastMessage += ' a fost salvat!';
+
+                dispatch('notifications/push', {
+                    visible: true,
+                    message: toastMessage
+                }, { root: true });
 
                 return comment.id;
             } catch (error) {

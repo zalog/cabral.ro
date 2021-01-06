@@ -20,13 +20,6 @@ export default {
 
     created() {
         this.$store.registerModule('notifications', notifications);
-    },
-
-    mounted() {
-        this.$store.dispatch('notifications/push', {
-            visible: true,
-            message: 'Mesaj toast de test!'
-        });
     }
 };
 </script>
