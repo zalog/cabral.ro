@@ -4,6 +4,7 @@
             <lazy-base-toast
                 :key="index"
                 v-model="notification.visible"
+                :variant="notification.variant"
                 @hide="$store.dispatch('notifications/delete', index)"
             >
                 {{ notification.message }}

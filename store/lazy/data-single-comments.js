@@ -62,12 +62,20 @@ export default {
                 }
 
                 let toastMessage = `${comment.author.name}, comentariul tău`;
-                if (comment.status === 'hold') toastMessage += ' urmează să fie aprobat.';
-                else if (comment.status === 'spam') toastMessage = ' a fost marcat ca spam.';
-                else toastMessage += ' a fost salvat!';
+                let toastVariant = 'success';
+                if (comment.status === 'hold') {
+                    toastMessage += ' urmează să fie aprobat.';
+                    toastVariant = 'info';
+                } else if (comment.status === 'spam') {
+                    toastMessage = ' a fost marcat ca spam.';
+                    toastVariant = 'danger';
+                } else {
+                    toastMessage += ' a fost salvat!';
+                }
 
                 dispatch('notifications/push', {
-                    message: toastMessage
+                    message: toastMessage,
+                    variant: toastVariant
                 }, { root: true });
 
                 return comment.id;
