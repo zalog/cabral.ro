@@ -73,7 +73,7 @@ export default {
                     toastMessage += ' a fost salvat!';
                 }
 
-                dispatch('notifications/push', {
+                dispatch('ui/notifications/push', {
                     message: toastMessage,
                     variant: toastVariant
                 }, { root: true });
