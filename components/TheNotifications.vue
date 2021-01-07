@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <template v-for="(notification, index) in data">
+    <div v-if="notifications">
+        <template v-for="(notification, index) in notifications">
             <lazy-base-toast
                 :key="index"
                 v-model="notification.visible"
@@ -14,12 +14,17 @@
 </template>
 
 <script>
+import notifications from './../store/lazy/notifications';
+
 export default {
-    props: {
-        data: {
-            type: Array,
-            required: true
+    computed: {
+        notifications() {
+            return this.$store.state.notifications;
         }
+    },
+
+    created() {
+        this.$store.registerModule('notifications', notifications);
     }
 };
 </script>

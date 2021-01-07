@@ -1,25 +1,6 @@
 <template>
     <div>
         <Nuxt />
-        <lazy-the-notifications
-            v-if="notifications.length"
-            :data="notifications"
-        />
+        <lazy-the-notifications />
     </div>
 </template>
-
-<script>
-import notifications from './../store/lazy/notifications';
-
-export default {
-    computed: {
-        notifications() {
-            return this.$store.state.notifications;
-        }
-    },
-
-    created() {
-        this.$store.registerModule('notifications', notifications);
-    }
-};
-</script>
