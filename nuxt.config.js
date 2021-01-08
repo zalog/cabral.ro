@@ -39,6 +39,12 @@ export default {
     css: [
         '~/assets/scss/app.scss'
     ],
+    head: {
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+        ]
+    },
     plugins: [
         '~/plugins/filters.js',
         '~/plugins/vue-lazysizes.client.js'
