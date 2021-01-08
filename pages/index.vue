@@ -30,12 +30,16 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        store.registerModule(['data', 'dataPosts'], dataPosts, { preserveState: true });
+        if (!store.hasModule(['data', 'dataPosts'])) {
+            store.registerModule(['data', 'dataPosts'], dataPosts, { preserveState: true });
+        }
 
         await store.dispatch('data/fetchPageHome', {
             route
         });
     },
+
+    watchQuery: ['s'],
 
     beforeDestroy() {
         this.$store.unregisterModule(['data', 'dataPosts']);
