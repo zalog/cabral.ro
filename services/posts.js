@@ -34,10 +34,7 @@ export async function fetchPosts(payload) {
         }),
         ...(payloadDefault.params.search && {
             search: payloadDefault.params.search
-        }),
-
-        // not needed for api
-        pageLoading: payloadDefault.pageLoading
+        })
     };
 
     // posts: fetch
