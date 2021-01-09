@@ -61,7 +61,7 @@ export default {
     }),
 
     async fetch() {
-        this.$store.registerModule(['ui', 'menu'], menu);
+        this.$store.registerModule(['ui', 'menu'], menu, { preserveState: false });
 
         await this.$store.dispatch('ui/menu/fetch');
     },
