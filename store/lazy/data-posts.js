@@ -9,40 +9,26 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchPageHome: async function({ getters, commit, dispatch }, payload) {
-            const pageKey = payload.route.fullPath;
-            const currentPage = getters.currentPage(pageKey);
-
-            const headTags = {
-                title: SITE.TITLE,
-                titleTemplate: false
-            };
+        fetchPageHome: async function({ dispatch }, payload) {
+            let title = SITE.TITLE;
 
             const pageS = payload.route.query.s;
             if (pageS) {
-                headTags.title = `Caută după "${pageS}"`;
-                delete headTags.titleTemplate;
+                title = `Caută după "${pageS}"`;
             }
 
             const pageNumber = payload.route.params.id;
             if (pageNumber) {
-                headTags.title = formatTitle([
-                    headTags.title,
+                title = formatTitle([
+                    title,
                     `pagina ${pageNumber}`
                 ]);
             }
 
-            commit('SET_PAGE_DATA', {
-                prop: 'head',
-                data: headTags,
-                routePath: pageKey,
-                currentPage
-            });
-
             await dispatch('fetchPosts', {
                 route: payload.route,
                 data: {
-                    title: formatPageTitle(headTags.title)
+                    title: formatPageTitle(title)
                 }
             });
         },

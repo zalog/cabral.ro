@@ -1,4 +1,8 @@
 export default {
+    head() {
+        return this.data.main.head;
+    },
+
     computed: {
         data() {
             const pageKey = this.$route.fullPath;

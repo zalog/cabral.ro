@@ -17,6 +17,7 @@
 <script>
 import { SITE } from '~/utils/constants';
 import dataPosts from '~/store/lazy/data-posts';
+import dataHead from '~/store/lazy/data-head';
 import { currentPage } from '~/mixins';
 import PostsList from '~/components/PostsList.vue';
 
@@ -33,10 +34,19 @@ export default {
         if (!store.hasModule(['data', 'dataPosts'])) {
             store.registerModule(['data', 'dataPosts'], dataPosts, { preserveState: true });
         }
+        if (!store.hasModule(['data', 'dataHead'])) {
+            store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
+        }
 
-        await store.dispatch('data/fetchPageHome', {
-            route
-        });
+        await Promise.all([
+            store.dispatch('data/fetchHead', {
+                route,
+                url: `${SITE.LINK}/`
+            }),
+            store.dispatch('data/fetchPageHome', {
+                route
+            })
+        ]);
     },
 
     watchQuery: ['s'],

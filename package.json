@@ -23,6 +23,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.18.1",
     "compression": "^1.7.4",
+    "dom-parser": "^0.1.6",
     "express": "^4.17.1",
     "jw-paginate": "^1.0.4",
     "lazysizes": "^5.2.2",
