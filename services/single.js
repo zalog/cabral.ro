@@ -4,7 +4,7 @@ import { pageSinglePost, pageSinglePage } from '~/utils/adaptors';
 export async function fetchPost(payload) {
     const params = {
         fields: [],
-        ...payload
+        ...payload.params
     };
 
     // prepare params data values
@@ -24,7 +24,7 @@ export async function fetchPost(payload) {
 export async function fetchPage(payload) {
     const params = {
         fields: [],
-        ...payload
+        ...payload.params
     };
 
     // prepare params data values

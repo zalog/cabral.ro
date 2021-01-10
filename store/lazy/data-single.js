@@ -17,12 +17,14 @@ export default {
 
             const responsePost = await fetchPost({
                 $axios: this.$axios,
-                fields: [
-                    'id', 'link', 'title', 'date', 'modified', 'content',
-                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
-                ],
-                embed_featured_media_size: 'full',
-                slug: payload.route.path
+                params: {
+                    fields: [
+                        'id', 'link', 'title', 'date', 'modified', 'content',
+                        'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
+                    ],
+                    embed_featured_media_size: 'full',
+                    slug: payload.route.path
+                }
             });
 
             commit('SET_PAGE_DATA', {
@@ -41,11 +43,13 @@ export default {
 
             const responsePage = await fetchPage({
                 $axios: this.$axios,
-                fields: [
-                    'id', 'link', 'title', 'date', 'modified', 'content',
-                    'comments_number', 'yoast_meta'
-                ],
-                slug: payload.route.path
+                params: {
+                    fields: [
+                        'id', 'link', 'title', 'date', 'modified', 'content',
+                        'comments_number', 'yoast_meta'
+                    ],
+                    slug: payload.route.path
+                }
             });
 
             commit('SET_PAGE_DATA', {
