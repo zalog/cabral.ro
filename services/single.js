@@ -3,12 +3,12 @@ import { pageSinglePost, pageSinglePage } from '~/utils/adaptors';
 
 export async function fetchPost(payload) {
     const params = {
-        fields: [],
+        _fields: [],
         ...payload.params
     };
 
     // prepare params data values
-    params.fields.length && ( params.fields = params.fields.join(',') );
+    params._fields.length && ( params._fields = params._fields.join(',') );
 
     const response = await payload.$axios({
         method: 'get',
@@ -23,12 +23,12 @@ export async function fetchPost(payload) {
 
 export async function fetchPage(payload) {
     const params = {
-        fields: [],
+        _fields: [],
         ...payload.params
     };
 
     // prepare params data values
-    params.fields.length && ( params.fields = params.fields.join(',') );
+    params._fields.length && ( params._fields = params._fields.join(',') );
 
     const response = await payload.$axios({
         method: 'get',

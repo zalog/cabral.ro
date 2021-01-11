@@ -9,7 +9,7 @@ export async function fetchPosts(payload) {
     const output = {};
     const payloadDefault = {
         params: {
-            fields: [],
+            _fields: [],
             search: '',
             ...payload.params
         },
@@ -26,8 +26,8 @@ export async function fetchPosts(payload) {
     const paramsPosts = {
         per_page: payloadDefault.pagination.itemsOnPage,
         page: payloadDefault.pagination.currentPage,
-        ...(payloadDefault.params.fields.length && {
-            fields: payloadDefault.params.fields.join(',')
+        ...(payloadDefault.params._fields.length && {
+            _fields: payloadDefault.params._fields.join(',')
         }),
         ...(payloadDefault.categories.length && {
             'filter[category_name]': payloadDefault.categories.join(',')

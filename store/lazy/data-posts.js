@@ -39,7 +39,7 @@ export default {
 
             const payloadPosts = {
                 params: {
-                    fields: [
+                    _fields: [
                         'title', 'slug', 'excerpt', 'date', 'modified',
                         'embed', 'embed_featured_media', 'comments_number'
                     ],

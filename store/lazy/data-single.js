@@ -18,7 +18,7 @@ export default {
             const responsePost = await fetchPost({
                 $axios: this.$axios,
                 params: {
-                    fields: [
+                    _fields: [
                         'id', 'link', 'title', 'date', 'modified', 'content',
                         'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
                     ],
@@ -44,7 +44,7 @@ export default {
             const responsePage = await fetchPage({
                 $axios: this.$axios,
                 params: {
-                    fields: [
+                    _fields: [
                         'id', 'link', 'title', 'date', 'modified', 'content',
                         'comments_number', 'yoast_meta'
                     ],
