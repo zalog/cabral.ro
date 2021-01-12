@@ -13,7 +13,7 @@ export default {
             });
 
             commit('SET_PAGE_DATA', {
-                prop: 'main.head',
+                prop: 'head',
                 data: response,
                 routePath: pageKey
             });

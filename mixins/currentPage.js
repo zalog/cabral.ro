@@ -1,6 +1,6 @@
 export default {
     head() {
-        return this.data.main.head;
+        return this.data.head;
     },
 
     computed: {
