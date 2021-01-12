@@ -15,7 +15,7 @@ export default {
 
             if (isValidPropData(currentPage, prop)) return;
 
-            const responsePost = await fetchPost({
+            const response = await fetchPost({
                 $axios: this.$axios,
                 params: {
                     _fields: [
@@ -29,7 +29,7 @@ export default {
 
             commit('SET_PAGE_DATA', {
                 prop: 'main',
-                data: responsePost,
+                data: response,
                 routePath: pageKey,
                 currentPage
             });
@@ -41,7 +41,7 @@ export default {
 
             if (isValidPropData(currentPage, prop)) return;
 
-            const responsePage = await fetchPage({
+            const response = await fetchPage({
                 $axios: this.$axios,
                 params: {
                     _fields: [
@@ -54,7 +54,7 @@ export default {
 
             commit('SET_PAGE_DATA', {
                 prop: 'main',
-                data: responsePage,
+                data: response,
                 routePath: pageKey,
                 currentPage
             });
