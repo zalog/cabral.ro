@@ -1,11 +1,16 @@
 import { fetchHead } from './../../services/head';
+import { isValidPropData } from '~/utils/store';
 
 export default {
     namespaced: false,
 
     actions: {
-        fetchHead: async function({ commit }, payload) {
+        fetchHead: async function({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
+            const currentPage = getters.currentPage(pageKey);
+            const prop = 'head';
+
+            if (isValidPropData(currentPage, prop)) return;
 
             const response = await fetchHead({
                 $axios: this.$axios,
@@ -13,7 +18,7 @@ export default {
             });
 
             commit('SET_PAGE_DATA', {
-                prop: 'head',
+                prop,
                 data: response,
                 routePath: pageKey
             });
