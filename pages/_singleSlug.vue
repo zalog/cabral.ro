@@ -4,43 +4,43 @@
         class="page-single"
     >
         <div
-            v-if="data.main.single.featuredMedia"
+            v-if="data.main.featuredMedia"
             class="entry-img-hero"
-            v-html="data.main.single.featuredMedia"
+            v-html="data.main.featuredMedia"
         />
         <div
             class="container-fluid"
         >
             <h1
-                v-html="data.main.single.title"
+                v-html="data.main.title"
                 class="entry-title"
             />
             <list-item-info
                 :data="[{
                     icon: 'date',
-                    text: $options.filters.formatDate(data.main.single.date)
+                    text: $options.filters.formatDate(data.main.date)
                 }, {
                     icon: 'folder',
-                    links: data.main.single.categories
+                    links: data.main.categories
                 }, {
                     icon: 'comment',
-                    text: data.main.single.commentsNumber
+                    text: data.main.commentsNumber
                 }]"
             />
             <div
                 ref="content"
-                v-html="data.main.single.content"
+                v-html="data.main.content"
                 class="entry-content"
             />
-            <list-share :url="data.main.single.link" />
+            <list-share :url="data.main.link" />
         </div>
 
         <div class="bg-light">
             <template
-                v-if="data.main.related"
+                v-if="data.related"
             >
                 <div class="container-fluid">
-                    <list-related :data="data.main.related" />
+                    <list-related :data="data.related" />
                 </div>
 
                 <hr class="d-none d-lg-block" />

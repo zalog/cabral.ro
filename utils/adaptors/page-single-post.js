@@ -31,7 +31,14 @@ export default (payload) => {
     });
 
     const output = {
-        single: {
+        head: {
+            title: payload.title.rendered,
+            link: [
+                {rel: 'canonical', href: payload.link}
+            ],
+            meta: payload.yoast_meta
+        },
+        main: {
             id: payload.id,
             link: payload.link,
             featuredMedia: featuredMediaValid && featuredMedia.html || false,
@@ -40,13 +47,6 @@ export default (payload) => {
             commentsNumber: payload.comments_number,
             categories,
             date
-        },
-        head: {
-            title: payload.title.rendered,
-            link: [
-                {rel: 'canonical', href: payload.link}
-            ],
-            meta: payload.yoast_meta
         },
         related
     };

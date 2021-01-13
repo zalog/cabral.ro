@@ -2,7 +2,7 @@
     <div>
         <h3>Comentarii</h3>
 
-        <comments-list-form :data="{singleId: data.main.single.id}" />
+        <comments-list-form :data="{singleId: data.main.id}" />
 
         <ul class="list-comments">
             <li
@@ -31,7 +31,7 @@
                 <comments-list-form
                     :data="{
                         label: 'răspunde...',
-                        singleId: data.main.single.id,
+                        singleId: data.main.id,
                         commentId: comment.commentId,
                         index
                     }"

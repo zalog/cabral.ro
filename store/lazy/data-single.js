@@ -28,8 +28,22 @@ export default {
             });
 
             commit('SET_PAGE_DATA', {
-                prop: 'main',
-                data: response,
+                prop: 'head',
+                data: response.head,
+                routePath: pageKey,
+                currentPage
+            });
+
+            commit('SET_PAGE_DATA', {
+                prop,
+                data: response.main,
+                routePath: pageKey,
+                currentPage
+            });
+
+            commit('SET_PAGE_DATA', {
+                prop: 'related',
+                data: response.related,
                 routePath: pageKey,
                 currentPage
             });
@@ -53,8 +67,15 @@ export default {
             });
 
             commit('SET_PAGE_DATA', {
-                prop: 'main',
-                data: response,
+                prop: 'head',
+                data: response.head,
+                routePath: pageKey,
+                currentPage
+            });
+
+            commit('SET_PAGE_DATA', {
+                prop,
+                data: response.main,
                 routePath: pageKey,
                 currentPage
             });

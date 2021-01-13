@@ -8,7 +8,7 @@ export default {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const pageComments = currentPage.comments;
-            const pageSingleId = currentPage.main.single.id;
+            const pageSingleId = currentPage.main.id;
             let commentsFrom = null;
 
             if (!currentPage || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
