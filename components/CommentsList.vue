@@ -2,11 +2,11 @@
     <div>
         <h3>Comentarii</h3>
 
-        <comments-list-form :data="{singleId: data.main.id}" />
+        <comments-list-form :data="{ singleId }" />
 
         <ul class="list-comments">
             <li
-                v-for="(comment, index) in data.comments && data.comments.nodes" :key="'comments-comment-' + comment.commentId"
+                v-for="(comment, index) in comments && comments.nodes" :key="'comments-comment-' + comment.commentId"
                 :id="`comment-${comment.commentId}`"
             >
                 <comments-list-comment
@@ -31,7 +31,7 @@
                 <comments-list-form
                     :data="{
                         label: 'răspunde...',
-                        singleId: data.main.id,
+                        singleId,
                         commentId: comment.commentId,
                         index
                     }"
@@ -62,18 +62,14 @@ export default {
     },
 
     props: {
-        loading: Boolean
-    },
-
-    computed: {
-        data() {
-            return this.$store.getters['data/currentPage'](this.$route.fullPath);
-        }
+        loading: Boolean,
+        comments: Object,
+        singleId: Number
     },
 
     methods: {
         emitVisibleLastComment(isVisible, index) {
-            if (!isVisible || this.data.comments.nodes.length != index) return;
+            if (!isVisible || this.comments.nodes.length != index) return;
 
             this.$emit('is-visible-last');
         }

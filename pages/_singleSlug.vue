@@ -52,6 +52,8 @@
             >
                 <comments-list
                     :loading="comments.loading"
+                    :comments="data.comments"
+                    :single-id="data.main.id"
                     @is-visible-last="fetchComments(true)"
                 />
             </div>
