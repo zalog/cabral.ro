@@ -69,8 +69,7 @@ export default {
                         pagination: response.pagination
                     }
                 },
-                routePath: pageKey,
-                currentPage
+                routePath: pageKey
             });
         }
     }

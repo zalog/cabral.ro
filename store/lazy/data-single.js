@@ -30,22 +30,19 @@ export default {
             commit('SET_PAGE_DATA', {
                 prop: 'head',
                 data: response.head,
-                routePath: pageKey,
-                currentPage
+                routePath: pageKey
             });
 
             commit('SET_PAGE_DATA', {
                 prop,
                 data: response.main,
-                routePath: pageKey,
-                currentPage
+                routePath: pageKey
             });
 
             commit('SET_PAGE_DATA', {
                 prop: 'related',
                 data: response.related,
-                routePath: pageKey,
-                currentPage
+                routePath: pageKey
             });
         },
         fetchPagePage: async function ({ getters, commit }, payload) {
@@ -69,15 +66,13 @@ export default {
             commit('SET_PAGE_DATA', {
                 prop: 'head',
                 data: response.head,
-                routePath: pageKey,
-                currentPage
+                routePath: pageKey
             });
 
             commit('SET_PAGE_DATA', {
                 prop,
                 data: response.main,
-                routePath: pageKey,
-                currentPage
+                routePath: pageKey
             });
         }
     }
