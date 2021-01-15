@@ -38,10 +38,14 @@ export default {
             store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
         }
 
+        const pageS = route.query.s;
+        let fetchHeadUrl = `${SITE.LINK}/`;
+        if (pageS) fetchHeadUrl += `?s=${pageS}`;
+
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/`
+                url: fetchHeadUrl
             }),
             store.dispatch('data/fetchPosts', {
                 route
