@@ -38,13 +38,16 @@ export default {
             store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
         }
 
+        const categorySlug = route.params.categorySlug.split('/').pop();
+
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
                 url: `${SITE.LINK}/`
             }),
             store.dispatch('data/fetchPosts', {
-                route
+                route,
+                categories: [categorySlug]
             })
         ]);
     },
