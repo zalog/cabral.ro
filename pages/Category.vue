@@ -9,7 +9,7 @@
             class="mb-4"
         />
         <posts-list
-            :posts="data.main.posts"
+            :posts="data.main"
         />
     </div>
 </template>

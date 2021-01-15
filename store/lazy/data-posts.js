@@ -38,12 +38,7 @@ export default {
 
             commit('SET_PAGE_DATA', {
                 prop,
-                data: {
-                    posts: {
-                        posts: response.posts,
-                        pagination: response.pagination
-                    }
-                },
+                data: response,
                 routePath: pageKey
             });
         }
