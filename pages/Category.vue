@@ -43,7 +43,7 @@ export default {
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/`
+                url: `${SITE.LINK}/category/${categorySlug}/`
             }),
             store.dispatch('data/fetchPosts', {
                 route,
