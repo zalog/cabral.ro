@@ -1,5 +1,7 @@
 import { fetchPosts } from '~/services/posts';
 import { isValidPropData } from '~/utils/store';
+import { formatTitle, formatPageTitle } from '~/utils';
+import { SITE } from '~/utils/constants';
 
 const postsOnPage = 12;
 
@@ -7,6 +9,40 @@ export default {
     namespaced: false,
 
     actions: {
+        fetchPageListing: async function({ commit, dispatch }, payload) {
+            const pageKey = payload.route.fullPath;
+            let pageTitle = SITE.TITLE;
+
+            const pageSearch = payload.route.query.s;
+            if (pageSearch) {
+                pageTitle = `Caută după "${pageSearch}"`;
+            }
+
+            // TODO adds category name
+            const pageCategory = payload.route.params.categorySlug;
+            if (pageCategory) {
+                pageTitle = 'Categorie';
+            }
+
+            const pageNumber = payload.route.params.id;
+            if (pageNumber) {
+                pageTitle = formatTitle([
+                    pageTitle,
+                    `pagina ${pageNumber}`
+                ]);
+            }
+
+            commit('SET_PAGE_DATA', {
+                prop: 'title',
+                data: formatPageTitle(pageTitle),
+                routePath: pageKey
+            });
+
+            await dispatch('fetchPosts', {
+                route: payload.route,
+                categories: payload.categories
+            });
+        },
         fetchPosts: async function({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);

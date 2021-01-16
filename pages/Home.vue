@@ -4,8 +4,8 @@
         class="page-home container-fluid py-5"
     >
         <h1
-            v-if="showPageTitle(data.main.title)"
-            v-html="data.main.title"
+            v-if="showPageTitle(data.title)"
+            v-html="data.title"
             class="mb-4"
         />
         <posts-list
@@ -47,7 +47,7 @@ export default {
                 route,
                 url: fetchHeadUrl
             }),
-            store.dispatch('data/fetchPosts', {
+            store.dispatch('data/fetchPageListing', {
                 route
             })
         ]);

@@ -4,8 +4,8 @@
         class="page-home container-fluid py-5"
     >
         <h1
-            v-if="showPageTitle(data.main.title)"
-            v-html="data.main.title"
+            v-if="data.title"
+            v-html="data.title"
             class="mb-4"
         />
         <posts-list
@@ -45,7 +45,7 @@ export default {
                 route,
                 url: `${SITE.LINK}/category/${categorySlug}/`
             }),
-            store.dispatch('data/fetchPosts', {
+            store.dispatch('data/fetchPageListing', {
                 route,
                 categories: [categorySlug]
             })
@@ -56,12 +56,6 @@ export default {
 
     beforeDestroy() {
         this.$store.unregisterModule(['data', 'dataPosts']);
-    },
-
-    methods: {
-        showPageTitle(title) {
-            return title !== SITE.TITLE;
-        }
     }
 };
 </script>
