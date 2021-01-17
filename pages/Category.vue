@@ -8,6 +8,11 @@
             v-html="data.title"
             class="mb-4"
         />
+        <div
+            v-if="data.description"
+            v-html="data.description"
+            class="mt-n3 mb-4"
+        />
         <posts-list
             :posts="data.main"
         />

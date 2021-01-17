@@ -1,4 +1,5 @@
 import { fetchPosts } from '~/services/posts';
+import { fetchCategory } from './../../services/category';
 import { isValidPropData } from '~/utils/store';
 import { formatTitle, formatPageTitle } from '~/utils';
 import { SITE } from '~/utils/constants';
@@ -9,9 +10,11 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchPageListing: async function({ commit, dispatch }, payload) {
+        fetchPageListing: async function({ getters, commit, dispatch }, payload) {
             const pageKey = payload.route.fullPath;
+            const currentPage = getters.currentPage(pageKey);
             let pageTitle = SITE.TITLE;
+            let pageDescription = null;
 
             const pageSearch = payload.route.query.s;
             if (pageSearch) {
@@ -19,9 +22,18 @@ export default {
             }
 
             // TODO adds category name
-            const pageCategory = payload.route.params.categorySlug;
-            if (pageCategory) {
-                pageTitle = 'Categorie';
+            const pageCategorySlug = payload.route.params.categorySlug;
+            if (pageCategorySlug) {
+                if (isValidPropData(currentPage, 'title')) return;
+
+                const responseCategory = await fetchCategory({
+                    $axios: this.$axios,
+                    params: {
+                        slug: pageCategorySlug
+                    }
+                });
+                pageTitle = responseCategory.name;
+                pageDescription = responseCategory.description;
             }
 
             const pageNumber = payload.route.params.id;
@@ -35,6 +47,12 @@ export default {
             commit('SET_PAGE_DATA', {
                 prop: 'title',
                 data: formatPageTitle(pageTitle),
+                routePath: pageKey
+            });
+
+            commit('SET_PAGE_DATA', {
+                prop: 'description',
+                data: pageDescription,
                 routePath: pageKey
             });
 
