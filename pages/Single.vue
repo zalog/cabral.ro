@@ -175,18 +175,13 @@ export default {
 
 .container-fluid {
     max-width: 800px;
-    padding-top: $grid-gutter-width;
-    padding-bottom: $grid-gutter-width;
-
-    @include media-breakpoint-up(md) {
-        padding: map-get($spacers, 5);
-    }
 }
 
 .entry-img-hero {
     position: relative;
     z-index: -1;
     height: calc(100vh - 56px);
+    margin-top: -(map-get($spacers, 4));
     margin-bottom: -40vh;
     overflow: hidden;
     background-color: $black;
@@ -211,11 +206,14 @@ export default {
 }
 
 .entry-img-hero + .container-fluid {
+    padding-top: $grid-gutter-width;
+    padding-bottom: $grid-gutter-width;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
     border-top-right-radius: $border-radius-lg;
 
     @include media-breakpoint-up(md) {
+        padding: map-get($spacers, 5);
         border-radius: 0;
     }
 }
