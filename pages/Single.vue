@@ -58,6 +58,13 @@
                 />
             </div>
         </div>
+
+        <lazy-photoswipe
+            v-if="typeof photoswipe.index === 'number'"
+            :items="photoswipe.items"
+            :index="photoswipe.index"
+            @closed="photoswipe.index = false"
+        />
     </div>
 </template>
 
@@ -101,11 +108,19 @@ export default {
     },
 
     data: () => ({
+        photoswipe: {
+            index: false,
+            items: []
+        },
         comments: {
             shown: false,
             loading: false
         }
     }),
+
+    mounted() {
+        this.setDataPhotoswipe();
+    },
 
     beforeDestroy() {
         this.$store.unregisterModule(['data', 'dataSingle']);
@@ -135,6 +150,24 @@ export default {
             });
 
             this.comments.loading = false;
+        },
+        setDataPhotoswipe() {
+            this.$refs['content'].querySelectorAll('img').forEach((img, index) => {
+                const src = (img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
+                const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
+
+                this.photoswipe.items.push({
+                    src,
+                    w: size[0],
+                    h: size[1]
+                });
+
+                img.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    this.photoswipe.index = index;
+                });
+            });
         }
     }
 };
