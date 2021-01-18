@@ -196,11 +196,15 @@ export default {
     /deep/ {
         img {
             position: absolute;
-            top: 0;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, 0);
-            min-width: 100%;
+            width: auto;
             height: auto;
+            min-width: 100%;
+            min-height: 100%;
+            max-width: none;
+            max-height: none;
+            transform: translate(-50%, -50%);
         }
     }
 }
