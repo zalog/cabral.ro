@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="data"
-        class="page-home container-fluid py-5"
+        class="container-fluid"
     >
         <h1
             v-if="showPageTitle(data.title)"

@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="data"
-        class="page-single"
-    >
+    <div v-if="data">
         <div
             v-if="data.main.featuredMedia"
             class="entry-img-hero"
