@@ -21,7 +21,7 @@
     "@nuxtjs/svg-sprite": "^0.5.0",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.18.1",
+    "bootstrap-vue": "^2.20.1",
     "compression": "^1.7.4",
     "dom-parser": "^0.1.6",
     "express": "^4.17.1",
