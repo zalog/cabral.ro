@@ -4,12 +4,23 @@
             :to="'/'"
         >Cabral.ro</b-navbar-brand>
 
-        <b-navbar-toggle
+        <button
             @click="navCollapse = !navCollapse"
-            target=""
-        />
+            type="button"
+            class="navbar-toggler"
+            :class="{ 'collapsed': navCollapse }"
+            aria-controls="navbar-content"
+            :aria-expanded="navCollapse && 'true' || 'false'"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <b-collapse v-model="navCollapse" is-nav>
+        <b-collapse
+            v-model="navCollapse"
+            is-nav
+            id="navbar-content"
+        >
             <b-navbar-nav class="flex-grow-1">
                 <b-nav-form
                     @submit.prevent="goToSearch($event)"
@@ -39,7 +50,7 @@
 import menu from './../store/lazy/menu';
 import { SITE } from './../utils/constants';
 import {
-    BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavbarToggle, BNavItem,
+    BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavItem,
     BCollapse,
     BFormInput
 } from 'bootstrap-vue';
@@ -51,7 +62,7 @@ export default {
     name: 'TheHeaderMenu',
 
     components: {
-        BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavbarToggle, BNavItem,
+        BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavItem,
         BCollapse,
         BFormInput
     },
