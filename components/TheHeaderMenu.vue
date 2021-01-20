@@ -1,8 +1,9 @@
 <template>
     <b-navbar toggleable="md" type="dark" variant="dark">
-        <b-navbar-brand
+        <nuxt-link
             :to="'/'"
-        >Cabral.ro</b-navbar-brand>
+            class="navbar-brand"
+        >Navbar</nuxt-link>
 
         <button
             @click="navCollapse = !navCollapse"
@@ -50,7 +51,7 @@
 import menu from './../store/lazy/menu';
 import { SITE } from './../utils/constants';
 import {
-    BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavItem,
+    BNavbar, BNavbarNav, BNavForm, BNavItem,
     BCollapse,
     BFormInput
 } from 'bootstrap-vue';
@@ -62,7 +63,7 @@ export default {
     name: 'TheHeaderMenu',
 
     components: {
-        BNavbar, BNavbarNav, BNavbarBrand, BNavForm, BNavItem,
+        BNavbar, BNavbarNav, BNavForm, BNavItem,
         BCollapse,
         BFormInput
     },
