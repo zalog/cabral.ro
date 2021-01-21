@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="md" type="dark" variant="dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <nuxt-link
             :to="'/'"
             class="navbar-brand"
@@ -44,14 +44,14 @@
                 >{{ item.title }}</b-nav-item>
             </b-navbar-nav>
         </b-collapse>
-    </b-navbar>
+    </nav>
 </template>
 
 <script>
 import menu from './../store/lazy/menu';
 import { SITE } from './../utils/constants';
 import {
-    BNavbar, BNavbarNav, BNavForm, BNavItem,
+    BNavbarNav, BNavForm, BNavItem,
     BCollapse,
     BFormInput
 } from 'bootstrap-vue';
@@ -63,7 +63,7 @@ export default {
     name: 'TheHeaderMenu',
 
     components: {
-        BNavbar, BNavbarNav, BNavForm, BNavItem,
+        BNavbarNav, BNavForm, BNavItem,
         BCollapse,
         BFormInput
     },
