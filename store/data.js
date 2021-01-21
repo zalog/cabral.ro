@@ -8,6 +8,7 @@ export const state = () => ({});
 export const getters = {
     currentPage: (state) => (path, passedState) => {
         state = passedState || state;
+        path = path.split('#')[0];
 
         const pages = state;
         const page = pages[path];
@@ -24,7 +25,8 @@ export const getters = {
 
 export const mutations = {
     SET_PAGE_DATA: (state, payload) => {
-        const dataKeys = [payload.routePath, ...payload.prop.split('.')];
+        const path = payload.routePath.split('#')[0];
+        const dataKeys = [path, ...payload.prop.split('.')];
         const dataKeyPage = dataKeys[0];
         const dataKeyFirst = dataKeys[1];
         const dataCurrent = get(state, dataKeys);
