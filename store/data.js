@@ -14,8 +14,8 @@ export const getters = {
         const page = pages[path];
         return page || false;
     },
-    currentPageTitle: (state, getters) => () => {
-        const page = getters.currentPage();
+    currentPageTitle: (state, getters) => (path) => {
+        const page = getters.currentPage(path);
 
         if (!page.head) return;
 
