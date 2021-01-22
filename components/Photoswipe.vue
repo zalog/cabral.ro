@@ -85,7 +85,10 @@ export default {
             }
         });
         gallery.listen('afterChange', () => {
-            this.currentIndex = gallery.getCurrentIndex();
+            const index = gallery.getCurrentIndex();
+
+            this.currentIndex = index;
+            this.$emit('changed-item', index);
         });
 
         gallery.init();
