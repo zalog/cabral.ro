@@ -55,10 +55,6 @@ export default {
         }
     },
 
-    data: () => ({
-        currentIndex: null
-    }),
-
     mounted() {
         const that = this;
         const gallery = new PhotoSwipe(
@@ -87,7 +83,6 @@ export default {
         gallery.listen('afterChange', () => {
             const index = gallery.getCurrentIndex();
 
-            this.currentIndex = index;
             this.$emit('changed-item', index);
         });
 
