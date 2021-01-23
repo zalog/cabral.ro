@@ -18,11 +18,17 @@ export default {
         '@nuxtjs/router'
     ],
     modules: [
+        '@nuxtjs/gtm',
         '@nuxtjs/axios',
         '@nuxtjs/svg-sprite'
     ],
     svgSprite: {
         input: '~/assets/icons/sprite',
         elementClass: null
+    },
+    publicRuntimeConfig: {
+        gtm: {
+            id: 'GTM-59M55JB'
+        }
     }
 };

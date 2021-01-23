@@ -61,6 +61,10 @@
             :items="photoswipe.items"
             :index="photoswipe.index"
             @closed="photoswipe.index = false"
+            @changed-item="sendPageView({
+                title: `${pageTitle} - Image ${$event + 1}`,
+                url: $route.fullPath
+            })"
         />
     </div>
 </template>
