@@ -61,10 +61,14 @@ export default {
             this.$refs['pswp'],
             PhotoSwipeUI_Default,
             this.items,
-            { index: this.index }
+            {
+                index: this.index,
+                history: false
+            }
         );
 
         gallery.listen('destroy', () => {
+            this.$router.push({ hash: false });
             that.$emit('closed');
         });
         gallery.listen('gettingData', function(index, item) {
@@ -80,9 +84,10 @@ export default {
                 img.src = item.src;
             }
         });
-        gallery.listen('afterChange', () => {
+        gallery.listen('afterChange', async () => {
             const index = gallery.getCurrentIndex();
 
+            await this.$router.push({ hash: `pid=${index}` });
             this.$emit('changed-item', index);
         });
 
