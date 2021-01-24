@@ -51,9 +51,14 @@ export const mutations = {
 
         set(state, [dataKeyPage, 'timestamp', dataKeyFirst], new Date().getTime());
 
-        if (Object.keys(state).length > pagesToKeep) {
-            const keyToDelete = Object.keys(state).reduce((prev, curr) =>
-                state[prev].timestamp.main < state[curr].timestamp.main ? prev : curr);
+        const stateKeys = Object.keys(state);
+        if (stateKeys.length > pagesToKeep) {
+            const keyToDelete = stateKeys
+                .filter((key) => key !== dataKeyPage)
+                .reduce((prev, curr) =>
+                    state[prev].timestamp.main < state[curr].timestamp.main ? prev : curr
+                );
+
             delete state[keyToDelete];
         }
     }
