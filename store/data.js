@@ -63,3 +63,13 @@ export const mutations = {
         }
     }
 };
+
+export const actions = {
+    setPageData: ({ commit }, payload) => {
+        commit('SET_PAGE_DATA', {
+            prop: payload.prop,
+            data: payload.data,
+            routePath: payload.route.fullPath
+        });
+    }
+};
