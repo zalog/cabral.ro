@@ -61,10 +61,7 @@
             :items="photoswipe.items"
             :index="photoswipe.index"
             @closed="photoswipe.index = false"
-            @changed-item="sendPageView({
-                title: `${pageTitle} - Image ${$event + 1}`,
-                url: $route.fullPath
-            })"
+            @changed-item="onPhotoswipeChangedItem($event)"
         />
     </div>
 </template>
@@ -168,6 +165,24 @@ export default {
 
                     this.photoswipe.index = index;
                 });
+            });
+        },
+        onPhotoswipeChangedItem(itemIndex) {
+            const route = this.$route;
+            const itemNr = itemIndex + 1;
+            const imageRegex = / Image \d/;
+            const pageTitle = (this.pageTitle.search(imageRegex) === -1)
+                ? `${this.pageTitle} - Image ${itemNr}`
+                : this.pageTitle.replace(imageRegex, ` - Image ${itemNr}`);
+
+            this.$store.dispatch('data/setPageData', {
+                route,
+                prop: 'head.title',
+                data: pageTitle
+            });
+            this.sendPageView({
+                title: pageTitle,
+                url: route.fullPath
             });
         }
     }
