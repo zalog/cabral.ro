@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "start": "npm run nuxt:dev",
-    "prod": "npm run nuxt:build && npm run nuxt:start",
+    "prod": "npm run nuxt:build && npm run pm2:start",
     "nuxt:dev": "nuxt dev",
     "nuxt:build": "nuxt build",
     "nuxt:start": "nuxt start",
+    "pm2:start": "pm2 start",
     "lint:js": "./node_modules/.bin/eslint --ignore-pattern '/dist/' --ext .js,.vue ."
   },
   "dependencies": {
