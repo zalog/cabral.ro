@@ -27,7 +27,6 @@
     "vanilla-sharing": "^6.0.4",
     "vue-observe-visibility": "^0.4.6",
     "vue-ripple-directive": "^2.0.1",
-    "vue-server-renderer": "^2.6.12",
     "vuelidate": "^0.7.6",
     "vuex-router-sync": "^5.0.0",
     "webfontloader": "^1.6.28"
