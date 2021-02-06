@@ -17,7 +17,6 @@
     "@nuxtjs/svg-sprite": "^0.5.2",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
-    "compression": "^1.7.4",
     "dom-parser": "^0.1.6",
     "jw-paginate": "^1.0.4",
     "lazysizes": "^5.2.2",
