@@ -4,7 +4,7 @@ import { pageSinglePost, pageSinglePage } from '~/utils/adaptors';
 export async function fetchPost(payload) {
     const params = {
         _fields: [],
-        ...payload.params
+        ...payload.params,
     };
 
     // prepare params data values
@@ -13,7 +13,7 @@ export async function fetchPost(payload) {
     const response = await payload.$axios({
         method: 'get',
         url: `${ENDPOINTS.POSTS}`,
-        params
+        params,
     });
 
     if (!response.data.length) return false;
@@ -24,7 +24,7 @@ export async function fetchPost(payload) {
 export async function fetchPage(payload) {
     const params = {
         _fields: [],
-        ...payload.params
+        ...payload.params,
     };
 
     // prepare params data values
@@ -33,7 +33,7 @@ export async function fetchPage(payload) {
     const response = await payload.$axios({
         method: 'get',
         url: `${ENDPOINTS.PAGES}`,
-        params
+        params,
     });
 
     if (!response.data.length) return false;

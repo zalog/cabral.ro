@@ -14,14 +14,14 @@ export default {
 
             const response = await fetchHead({
                 $axios: this.$axios,
-                url: payload.url
+                url: payload.url,
             });
 
             commit('SET_PAGE_DATA', {
                 prop,
                 data: response,
-                routePath: pageKey
+                routePath: pageKey,
             });
-        }
-    }
+        },
+    },
 };

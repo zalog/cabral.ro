@@ -23,14 +23,14 @@ export default {
     name: 'CommentsListComment',
 
     components: {
-        ListItemInfo
+        ListItemInfo,
     },
 
     props: {
         comment: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
 
     methods: {
@@ -39,8 +39,8 @@ export default {
             if (comment.author.url) output = `<a href="${comment.author.url}" target="_blank">${output}</a>`;
 
             return output;
-        }
-    }
+        },
+    },
 };
 </script>
 

@@ -33,15 +33,15 @@ export default {
 
     props: {
         data: {
-            type: Array
-        }
+            type: Array,
+        },
     },
 
     computed: {
         getData() {
             return this.data.filter(object => object.text || object.links);
-        }
-    }
+        },
+    },
 };
 </script>
 

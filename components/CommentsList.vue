@@ -58,13 +58,13 @@ export default {
     components: {
         BSpinner,
         CommentsListComment,
-        CommentsListForm
+        CommentsListForm,
     },
 
     props: {
         loading: Boolean,
         comments: Object,
-        singleId: Number
+        singleId: Number,
     },
 
     methods: {
@@ -72,8 +72,8 @@ export default {
             if (!isVisible || this.comments.nodes.length != index) return;
 
             this.$emit('is-visible-last');
-        }
-    }
+        },
+    },
 };
 </script>
 

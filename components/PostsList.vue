@@ -51,14 +51,14 @@ export default {
     name: 'PostsList',
 
     components: {
-        BaseItemPost
+        BaseItemPost,
     },
 
     props: {
         posts: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
 
     methods: {
@@ -70,8 +70,8 @@ export default {
             if (routeCategory) url = `/category/${routeCategory}${url}`;
 
             return url;
-        }
-    }
+        },
+    },
 };
 </script>
 

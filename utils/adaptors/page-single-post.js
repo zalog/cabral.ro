@@ -7,7 +7,7 @@ export default (payload) => {
 
     const categories = payload.embed.categories.map(category => ({
         ...category,
-        link: category.link.replace(SITE.LINK, '')
+        link: category.link.replace(SITE.LINK, ''),
     }));
 
     const featuredMedia = payload.embed_featured_media;
@@ -26,7 +26,7 @@ export default (payload) => {
         return {
             title: post.title,
             slug,
-            featuredMedia: `<img src="${post.img.src}" alt="${post.img.alt_text || 'post featured image'}" />`
+            featuredMedia: `<img src="${post.img.src}" alt="${post.img.alt_text || 'post featured image'}" />`,
         };
     });
 
@@ -34,9 +34,9 @@ export default (payload) => {
         head: {
             title: payload.title.rendered,
             link: [
-                {rel: 'canonical', href: payload.link}
+                {rel: 'canonical', href: payload.link},
             ],
-            meta: payload.yoast_meta
+            meta: payload.yoast_meta,
         },
         main: {
             id: payload.id,
@@ -46,9 +46,9 @@ export default (payload) => {
             content: payload.content,
             commentsNumber: payload.comments_number,
             categories,
-            date
+            date,
         },
-        related
+        related,
     };
 
     return output;

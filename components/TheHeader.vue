@@ -11,7 +11,7 @@ export default {
     name: 'TheHeader',
 
     components: {
-        TheHeaderMenu
-    }
+        TheHeaderMenu,
+    },
 };
 </script>

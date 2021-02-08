@@ -26,15 +26,15 @@ export default {
     name: 'ListRelated',
 
     components: {
-        BaseItemPost
+        BaseItemPost,
     },
 
     props: {
         data: {
             type: Array,
-            required: true
-        }
-    }
+            required: true,
+        },
+    },
 };
 </script>
 

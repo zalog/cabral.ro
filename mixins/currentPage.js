@@ -11,7 +11,7 @@ export default {
         pageTitle() {
             const pageKey = this.$route.fullPath;
             return this.$store.getters['data/currentPageTitle'](pageKey);
-        }
+        },
     },
 
     mounted() {
@@ -22,14 +22,14 @@ export default {
         sendPageView(payload) {
             payload = {
                 title: this.pageTitle,
-                ...payload
+                ...payload,
             };
 
             this.$gtm.push({
                 event: 'pageview',
                 title: payload.title,
-                ...(payload.url && { url: payload.url })
+                ...(payload.url && { url: payload.url }),
             });
-        }
-    }
+        },
+    },
 };

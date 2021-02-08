@@ -5,7 +5,7 @@ export default (payload) => {
     const output = {};
 
     dom.getElementById('all').childNodes.filter(node =>
-        ['meta', 'link', 'script'].includes(node.nodeName)
+        ['meta', 'link', 'script'].includes(node.nodeName),
     ).forEach(el => {
         const tag = el.nodeName;
         const outputTag = {};
@@ -28,7 +28,7 @@ export default (payload) => {
 
     return {
         title: dom.getElementsByTagName('title')[0].textContent,
-        ...output
+        ...output,
     };
 };
 

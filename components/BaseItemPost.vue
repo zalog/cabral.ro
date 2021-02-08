@@ -39,26 +39,26 @@ export default {
     name: 'BaseItemPost',
 
     components: {
-        ListItemInfo
+        ListItemInfo,
     },
 
     props: {
         tag: {
             type: String,
-            default: 'div'
+            default: 'div',
         },
         img: [String, Object],
         imgInfo: Array,
         title: {
             type: String,
-            required: true
+            required: true,
         },
         slug: {
             type: String,
-            required: true
+            required: true,
         },
         bodyInfo: Array,
-        bodyText: String
+        bodyText: String,
     },
 
     methods: {
@@ -67,11 +67,11 @@ export default {
                 name: 'Single',
                 params: {
                     singleSlug: slug,
-                    singleType: 'post'
-                }
+                    singleType: 'post',
+                },
             };
-        }
-    }
+        },
+    },
 };
 </script>
 

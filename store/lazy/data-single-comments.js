@@ -21,18 +21,18 @@ export default {
             const response = await fetchComments({
                 $axios: this.$axios,
                 singleId: pageSingleId,
-                after: commentsFrom
+                after: commentsFrom,
             });
 
             commit('SET_PAGE_DATA', {
                 routePath: pageKey,
                 prop: 'comments.nodes',
-                data: response.nodes
+                data: response.nodes,
             });
             commit('SET_PAGE_DATA', {
                 routePath: pageKey,
                 prop: 'comments.pageInfo',
-                data: response.pageInfo
+                data: response.pageInfo,
             });
         },
         postComment: async function({ commit, dispatch }, payload) {
@@ -41,7 +41,7 @@ export default {
             try {
                 const comment = await postComment({
                     $axios: this.$axios,
-                    params: payload.params
+                    params: payload.params,
                 });
 
                 if (comment.status === 'approved') {
@@ -50,7 +50,7 @@ export default {
                         prop: 'comments.nodes',
                         data: comment,
                         type: 'array',
-                        unshift: true
+                        unshift: true,
                     };
 
                     if (typeof payload.index === 'number') {
@@ -75,13 +75,13 @@ export default {
 
                 dispatch('ui/notifications/push', {
                     message: toastMessage,
-                    variant: toastVariant
+                    variant: toastVariant,
                 }, { root: true });
 
                 return comment.id;
             } catch (error) {
                 console.error('action postComment: ', error);
             }
-        }
-    }
+        },
+    },
 };

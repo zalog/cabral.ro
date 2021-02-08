@@ -23,11 +23,11 @@ import PostsList from '~/components/PostsList.vue';
 
 export default {
     components: {
-        PostsList
+        PostsList,
     },
 
     mixins: [
-        currentPage
+        currentPage,
     ],
 
     async asyncData({ store, route }) {
@@ -45,11 +45,11 @@ export default {
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: fetchHeadUrl
+                url: fetchHeadUrl,
             }),
             store.dispatch('data/fetchPageListing', {
-                route
-            })
+                route,
+            }),
         ]);
     },
 
@@ -62,7 +62,7 @@ export default {
     methods: {
         showPageTitle(title) {
             return title !== SITE.TITLE;
-        }
-    }
+        },
+    },
 };
 </script>

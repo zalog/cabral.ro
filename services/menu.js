@@ -4,7 +4,7 @@ export async function fetchMenu(payload) {
     try {
         const response = await payload.$axios({
             method: 'get',
-            url: ENDPOINTS.MENU
+            url: ENDPOINTS.MENU,
         });
 
         return response.data;

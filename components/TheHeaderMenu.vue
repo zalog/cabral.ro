@@ -53,7 +53,7 @@ import { SITE } from './../utils/constants';
 import {
     BNavbarNav, BNavForm, BNavItem,
     BCollapse,
-    BFormInput
+    BFormInput,
 } from 'bootstrap-vue';
 
 // TODO remove this require
@@ -65,11 +65,11 @@ export default {
     components: {
         BNavbarNav, BNavForm, BNavItem,
         BCollapse,
-        BFormInput
+        BFormInput,
     },
 
     data: () => ({
-        navCollapse: false
+        navCollapse: false,
     }),
 
     async fetch() {
@@ -81,7 +81,7 @@ export default {
     computed: {
         menu() {
             return this.$store.state.ui.menu;
-        }
+        },
     },
 
     methods: {
@@ -94,8 +94,8 @@ export default {
                     name: 'Single',
                     params: {
                         singleSlug: url.pathname.slice(1, -1),
-                        singleType: item.object
-                    }
+                        singleType: item.object,
+                    },
                 };
             }
 
@@ -114,8 +114,8 @@ export default {
 
             this.$router.push({ path: '/', query: { s } });
             this.navCollapse = false;
-        }
-    }
+        },
+    },
 };
 </script>
 

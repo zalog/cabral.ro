@@ -6,7 +6,7 @@ export default (payload) => {
     const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
     const categories = payload.embed.categories.map(category => ({
         ...category,
-        link: category.link.replace(SITE.LINK, '')
+        link: category.link.replace(SITE.LINK, ''),
     }));
 
     const output = {
@@ -16,7 +16,7 @@ export default (payload) => {
         title: payload.title.rendered,
         commentsNumber: payload.comments_number,
         categories,
-        date
+        date,
     };
 
     return output;

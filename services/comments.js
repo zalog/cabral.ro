@@ -5,7 +5,7 @@ export async function fetchComments(payload) {
     const params = {
         onPage: 10,
         after: null,
-        ...payload
+        ...payload,
     };
 
     const response = await payload.$axios({
@@ -53,9 +53,9 @@ export async function fetchComments(payload) {
             variables: {
                 'id': params.singleId,
                 'first': params.onPage,
-                'after': params.after
-            }
-        }
+                'after': params.after,
+            },
+        },
     });
 
     return response.data.data.comments;
@@ -69,7 +69,7 @@ export async function postComment(payload) {
         'name': 'author_name',
         'email': 'author_email',
         'site': 'author_url',
-        'message': 'content'
+        'message': 'content',
     }).forEach(entry => {
         payload.params[entry[1]] = payload.params[entry[0]];
         delete payload.params[entry[0]];
@@ -79,7 +79,7 @@ export async function postComment(payload) {
         const response = await payload.$axios({
             method: 'post',
             url: ENDPOINTS.COMMENTS,
-            params: payload.params
+            params: payload.params,
         });
 
         return itemComment(response.data);

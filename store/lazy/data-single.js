@@ -20,29 +20,29 @@ export default {
                 params: {
                     _fields: [
                         'id', 'link', 'title', 'date', 'modified', 'content',
-                        'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts'
+                        'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts',
                     ],
                     embed_featured_media_size: 'full',
-                    slug: payload.route.path
-                }
+                    slug: payload.route.path,
+                },
             });
 
             commit('SET_PAGE_DATA', {
                 prop: 'head',
                 data: response.head,
-                routePath: pageKey
+                routePath: pageKey,
             });
 
             commit('SET_PAGE_DATA', {
                 prop,
                 data: response.main,
-                routePath: pageKey
+                routePath: pageKey,
             });
 
             commit('SET_PAGE_DATA', {
                 prop: 'related',
                 data: response.related,
-                routePath: pageKey
+                routePath: pageKey,
             });
         },
         fetchPagePage: async function ({ getters, commit }, payload) {
@@ -57,23 +57,23 @@ export default {
                 params: {
                     _fields: [
                         'id', 'link', 'title', 'date', 'modified', 'content',
-                        'comments_number', 'yoast_meta'
+                        'comments_number', 'yoast_meta',
                     ],
-                    slug: payload.route.path
-                }
+                    slug: payload.route.path,
+                },
             });
 
             commit('SET_PAGE_DATA', {
                 prop: 'head',
                 data: response.head,
-                routePath: pageKey
+                routePath: pageKey,
             });
 
             commit('SET_PAGE_DATA', {
                 prop,
                 data: response.main,
-                routePath: pageKey
+                routePath: pageKey,
             });
-        }
-    }
+        },
+    },
 };

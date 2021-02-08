@@ -20,11 +20,11 @@ export default {
     computed: {
         notifications() {
             return this.$store.state.ui.notifications;
-        }
+        },
     },
 
     created() {
         this.$store.registerModule(['ui', 'notifications'], notifications);
-    }
+    },
 };
 </script>

@@ -28,11 +28,11 @@ import PostsList from '~/components/PostsList.vue';
 
 export default {
     components: {
-        PostsList
+        PostsList,
     },
 
     mixins: [
-        currentPage
+        currentPage,
     ],
 
     async asyncData({ store, route }) {
@@ -48,12 +48,12 @@ export default {
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/category/${categorySlug}/`
+                url: `${SITE.LINK}/category/${categorySlug}/`,
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
-                categories: [categorySlug]
-            })
+                categories: [categorySlug],
+            }),
         ]);
     },
 
@@ -61,6 +61,6 @@ export default {
 
     beforeDestroy() {
         this.$store.unregisterModule(['data', 'dataListing']);
-    }
+    },
 };
 </script>

@@ -10,36 +10,36 @@ export async function fetchPosts(payload) {
     const payloadDefault = {
         params: {
             _fields: [],
-            search: ''
+            search: '',
         },
         categories: [],
         pagination: {
             itemsOnPage: itemsOnPage,
-            currentPage: 1
-        }
+            currentPage: 1,
+        },
     };
     Object.assign(payloadDefault, payload);
 
     // posts: params
     const paramsPosts = {
         ...(payloadDefault.params._fields.length && {
-            _fields: payloadDefault.params._fields.join(',')
+            _fields: payloadDefault.params._fields.join(','),
         }),
         ...(payloadDefault.params.search && {
-            search: payloadDefault.params.search
+            search: payloadDefault.params.search,
         }),
         ...(payloadDefault.categories.length && {
-            'filter[category_name]': payloadDefault.categories.join(',')
+            'filter[category_name]': payloadDefault.categories.join(','),
         }),
         per_page: payloadDefault.pagination.itemsOnPage,
-        page: payloadDefault.pagination.currentPage
+        page: payloadDefault.pagination.currentPage,
     };
 
     // posts: fetch
     const responsePosts = await payload.$axios({
         method: 'get',
         url: ENDPOINTS.POSTS,
-        params: paramsPosts
+        params: paramsPosts,
     });
 
     output.posts = responsePosts.data.map(post => itemPost(post));
@@ -49,12 +49,12 @@ export async function fetchPosts(payload) {
         parseInt(responsePosts.headers['x-wp-total']),
         payload.pagination.currentPage,
         payload.pagination.itemsOnPage,
-        paginationMaxPages
+        paginationMaxPages,
     );
 
     output.pagination = {
         pages: responsePagination.pages,
-        currentPage: responsePagination.currentPage
+        currentPage: responsePagination.currentPage,
     };
 
     return output;

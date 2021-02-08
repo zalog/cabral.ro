@@ -6,7 +6,7 @@ export default {
     getters: {
         findIndex: (state) => (payload) => {
             return state.findIndex((item) => item.visible && item.message === payload.message);
-        }
+        },
     },
 
     mutations: {
@@ -15,7 +15,7 @@ export default {
         },
         DELETE: (state, payloadIndex) => {
             state.splice(payloadIndex, 1);
-        }
+        },
     },
 
     actions: {
@@ -32,6 +32,6 @@ export default {
             if (!state[payloadIndex]) return;
 
             commit('DELETE', payloadIndex);
-        }
-    }
+        },
+    },
 };

@@ -15,18 +15,18 @@ export function createRouter() {
             {
                 name: 'Home',
                 path: '/',
-                component: PageHome
+                component: PageHome,
             },
             {
                 path: '/page/1/',
                 pathToRegexpOptions: { strict: true },
-                redirect: '/'
+                redirect: '/',
             },
             {
                 name: 'HomePaged',
                 path: '/page/:id/',
                 pathToRegexpOptions: { strict: true },
-                component: PageHome
+                component: PageHome,
             },
 
             // single
@@ -34,42 +34,42 @@ export function createRouter() {
                 name: 'Single',
                 path: '/:singleSlug/',
                 pathToRegexpOptions: { strict: true },
-                component: PageSingle
+                component: PageSingle,
             },
             {
                 path: '/:singleSlug',
-                redirect: { name: 'Single' }
+                redirect: { name: 'Single' },
             },
 
             // category: redirect page 1
             {
                 path: '/category/:categorySlug+/page/1',
-                redirect: to => `/category/${to.params.categorySlug}/`
+                redirect: to => `/category/${to.params.categorySlug}/`,
             },
             // category: pagination
             {
                 path: '/category/:categorySlug+/page/:id',
                 pathToRegexpOptions: { strict: true },
-                redirect: to => `/category/${to.params.categorySlug}/page/${to.params.id}/`
+                redirect: to => `/category/${to.params.categorySlug}/page/${to.params.id}/`,
             },
             {
                 name: 'CategoryPage',
                 path: '/category/:categorySlug+/page/:id/',
                 pathToRegexpOptions: { strict: true },
-                component: PageCategory
+                component: PageCategory,
             },
             // category
             {
                 path: '/category/:categorySlug+',
                 pathToRegexpOptions: { strict: true },
-                redirect: to => `/category/${to.params.categorySlug}/`
+                redirect: to => `/category/${to.params.categorySlug}/`,
             },
             {
                 name: 'Category',
                 path: '/category/:categorySlug+/',
                 pathToRegexpOptions: { strict: true },
-                component: PageCategory
-            }
-        ]
+                component: PageCategory,
+            },
+        ],
     });
 }

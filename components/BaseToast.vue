@@ -15,27 +15,27 @@ import { BToast } from 'bootstrap-vue';
 
 export default {
     components: {
-        'b-toast': BToast
+        'b-toast': BToast,
     },
 
     model: {
         prop: 'visible',
-        event: 'hidden'
+        event: 'hidden',
     },
 
     props: {
         visible: {
             type: Boolean,
-            default: true
+            default: true,
         },
-        variant: String
+        variant: String,
     },
 
     computed: {
         computedVisible: {
             get() { return this.visible; },
-            set(value) { return this.$emit('hidden', value); }
-        }
-    }
+            set(value) { return this.$emit('hidden', value); },
+        },
+    },
 };
 </script>

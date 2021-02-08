@@ -20,7 +20,7 @@ export const getters = {
         if (!page.head) return;
 
         return formatPageTitle(page.head.title);
-    }
+    },
 };
 
 export const mutations = {
@@ -56,12 +56,12 @@ export const mutations = {
             const keyToDelete = stateKeys
                 .filter((key) => key !== dataKeyPage)
                 .reduce((prev, curr) =>
-                    state[prev].timestamp.main < state[curr].timestamp.main ? prev : curr
+                    state[prev].timestamp.main < state[curr].timestamp.main ? prev : curr,
                 );
 
             delete state[keyToDelete];
         }
-    }
+    },
 };
 
 export const actions = {
@@ -69,7 +69,7 @@ export const actions = {
         commit('SET_PAGE_DATA', {
             prop: payload.prop,
             data: payload.data,
-            routePath: payload.route.fullPath
+            routePath: payload.route.fullPath,
         });
-    }
+    },
 };

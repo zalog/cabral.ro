@@ -37,13 +37,13 @@ export default {
     name: 'ListShare',
 
     props: {
-        url: String
+        url: String,
     },
 
     methods: {
         shareTo(to) {
             const payload = {
-                url: this.url
+                url: this.url,
             };
 
             switch (to) {
@@ -57,8 +57,8 @@ export default {
                 tw(payload);
                 break;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

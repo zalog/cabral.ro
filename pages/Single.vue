@@ -84,11 +84,11 @@ export default {
         ListItemInfo,
         ListShare,
         ListRelated,
-        CommentsList
+        CommentsList,
     },
 
     mixins: [
-        currentPage
+        currentPage,
     ],
 
     async asyncData({ store, route }) {
@@ -101,19 +101,19 @@ export default {
         else if (route.params.singleType === 'page') actionName = 'data/fetchPagePage';
 
         await store.dispatch(actionName, {
-            route
+            route,
         });
     },
 
     data: () => ({
         photoswipe: {
             index: false,
-            items: []
+            items: [],
         },
         comments: {
             shown: false,
-            loading: false
-        }
+            loading: false,
+        },
     }),
 
     mounted() {
@@ -144,7 +144,7 @@ export default {
                 this.$store.registerModule(['data', 'dataComments'], dataComments, { preserveState: true });
             }
             await this.$store.dispatch('data/fetchComments', {
-                route: this.$route
+                route: this.$route,
             });
 
             this.comments.loading = false;
@@ -157,7 +157,7 @@ export default {
                 this.photoswipe.items.push({
                     src,
                     w: size[0],
-                    h: size[1]
+                    h: size[1],
                 });
 
                 img.addEventListener('click', (event) => {
@@ -178,14 +178,14 @@ export default {
             this.$store.dispatch('data/setPageData', {
                 route,
                 prop: 'head.title',
-                data: pageTitle
+                data: pageTitle,
             });
             this.sendPageView({
                 title: pageTitle,
-                url: route.fullPath
+                url: route.fullPath,
             });
-        }
-    }
+        },
+    },
 };
 </script>
 

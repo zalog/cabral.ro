@@ -6,7 +6,7 @@ export async function fetchCategory(payload) {
         const response = await payload.$axios({
             method: 'get',
             url: ENDPOINTS.CATEGORIES,
-            params: payload.params
+            params: payload.params,
         });
 
         return pageCategory(response.data[0]);

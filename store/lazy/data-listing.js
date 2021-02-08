@@ -29,8 +29,8 @@ export default {
                 const responseCategory = await fetchCategory({
                     $axios: this.$axios,
                     params: {
-                        slug: pageCategorySlug
-                    }
+                        slug: pageCategorySlug,
+                    },
                 });
                 pageTitle = responseCategory.name;
                 pageDescription = responseCategory.description;
@@ -40,25 +40,25 @@ export default {
             if (pageNumber) {
                 pageTitle = formatTitle([
                     pageTitle,
-                    `pagina ${pageNumber}`
+                    `pagina ${pageNumber}`,
                 ]);
             }
 
             commit('SET_PAGE_DATA', {
                 prop: 'title',
                 data: formatPageTitle(pageTitle),
-                routePath: pageKey
+                routePath: pageKey,
             });
 
             commit('SET_PAGE_DATA', {
                 prop: 'description',
                 data: pageDescription,
-                routePath: pageKey
+                routePath: pageKey,
             });
 
             await dispatch('fetchPosts', {
                 route: payload.route,
-                categories: payload.categories
+                categories: payload.categories,
             });
         },
         fetchPosts: async function({ getters, commit }, payload) {
@@ -71,19 +71,19 @@ export default {
                 params: {
                     _fields: [
                         'title', 'slug', 'excerpt', 'date', 'modified',
-                        'embed', 'embed_featured_media', 'comments_number'
+                        'embed', 'embed_featured_media', 'comments_number',
                     ],
                     ...(payload.route.query.s && {
-                        search: payload.route.query.s
-                    })
+                        search: payload.route.query.s,
+                    }),
                 },
                 ...(payload.categories && {
-                    categories: payload.categories
+                    categories: payload.categories,
                 }),
                 pagination: {
                     itemsOnPage: postsOnPage,
-                    currentPage: parseInt(payload.route.params.id) || 1
-                }
+                    currentPage: parseInt(payload.route.params.id) || 1,
+                },
             };
 
             if (isValidPropData(currentPage, prop)) return;
@@ -93,8 +93,8 @@ export default {
             commit('SET_PAGE_DATA', {
                 prop,
                 data: response,
-                routePath: pageKey
+                routePath: pageKey,
             });
-        }
-    }
+        },
+    },
 };

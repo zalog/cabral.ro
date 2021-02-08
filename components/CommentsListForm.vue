@@ -83,15 +83,15 @@ export default {
 
     props: {
         data: {
-            type: Object
-        }
+            type: Object,
+        },
     },
 
     data: () => ({
         form: {
             data: {},
-            loading: false
-        }
+            loading: false,
+        },
     }),
 
     validations: {
@@ -100,9 +100,9 @@ export default {
                 message: { required, min: minLength(3) },
                 name: { required, min: minLength(3) },
                 email: { required, email },
-                site: { url }
-            }
-        }
+                site: { url },
+            },
+        },
     },
 
     methods: {
@@ -133,8 +133,8 @@ export default {
                 params: {
                     singleId: this.data.singleId,
                     commentId: this.data.commentId,
-                    ...this.form.data
-                }
+                    ...this.form.data,
+                },
             }).then((commentId) => {
                 let elComment = document.getElementById(`comment-${commentId}`);
 
@@ -150,8 +150,8 @@ export default {
         },
         getIdSuffix(string, commentId = this.data.commentId) {
             return (commentId) && `${string}-${commentId}` || string;
-        }
-    }
+        },
+    },
 };
 </script>
 

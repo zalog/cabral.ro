@@ -7,9 +7,9 @@ export default (payload) => {
         head: {
             title: payload.title.rendered,
             link: [
-                {rel: 'canonical', href: payload.link}
+                {rel: 'canonical', href: payload.link},
             ],
-            meta: payload.yoast_meta
+            meta: payload.yoast_meta,
         },
         main: {
             id: payload.id,
@@ -17,8 +17,8 @@ export default (payload) => {
             title: payload.title.rendered,
             content: payload.content,
             commentsNumber: payload.comments_number,
-            date
-        }
+            date,
+        },
     };
 
     return output;

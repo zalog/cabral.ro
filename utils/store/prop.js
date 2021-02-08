@@ -46,5 +46,5 @@ const del = (obj, props) => {
 export {
     get,
     set,
-    del
+    del,
 };
