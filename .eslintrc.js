@@ -4,7 +4,8 @@ module.exports = {
         'node': true
     },
     'extends': [
-        '@nuxtjs'
+        '@nuxtjs',
+        'airbnb-base'
     ],
     'rules': {
         // overwrite eslint rules
