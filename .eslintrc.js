@@ -4,26 +4,17 @@ module.exports = {
         'node': true
     },
     'extends': [
-        'eslint:recommended',
-        'plugin:vue/essential'
+        '@nuxtjs'
     ],
     'rules': {
-        // overwrite eslint:recommended
-        'semi': ['error', 'always'],
-        'no-console': 'off',
-        // other eslint
+        // overwrite eslint rules
         'indent': ['error', 4],
-        'quotes': ['error', 'single'],
-        'space-before-blocks': 'error',
-        'keyword-spacing': ['error'],
-        'comma-dangle': ['error', 'never'],
         // overwrite vue/essential
-        'vue/mustache-interpolation-spacing': 'error',
         'vue/html-indent': ['error', 4],
-        'vue/script-indent': ['error', 4],
-        'vue/order-in-components': ['error']
+        'vue/script-indent': ['error', 4]
     },
     'parserOptions': {
-        'parser': 'babel-eslint'
+        'parser': 'babel-eslint',
+        'sourceType': 'module'
     }
 };
