@@ -18,4 +18,14 @@ module.exports = {
         parser: 'babel-eslint',
         sourceType: 'module',
     },
+    settings: {
+        'import/resolver': {
+            alias: {
+                map: [
+                    ['~', '.'],
+                ],
+                extensions: ['.vue', '.js'],
+            },
+        },
+    },
 };
