@@ -51,9 +51,9 @@ export async function fetchComments(payload) {
                 }
             `,
             variables: {
-                'id': params.singleId,
-                'first': params.onPage,
-                'after': params.after,
+                id: params.singleId,
+                first: params.onPage,
+                after: params.after,
             },
         },
     });
@@ -64,12 +64,12 @@ export async function fetchComments(payload) {
 export async function postComment(payload) {
     // renames params keys to match wp-api
     Object.entries({
-        'singleId': 'post',
-        'commentId': 'parent',
-        'name': 'author_name',
-        'email': 'author_email',
-        'site': 'author_url',
-        'message': 'content',
+        singleId: 'post',
+        commentId: 'parent',
+        name: 'author_name',
+        email: 'author_email',
+        site: 'author_url',
+        message: 'content',
     }).forEach(entry => {
         payload.params[entry[1]] = payload.params[entry[0]];
         delete payload.params[entry[0]];

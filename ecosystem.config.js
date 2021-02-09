@@ -6,9 +6,9 @@ module.exports = {
         script: './node_modules/nuxt/bin/nuxt.js',
         args: 'start',
         env: {
-            'HOST': '0.0.0.0',
-            'PORT': 8080,
-            'NODE_ENV': 'production',
+            HOST: '0.0.0.0',
+            PORT: 8080,
+            NODE_ENV: 'production',
         },
     }],
 };

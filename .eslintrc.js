@@ -1,21 +1,21 @@
 module.exports = {
-    'root': true,
-    'env': {
-        'node': true,
+    root: true,
+    env: {
+        node: true,
     },
-    'extends': [
+    extends: [
         '@nuxtjs',
         'airbnb-base',
     ],
-    'rules': {
+    rules: {
         // overwrite eslint rules
-        'indent': ['error', 4],
+        indent: ['error', 4],
         // overwrite vue/essential
         'vue/html-indent': ['error', 4],
         'vue/script-indent': ['error', 4],
     },
-    'parserOptions': {
-        'parser': 'babel-eslint',
-        'sourceType': 'module',
+    parserOptions: {
+        parser: 'babel-eslint',
+        sourceType: 'module',
     },
 };
