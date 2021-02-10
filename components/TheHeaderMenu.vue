@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import menu from './../store/lazy/menu';
-import { SITE } from './../utils/constants';
+import menu from "../store/lazy/menu";
+import { SITE } from "../utils/constants";
 import {
     BNavbarNav, BNavForm, BNavItem,
     BCollapse,

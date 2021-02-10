@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import notifications from './../store/lazy/notifications';
+import notifications from "../store/lazy/notifications";
 
 export default {
     computed: {
