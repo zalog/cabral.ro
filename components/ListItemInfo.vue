@@ -39,7 +39,7 @@ export default {
 
     computed: {
         getData() {
-            return this.data.filter(object => object.text || object.links);
+            return this.data.filter((object) => object.text || object.links);
         },
     },
 };

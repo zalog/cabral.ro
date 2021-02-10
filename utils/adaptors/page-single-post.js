@@ -5,7 +5,7 @@ export default (payload) => {
     const payloadModified = new Date(payload.modified);
     const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
 
-    const categories = payload.embed.categories.map(category => ({
+    const categories = payload.embed.categories.map((category) => ({
         ...category,
         link: category.link.replace(SITE.LINK, ''),
     }));

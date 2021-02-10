@@ -4,9 +4,9 @@ export default (payload) => {
     const dom = _stringToHTML(`<div id="all">${payload}</div>`);
     const output = {};
 
-    dom.getElementById('all').childNodes.filter(node =>
+    dom.getElementById('all').childNodes.filter((node) =>
         ['meta', 'link', 'script'].includes(node.nodeName),
-    ).forEach(el => {
+    ).forEach((el) => {
         const tag = el.nodeName;
         const outputTag = {};
 

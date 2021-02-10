@@ -8,7 +8,7 @@ export default {
     mutations: {
         SET: (state, payload) => {
             state.splice(0);
-            payload.forEach(item => state.push(item));
+            payload.forEach((item) => state.push(item));
         },
     },
 

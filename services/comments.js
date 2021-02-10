@@ -70,7 +70,7 @@ export async function postComment(payload) {
         email: 'author_email',
         site: 'author_url',
         message: 'content',
-    }).forEach(entry => {
+    }).forEach((entry) => {
         payload.params[entry[1]] = payload.params[entry[0]];
         delete payload.params[entry[0]];
     });

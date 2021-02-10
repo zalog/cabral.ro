@@ -42,7 +42,7 @@ export async function fetchPosts(payload) {
         params: paramsPosts,
     });
 
-    output.posts = responsePosts.data.map(post => itemPost(post));
+    output.posts = responsePosts.data.map((post) => itemPost(post));
 
     // posts: pagination
     const responsePagination = paginate(
