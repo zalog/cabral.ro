@@ -1,5 +1,5 @@
-import { ENDPOINTS } from "../utils/constants";
-import { pageCategory } from "../utils/adaptors";
+import { ENDPOINTS } from '../utils/constants';
+import { pageCategory } from '../utils/adaptors';
 
 export async function fetchCategory(payload) {
     try {

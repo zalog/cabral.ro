@@ -1,5 +1,5 @@
 import { formatPageTitle } from '~/utils';
-import { get, set } from "../utils/store";
+import { get, set } from '../utils/store';
 
 const pagesToKeep = 5;
 

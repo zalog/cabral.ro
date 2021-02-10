@@ -1,5 +1,5 @@
-import { ENDPOINTS } from "../utils/constants";
-import { head } from "../utils/adaptors";
+import { ENDPOINTS } from '../utils/constants';
+import { head } from '../utils/adaptors';
 
 export async function fetchHead(payload) {
     try {

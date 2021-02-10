@@ -1,4 +1,4 @@
-import { ENDPOINTS } from "../utils/constants";
+import { ENDPOINTS } from '../utils/constants';
 
 export async function fetchMenu(payload) {
     try {

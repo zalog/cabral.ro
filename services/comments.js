@@ -1,5 +1,5 @@
-import { ENDPOINTS } from "../utils/constants";
-import { itemComment } from "../utils/adaptors";
+import { ENDPOINTS } from '../utils/constants';
+import { itemComment } from '../utils/adaptors';
 
 export async function fetchComments(payload) {
     const params = {
