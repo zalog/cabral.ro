@@ -79,7 +79,7 @@ import { required, email, minLength, url } from 'vuelidate/lib/validators';
 export default {
     name: 'CommentsListForm',
 
-    mixins: [ validationMixin ],
+    mixins: [validationMixin],
 
     props: {
         data: {
