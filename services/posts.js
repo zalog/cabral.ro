@@ -14,7 +14,7 @@ export async function fetchPosts(payload) {
         },
         categories: [],
         pagination: {
-            itemsOnPage: itemsOnPage,
+            itemsOnPage,
             currentPage: 1,
         },
     };

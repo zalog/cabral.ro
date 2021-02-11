@@ -5,7 +5,7 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchHead: async function({ getters, commit }, payload) {
+        async fetchHead({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'head';

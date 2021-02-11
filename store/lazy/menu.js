@@ -13,7 +13,7 @@ export default {
     },
 
     actions: {
-        fetch: async function({ commit }) {
+        async fetch({ commit }) {
             const response = await fetchMenu({
                 $axios: this.$axios,
             });

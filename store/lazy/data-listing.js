@@ -10,7 +10,7 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchPageListing: async function({ getters, commit, dispatch }, payload) {
+        async fetchPageListing({ getters, commit, dispatch }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             let pageTitle = SITE.TITLE;
@@ -61,7 +61,7 @@ export default {
                 categories: payload.categories,
             });
         },
-        fetchPosts: async function({ getters, commit }, payload) {
+        async fetchPosts({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';

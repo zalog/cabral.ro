@@ -5,10 +5,10 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchPageSingle: async function({ dispatch }, payload) {
+        async fetchPageSingle({ dispatch }, payload) {
             await dispatch('fetchPagePost', payload) || await dispatch('fetchPagePage', payload);
         },
-        fetchPagePost: async function({ getters, commit }, payload) {
+        async fetchPagePost({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
@@ -45,7 +45,7 @@ export default {
                 routePath: pageKey,
             });
         },
-        fetchPagePage: async function ({ getters, commit }, payload) {
+        async fetchPagePage ({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';

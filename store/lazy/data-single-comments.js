@@ -4,7 +4,7 @@ export default {
     namespaced: false,
 
     actions: {
-        fetchComments: async function({ getters, commit }, payload) {
+        async fetchComments({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const pageComments = currentPage.comments;
@@ -35,7 +35,7 @@ export default {
                 data: response.pageInfo,
             });
         },
-        postComment: async function({ commit, dispatch }, payload) {
+        async postComment({ commit, dispatch }, payload) {
             const pageKey = payload.route.fullPath;
 
             try {
