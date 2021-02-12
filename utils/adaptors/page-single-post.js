@@ -15,9 +15,7 @@ export default (payload) => {
     const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
 
     let related = payload['jetpack-related-posts']
-        .filter((post) => {
-            return post.img.src !== '';
-        });
+        .filter((post) => post.img.src !== '');
     if (related.length > 3) related.splice(3);
     related = related.map((post) => {
         let slug = post.url.replace(SITE.LINK, '');
