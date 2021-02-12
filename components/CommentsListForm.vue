@@ -65,7 +65,12 @@
                 class="btn btn-outline-secondary d-flex align-items-center"
                 :disabled="form.loading"
             >
-                <span v-if="form.loading" class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+                <span
+                    v-if="form.loading"
+                    class="spinner-border spinner-border-sm mr-1"
+                    role="status"
+                    aria-hidden="true"
+                />
                 <span v-text="(!form.loading) ? 'Trimite' : 'se trimite...'" />
             </button>
         </div>

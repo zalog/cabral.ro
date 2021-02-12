@@ -12,7 +12,9 @@ export default (payload) => {
 
     const featuredMedia = payload.embed_featured_media;
     const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
-    const featuredMediaValid = featuredMediaRatio > 1.2 && featuredMedia.width > 1200 && true || false;
+    const featuredMediaValid = featuredMediaRatio > 1.2
+        && featuredMedia.width > 1200
+        && true || false;
 
     let related = payload['jetpack-related-posts']
         .filter((post) => post.img.src !== '');

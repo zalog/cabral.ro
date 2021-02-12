@@ -14,8 +14,9 @@ export default {
             if (!currentPage || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
 
             if (pageComments && Object.keys(pageComments.pageInfo).length) {
-                if (pageComments.pageInfo.hasNextPage) commentsFrom = pageComments.pageInfo.endCursor;
-                else return;
+                if (pageComments.pageInfo.hasNextPage) {
+                    commentsFrom = pageComments.pageInfo.endCursor;
+                } else return;
             }
 
             const response = await fetchComments({

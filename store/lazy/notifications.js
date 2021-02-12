@@ -4,7 +4,8 @@ export default {
     state: () => ([]),
 
     getters: {
-        findIndex: (state) => (payload) => state.findIndex((item) => item.visible && item.message === payload.message),
+        findIndex: (state) => (payload) => state.findIndex((item) => item.visible
+            && item.message === payload.message),
     },
 
     mutations: {

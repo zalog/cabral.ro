@@ -30,7 +30,8 @@
                 <router-link
                     tag="li"
                     class="page-item"
-                    v-for="(page, index) in posts.pagination.pages" :key="'pagination-page-' + index"
+                    v-for="(page, index) in posts.pagination.pages"
+                    :key="'pagination-page-' + index"
                     :to="paginationTo(page)"
                     :class="{ active: [posts.pagination.currentPage] == page }"
                 >

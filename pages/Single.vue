@@ -45,7 +45,11 @@
 
             <div
                 class="container-fluid"
-                v-observe-visibility="!comments.shown ? isVisible => fetchComments(isVisible, true) : false"
+                v-observe-visibility="
+                    !comments.shown
+                        ? isVisible => fetchComments(isVisible, true)
+                        : false
+                "
             >
                 <comments-list
                     :loading="comments.loading"
@@ -133,7 +137,9 @@ export default {
 
             if (checkForData && this.data.comments) return;
 
-            const hasNextPage = this.data.comments && this.data.comments.pageInfo && this.data.comments.pageInfo.hasNextPage;
+            const hasNextPage = this.data.comments
+                && this.data.comments.pageInfo
+                && this.data.comments.pageInfo.hasNextPage;
 
             if (hasNextPage === false) return;
 

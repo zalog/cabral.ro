@@ -6,7 +6,8 @@
 
         <ul class="list-comments">
             <li
-                v-for="(comment, index) in comments && comments.nodes" :key="'comments-comment-' + comment.commentId"
+                v-for="(comment, index) in comments && comments.nodes"
+                :key="'comments-comment-' + comment.commentId"
                 :id="`comment-${comment.commentId}`"
             >
                 <comments-list-comment
@@ -19,7 +20,8 @@
 
                 <ul v-if="comment.replies && comment.replies.nodes.length">
                     <li
-                        v-for="comment in comment.replies.nodes" :key="'comments-comment-l1-' + comment.commentId"
+                        v-for="comment in comment.replies.nodes"
+                        :key="'comments-comment-l1-' + comment.commentId"
                         :id="`comment-${comment.commentId}`"
                     >
                         <comments-list-comment

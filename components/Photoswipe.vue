@@ -3,16 +3,18 @@
         <div class="pswp__bg"></div>
         <div class="pswp__scroll-wrap">
             <div class="pswp__container">
-                <div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div>
+                <div class="pswp__item" />
+                <div class="pswp__item" />
+                <div class="pswp__item" />
             </div>
 
             <div class="pswp__ui pswp__ui--hidden">
                 <div class="pswp__top-bar">
                     <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)" />
+                    <button class="pswp__button pswp__button--share" title="Share" />
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen" />
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out" />
                     <div class="pswp__preloader">
                         <div class="pswp__preloader__icn">
                             <div class="pswp__preloader__cut">
@@ -26,8 +28,14 @@
                     <div class="pswp__share-tooltip"></div>
                 </div>
 
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <button
+                    class="pswp__button pswp__button--arrow--left"
+                    title="Previous (arrow left)"
+                />
+                <button
+                    class="pswp__button pswp__button--arrow--right"
+                    title="Next (arrow right)"
+                />
 
                 <div class="pswp__caption">
                     <div class="pswp__caption__center"></div>
