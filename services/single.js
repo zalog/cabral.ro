@@ -8,7 +8,7 @@ export async function fetchPost(payload) {
     };
 
     // prepare params data values
-    params._fields.length && ( params._fields = params._fields.join(',') );
+    if (params._fields.length) params._fields = params._fields.join(',');
 
     const response = await payload.$axios({
         method: 'get',
@@ -28,7 +28,7 @@ export async function fetchPage(payload) {
     };
 
     // prepare params data values
-    params._fields.length && ( params._fields = params._fields.join(',') );
+    if (params._fields.length) params._fields = params._fields.join(',');
 
     const response = await payload.$axios({
         method: 'get',

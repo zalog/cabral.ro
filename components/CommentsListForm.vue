@@ -141,11 +141,11 @@ export default {
                     ...this.form.data,
                 },
             }).then((commentId) => {
-                let elComment = document.getElementById(`comment-${commentId}`);
+                const elComment = document.getElementById(`comment-${commentId}`);
 
                 this.form.data.message = null;
                 this.$v.form.data.$reset();
-                elComment && elComment.classList.add('highlight-background');
+                if (elComment) elComment.classList.add('highlight-background');
                 setTimeout(() => this.$el.classList.remove('open'), 2000);
             }).catch(() => {
                 // empty catch

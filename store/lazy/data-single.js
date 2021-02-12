@@ -6,7 +6,8 @@ export default {
 
     actions: {
         async fetchPageSingle({ dispatch }, payload) {
-            await dispatch('fetchPagePost', payload) || await dispatch('fetchPagePage', payload);
+            await dispatch('fetchPagePost', payload);
+            await dispatch('fetchPagePage', payload);
         },
         async fetchPagePost({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
