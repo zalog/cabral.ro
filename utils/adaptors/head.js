@@ -1,5 +1,10 @@
 const DomParser = require('dom-parser');
 
+const _stringToHTML = function(str) {
+    const parser = new DomParser();
+    return parser.parseFromString(str);
+};
+
 export default (payload) => {
     const dom = _stringToHTML(`<div id="all">${payload}</div>`);
     const output = {};
@@ -30,9 +35,4 @@ export default (payload) => {
         title: dom.getElementsByTagName('title')[0].textContent,
         ...output,
     };
-};
-
-const _stringToHTML = function(str) {
-    const parser = new DomParser();
-    return parser.parseFromString(str);
 };

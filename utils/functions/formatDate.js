@@ -1,3 +1,6 @@
+const getLeadingZero = (number) => number < 10 ? `0${number}` : number;
+const getMM = (number) => getLeadingZero(number + 1);
+
 export function formatDate(string) {
     if (!string || typeof string !== 'string') return;
 
@@ -8,6 +11,3 @@ export function formatDate(string) {
 
     return `${dd}.${mm}.${yy}`;
 }
-
-const getLeadingZero = (number) => number < 10 ? `0${number}` : number;
-const getMM = (number) => getLeadingZero(number + 1);
