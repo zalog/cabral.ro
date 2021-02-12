@@ -19,7 +19,7 @@ export default {
     },
 
     actions: {
-        push: ({commit, getters}, payload) => {
+        push: ({ commit, getters }, payload) => {
             const findIndex = getters['findIndex'](payload);
 
             if (findIndex > -1) return;
@@ -28,7 +28,7 @@ export default {
 
             commit('PUSH', payload);
         },
-        delete: ({state, commit}, payloadIndex) => {
+        delete: ({ state, commit }, payloadIndex) => {
             if (!state[payloadIndex]) return;
 
             commit('DELETE', payloadIndex);
