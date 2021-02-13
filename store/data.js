@@ -55,9 +55,13 @@ export const mutations = {
         if (stateKeys.length > pagesToKeep) {
             const keyToDelete = stateKeys
                 .filter((key) => key !== dataKeyPage)
-                .reduce((prev, curr) =>
-                    state[prev].timestamp.main < state[curr].timestamp.main ? prev : curr,
-                );
+                .reduce((prev, curr) => {
+                    if (state[prev].timestamp.main < state[curr].timestamp.main) {
+                        return prev;
+                    }
+
+                    return curr;
+                });
 
             delete state[keyToDelete];
         }
