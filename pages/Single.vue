@@ -78,7 +78,7 @@ import { currentPage } from '~/mixins';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
-import CommentsList from '../components/CommentsList';
+import CommentsList from '~/components/CommentsList.vue';
 import { ObserveVisibility } from 'vue-observe-visibility';
 
 Vue.directive('observe-visibility', ObserveVisibility);
