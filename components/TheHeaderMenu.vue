@@ -48,13 +48,13 @@
 </template>
 
 <script>
-import menu from '../store/lazy/menu';
-import { SITE } from '../utils/constants';
 import {
     BNavbarNav, BNavForm, BNavItem,
     BCollapse,
     BFormInput,
 } from 'bootstrap-vue';
+import menu from '../store/lazy/menu';
+import { SITE } from '../utils/constants';
 
 // TODO remove this require
 const Url = typeof URL !== 'undefined' && URL || require('url').parse;
