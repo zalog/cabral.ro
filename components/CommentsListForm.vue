@@ -11,8 +11,8 @@
             <div class="form-group">
                 <label :for="getIdSuffix('form-reply-message')" class="sr-only">Comentariu</label>
                 <textarea
-                    v-model="form.data.message"
                     :id="getIdSuffix('form-reply-message')"
+                    v-model="form.data.message"
                     :class="['form-control', {'is-invalid': $v.form.data.message.$error }]"
                     rows="4" placeholder="Scrie comentariul tău aici..." required
                 />
@@ -24,9 +24,9 @@
                 <div class="form-group col-sm-4">
                     <label for="form-reply-name" class="sr-only">Nume</label>
                     <input
+                        id="form-reply-name"
                         v-model="form.data.name"
                         type="text"
-                        id="form-reply-name"
                         :class="['form-control', {'is-invalid': $v.form.data.name.$error}]"
                         placeholder="Nume" required
                     >
@@ -34,9 +34,9 @@
                 <div class="form-group col-sm-4">
                     <label for="form-reply-email" class="sr-only">Email</label>
                     <input
+                        id="form-reply-email"
                         v-model="form.data.email"
                         type="email"
-                        id="form-reply-email"
                         :class="['form-control', {'is-invalid': $v.form.data.email.$error}]"
                         placeholder="Email" required
                     >
@@ -44,9 +44,9 @@
                 <div class="form-group col-sm-4">
                     <label for="form-reply-site" class="sr-only">Site</label>
                     <input
+                        id="form-reply-site"
                         v-model="form.data.site"
                         type="url"
-                        id="form-reply-site"
                         :class="['form-control', {'is-invalid': $v.form.data.site.$error}]"
                         placeholder="Site"
                     >

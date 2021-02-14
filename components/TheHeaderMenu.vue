@@ -6,28 +6,28 @@
         >Navbar</nuxt-link>
 
         <button
-            @click="navCollapse = !navCollapse"
             type="button"
             class="navbar-toggler"
             :class="{ 'collapsed': navCollapse }"
             aria-controls="navbar-content"
             :aria-expanded="navCollapse && 'true' || 'false'"
             aria-label="Toggle navigation"
+            @click="navCollapse = !navCollapse"
         >
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <b-collapse
+            id="navbar-content"
             v-model="navCollapse"
             is-nav
-            id="navbar-content"
         >
             <b-navbar-nav class="flex-grow-1">
                 <b-nav-form
-                    @submit.prevent="goToSearch($event)"
                     action="/"
                     class="mr-md-auto order-last order-md-first py-3 py-md-0"
                     form-class="flex-grow-1"
+                    @submit.prevent="goToSearch($event)"
                 >
                     <b-form-input
                         type="search"

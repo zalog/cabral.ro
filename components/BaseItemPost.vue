@@ -9,8 +9,8 @@
             class="card-img-top"
         >
             <div
-                v-html="img"
                 class="img"
+                v-html="img"
             />
             <list-item-info
                 :data="imgInfo"
@@ -18,15 +18,15 @@
         </div>
         <div class="card-body" :to="postTo(slug)">
             <h2 class="card-title">
-                <router-link v-html="title" :to="postTo(slug)" />
+                <router-link :to="postTo(slug)" v-html="title" />
             </h2>
             <list-item-info
                 :data="bodyInfo"
             />
             <div
                 v-if="bodyText"
-                v-html="bodyText"
                 class="card-text"
+                v-html="bodyText"
             />
         </div>
     </router-link>

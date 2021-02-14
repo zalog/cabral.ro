@@ -9,8 +9,8 @@
             class="container-fluid"
         >
             <h1
-                v-html="data.main.title"
                 class="entry-title"
+                v-html="data.main.title"
             />
             <list-item-info
                 :data="[{
@@ -26,8 +26,8 @@
             />
             <div
                 ref="content"
-                v-html="data.main.content"
                 class="entry-content"
+                v-html="data.main.content"
             />
             <list-share :url="data.main.link" />
         </div>
@@ -44,12 +44,12 @@
             </template>
 
             <div
-                class="container-fluid"
                 v-observe-visibility="
                     !comments.shown
                         ? isVisible => fetchComments(isVisible, true)
                         : false
                 "
+                class="container-fluid"
             >
                 <comments-list
                     :loading="comments.loading"

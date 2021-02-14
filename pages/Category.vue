@@ -5,13 +5,13 @@
     >
         <h1
             v-if="data.title"
-            v-html="data.title"
             class="mb-4"
+            v-html="data.title"
         />
         <div
             v-if="data.description"
-            v-html="data.description"
             class="mt-n3 mb-4"
+            v-html="data.description"
         />
         <posts-list
             :posts="data.main"

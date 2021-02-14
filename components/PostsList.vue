@@ -1,7 +1,7 @@
 <template>
     <div
-        class="cards-posts"
         v-if="posts.posts.length"
+        class="cards-posts"
     >
         <template v-for="(post, index) in posts.posts">
             <base-item-post
@@ -28,10 +28,10 @@
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <router-link
-                    tag="li"
-                    class="page-item"
                     v-for="(page, index) in posts.pagination.pages"
                     :key="'pagination-page-' + index"
+                    tag="li"
+                    class="page-item"
                     :to="paginationTo(page)"
                     :class="{ active: [posts.pagination.currentPage] == page }"
                 >
