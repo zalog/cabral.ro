@@ -1,4 +1,4 @@
-const getLeadingZero = (number) => number < 10 ? `0${number}` : number;
+const getLeadingZero = (number) => (number < 10 ? `0${number}` : number);
 const getMM = (number) => getLeadingZero(number + 1);
 
 export function formatDate(string) {
