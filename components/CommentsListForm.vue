@@ -5,7 +5,9 @@
         @click="formOpen"
         @submit.prevent="formSubmit"
     >
-        <div class="label text-muted">{{ data.label || 'Lasă un comentariu...' }}</div>
+        <div class="label text-muted">
+            {{ data.label || 'Lasă un comentariu...' }}
+        </div>
 
         <div class="form">
             <div class="form-group">
