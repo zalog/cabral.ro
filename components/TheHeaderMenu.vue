@@ -3,7 +3,9 @@
         <nuxt-link
             :to="'/'"
             class="navbar-brand"
-        >Navbar</nuxt-link>
+        >
+            Navbar
+        </nuxt-link>
 
         <button
             type="button"
@@ -42,7 +44,9 @@
                     :key="item.ID"
                     :to="menuItemTo(item)"
                     :active="menuItemActive(item)"
-                >{{ item.title }}</b-nav-item>
+                >
+                    {{ item.title }}
+                </b-nav-item>
             </b-navbar-nav>
         </b-collapse>
     </nav>

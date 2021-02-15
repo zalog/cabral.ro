@@ -15,7 +15,8 @@
             <template v-else-if="item.links">
                 <template
                     v-for="(itemLink, index) in item.links"
-                >{{ ((index !== 0) && ', ' || '') }}
+                >
+                    {{ ((index !== 0) && ', ' || '') }}
                     <router-link
                         :key="`item-link-${index}`"
                         :to="itemLink.link"
