@@ -14,7 +14,7 @@
             aria-label="Toggle navigation"
             @click="navCollapse = !navCollapse"
         >
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon" />
         </button>
 
         <b-collapse

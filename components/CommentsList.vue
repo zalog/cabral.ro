@@ -43,7 +43,7 @@
                 v-if="this.loading"
                 class="py-4 text-center"
             >
-                <b-spinner variant="warning" label="Loading..."></b-spinner>
+                <b-spinner variant="warning" label="Loading..." />
             </li>
         </ul>
     </div>

@@ -6,7 +6,7 @@
         no-close-button
         @hide="$emit('hide')"
     >
-        <slot></slot>
+        <slot />
     </b-toast>
 </template>
 

@@ -40,7 +40,7 @@
                     <list-related :data="data.related" />
                 </div>
 
-                <hr class="d-none d-lg-block" />
+                <hr class="d-none d-lg-block">
             </template>
 
             <div
