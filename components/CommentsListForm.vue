@@ -14,7 +14,9 @@
                     :id="getIdSuffix('form-reply-message')"
                     v-model="form.data.message"
                     :class="['form-control', {'is-invalid': $v.form.data.message.$error }]"
-                    rows="4" placeholder="Scrie comentariul tău aici..." required
+                    rows="4"
+                    placeholder="Scrie comentariul tău aici..."
+                    required
                 />
             </div>
             <div
@@ -28,7 +30,8 @@
                         v-model="form.data.name"
                         type="text"
                         :class="['form-control', {'is-invalid': $v.form.data.name.$error}]"
-                        placeholder="Nume" required
+                        placeholder="Nume"
+                        required
                     >
                 </div>
                 <div class="form-group col-sm-4">
@@ -38,7 +41,8 @@
                         v-model="form.data.email"
                         type="email"
                         :class="['form-control', {'is-invalid': $v.form.data.email.$error}]"
-                        placeholder="Email" required
+                        placeholder="Email"
+                        required
                     >
                 </div>
                 <div class="form-group col-sm-4">
@@ -55,7 +59,8 @@
 
             <div
                 v-if="$v.form.data.$error"
-                class="alert alert-warning" role="alert"
+                class="alert alert-warning"
+                role="alert"
             >
                 Câmpurile marcate cu roșu conțin erori.
             </div>

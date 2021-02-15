@@ -4,7 +4,8 @@
 
         <div class="row row-related">
             <div
-                v-for="(post, index) in data" :key="`related-${index}`"
+                v-for="(post, index) in data"
+                :key="`related-${index}`"
                 class="col-sm-4 mb-3 mb-sm-0"
             >
                 <base-item-post

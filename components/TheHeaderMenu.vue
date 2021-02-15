@@ -38,7 +38,8 @@
                     />
                 </b-nav-form>
                 <b-nav-item
-                    v-for="item in menu" :key="item.ID"
+                    v-for="item in menu"
+                    :key="item.ID"
                     :to="menuItemTo(item)"
                     :active="menuItemActive(item)"
                 >{{ item.title }}</b-nav-item>
