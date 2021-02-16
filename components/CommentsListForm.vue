@@ -86,7 +86,9 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, email, minLength, url } from 'vuelidate/lib/validators';
+import {
+    required, email, minLength, url,
+} from 'vuelidate/lib/validators';
 
 export default {
     name: 'CommentsListForm',
