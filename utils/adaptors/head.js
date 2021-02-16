@@ -15,7 +15,7 @@ export default (payload) => {
             const tag = el.nodeName;
             const outputTag = {};
 
-            for (let attrName in el.attributes) {
+            for (const attrName in el.attributes) {
                 const name = el.attributes[attrName].name;
                 const value = el.attributes[attrName].value;
 
