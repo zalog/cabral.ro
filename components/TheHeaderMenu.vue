@@ -68,7 +68,9 @@ export default {
     name: 'TheHeaderMenu',
 
     components: {
-        BNavbarNav, BNavForm, BNavItem,
+        BNavbarNav,
+        BNavForm,
+        BNavItem,
         BCollapse,
         BFormInput,
     },
