@@ -110,7 +110,7 @@ export default {
         },
         menuItemActive(item) {
             item = this.menuItemTo(item);
-            const itemPath = (typeof item === 'string') ? item : '/' + item.params.singleSlug + '/';
+            const itemPath = (typeof item === 'string') ? item : `/${item.params.singleSlug}/`;
 
             return this.$route.path === itemPath;
         },
