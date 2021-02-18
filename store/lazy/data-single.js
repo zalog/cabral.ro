@@ -46,7 +46,7 @@ export default {
                 routePath: pageKey,
             });
         },
-        async fetchPagePage ({ getters, commit }, payload) {
+        async fetchPagePage({ getters, commit }, payload) {
             const pageKey = payload.route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';

@@ -83,7 +83,7 @@ export default {
             if (item.w < 1 || item.h < 1) {
                 const img = new Image();
 
-                img.onload = function() {
+                img.onload = function () {
                     item.w = this.width;
                     item.h = this.height;
                     gallery.updateSize(true);
