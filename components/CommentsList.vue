@@ -40,7 +40,7 @@
                 />
             </li>
             <li
-                v-if="this.loading"
+                v-if="loading"
                 class="py-4 text-center"
             >
                 <b-spinner variant="warning" label="Loading..." />
