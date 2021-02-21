@@ -20,7 +20,7 @@ export function formatHtmlTitle(title) {
 }
 
 export function formatPageTitle(title) {
-    if (!title) return;
+    if (!title) return undefined;
 
     return title.replace(htmlTitleSeparator, pageTitleSeparator);
 }

@@ -17,7 +17,7 @@ export const getters = {
     currentPageTitle: (state, getters) => (path) => {
         const page = getters.currentPage(path);
 
-        if (!page.head) return;
+        if (!page.head) return undefined;
 
         return formatPageTitle(page.head.title);
     },

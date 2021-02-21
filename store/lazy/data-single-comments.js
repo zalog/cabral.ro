@@ -82,6 +82,7 @@ export default {
                 return comment.id;
             } catch (error) {
                 console.error('action postComment: ', error);
+                return undefined;
             }
         },
     },
