@@ -47,7 +47,7 @@
 
 <script>
 import PhotoSwipe from 'photoswipe';
-import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
+import PhotoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 
 export default {
     name: 'Photoswipe',
@@ -67,7 +67,7 @@ export default {
         const that = this;
         const gallery = new PhotoSwipe(
             this.$refs['pswp'],
-            PhotoSwipeUI_Default,
+            PhotoSwipeUIDefault,
             this.items,
             {
                 index: this.index,
