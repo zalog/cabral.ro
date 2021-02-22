@@ -66,7 +66,7 @@ export default {
     mounted() {
         const that = this;
         const gallery = new PhotoSwipe(
-            this.$refs['pswp'],
+            this.$refs.pswp,
             PhotoSwipeUIDefault,
             this.items,
             {

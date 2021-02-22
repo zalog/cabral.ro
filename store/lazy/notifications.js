@@ -19,7 +19,7 @@ export default {
 
     actions: {
         push: ({ commit, getters }, payload) => {
-            const findIndex = getters['findIndex'](payload);
+            const findIndex = getters.findIndex(payload);
 
             if (findIndex > -1) return;
 

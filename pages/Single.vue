@@ -156,7 +156,7 @@ export default {
             this.comments.loading = false;
         },
         setDataPhotoswipe() {
-            this.$refs['content'].querySelectorAll('img').forEach((img, index) => {
+            this.$refs.content.querySelectorAll('img').forEach((img, index) => {
                 const src = (img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
                 const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
 
