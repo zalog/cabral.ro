@@ -15,16 +15,15 @@ export default (payload) => {
             const tag = el.nodeName;
             const outputTag = {};
 
-            for (const attrName in el.attributes) {
-                const name = el.attributes[attrName].name;
-                const value = el.attributes[attrName].value;
+            el.attributes.forEach((attribute) => {
+                const { name, value } = attribute;
 
                 outputTag[name] = value;
 
                 if (name === 'type' && value === 'application/ld+json') {
                     outputTag.json = JSON.parse(el.textContent);
                 }
-            }
+            });
 
             if (!output[tag]) output[tag] = [];
 
