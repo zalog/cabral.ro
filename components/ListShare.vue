@@ -56,6 +56,8 @@ export default {
             case 'twitter':
                 tw(payload);
                 break;
+            default:
+                break;
             }
         },
     },
