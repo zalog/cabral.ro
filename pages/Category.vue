@@ -43,7 +43,7 @@ export default {
             store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
         }
 
-        const categorySlug = route.params.categorySlug;
+        const { categorySlug } = route.params;
 
         await Promise.all([
             store.dispatch('data/fetchHead', {

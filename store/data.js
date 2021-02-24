@@ -9,10 +9,10 @@ export default {
     getters: {
         currentPage: (state) => (path, passedState) => {
             state = passedState || state;
-            path = path.split('#')[0];
 
+            const [pathClean] = path.split('#');
             const pages = state;
-            const page = pages[path];
+            const page = pages[pathClean];
             return page || false;
         },
         currentPageTitle: (state, getters) => (path) => {
