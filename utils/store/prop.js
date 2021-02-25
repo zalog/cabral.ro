@@ -40,7 +40,7 @@ const del = (obj, props) => {
         return;
     }
 
-    delete(obj[prop], props);
+    delete (obj[prop], props);
 };
 
 export {
