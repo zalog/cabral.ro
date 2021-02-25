@@ -11,7 +11,7 @@ export default {
             const pageSingleId = currentPage.main.id;
             let commentsFrom = null;
 
-            if (!currentPage || !pageSingleId) throw Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
+            if (!currentPage || !pageSingleId) throw new Error('`fetchSingleComments` needs `page` or `pageSingleId`.');
 
             if (pageComments && Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) {
