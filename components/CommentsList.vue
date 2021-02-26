@@ -71,7 +71,7 @@ export default {
 
     methods: {
         emitVisibleLastComment(isVisible, index) {
-            if (!isVisible || this.comments.nodes.length != index) return;
+            if (!isVisible || this.comments.nodes.length !== index) return;
 
             this.$emit('is-visible-last');
         },
