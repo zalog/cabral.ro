@@ -96,7 +96,7 @@ export default {
             const url = new Url(item.url, SITE.LINK);
             let output = url.pathname;
 
-            if (['post', 'page'].indexOf(item.object) !== -1) {
+            if (['post', 'page'].includes(item.object)) {
                 output = {
                     name: 'Single',
                     params: {
