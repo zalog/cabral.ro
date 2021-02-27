@@ -1,6 +1,6 @@
 import { ENDPOINTS } from '../utils/constants';
 
-export async function fetchMenu(payload) {
+const fetchMenu = async (payload) => {
     try {
         const response = await payload.$axios({
             method: 'get',
@@ -11,4 +11,6 @@ export async function fetchMenu(payload) {
     } catch (error) {
         throw error.response;
     }
-}
+};
+
+export { fetchMenu as default };

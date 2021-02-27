@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '../utils/constants';
 import { pageCategory } from '../utils/adaptors';
 
-export async function fetchCategory(payload) {
+const fetchCategory = async (payload) => {
     try {
         const response = await payload.$axios({
             method: 'get',
@@ -13,4 +13,6 @@ export async function fetchCategory(payload) {
     } catch (error) {
         throw error.response;
     }
-}
+};
+
+export { fetchCategory as default };

@@ -1,4 +1,4 @@
-import { fetchHead } from '../../services/head';
+import { fetchHead } from '../../services';
 import { isValidPropData } from '~/utils/store';
 
 export default {

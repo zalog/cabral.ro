@@ -5,7 +5,7 @@ import { itemPost } from '~/utils/adaptors';
 const paginationMaxPages = 8;
 const itemsOnPage = 10;
 
-export async function fetchPosts(payload) {
+const fetchPosts = async (payload) => {
     const output = {};
     const payloadDefault = {
         params: {
@@ -58,4 +58,6 @@ export async function fetchPosts(payload) {
     };
 
     return output;
-}
+};
+
+export { fetchPosts as default };

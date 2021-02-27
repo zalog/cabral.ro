@@ -1,4 +1,4 @@
-import { fetchMenu } from '../../services/menu';
+import { fetchMenu } from '../../services';
 
 export default {
     namespaced: true,

@@ -1,5 +1,4 @@
-import { fetchPosts } from '~/services/posts';
-import { fetchCategory } from '../../services/category';
+import { fetchPosts, fetchCategory } from '~/services';
 import { isValidPropData } from '~/utils/store';
 import { formatTitle, formatPageTitle } from '~/utils';
 import { SITE } from '~/utils/constants';

@@ -1,7 +1,7 @@
 const getLeadingZero = (number) => (number < 10 ? `0${number}` : number);
 const getMM = (number) => getLeadingZero(number + 1);
 
-export function formatDate(string) {
+const formatDate = (string) => {
     if (!string || typeof string !== 'string') return undefined;
 
     const date = new Date(string);
@@ -10,4 +10,6 @@ export function formatDate(string) {
     const yy = date.getFullYear();
 
     return `${dd}.${mm}.${yy}`;
-}
+};
+
+export { formatDate as default };

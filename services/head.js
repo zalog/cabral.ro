@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '../utils/constants';
 import { head } from '../utils/adaptors';
 
-export async function fetchHead(payload) {
+const fetchHead = async (payload) => {
     try {
         const response = await payload.$axios({
             method: 'get',
@@ -12,4 +12,6 @@ export async function fetchHead(payload) {
     } catch (error) {
         throw error.response;
     }
-}
+};
+
+export { fetchHead as default };
