@@ -1,4 +1,4 @@
-export default function (currentPage, prop, bypass = false, expireMinutes = 5) {
+const isValidPropData = (currentPage, prop, bypass = false, expireMinutes = 5) => {
     const isInvalid = !currentPage || !currentPage[prop] || !currentPage.timestamp[prop] || !prop;
 
     if (isInvalid || bypass) return false;
@@ -9,4 +9,6 @@ export default function (currentPage, prop, bypass = false, expireMinutes = 5) {
     const isValid = !dataExpired;
 
     return isValid;
-}
+};
+
+export { isValidPropData as default };

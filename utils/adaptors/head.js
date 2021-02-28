@@ -1,6 +1,6 @@
 const DomParser = require('dom-parser');
 
-const _stringToHTML = function (str) {
+const _stringToHTML = (str) => {
     const parser = new DomParser();
     return parser.parseFromString(str);
 };
