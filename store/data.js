@@ -33,8 +33,8 @@ export default {
             const dataCurrent = get(state, dataKeys);
             let data = null;
 
-            if (dataCurrent instanceof Array || payload.type === 'array') {
-                const payloadData = (payload.data instanceof Array) ? payload.data : [payload.data];
+            if (Array.isArray(dataCurrent) || payload.type === 'array') {
+                const payloadData = (Array.isArray(payload.data)) ? payload.data : [payload.data];
 
                 if (dataCurrent) {
                     if (!payload.unshift) data = [...dataCurrent, ...payloadData];
