@@ -68,7 +68,7 @@ export default {
             const payloadPosts = {
                 $axios: this.$axios,
                 params: {
-                    _fields: [
+                    fields: [
                         'title', 'slug', 'excerpt', 'date', 'modified',
                         'embed', 'embed_featured_media', 'comments_number',
                     ],

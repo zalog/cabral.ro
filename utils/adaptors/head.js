@@ -1,12 +1,12 @@
 const DomParser = require('dom-parser');
 
-const _stringToHTML = (str) => {
+const stringToHTML = (str) => {
     const parser = new DomParser();
     return parser.parseFromString(str);
 };
 
 export default (payload) => {
-    const dom = _stringToHTML(`<div id="all">${payload}</div>`);
+    const dom = stringToHTML(`<div id="all">${payload}</div>`);
     const output = {};
 
     dom.getElementById('all').childNodes

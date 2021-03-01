@@ -9,7 +9,7 @@ const fetchPosts = async (payload) => {
     const output = {};
     const payloadDefault = {
         params: {
-            _fields: [],
+            fields: [],
             search: '',
         },
         categories: [],
@@ -22,8 +22,8 @@ const fetchPosts = async (payload) => {
 
     // posts: params
     const paramsPosts = {
-        ...(payloadDefault.params._fields.length && {
-            _fields: payloadDefault.params._fields.join(','),
+        ...(payloadDefault.params.fields.length && {
+            fields: payloadDefault.params.fields.join(','),
         }),
         ...(payloadDefault.params.search && {
             search: payloadDefault.params.search,
