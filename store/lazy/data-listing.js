@@ -81,7 +81,7 @@ export default {
                 }),
                 pagination: {
                     itemsOnPage: postsOnPage,
-                    currentPage: parseInt(payload.route.params.id) || 1,
+                    currentPage: parseInt(payload.route.params.id, 10) || 1,
                 },
             };
 

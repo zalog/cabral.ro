@@ -46,7 +46,7 @@ const fetchPosts = async (payload) => {
 
     // posts: pagination
     const responsePagination = paginate(
-        parseInt(responsePosts.headers['x-wp-total']),
+        parseInt(responsePosts.headers['x-wp-total'], 10),
         payload.pagination.currentPage,
         payload.pagination.itemsOnPage,
         paginationMaxPages,
