@@ -14,11 +14,11 @@
             </template>
             <template v-else-if="item.links">
                 <template
-                    v-for="(itemLink, index) in item.links"
+                    v-for="(itemLink, indexLink) in item.links"
                 >
-                    {{ ((index !== 0) && ', ' || '') }}
+                    {{ ((indexLink !== 0) && ', ' || '') }}
                     <router-link
-                        :key="`item-link-${index}`"
+                        :key="`item-link-${indexLink}`"
                         :to="itemLink.link"
                         v-text="itemLink.name"
                     />

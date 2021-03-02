@@ -20,12 +20,12 @@
 
                 <ul v-if="comment.replies && comment.replies.nodes.length">
                     <li
-                        v-for="comment in comment.replies.nodes"
-                        :id="`comment-${comment.commentId}`"
-                        :key="'comments-comment-l1-' + comment.commentId"
+                        v-for="commentReply in comment.replies.nodes"
+                        :id="`comment-${commentReply.commentId}`"
+                        :key="'comments-comment-l1-' + commentReply.commentId"
                     >
                         <comments-list-comment
-                            :comment="comment"
+                            :comment="commentReply"
                         />
                     </li>
                 </ul>
