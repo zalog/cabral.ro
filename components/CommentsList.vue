@@ -65,8 +65,14 @@ export default {
 
     props: {
         loading: Boolean,
-        comments: Object,
-        singleId: Number,
+        comments: {
+            type: Object,
+            default: () => ({}),
+        },
+        singleId: {
+            type: Number,
+            default: null,
+        },
     },
 
     methods: {

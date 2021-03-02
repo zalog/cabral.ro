@@ -47,8 +47,14 @@ export default {
             type: String,
             default: 'div',
         },
-        img: [String, Object],
-        imgInfo: Array,
+        img: {
+            type: [String, Object],
+            default: '',
+        },
+        imgInfo: {
+            type: Array,
+            default: () => ([]),
+        },
         title: {
             type: String,
             required: true,
@@ -57,8 +63,14 @@ export default {
             type: String,
             required: true,
         },
-        bodyInfo: Array,
-        bodyText: String,
+        bodyInfo: {
+            type: Array,
+            default: () => ([]),
+        },
+        bodyText: {
+            type: String,
+            default: '',
+        },
     },
 
     methods: {

@@ -37,7 +37,10 @@ export default {
     name: 'ListShare',
 
     props: {
-        url: String,
+        url: {
+            type: String,
+            default: '',
+        },
     },
 
     methods: {

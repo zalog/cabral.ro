@@ -28,7 +28,10 @@ export default {
             type: Boolean,
             default: true,
         },
-        variant: String,
+        variant: {
+            type: String,
+            default: '',
+        },
     },
 
     computed: {
