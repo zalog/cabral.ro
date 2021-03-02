@@ -62,7 +62,7 @@ import menu from '../store/lazy/menu';
 import { SITE } from '../utils/constants';
 
 // TODO remove this require
-const Url = typeof URL !== 'undefined' && URL || require('url').parse;
+const Url = (typeof URL !== 'undefined' && URL) || require('url').parse;
 
 export default {
     name: 'TheHeaderMenu',

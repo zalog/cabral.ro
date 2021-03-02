@@ -1,7 +1,7 @@
 export default (payload) => {
     const payloadDate = new Date(payload.date);
     const payloadModified = new Date(payload.modified);
-    const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
+    const date = ((payloadModified > payloadDate && payloadModified) || payloadDate).toString();
 
     const output = {
         head: {

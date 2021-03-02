@@ -164,7 +164,7 @@ export default {
             });
         },
         getIdSuffix(string, commentId = this.data.commentId) {
-            return (commentId) && `${string}-${commentId}` || string;
+            return (commentId && `${string}-${commentId}`) || string;
         },
     },
 };

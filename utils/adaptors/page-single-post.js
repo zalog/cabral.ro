@@ -3,7 +3,7 @@ import { SITE } from '~/utils/constants';
 export default (payload) => {
     const payloadDate = new Date(payload.date);
     const payloadModified = new Date(payload.modified);
-    const date = ((payloadModified > payloadDate) && payloadModified || payloadDate).toString();
+    const date = ((payloadModified > payloadDate && payloadModified) || payloadDate).toString();
 
     const categories = payload.embed.categories.map((category) => ({
         ...category,
@@ -12,9 +12,11 @@ export default (payload) => {
 
     const featuredMedia = payload.embed_featured_media;
     const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
-    const featuredMediaValid = featuredMediaRatio > 1.2
+    const featuredMediaValid = (
+        featuredMediaRatio > 1.2
         && featuredMedia.width > 1200
-        && true || false;
+        && true
+    ) || false;
 
     let related = payload['jetpack-related-posts']
         .filter((post) => post.img.src !== '');
@@ -41,7 +43,7 @@ export default (payload) => {
         main: {
             id: payload.id,
             link: payload.link,
-            featuredMedia: featuredMediaValid && featuredMedia.html || false,
+            featuredMedia: (featuredMediaValid && featuredMedia.html) || false,
             title: payload.title.rendered,
             content: payload.content,
             commentsNumber: payload.comments_number,
