@@ -8,17 +8,16 @@
             v-if="img"
             class="card-img-top"
         >
-            <div
-                class="img"
-                v-html="img"
-            />
+            <div class="img" v-html="img/* eslint-disable-line vue/no-v-html */" />
             <list-item-info
                 :data="imgInfo"
             />
         </div>
         <div class="card-body" :to="postTo(slug)">
             <h2 class="card-title">
-                <router-link :to="postTo(slug)" v-html="title" />
+                <router-link :to="postTo(slug)">
+                    {{ title }}
+                </router-link>
             </h2>
             <list-item-info
                 :data="bodyInfo"
@@ -26,7 +25,7 @@
             <div
                 v-if="bodyText"
                 class="card-text"
-                v-html="bodyText"
+                v-html="bodyText/* eslint-disable-line vue/no-v-html */"
             />
         </div>
     </router-link>

@@ -1,7 +1,7 @@
 <template>
     <div class="comment">
         <div class="comment-header">
-            <div v-html="printAuthor(comment)" />
+            <div v-html="printAuthor(comment)/* eslint-disable-line vue/no-v-html */" />
             <list-item-info
                 :data="[{
                     icon: 'date',
@@ -11,7 +11,7 @@
         </div>
         <div
             class="comment-content"
-            v-html="comment.content"
+            v-html="comment.content/* eslint-disable-line vue/no-v-html */"
         />
     </div>
 </template>

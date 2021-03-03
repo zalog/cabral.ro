@@ -6,12 +6,13 @@
         <h1
             v-if="data.title"
             class="mb-4"
-            v-html="data.title"
-        />
+        >
+            {{ data.title }}
+        </h1>
         <div
             v-if="data.description"
             class="mt-n3 mb-4"
-            v-html="data.description"
+            v-html="data.description/* eslint-disable-line vue/no-v-html */"
         />
         <posts-list
             :posts="data.main"

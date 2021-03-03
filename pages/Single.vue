@@ -3,15 +3,16 @@
         <div
             v-if="data.main.featuredMedia"
             class="entry-img-hero"
-            v-html="data.main.featuredMedia"
+            v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
         />
         <div
             class="container-fluid"
         >
             <h1
                 class="entry-title"
-                v-html="data.main.title"
-            />
+            >
+                {{ data.main.title }}
+            </h1>
             <list-item-info
                 :data="[{
                     icon: 'date',
@@ -27,7 +28,7 @@
             <div
                 ref="content"
                 class="entry-content"
-                v-html="data.main.content"
+                v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
             />
             <list-share :url="data.main.link" />
         </div>

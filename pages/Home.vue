@@ -6,8 +6,9 @@
         <h1
             v-if="showPageTitle(data.title)"
             class="mb-4"
-            v-html="data.title"
-        />
+        >
+            {{ data.title }}
+        </h1>
         <posts-list
             :posts="data.main"
         />
