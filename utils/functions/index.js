@@ -1,2 +1,2 @@
 export { default as formatDate } from './formatDate';
-export { formatTitle, formatHtmlTitle, formatPageTitle } from './formatTitle';
+export * from './formatTitle';
