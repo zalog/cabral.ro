@@ -29,18 +29,17 @@ const set = (obj, props, value) => {
 };
 
 const del = (obj, props) => {
-    const cloneProps = [...props];
-    const prop = cloneProps.shift();
+    const prop = props.shift();
 
     if (!obj[prop]) return;
 
-    if (!cloneProps.length) {
+    if (!props.length) {
         Vue.delete(obj, prop);
 
         return;
     }
 
-    delete (obj[prop], cloneProps);
+    del(obj[prop], props);
 };
 
 export {
