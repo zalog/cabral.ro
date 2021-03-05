@@ -7,12 +7,12 @@ export default {
     state: () => ({}),
 
     getters: {
-        currentPage: (state) => (path, passedState) => {
-            state = passedState || state;
-
+        currentPage: (storeState) => (path, passedState) => {
+            const state = passedState || storeState;
             const [pathClean] = path.split('#');
             const pages = state;
             const page = pages[pathClean];
+
             return page || false;
         },
         currentPageTitle: (state, getters) => (path) => {
