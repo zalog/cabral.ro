@@ -109,8 +109,8 @@ export default {
             return output;
         },
         menuItemActive(item) {
-            item = this.menuItemTo(item);
-            const itemPath = (typeof item === 'string') ? item : `/${item.params.singleSlug}/`;
+            const menuItemTo = this.menuItemTo(item);
+            const itemPath = (typeof menuItemTo === 'string') ? menuItemTo : `/${menuItemTo.params.singleSlug}/`;
 
             return this.$route.path === itemPath;
         },

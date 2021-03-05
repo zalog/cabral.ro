@@ -4,19 +4,21 @@ const htmlTitleSeparator = ' - ';
 const pageTitleSeparator = ' ';
 
 export function formatTitle(title) {
-    if (typeof title === 'string') title = [title];
+    let output = title;
 
-    return title.join(htmlTitleSeparator);
+    if (typeof title === 'string') output = [title];
+
+    return output.join(htmlTitleSeparator);
 }
 
 export function formatHtmlTitle(title) {
     if (!title) return SITE.TITLE;
 
-    title = [formatTitle(title)];
+    const output = [formatTitle(title)];
 
-    title.push(SITE.TITLE);
+    output.push(SITE.TITLE);
 
-    return title.join(htmlTitleSeparator);
+    return output.join(htmlTitleSeparator);
 }
 
 export function formatPageTitle(title) {

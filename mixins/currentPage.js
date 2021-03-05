@@ -15,20 +15,15 @@ export default {
     },
 
     mounted() {
-        this.sendPageView();
+        this.sendPageView({ title: this.pageTitle });
     },
 
     methods: {
-        sendPageView(payload) {
-            payload = {
-                title: this.pageTitle,
-                ...payload,
-            };
-
+        sendPageView({ title, url }) {
             this.$gtm.push({
                 event: 'pageview',
-                title: payload.title,
-                ...(payload.url && { url: payload.url }),
+                title,
+                ...(url && { url }),
             });
         },
     },

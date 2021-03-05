@@ -23,9 +23,11 @@ export default {
 
             if (findIndex > -1) return;
 
-            if (typeof payload.visible === 'undefined') payload.visible = true;
+            const output = { ...payload };
 
-            commit('PUSH', payload);
+            if (typeof payload.visible === 'undefined') output.visible = true;
+
+            commit('PUSH', output);
         },
         delete: ({ state, commit }, payloadIndex) => {
             if (!state[payloadIndex]) return;

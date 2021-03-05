@@ -1,21 +1,21 @@
 import Vue from 'vue';
 
 const get = (obj, props) => {
-    props = [...props];
-    const prop = props.shift();
+    const cloneProps = [...props];
+    const prop = cloneProps.shift();
 
-    if (!obj[prop] || !props.length) return obj[prop];
+    if (!obj[prop] || !cloneProps.length) return obj[prop];
 
-    return get(obj[prop], props);
+    return get(obj[prop], cloneProps);
 };
 
 const set = (obj, props, value) => {
-    props = [...props];
-    const prop = props.shift();
+    const cloneProps = [...props];
+    const prop = cloneProps.shift();
 
     if (!obj[prop]) Vue.set(obj, prop, {});
 
-    if (!props.length) {
+    if (!cloneProps.length) {
         if (value && typeof value === 'object' && !Array.isArray(value)) {
             obj[prop] = { ...obj[prop], ...value };
         } else {
@@ -25,22 +25,22 @@ const set = (obj, props, value) => {
         return;
     }
 
-    set(obj[prop], props, value);
+    set(obj[prop], cloneProps, value);
 };
 
 const del = (obj, props) => {
-    props = [...props];
-    const prop = props.shift();
+    const cloneProps = [...props];
+    const prop = cloneProps.shift();
 
     if (!obj[prop]) return;
 
-    if (!props.length) {
+    if (!cloneProps.length) {
         Vue.delete(obj, prop);
 
         return;
     }
 
-    delete (obj[prop], props);
+    delete (obj[prop], cloneProps);
 };
 
 export {

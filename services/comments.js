@@ -1,5 +1,6 @@
 import { ENDPOINTS } from '../utils/constants';
 import { itemComment } from '../utils/adaptors';
+import { objectRenameKeys } from '../utils';
 
 export async function fetchComments(payload) {
     const params = {
@@ -61,25 +62,21 @@ export async function fetchComments(payload) {
     return response.data.data.comments;
 }
 
-export async function postComment(payload) {
-    // renames params keys to match wp-api
-    Object.entries({
+export async function postComment({ params, $axios }) {
+    const prepareParams = objectRenameKeys({
         singleId: 'post',
         commentId: 'parent',
         name: 'author_name',
         email: 'author_email',
         site: 'author_url',
         message: 'content',
-    }).forEach((entry) => {
-        payload.params[entry[1]] = payload.params[entry[0]];
-        delete payload.params[entry[0]];
-    });
+    }, params);
 
     try {
-        const response = await payload.$axios({
+        const response = await $axios({
             method: 'post',
             url: ENDPOINTS.COMMENTS,
-            params: payload.params,
+            params: prepareParams,
         });
 
         return itemComment(response.data);

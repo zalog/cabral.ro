@@ -79,7 +79,9 @@ export default {
             this.$router.push({ hash: false });
             that.$emit('closed');
         });
-        gallery.listen('gettingData', (index, item) => {
+        gallery.listen('gettingData', (index, getItem) => {
+            const item = getItem;
+
             if (item.w < 1 || item.h < 1) {
                 const img = new Image();
 
