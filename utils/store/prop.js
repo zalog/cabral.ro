@@ -16,11 +16,13 @@ const set = (obj, props, value) => {
     if (!obj[prop]) Vue.set(obj, prop, {});
 
     if (!cloneProps.length) {
+        let getValue = value;
+
         if (value && typeof value === 'object' && !Array.isArray(value)) {
-            obj[prop] = { ...obj[prop], ...value };
-        } else {
-            obj[prop] = value;
+            getValue = { ...obj[prop], ...value };
         }
+
+        Vue.set(obj, prop, getValue);
 
         return;
     }
