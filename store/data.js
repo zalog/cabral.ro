@@ -1,5 +1,5 @@
 import { formatPageTitle } from '~/utils';
-import { get, set } from '../utils/store';
+import { get, set, del } from '../utils/store';
 
 const pagesToKeep = 5;
 
@@ -64,7 +64,7 @@ export default {
                         return curr;
                     });
 
-                delete state[keyToDelete];
+                del(state, [keyToDelete]);
             }
         },
     },
