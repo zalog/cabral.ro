@@ -32,7 +32,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^5.0.0",
+    "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/router": "^1.5.1",
     "babel-eslint": "^10.1.0",
     "eslint-config-airbnb-base": "^14.2.1",
