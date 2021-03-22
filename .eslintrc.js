@@ -4,6 +4,8 @@ module.exports = {
         node: true,
     },
     extends: [
+        'eslint:recommended',
+        'plugin:vue/essential',
         '@nuxtjs',
         'airbnb-base',
     ],

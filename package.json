@@ -38,19 +38,5 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
   }
 }
