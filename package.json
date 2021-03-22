@@ -33,6 +33,7 @@
     "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/router": "^1.6.1",
     "babel-eslint": "^10.1.0",
+    "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "node-sass": "^5.0.0",
