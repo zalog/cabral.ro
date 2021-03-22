@@ -13,6 +13,7 @@ export default {
     plugins: [
         '~/plugins/filters.js',
         '~/plugins/vue-lazysizes.client.js',
+        '~/plugins/webfontloader.client.js'
     ],
     buildModules: [
         '@nuxtjs/router',
