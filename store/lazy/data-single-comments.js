@@ -80,9 +80,8 @@ export default {
                 }, { root: true });
 
                 return comment.id;
-            } catch (error) {
-                console.error('action postComment: ', error);
-                return undefined;
+            } catch {
+                throw new Error('action postComment');
             }
         },
     },
