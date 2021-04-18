@@ -9,7 +9,7 @@
     "nuxt:build": "nuxt build",
     "nuxt:start": "nuxt start",
     "pm2:start": "pm2 start",
-    "lint:js": "./node_modules/.bin/eslint --ignore-pattern '/dist/' --ext .js,.vue ."
+    "lint:js": "./node_modules/.bin/eslint --ext .js,.vue ."
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
