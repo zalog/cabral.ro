@@ -213,10 +213,10 @@ export default {
     background-color: $black;
 
     &::after {
-        content: " ";
         position: absolute;
         width: 100%;
         height: 100%;
+        content: " ";
     }
 
     /deep/ {
@@ -225,10 +225,10 @@ export default {
             top: 50%;
             left: 50%;
             width: auto;
-            height: auto;
             min-width: 100%;
-            min-height: 100%;
             max-width: none;
+            height: auto;
+            min-height: 100%;
             max-height: none;
             transform: translate(-50%, -50%);
         }

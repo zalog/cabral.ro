@@ -181,8 +181,8 @@ export default {
 
     .label,
     .form {
-        transition: max-height .2s ease, opacity .2s ease;
         overflow: hidden;
+        transition: max-height .2s ease, opacity .2s ease;
     }
 
     .label {
@@ -201,16 +201,16 @@ export default {
         }
         .form {
             max-height: 500px;
-            opacity: 1;
             overflow: visible;
+            opacity: 1;
         }
     }
 }
 
 .list-comments {
     .form-reply {
-        box-shadow: none;
         background-color: transparent;
+        box-shadow: none;
 
         .text-muted {
             font-size: $font-size-sm;

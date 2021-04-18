@@ -1,17 +1,8 @@
-// typo
 .entry-content {
-    font-family: $font-family-serif;
     font-size: $font-size-lg;
+    font-family: $font-family-serif;
     line-height: 1.9;
-}
 
-
-
-// content
-.entry-title {
-    margin-bottom: map-get($spacers, 4);
-}
-.entry-content {
     > * {
         margin-bottom: $spacer;
     }
@@ -44,6 +35,11 @@
             margin-left: -180px;
         }
     }
+}
+
+// content
+.entry-title {
+    margin-bottom: map-get($spacers, 4);
 }
 
 // content childs
@@ -88,8 +84,8 @@
 
     &::before {
         display: block;
-        content: "";
         padding-top: percentage(9 / 16);
+        content: "";
     }
 
     .youtube-player {

@@ -104,9 +104,9 @@ $card-border-color:           transparent;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             width: 100%;
             height: auto;
+            transform: translate(-50%, -50%);
         }
     }
 }
@@ -124,9 +124,9 @@ $card-border-color:           transparent;
 }
 
 .card {
-    cursor: pointer;
-    box-shadow: $box-shadow-lg;
     border: 0;
+    box-shadow: $box-shadow-lg;
+    cursor: pointer;
 
     .card-img-top {
         position: relative;
@@ -144,10 +144,10 @@ $card-border-color:           transparent;
 
                 li {
                     padding: $badge-padding-y * 1.8 $badge-padding-x * 2;
-                    font-size: $badge-font-size;
-                    border-radius: $badge-border-radius;
-                    background-color: rgba($white, .6);
                     color: $gray-800;
+                    font-size: $badge-font-size;
+                    background-color: rgba($white, .6);
+                    border-radius: $badge-border-radius;
                 }
             }
         }
