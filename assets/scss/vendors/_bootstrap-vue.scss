@@ -1,5 +1,4 @@
-@import '~bootstrap-vue/src/index'; // to do: import only what's needed
-
+@import "~bootstrap-vue/src/index"; // to do: import only what's needed
 
 // Override bootstrap-vue
 .b-toaster.b-toaster-bottom-center .b-toaster-slot {
@@ -7,9 +6,9 @@
 
     .b-toast:last-child {
         .toast {
+            border-bottom: 0;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
-            border-bottom: 0;
         }
     }
 }

@@ -28,16 +28,17 @@ export default {
 .icon {
     position: relative;
     display: inline-flex;
-    justify-content: center;
     align-items: center;
-    vertical-align: middle;
-    line-height: 0; // keep this square if children is text
+    justify-content: center;
+    width: 1.2rem;
     margin-top: -3px; // TODO: find a way to remove fixed px
+    line-height: 0; // keep this square if children is text
+    vertical-align: middle;
 
     &::before {
         display: block;
-        content: "";
         padding-top: 100%;
+        content: "";
     }
     svg {
         position: absolute;
@@ -54,7 +55,6 @@ export default {
     }
 
     // sizes
-    width: 1.2rem;
     &.icon-sm {
         width: 1rem;
         font-size: $font-size-sm;
@@ -70,8 +70,8 @@ export default {
 
     // shapes
     &.icon-circle {
-        border-radius: 50%;
         border: $border-width solid $border-color;
+        border-radius: 50%;
 
         svg {
             width: 75%;

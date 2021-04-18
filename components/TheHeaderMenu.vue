@@ -131,13 +131,13 @@ export default {
 /deep/ {
     .form-inline {
         .form-control {
+            color: $navbar-dark-active-color;
             background-color: rgba($white, .02);
             border-color: transparent;
-            color: $navbar-dark-active-color;
 
             &:focus {
-                box-shadow: none;
                 background-color: rgba($white, .06);
+                box-shadow: none;
             }
         }
     }

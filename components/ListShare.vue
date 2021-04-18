@@ -82,15 +82,15 @@ export default {
 }
 
 .btn-facebook {
-    border-color: map-get($social-colors, 'facebook');
-    color: map-get($social-colors, 'facebook');
+    color: map-get($social-colors, "facebook");
+    border-color: map-get($social-colors, "facebook");
 }
 .btn-whatsapp {
-    border-color: map-get($social-colors, 'whatsapp');
-    color: map-get($social-colors, 'whatsapp');
+    color: map-get($social-colors, "whatsapp");
+    border-color: map-get($social-colors, "whatsapp");
 }
 .btn-twitter {
-    border-color: map-get($social-colors, 'twitter');
-    color: map-get($social-colors, 'twitter');
+    color: map-get($social-colors, "twitter");
+    border-color: map-get($social-colors, "twitter");
 }
 </style>

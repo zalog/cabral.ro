@@ -3,13 +3,11 @@ svg {
     fill: currentColor;
 }
 
-
-
 // images
 .aligncenter {
     display: block;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
 }
 
 .alignleft {
@@ -21,8 +19,6 @@ svg {
     float: right;
     margin-left: $spacer;
 }
-
-
 
 // gallery
 .gallery {
@@ -62,9 +58,9 @@ svg {
 
 .gallery-caption {
     display: block;
+    padding: ceil($spacer / 4) 0;
     color: fade($gray-100, 80%);
     font-size: $font-size-sm;
-    padding: ceil($spacer / 4) 0;
 }
 
 [class*="gallery-columns"] {
@@ -73,15 +69,13 @@ svg {
     }
 }
 
-
-
 // highlight animations
 .highlight-background {
     animation: highlight .25s linear 0s 5 alternate;
 }
 @keyframes highlight {
     0% {
-        background: $warning
+        background: $warning;
     }
     100% {
         background: none;
