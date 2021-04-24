@@ -8,7 +8,7 @@ const fetchHead = async (payload) => {
             url: `${ENDPOINTS.HEAD}?url=${payload.url}`,
         });
 
-        return head(response.data.head);
+        return head(response.data.html);
     } catch (error) {
         throw error.response;
     }
