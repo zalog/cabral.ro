@@ -1,11 +1,22 @@
 <template>
     <div class="container-fluid">
         <h1>Slider test {{ $route.params.id }}</h1>
+
+        <base-slider-1
+            v-if="Number($route.params.id) === 1"
+            :items="items"
+        />
     </div>
 </template>
 
 <script>
+import BaseSlider1 from '~/components/BaseSlider1.vue';
+
 export default {
+    components: {
+        BaseSlider1,
+    },
+
     layout: 'slider-test',
 
     data: () => ({
