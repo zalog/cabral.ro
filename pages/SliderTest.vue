@@ -6,15 +6,21 @@
             v-if="Number($route.params.id) === 1"
             :items="items"
         />
+        <base-slider-2
+            v-else-if="Number($route.params.id) === 2"
+            :items="items"
+        />
     </div>
 </template>
 
 <script>
 import BaseSlider1 from '~/components/BaseSlider1.vue';
+import BaseSlider2 from '~/components/BaseSlider2.vue';
 
 export default {
     components: {
         BaseSlider1,
+        BaseSlider2,
     },
 
     layout: 'slider-test',
