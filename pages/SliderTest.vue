@@ -10,17 +10,23 @@
             v-else-if="Number($route.params.id) === 2"
             :items="items"
         />
+        <base-slider-3
+            v-else-if="Number($route.params.id) === 3"
+            :items="items"
+        />
     </div>
 </template>
 
 <script>
 import BaseSlider1 from '~/components/BaseSlider1.vue';
 import BaseSlider2 from '~/components/BaseSlider2.vue';
+import BaseSlider3 from '~/components/BaseSlider3.vue';
 
 export default {
     components: {
         BaseSlider1,
         BaseSlider2,
+        BaseSlider3,
     },
 
     layout: 'slider-test',
