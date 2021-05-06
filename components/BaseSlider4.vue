@@ -2,23 +2,131 @@
     <div>
         <h2>css + js</h2>
 
-        <ul class="gallery">
-            <li
-                v-for="(item, index) in items"
-                :key="index"
-                class="slide"
+        <div class="slider" style="width: 100%;">
+            <div
+                ref="slider-inner"
+                class="slider-inner"
             >
-                <img
-                    :src="item.src"
-                    :width="item.width"
-                    :height="item.height"
+                <div
+                    v-for="(item, index) in items"
+                    :id="`item-${index}`"
+                    :key="index"
+                    class="slider-item"
                 >
-            </li>
-        </ul>
+                    <div style="text-align: center;">
+                        <a href="https://www.google.com/">{{ index }}</a>
+                    </div>
+                    <nuxt-link
+                        :event="isDragging || isScrolling ? '': 'click'"
+                        to="https://www.google.com/"
+                    >
+                        <img
+                            :src="item.src"
+                            :width="item.width"
+                            :height="item.height"
+                        >
+                    </nuxt-link>
+                </div>
+            </div>
+
+            <ul class="list-inline text-center">
+                <li class="list-inline-item">
+                    <button
+                        type="button"
+                        class="btn btn-primary slider-control-prev"
+                        :disabled="hasBtn.itemPrev"
+                        @click="goToItemPrev()"
+                    >
+                        <span class="slider-control-prev-icon" aria-hidden="true" />
+                        <span class="visually-hidden">←</span>
+                    </button>
+                </li>
+                <li
+                    v-for="(item, index) in internalItems"
+                    :key="`items-${index}`"
+                    class="list-inline-item"
+                >
+                    <a
+                        :href="`#item-${index}`"
+                        class="btn btn-primary"
+                        :style="[ item.inView && { background: 'red' }]"
+                        @click.prevent="goTo(index)"
+                    >
+                        {{ index }}
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <button
+                        type="button"
+                        class="btn btn-primary slider-control-next"
+                        :disabled="hasBtn.itemNext"
+                        @click="goToItemNext()"
+                    >
+                        <span class="slider-control-next-icon" aria-hidden="true" />
+                        <span class="visually-hidden">→</span>
+                    </button>
+                </li>
+            </ul>
+
+            <ul class="list-inline text-center">
+                <li class="list-inline-item">
+                    <button
+                        type="button"
+                        class="btn btn-primary slider-control-prev"
+                        :disabled="hasBtn.screenPrev"
+                        @click="goToScreenPrev()"
+                    >
+                        <span class="slider-control-prev-icon" aria-hidden="true" />
+                        <span class="visually-hidden">←</span>
+                    </button>
+                </li>
+                <li
+                    v-for="(_, index) in screensLength"
+                    :key="`screens-${index}`"
+                    class="list-inline-item"
+                >
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        :style="[ activeScreenIndex === index && { background: 'red' }]"
+                        @click="goTo(index, 'screen')"
+                    >
+                        {{ index }}
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button
+                        type="button"
+                        class="btn btn-primary slider-control-next"
+                        :disabled="hasBtn.screenNext"
+                        @click="goToScreenNext()"
+                    >
+                        <span class="slider-control-next-icon" aria-hidden="true" />
+                        <span class="visually-hidden">→</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex data">
+            <pre>{{ internalItems }}</pre>
+            <pre>{{
+                `items ${activeItem.index + 1} / ${itemsLength},
+                screens ${activeScreenIndex + 1} / ${screensLength}`
+            }}</pre>
+            <pre>{{ { isDragging, isScrolling } }}</pre>
+        </div>
     </div>
 </template>
 
 <script>
+const defaultItem = {
+    index: 0,
+    width: 0,
+    scrollTo: 0,
+    screen: 0,
+    inView: false,
+};
+
 export default {
     name: 'BaseSlider4',
 
@@ -27,32 +135,403 @@ export default {
             type: Array,
             required: true,
         },
+        infinite: {
+            type: Boolean,
+            default: true,
+        },
+    },
+
+    data: () => ({
+        isDragging: false,
+        isScrolling: false,
+        internalItems: {},
+    }),
+
+    computed: {
+        activeItem() {
+            return Object.values(this.internalItems)
+                .find((item) => item.inView)
+                || {};
+        },
+        activeScreenIndex() {
+            return this.activeItem?.screen;
+        },
+        screensLength() {
+            const [lastItem] = Object.values(this.internalItems).slice(-1);
+
+            if (!lastItem) return null;
+
+            return lastItem.screen + 1;
+        },
+        itemsLength() {
+            return this.items.length;
+        },
+        hasBtn() {
+            return {
+                itemPrev: !this.infinite && this.activeItem.index === 0,
+                itemNext: !this.infinite && this.activeItem.index + 1 === this.itemsLength,
+                screenPrev: !this.infinite && this.activeScreenIndex === 0,
+                screenNext: !this.infinite && this.activeScreenIndex + 1 === this.screensLength,
+            };
+        },
+    },
+
+    mounted() {
+        const slider = this.$refs['slider-inner'];
+
+        this.createStateItems(slider);
+
+        this.attachObserve(slider);
+        this.attachResize(slider);
+        this.attachDrag(slider);
+        this.attachScroll(slider);
+    },
+
+    methods: {
+        createStateItems(slider) {
+            const items = this.prepareItems(slider);
+
+            items.forEach((item, index) => {
+                this.$set(this.internalItems, index, item);
+            });
+        },
+
+        updateStateItem(index, payload) {
+            this.internalItems[index] = {
+                ...this.internalItems[index],
+                ...payload,
+            };
+        },
+
+        goTo(index, entity = 'item', items = this.internalItems) {
+            const slider = this.$refs['slider-inner'];
+            const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
+            let wantedIndex = Number(index);
+
+            if (wantedIndex + 1 > entityLength) wantedIndex = 0;
+            else if (wantedIndex < 0) wantedIndex = entityLength - 1;
+
+            const wantedItem = (entity === 'item')
+                ? items[wantedIndex]
+                : Object.values(items).find((item) => item.screen === wantedIndex);
+            const { scrollTo } = wantedItem;
+
+            slider.scrollTo({
+                left: scrollTo,
+                behavior: 'smooth',
+            });
+        },
+        goToItemPrev() {
+            this.goTo(this.activeItem.index - 1);
+        },
+        goToItemNext() {
+            this.goTo(this.activeItem.index + 1);
+        },
+        goToScreenPrev() {
+            this.goTo(this.activeScreenIndex - 1, 'screen');
+        },
+        goToScreenNext() {
+            this.goTo(this.activeScreenIndex + 1, 'screen');
+        },
+
+        attachObserve(slider) {
+            const items = [...slider.children];
+            const onIntersection = (entries) => {
+                entries.forEach((entryIO) => {
+                    const { target: node } = entryIO;
+                    const nodeIndex = Array.from(node.parentNode.children).indexOf(node);
+
+                    this.updateStateItem(nodeIndex, {
+                        inView: entryIO.isIntersecting,
+                    });
+                });
+            };
+            const observer = new IntersectionObserver(
+                onIntersection,
+                {
+                    root: slider,
+                    threshold: 0.5,
+                    thresholds: [0, 0.25, 0.5, 0.75, 1],
+                },
+            );
+
+            items.forEach((item) => {
+                observer.observe(item);
+            });
+        },
+
+        attachResize(slider) {
+            let isFirstTime = true;
+            const resizeObserver = new ResizeObserver((entries) => {
+                if (isFirstTime) {
+                    isFirstTime = false;
+                    return;
+                }
+
+                const { target: resizedSlider } = entries[0];
+                const items = this.prepareItems(resizedSlider);
+
+                items.forEach((item, index) => {
+                    this.updateStateItem(index, {
+                        screen: item.screen,
+                    });
+                });
+            });
+
+            resizeObserver.observe(slider);
+        },
+
+        attachDrag(slider) {
+            const theSlider = this.$refs['slider-inner'];
+
+            let isMousedown = false;
+            let isDragging = false;
+            let startX;
+            let scrollLeft;
+
+            let momentumID;
+            let velX = 0;
+
+            this.isDragging = isDragging;
+
+            const momentumLoop = () => {
+                theSlider.scrollLeft += velX;
+                velX *= 0.95;
+
+                if (Math.abs(velX) < 0.5) return;
+
+                momentumID = window.requestAnimationFrame(momentumLoop);
+            };
+            const cancelMomentumTracking = () => {
+                isDragging = false;
+                this.isDragging = isDragging;
+
+                window.cancelAnimationFrame(momentumID);
+            };
+            const beginMomentumTracking = () => {
+                cancelMomentumTracking();
+                momentumID = window.requestAnimationFrame(momentumLoop);
+            };
+
+            slider.addEventListener('mousedown', (event) => {
+                event.preventDefault();
+
+                isMousedown = true;
+                isDragging = false;
+
+                this.isDragging = isDragging;
+
+                this.snap({ slider, snap: true });
+
+                startX = event.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+                cancelMomentumTracking();
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isMousedown = false;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isMousedown = false;
+                beginMomentumTracking();
+            });
+
+            slider.addEventListener('mousemove', (event) => {
+                if (!isMousedown) return;
+
+                event.preventDefault();
+
+                isDragging = true;
+                this.isDragging = isDragging;
+
+                const x = event.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 3;
+                const prevScrollLeft = slider.scrollLeft;
+                theSlider.scrollLeft = scrollLeft - walk;
+                velX = slider.scrollLeft - prevScrollLeft;
+            });
+
+            slider.addEventListener('wheel', () => {
+                cancelMomentumTracking();
+            });
+
+            const items = [...slider.children];
+            items.forEach((item) => {
+                const links = item.querySelectorAll('a');
+                links.forEach((link) => {
+                    link.addEventListener('click', (event) => {
+                        if (isDragging || this.isScrolling) event.preventDefault();
+                    });
+                });
+            });
+        },
+
+        attachScroll(slider) {
+            let rafID;
+            let timeoutID;
+
+            slider.addEventListener('scroll', () => {
+                if (rafID) {
+                    window.cancelAnimationFrame(rafID);
+                    clearTimeout(timeoutID);
+                }
+
+                rafID = window.requestAnimationFrame(() => {
+                    this.isScrolling = true;
+
+                    timeoutID = setTimeout(() => {
+                        this.isScrolling = false;
+                    }, 100);
+                });
+            });
+        },
+
+        prepareItems(slider) {
+            const { dir } = slider.parentElement;
+            const {
+                offsetWidth: sliderWidth,
+                scrollWidth: sliderScrollWidth,
+            } = slider;
+            const items = [...slider.children];
+            const screens = this.getRanges(sliderWidth, sliderScrollWidth);
+            let lastItemScreen = null;
+
+            return items.map((item, index) => {
+                const {
+                    offsetLeft: itemLeft,
+                    offsetWidth: itemWidth,
+                } = item;
+                let itemDir = {
+                    itemLeft,
+                    itemRight: itemLeft + itemWidth,
+                };
+                let scrollTo = itemDir.itemLeft;
+
+                if (dir === 'rtl') {
+                    itemDir = {
+                        itemRight: sliderWidth - (itemLeft + itemWidth),
+                        itemLeft: sliderWidth - itemLeft,
+                    };
+                    scrollTo = -itemDir.itemRight;
+                }
+
+                const getAproxItemScreen = this.getAproxItemScreen({
+                    ...itemDir,
+                    lastItemScreen,
+                    screens,
+                });
+
+                lastItemScreen = getAproxItemScreen;
+
+                return {
+                    ...defaultItem,
+                    index,
+                    scrollTo,
+                    width: itemWidth,
+                    screen: getAproxItemScreen,
+                };
+            });
+        },
+
+        getAproxItemScreen({
+            itemLeft, itemRight,
+            lastItemScreen,
+            screens,
+        }) {
+            const itemScreen = screens
+                .findIndex((screen) => screen.min >= itemLeft || itemRight <= screen.max);
+
+            const itemScreenJumped = (itemScreen - lastItemScreen) >= 2;
+            const itemScreenNotFound = itemScreen === -1;
+
+            let output = itemScreen;
+            if (itemScreenJumped || itemScreenNotFound) {
+                output = lastItemScreen + 1;
+            }
+
+            return output;
+        },
+
+        getRanges(range, total) {
+            const size = Math.round(total / range);
+            const output = [];
+
+            for (let i = 0; i < size; i += 1) {
+                const min = (i === 0) ? 0 : (range * i) + 1;
+                const getMax = (i === 0) ? range : range * (i + 1);
+                const max = (getMax >= total) ? total : getMax;
+
+                output.push({
+                    min,
+                    max,
+                });
+            }
+
+            return output;
+        },
+
+        snap({ slider, snap }) {
+            const verb = snap ? 'add' : 'remove';
+
+            slider.classList[verb]('slider-remove-snap');
+        },
     },
 };
 </script>
 
 <style lang="scss" scoped>
-.gallery {
-    display: grid;
-    grid-row-gap: 1rem;
-    grid-column-gap: 1rem;
-    grid-template-rows: 1fr;
-    grid-template-columns: repeat(10, 80vw);
-    height: 90vh;
-    padding: 1rem;
-    overflow: scroll;
-    scroll-snap-type: both mandatory;
-    scroll-padding: 1rem;
+.data {
+    margin-top: 20px;
+
+    pre {
+        height: 300px;
+        overflow-y: scroll;
+        font-size: 10px;
+
+        + pre {
+            margin-left: 20px;
+        }
+    }
 }
 
-.active {
+.slider {
+    position: relative;
+    background: #ced4da;
+}
+
+.slider-inner {
+    display: flex;
+    gap: 25px;
+    padding-bottom: 25px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 25px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.slider-item {
+    flex: 0 0 auto;
+    height: 100%;
+    scroll-snap-align: start;
+    background: #adb5bd;
+
+    a {
+        display: block;
+    }
+}
+
+.slider-remove-snap {
     scroll-snap-type: unset;
 }
 
-li {
-    scroll-snap-align: center;
-    display: inline-block;
-    font-size: 0;
-    border-radius: 3px;
+:dir(rtl) {
+    .slider-item {
+        scroll-snap-align: end;
+    }
+    .slider-control-next,
+    .slider-control-prev {
+        transform: rotate(180deg);
+    }
 }
 </style>
