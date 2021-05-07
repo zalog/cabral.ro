@@ -16,8 +16,28 @@
         />
         <base-slider-4
             v-else-if="Number($route.params.id) === 4"
-            :items="items"
-        />
+            @onDragging="slider4.isDragging = $event"
+        >
+            <base-slider4-slide
+                v-for="(item, index) in items"
+                :id="`item-${index}`"
+                :key="index"
+            >
+                <div style="text-align: center;">
+                    <a href="https://www.google.com/">{{ index }}</a>
+                </div>
+                <nuxt-link
+                    :event="!slider4.isDragging ? 'click': ''"
+                    to="https://www.google.com/"
+                >
+                    <img
+                        :src="item.src"
+                        :width="item.width"
+                        :height="item.height"
+                    >
+                </nuxt-link>
+            </base-slider4-slide>
+        </base-slider-4>
     </div>
 </template>
 
@@ -26,6 +46,7 @@ import BaseSlider1 from '~/components/BaseSlider1.vue';
 import BaseSlider2 from '~/components/BaseSlider2.vue';
 import BaseSlider3 from '~/components/BaseSlider3.vue';
 import BaseSlider4 from '~/components/BaseSlider4.vue';
+import BaseSlider4Slide from '~/components/BaseSlider4Slide.vue';
 
 export default {
     components: {
@@ -33,6 +54,7 @@ export default {
         BaseSlider2,
         BaseSlider3,
         BaseSlider4,
+        BaseSlider4Slide,
     },
 
     layout: 'slider-test',
@@ -70,6 +92,9 @@ export default {
                 height: '256',
             },
         ],
+        slider4: {
+            isDragging: null,
+        },
     }),
 };
 </script>

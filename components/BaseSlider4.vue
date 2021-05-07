@@ -7,26 +7,7 @@
                 ref="slider-inner"
                 class="slider-inner"
             >
-                <div
-                    v-for="(item, index) in items"
-                    :id="`item-${index}`"
-                    :key="index"
-                    class="slider-item"
-                >
-                    <div style="text-align: center;">
-                        <a href="https://www.google.com/">{{ index }}</a>
-                    </div>
-                    <nuxt-link
-                        :event="isDragging || isScrolling ? '': 'click'"
-                        to="https://www.google.com/"
-                    >
-                        <img
-                            :src="item.src"
-                            :width="item.width"
-                            :height="item.height"
-                        >
-                    </nuxt-link>
-                </div>
+                <slot v-if="$slots.default" />
             </div>
 
             <ul class="list-inline text-center">
@@ -131,10 +112,6 @@ export default {
     name: 'BaseSlider4',
 
     props: {
-        items: {
-            type: Array,
-            required: true,
-        },
         infinite: {
             type: Boolean,
             default: true,
@@ -164,7 +141,7 @@ export default {
             return lastItem.screen + 1;
         },
         itemsLength() {
-            return this.items.length;
+            return Object.keys(this.internalItems).length;
         },
         hasBtn() {
             return {
@@ -173,6 +150,16 @@ export default {
                 screenPrev: !this.infinite && this.activeScreenIndex === 0,
                 screenNext: !this.infinite && this.activeScreenIndex + 1 === this.screensLength,
             };
+        },
+    },
+
+    watch: {
+        isDragging(newValue) {
+            this.$emit('onDragging', newValue);
+        },
+        isScrolling(newValue) {
+            this.$emit('onDragging', true);
+            this.$emit('onScrolling', newValue);
         },
     },
 
