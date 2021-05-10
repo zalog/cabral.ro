@@ -441,7 +441,7 @@ export default {
         },
 
         getRanges(range, total) {
-            const size = Math.round(total / range);
+            const size = Math.ceil(total / range);
             const output = [];
 
             for (let i = 0; i < size; i += 1) {
