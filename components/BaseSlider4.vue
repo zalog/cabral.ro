@@ -404,6 +404,7 @@ export default {
                 }
 
                 const getAproxItemScreen = this.getAproxItemScreen({
+                    itemIndex: index,
                     ...itemDir,
                     lastItemScreen,
                     screens,
@@ -422,12 +423,20 @@ export default {
         },
 
         getAproxItemScreen({
+            itemIndex,
             itemLeft, itemRight,
             lastItemScreen,
             screens,
         }) {
+            const gap = 25 * (itemIndex + 1);
             const itemScreen = screens
-                .findIndex((screen) => screen.min >= itemLeft || itemRight <= screen.max);
+                .findIndex((screen) => {
+                    const itemRightInScreen = itemRight - gap <= screen.max;
+                    const itemLeftInScreen = screen.min <= itemLeft - gap;
+                    const exactMatch = itemLeftInScreen && itemRightInScreen;
+                    const aproxMatch = itemRightInScreen;
+                    return exactMatch || aproxMatch;
+                });
 
             const itemScreenJumped = (itemScreen - lastItemScreen) >= 2;
             const itemScreenNotFound = itemScreen === -1;
