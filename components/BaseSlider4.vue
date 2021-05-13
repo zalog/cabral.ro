@@ -88,13 +88,17 @@
                 </li>
             </ul>
         </div>
-        <div class="d-flex data">
-            <pre>{{ internalItems }}</pre>
-            <pre>{{
-                `items ${activeItem.index + 1} / ${itemsLength},
-                screens ${activeScreenIndex + 1} / ${screensLength}`
-            }}</pre>
-            <pre>{{ { isDragging, isScrolling } }}</pre>
+        <div class="d-flex debugging">
+            <pre class="items">{{ internalItems }}</pre>
+            <div>
+                <pre>{{ { isDragging, isScrolling } }}</pre>
+                <pre v-if="activeItem">{{
+                    `items ${activeItem.index + 1}/${itemsLength}`
+                }}</pre>
+                <pre v-if="activeScreenIndex >= 0">{{
+                    `screens ${activeScreenIndex + 1}/${screensLength}`
+                }}</pre>
+            </div>
         </div>
     </div>
 </template>
@@ -477,17 +481,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.data {
+.debugging {
     margin-top: 20px;
+    font-size: 10px;
 
-    pre {
+    pre.items {
         height: 300px;
         overflow-y: scroll;
-        font-size: 10px;
+    }
 
-        + pre {
-            margin-left: 20px;
-        }
+    > * + * {
+        margin-left: 20px;
     }
 }
 
