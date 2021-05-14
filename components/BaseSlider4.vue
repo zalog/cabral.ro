@@ -4,6 +4,19 @@
 
         <div class="slider" style="width: 100%;">
             <div
+                ref="slider-range"
+                class="slider-range"
+            >
+                <div
+                    v-for="(range, index) in ranges"
+                    :key="index"
+                    class="slider-range-item"
+                    :style="{ width: `${range.max - range.min}px` }"
+                >
+                    {{ `${range.min}, ${range.max} / ${index}` }}
+                </div>
+            </div>
+            <div
                 ref="slider-inner"
                 class="slider-inner"
             >
@@ -90,6 +103,7 @@
         </div>
         <div class="d-flex debugging">
             <pre class="items">{{ internalItems }}</pre>
+            <pre>{{ ranges }} </pre>
             <div>
                 <pre>{{ { isDragging, isScrolling } }}</pre>
                 <pre v-if="activeItem">{{
@@ -126,6 +140,8 @@ export default {
         isDragging: false,
         isScrolling: false,
         internalItems: {},
+        ranges: [],
+        scrollLeft: 0,
     }),
 
     computed: {
@@ -164,6 +180,10 @@ export default {
         isScrolling(newValue) {
             this.$emit('onDragging', true);
             this.$emit('onScrolling', newValue);
+        },
+        scrollLeft(newValue) {
+            const slider = this.$refs['slider-range'];
+            slider.scrollLeft = newValue;
         },
     },
 
@@ -362,7 +382,7 @@ export default {
             let rafID;
             let timeoutID;
 
-            slider.addEventListener('scroll', () => {
+            slider.addEventListener('scroll', (event) => {
                 if (rafID) {
                     window.cancelAnimationFrame(rafID);
                     clearTimeout(timeoutID);
@@ -370,6 +390,8 @@ export default {
 
                 rafID = window.requestAnimationFrame(() => {
                     this.isScrolling = true;
+
+                    this.scrollLeft = event.target.scrollLeft;
 
                     timeoutID = setTimeout(() => {
                         this.isScrolling = false;
@@ -386,6 +408,7 @@ export default {
             } = slider;
             const items = [...slider.children];
             const screens = this.getRanges(sliderWidth, sliderScrollWidth);
+            this.ranges = screens;
             let lastItemScreen = null;
 
             return items.map((item, index) => {
@@ -533,5 +556,17 @@ export default {
     .slider-control-prev {
         transform: rotate(180deg);
     }
+}
+.slider-range {
+    display: flex;
+    gap: 25px;
+    scroll-padding: 25px;
+    overflow-x: auto;
+    text-align: center;
+    background-color: #ced4da;
+}
+.slider-range-item {
+    flex: 0 0 auto;
+    border: 1px solid red;
 }
 </style>
