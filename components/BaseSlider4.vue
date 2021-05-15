@@ -46,7 +46,7 @@
                         :style="[ item.inView && { background: 'red' }]"
                         @click.prevent="goTo(index)"
                     >
-                        {{ index }}
+                        {{ `${index} - ${item.screen}` }}
                     </a>
                 </li>
                 <li class="list-inline-item">
