@@ -460,8 +460,9 @@ export default {
                 .findIndex((screen) => {
                     const itemRightInScreen = itemRight - gap <= screen.max;
                     const itemLeftInScreen = screen.min <= itemLeft - gap;
+                    const itemLeftInPrevScreen = itemLeft - gap <= screen.min;
                     const exactMatch = itemLeftInScreen && itemRightInScreen;
-                    const aproxMatch = itemRightInScreen;
+                    const aproxMatch = itemLeftInPrevScreen || itemRightInScreen;
                     return exactMatch || aproxMatch;
                 });
 
