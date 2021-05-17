@@ -215,12 +215,25 @@ export default {
         },
 
         goTo(index, entity = 'item', items = this.internalItems) {
-            const slider = this.$refs['slider-inner'];
-            const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
             let wantedIndex = Number(index);
+            const slider = this.$refs['slider-inner'];
+            const {
+                scrollLeft: sliderScrollLeft,
+                scrollWidth: sliderScrollWidth,
+                offsetWidth: sliderWidth,
+            } = slider;
+            const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
+            const wantedDir = this.activeItem.index <= wantedIndex ? 'front' : 'back';
 
-            if (wantedIndex + 1 > entityLength) wantedIndex = 0;
-            else if (wantedIndex < 0) wantedIndex = entityLength - 1;
+            const sliderScrollBack = Math.abs(sliderScrollLeft);
+            const sliderScrollFront = sliderScrollBack + sliderWidth;
+            const scrollFrontFinished = sliderScrollFront === sliderScrollWidth && wantedDir === 'front';
+            const scrollBackFinished = sliderScrollBack === 0 && wantedDir === 'back';
+            const wantedIndexFrontFinished = wantedIndex + 1 > entityLength;
+            const wantedIndexBackFinished = wantedIndex < 0;
+
+            if (scrollFrontFinished || wantedIndexFrontFinished) wantedIndex = 0;
+            else if (scrollBackFinished || wantedIndexBackFinished) wantedIndex = entityLength - 1;
 
             const wantedItem = (entity === 'item')
                 ? items[wantedIndex]
