@@ -214,26 +214,37 @@ export default {
             };
         },
 
-        goTo(index, entity = 'item', items = this.internalItems) {
-            let wantedIndex = Number(index);
+        goTo(to, entity = 'item', items = this.internalItems) {
+            let wantedIndex = to;
             const slider = this.$refs['slider-inner'];
-            const {
-                scrollLeft: sliderScrollLeft,
-                scrollWidth: sliderScrollWidth,
-                offsetWidth: sliderWidth,
-            } = slider;
-            const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
-            const wantedDir = this.activeItem.index <= wantedIndex ? 'front' : 'back';
 
-            const sliderScrollBack = Math.abs(sliderScrollLeft);
-            const sliderScrollFront = sliderScrollBack + sliderWidth;
-            const scrollFrontFinished = sliderScrollFront === sliderScrollWidth && wantedDir === 'front';
-            const scrollBackFinished = sliderScrollBack === 0 && wantedDir === 'back';
-            const wantedIndexFrontFinished = wantedIndex + 1 > entityLength;
-            const wantedIndexBackFinished = wantedIndex < 0;
+            if (['prev', 'next'].includes(to)) {
+                if (to === 'prev') {
+                    wantedIndex = this.activeItem.index - 1;
+                } else if (to === 'next') {
+                    wantedIndex = this.activeItem.index + 1;
+                }
 
-            if (scrollFrontFinished || wantedIndexFrontFinished) wantedIndex = 0;
-            else if (scrollBackFinished || wantedIndexBackFinished) wantedIndex = entityLength - 1;
+                const {
+                    scrollLeft: sliderScrollLeft,
+                    scrollWidth: sliderScrollWidth,
+                    offsetWidth: sliderWidth,
+                } = slider;
+                const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
+
+                const sliderScrollBack = Math.abs(sliderScrollLeft);
+                const sliderScrollFront = sliderScrollBack + sliderWidth;
+                const scrollPrevFinished = sliderScrollBack === 0 && to === 'prev';
+                const scrollNextFinished = sliderScrollFront === sliderScrollWidth && to === 'next';
+                const wantedIndexPrevFinished = wantedIndex < 0;
+                const wantedIndexNextFinished = wantedIndex + 1 > entityLength;
+
+                if (scrollPrevFinished || wantedIndexPrevFinished) {
+                    wantedIndex = entityLength - 1;
+                } else if (scrollNextFinished || wantedIndexNextFinished) {
+                    wantedIndex = 0;
+                }
+            }
 
             const wantedItem = (entity === 'item')
                 ? items[wantedIndex]
@@ -246,16 +257,16 @@ export default {
             });
         },
         goToItemPrev() {
-            this.goTo(this.activeItem.index - 1);
+            this.goTo('prev');
         },
         goToItemNext() {
-            this.goTo(this.activeItem.index + 1);
+            this.goTo('next');
         },
         goToScreenPrev() {
-            this.goTo(this.activeScreenIndex - 1, 'screen');
+            this.goTo('prev', 'screen');
         },
         goToScreenNext() {
-            this.goTo(this.activeScreenIndex + 1, 'screen');
+            this.goTo('next', 'screen');
         },
 
         attachObserve(slider) {
