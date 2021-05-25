@@ -574,9 +574,6 @@ export default {
 }
 
 :dir(rtl) {
-    .slider-item {
-        scroll-snap-align: end;
-    }
     .slider-control-next,
     .slider-control-prev {
         transform: rotate(180deg);
