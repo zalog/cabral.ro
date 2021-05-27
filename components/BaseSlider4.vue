@@ -448,10 +448,10 @@ export default {
 
                 if (dir === 'rtl') {
                     itemDir = {
-                        itemRight: sliderWidth - (itemLeft + itemWidth),
-                        itemLeft: sliderWidth - itemLeft,
+                        itemLeft: sliderWidth - (itemLeft + itemWidth),
+                        itemRight: sliderWidth - itemLeft,
                     };
-                    scrollTo = -itemDir.itemRight;
+                    scrollTo = -itemDir.itemLeft;
                 }
 
                 const getAproxItemScreen = this.getAproxItemScreen({
