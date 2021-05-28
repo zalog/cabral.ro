@@ -437,21 +437,21 @@ export default {
 
             return items.map((item, index) => {
                 const {
-                    offsetLeft: itemLeft,
+                    offsetLeft: itemStart,
                     offsetWidth: itemWidth,
                 } = item;
                 let itemDir = {
-                    itemLeft,
-                    itemRight: itemLeft + itemWidth,
+                    itemStart,
+                    itemEnd: itemStart + itemWidth,
                 };
-                let scrollTo = itemDir.itemLeft;
+                let scrollTo = itemDir.itemStart;
 
                 if (dir === 'rtl') {
                     itemDir = {
-                        itemLeft: sliderWidth - (itemLeft + itemWidth),
-                        itemRight: sliderWidth - itemLeft,
+                        itemStart: sliderWidth - (itemStart + itemWidth),
+                        itemEnd: sliderWidth - itemStart,
                     };
-                    scrollTo = -itemDir.itemLeft;
+                    scrollTo = -itemDir.itemStart;
                 }
 
                 const getAproxItemScreen = this.getAproxItemScreen({
@@ -475,18 +475,18 @@ export default {
 
         getAproxItemScreen({
             itemIndex,
-            itemLeft, itemRight,
+            itemStart, itemEnd,
             lastItemScreen,
             screens,
         }) {
             const gap = 25 * (itemIndex + 1);
             const itemScreen = screens
                 .findIndex((screen) => {
-                    const itemRightInScreen = itemRight - gap <= screen.max;
-                    const itemLeftInScreen = screen.min <= itemLeft - gap;
-                    const itemLeftInPrevScreen = itemLeft - gap <= screen.min;
-                    const exactMatch = itemLeftInScreen && itemRightInScreen;
-                    const aproxMatch = itemLeftInPrevScreen || itemRightInScreen;
+                    const itemEndInScreen = itemEnd - gap <= screen.max;
+                    const itemStartInScreen = screen.min <= itemStart - gap;
+                    const itemStartInPrevScreen = itemStart - gap <= screen.min;
+                    const exactMatch = itemStartInScreen && itemEndInScreen;
+                    const aproxMatch = itemStartInPrevScreen || itemEndInScreen;
                     return exactMatch || aproxMatch;
                 });
 
