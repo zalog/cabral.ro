@@ -432,6 +432,8 @@ export default {
             } = slider;
             const items = [...slider.children];
             const screens = this.getRanges(sliderWidth, sliderScrollWidth);
+            const sliderGapPx = parseInt(getComputedStyle(slider).gap, 10);
+
             this.ranges = screens;
             let lastItemScreen = null;
 
@@ -459,6 +461,7 @@ export default {
                     ...itemDir,
                     lastItemScreen,
                     screens,
+                    sliderGapPx,
                 });
 
                 lastItemScreen = getAproxItemScreen;
@@ -478,8 +481,9 @@ export default {
             itemStart, itemEnd,
             lastItemScreen,
             screens,
+            sliderGapPx,
         }) {
-            const gap = 25 * (itemIndex + 1);
+            const gap = sliderGapPx * (itemIndex + 1);
             const itemScreen = screens
                 .findIndex((screen) => {
                     const itemEndInScreen = itemEnd - gap <= screen.max;
