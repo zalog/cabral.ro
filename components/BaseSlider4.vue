@@ -232,16 +232,16 @@ export default {
                 } = slider;
                 const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
 
-                const sliderScrollBack = Math.abs(sliderScrollLeft);
-                const sliderScrollFront = sliderScrollBack + sliderWidth;
-                const scrollPrevFinished = sliderScrollBack === 0 && to === 'prev';
-                const scrollNextFinished = sliderScrollFront === sliderScrollWidth && to === 'next';
-                const wantedIndexPrevFinished = wantedIndex < 0;
-                const wantedIndexNextFinished = wantedIndex + 1 > entityLength;
+                const sliderScrollStart = Math.abs(sliderScrollLeft);
+                const sliderScrollEnd = sliderScrollStart + sliderWidth;
+                const scrollStartFinished = sliderScrollStart === 0 && to === 'prev';
+                const scrollEndFinished = sliderScrollEnd === sliderScrollWidth && to === 'next';
+                const wantedIndexStartFinished = wantedIndex < 0;
+                const wantedIndexEndFinished = wantedIndex + 1 > entityLength;
 
-                if (scrollPrevFinished || wantedIndexPrevFinished) {
+                if (scrollStartFinished || wantedIndexStartFinished) {
                     wantedIndex = entityLength - 1;
-                } else if (scrollNextFinished || wantedIndexNextFinished) {
+                } else if (scrollEndFinished || wantedIndexEndFinished) {
                     wantedIndex = 0;
                 }
             }
