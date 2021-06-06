@@ -106,8 +106,8 @@
             <pre>{{ ranges }} </pre>
             <div>
                 <pre>{{ { isDragging, isScrolling } }}</pre>
-                <pre v-if="itemInView">{{
-                    `items ${itemInView.index + 1}/${itemsLength}`
+                <pre v-if="itemInViewFirst">{{
+                    `items ${itemInViewFirst.index + 1}/${itemsLength}`
                 }}</pre>
                 <pre v-if="activeScreenIndex >= 0">{{
                     `screens ${activeScreenIndex + 1}/${screensLength}`
@@ -145,13 +145,13 @@ export default {
     }),
 
     computed: {
-        itemInView() {
+        itemInViewFirst() {
             return Object.values(this.internalItems)
                 .find((item) => item.inView)
                 || {};
         },
         activeScreenIndex() {
-            return this.itemInView?.screen;
+            return this.itemInViewFirst?.screen;
         },
         screensLength() {
             const [lastItem] = Object.values(this.internalItems).slice(-1);
@@ -165,8 +165,8 @@ export default {
         },
         hasBtn() {
             return {
-                itemPrev: !this.infinite && this.itemInView.index === 0,
-                itemNext: !this.infinite && this.itemInView.index + 1 === this.itemsLength,
+                itemPrev: !this.infinite && this.itemInViewFirst.index === 0,
+                itemNext: !this.infinite && this.itemInViewFirst.index + 1 === this.itemsLength,
                 screenPrev: !this.infinite && this.activeScreenIndex === 0,
                 screenNext: !this.infinite && this.activeScreenIndex + 1 === this.screensLength,
             };
@@ -220,9 +220,9 @@ export default {
 
             if (['prev', 'next'].includes(to)) {
                 if (to === 'prev') {
-                    wantedIndex = this.itemInView.index - 1;
+                    wantedIndex = this.itemInViewFirst.index - 1;
                 } else if (to === 'next') {
-                    wantedIndex = this.itemInView.index + 1;
+                    wantedIndex = this.itemInViewFirst.index + 1;
                 }
 
                 const {
