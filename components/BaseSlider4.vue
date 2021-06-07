@@ -145,10 +145,14 @@ export default {
     }),
 
     computed: {
+        itemsInView() {
+            const items = Object.values(this.internalItems)
+                .filter((item) => item.inView);
+
+            return items || [];
+        },
         itemInViewFirst() {
-            return Object.values(this.internalItems)
-                .find((item) => item.inView)
-                || {};
+            return this.itemsInView[0];
         },
         activeScreenIndex() {
             return this.itemInViewFirst?.screen;
