@@ -154,6 +154,17 @@ export default {
         itemInViewFirst() {
             return this.itemsInView[0];
         },
+        screensInView() {
+            const screens = new Set();
+            this.itemsInView.forEach((item) => {
+                screens.add(item.screen);
+            });
+
+            return screens;
+        },
+        screenInViewFirst() {
+            return this.screensInView.values().next().value;
+        },
         activeScreenIndex() {
             return this.itemInViewFirst?.screen;
         },
@@ -219,40 +230,49 @@ export default {
         },
 
         goTo(to, entity = 'item', items = this.internalItems) {
-            let wantedIndex = to;
+            let wantedEntityIndex = to;
             const slider = this.$refs['slider-inner'];
 
             if (['prev', 'next'].includes(to)) {
-                if (to === 'prev') {
-                    wantedIndex = this.itemInViewFirst.index - 1;
-                } else if (to === 'next') {
-                    wantedIndex = this.itemInViewFirst.index + 1;
+                let direction = null;
+                if (to === 'prev') direction = -1;
+                else if (to === 'next') direction = +1;
+
+                let entityIndex = null;
+                let entityLength = null;
+                if (entity === 'item') {
+                    entityIndex = this.itemInViewFirst.index;
+                    entityLength = this.itemsLength;
+                } else if (entity === 'screen') {
+                    entityIndex = this.screenInViewFirst;
+                    entityLength = this.screensLength;
                 }
+
+                wantedEntityIndex = entityIndex + direction;
 
                 const {
                     scrollLeft: sliderScrollLeft,
                     scrollWidth: sliderScrollWidth,
                     offsetWidth: sliderWidth,
                 } = slider;
-                const entityLength = (entity === 'item') ? this.itemsLength : this.screensLength;
 
                 const sliderScrollStart = Math.abs(sliderScrollLeft);
                 const sliderScrollEnd = sliderScrollStart + sliderWidth;
                 const scrollStartFinished = sliderScrollStart === 0 && to === 'prev';
                 const scrollEndFinished = sliderScrollEnd === sliderScrollWidth && to === 'next';
-                const wantedIndexStartFinished = wantedIndex < 0;
-                const wantedIndexEndFinished = wantedIndex + 1 > entityLength;
+                const wantedEntityIndexStartFinished = wantedEntityIndex < 0;
+                const wantedEntityIndexEndFinished = wantedEntityIndex + 1 > entityLength;
 
-                if (scrollStartFinished || wantedIndexStartFinished) {
-                    wantedIndex = entityLength - 1;
-                } else if (scrollEndFinished || wantedIndexEndFinished) {
-                    wantedIndex = 0;
+                if (scrollStartFinished || wantedEntityIndexStartFinished) {
+                    wantedEntityIndex = entityLength - 1;
+                } else if (scrollEndFinished || wantedEntityIndexEndFinished) {
+                    wantedEntityIndex = 0;
                 }
             }
 
             const wantedItem = (entity === 'item')
-                ? items[wantedIndex]
-                : Object.values(items).find((item) => item.screen === wantedIndex);
+                ? items[wantedEntityIndex]
+                : Object.values(items).find((item) => item.screen === wantedEntityIndex);
             const { scrollTo } = wantedItem;
 
             slider.scrollTo({
