@@ -270,9 +270,9 @@ export default {
                 }
             }
 
-            const wantedItem = (entity === 'item')
-                ? items[wantedEntityIndex]
-                : Object.values(items).find((item) => item.screen === wantedEntityIndex);
+            let wantedItem = null;
+            if (entity === 'item') wantedItem = items[wantedEntityIndex];
+            else if (entity === 'screen') wantedItem = Object.values(items).find((item) => item.screen === wantedEntityIndex);
             const { scrollTo } = wantedItem;
 
             slider.scrollTo({
