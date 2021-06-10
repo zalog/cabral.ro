@@ -82,7 +82,7 @@
                     <button
                         type="button"
                         class="btn btn-primary"
-                        :style="[ activeScreenIndex === index && { background: 'red' }]"
+                        :style="[ screensInView.has(index) && { background: 'red' }]"
                         @click="goTo(index, 'screen')"
                     >
                         {{ index }}
@@ -109,8 +109,8 @@
                 <pre v-if="itemInViewFirst">{{
                     `items ${itemInViewFirst.index + 1}/${itemsLength}`
                 }}</pre>
-                <pre v-if="activeScreenIndex >= 0">{{
-                    `screens ${activeScreenIndex + 1}/${screensLength}`
+                <pre v-if="screenInViewFirst >= 0">{{
+                    `screens ${screenInViewFirst + 1}/${screensLength}`
                 }}</pre>
             </div>
         </div>
@@ -165,9 +165,6 @@ export default {
         screenInViewFirst() {
             return this.screensInView.values().next().value;
         },
-        activeScreenIndex() {
-            return this.itemInViewFirst?.screen;
-        },
         screensLength() {
             const [lastItem] = Object.values(this.internalItems).slice(-1);
 
@@ -182,8 +179,8 @@ export default {
             return {
                 itemPrev: !this.infinite && this.itemInViewFirst.index === 0,
                 itemNext: !this.infinite && this.itemInViewFirst.index + 1 === this.itemsLength,
-                screenPrev: !this.infinite && this.activeScreenIndex === 0,
-                screenNext: !this.infinite && this.activeScreenIndex + 1 === this.screensLength,
+                screenPrev: !this.infinite && this.screenInViewFirst === 0,
+                screenNext: !this.infinite && this.screenInViewFirst + 1 === this.screensLength,
             };
         },
     },
