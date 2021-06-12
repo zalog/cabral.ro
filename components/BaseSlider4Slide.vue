@@ -9,3 +9,16 @@ export default {
     name: 'BaseSlider4Slide',
 };
 </script>
+
+<style lang="scss" scoped>
+.slider-item {
+    flex: 0 0 auto;
+    height: 100%;
+    scroll-snap-align: start;
+    background: #adb5bd;
+
+    a {
+        display: block;
+    }
+}
+</style>

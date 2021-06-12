@@ -560,17 +560,6 @@ export default {
     -webkit-overflow-scrolling: touch;
 }
 
-.slider-item {
-    flex: 0 0 auto;
-    height: 100%;
-    scroll-snap-align: start;
-    background: #adb5bd;
-
-    a {
-        display: block;
-    }
-}
-
 .slider-remove-snap {
     scroll-snap-type: unset;
 }
