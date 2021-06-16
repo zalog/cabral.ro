@@ -185,6 +185,7 @@ export default {
         this.createStateItems(slider);
 
         this.attachObserve(slider);
+        this.attachObserveSlider(slider);
         this.attachResize(slider);
         this.attachDrag(slider);
         this.attachScroll(slider);
@@ -294,6 +295,31 @@ export default {
             items.forEach((item) => {
                 observer.observe(item);
             });
+        },
+
+        attachObserveSlider(slider) {
+            let intervalAutoplay = null;
+
+            const onIntersection = (entries) => {
+                clearInterval(intervalAutoplay);
+
+                const { isIntersecting } = entries[0];
+
+                if (!isIntersecting) return;
+
+                intervalAutoplay = setInterval(() => {
+                    this.goToItemNext();
+                }, 3000);
+            };
+            const observer = new IntersectionObserver(
+                onIntersection,
+                {
+                    threshold: 0.5,
+                    thresholds: [0, 0.5, 1],
+                },
+            );
+
+            observer.observe(slider);
         },
 
         attachResize(slider) {
