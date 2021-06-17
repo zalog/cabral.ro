@@ -126,6 +126,7 @@ export default {
         isDragging: false,
         isScrolling: false,
         internalItems: {},
+        intervalAutoplay: null,
     }),
 
     computed: {
@@ -298,16 +299,16 @@ export default {
         },
 
         attachObserveSlider(slider) {
-            let intervalAutoplay = null;
+            let interval = this.intervalAutoplay;
 
             const onIntersection = (entries) => {
-                clearInterval(intervalAutoplay);
+                clearInterval(interval);
 
                 const { isIntersecting } = entries[0];
 
                 if (!isIntersecting) return;
 
-                intervalAutoplay = setInterval(() => {
+                interval = setInterval(() => {
                     this.goToItemNext();
                 }, 3000);
             };
