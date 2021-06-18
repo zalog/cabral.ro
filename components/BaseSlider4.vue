@@ -185,7 +185,7 @@ export default {
 
         this.createStateItems(slider);
 
-        this.attachObserve(slider);
+        this.attachObserveItems(slider);
         this.attachObserveSlider(slider);
         this.attachResize(slider);
         this.attachDrag(slider);
@@ -272,7 +272,7 @@ export default {
             this.goTo('next', 'screen');
         },
 
-        attachObserve(slider) {
+        attachObserveItems(slider) {
             const items = [...slider.children];
             const onIntersection = (entries) => {
                 entries.forEach((entryIO) => {
