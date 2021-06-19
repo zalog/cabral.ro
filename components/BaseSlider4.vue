@@ -186,7 +186,7 @@ export default {
         this.createStateItems(slider);
 
         this.attachObserveItems(slider);
-        this.attachObserveSlider(slider);
+        this.attachAutoplay(slider);
         this.attachResize(slider);
         this.attachDrag(slider);
         this.attachScroll(slider);
@@ -298,7 +298,7 @@ export default {
             });
         },
 
-        attachObserveSlider(slider) {
+        attachAutoplay(slider) {
             let interval = this.intervalAutoplay;
 
             const onIntersection = (entries) => {
