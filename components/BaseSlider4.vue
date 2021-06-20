@@ -2,7 +2,11 @@
     <div>
         <h2>css + js</h2>
 
-        <div class="slider" style="width: 100%;">
+        <div
+            ref="slider"
+            class="slider"
+            style="width: 100%;"
+        >
             <div
                 ref="slider-inner"
                 class="slider-inner"
@@ -181,12 +185,13 @@ export default {
     },
 
     mounted() {
+        const sliderWrap = this.$refs.slider;
         const slider = this.$refs['slider-inner'];
 
         this.createStateItems(slider);
 
         this.attachObserveItems(slider);
-        this.attachAutoplay(slider);
+        this.attachAutoplay(sliderWrap, slider);
         this.attachResize(slider);
         this.attachDrag(slider);
         this.attachScroll(slider);
@@ -298,8 +303,13 @@ export default {
             });
         },
 
-        attachAutoplay(slider) {
+        attachAutoplay(sliderWrap, slider) {
             let interval = this.intervalAutoplay;
+            const startInterval = () => {
+                interval = setInterval(() => {
+                    this.goToItemNext();
+                }, 3000);
+            };
 
             const onIntersection = (entries) => {
                 clearInterval(interval);
@@ -308,9 +318,7 @@ export default {
 
                 if (!isIntersecting) return;
 
-                interval = setInterval(() => {
-                    this.goToItemNext();
-                }, 3000);
+                startInterval();
             };
             const observer = new IntersectionObserver(
                 onIntersection,
@@ -321,6 +329,13 @@ export default {
             );
 
             observer.observe(slider);
+
+            sliderWrap.addEventListener('mouseover', () => {
+                clearInterval(interval);
+            });
+            sliderWrap.addEventListener('mouseout', () => {
+                startInterval();
+            });
         },
 
         attachResize(slider) {
