@@ -8,7 +8,7 @@
             style="width: 100%;"
         >
             <div
-                ref="slider-inner"
+                ref="sliderInner"
                 class="slider-inner"
             >
                 <slot v-if="$slots.default" />
@@ -185,21 +185,23 @@ export default {
     },
 
     mounted() {
-        const sliderWrap = this.$refs.slider;
-        const slider = this.$refs['slider-inner'];
+        const {
+            slider,
+            sliderInner,
+        } = this.$refs;
 
-        this.createStateItems(slider);
+        this.createStateItems(sliderInner);
 
-        this.attachObserveItems(slider);
-        this.attachAutoplay(sliderWrap, slider);
-        this.attachResize(slider);
-        this.attachDrag(slider);
-        this.attachScroll(slider);
+        this.attachObserveItems(sliderInner);
+        this.attachAutoplay(slider, sliderInner);
+        this.attachResize(sliderInner);
+        this.attachDrag(sliderInner);
+        this.attachScroll(sliderInner);
     },
 
     methods: {
-        createStateItems(slider) {
-            const items = this.prepareItems(slider);
+        createStateItems(sliderInner) {
+            const items = this.prepareItems(sliderInner);
 
             items.forEach((item, index) => {
                 this.$set(this.internalItems, index, item);
@@ -215,7 +217,7 @@ export default {
 
         goTo(to, entity = 'item', items = this.internalItems) {
             let wantedEntityIndex = to;
-            const slider = this.$refs['slider-inner'];
+            const { sliderInner } = this.$refs;
 
             if (['prev', 'next'].includes(to)) {
                 let direction = null;
@@ -238,7 +240,7 @@ export default {
                     scrollLeft: sliderScrollLeft,
                     scrollWidth: sliderScrollWidth,
                     offsetWidth: sliderWidth,
-                } = slider;
+                } = sliderInner;
 
                 const sliderScrollStart = Math.abs(sliderScrollLeft);
                 const sliderScrollEnd = sliderScrollStart + sliderWidth;
@@ -259,7 +261,7 @@ export default {
             else if (entity === 'screen') wantedItem = Object.values(items).find((item) => item.screen === wantedEntityIndex);
             const { scrollTo } = wantedItem;
 
-            slider.scrollTo({
+            sliderInner.scrollTo({
                 left: scrollTo,
                 behavior: 'smooth',
             });
@@ -277,8 +279,8 @@ export default {
             this.goTo('next', 'screen');
         },
 
-        attachObserveItems(slider) {
-            const items = [...slider.children];
+        attachObserveItems(sliderInner) {
+            const items = [...sliderInner.children];
             const onIntersection = (entries) => {
                 entries.forEach((entryIO) => {
                     const { target: node } = entryIO;
@@ -292,7 +294,7 @@ export default {
             const observer = new IntersectionObserver(
                 onIntersection,
                 {
-                    root: slider,
+                    root: sliderInner,
                     threshold: 0.5,
                     thresholds: [0, 0.25, 0.5, 0.75, 1],
                 },
@@ -303,7 +305,7 @@ export default {
             });
         },
 
-        attachAutoplay(sliderWrap, slider) {
+        attachAutoplay(slider, sliderInner) {
             let interval = this.intervalAutoplay;
             const startInterval = () => {
                 interval = setInterval(() => {
@@ -328,17 +330,17 @@ export default {
                 },
             );
 
-            observer.observe(slider);
+            observer.observe(sliderInner);
 
-            sliderWrap.addEventListener('mouseover', () => {
+            slider.addEventListener('mouseover', () => {
                 clearInterval(interval);
             });
-            sliderWrap.addEventListener('mouseout', () => {
+            slider.addEventListener('mouseout', () => {
                 startInterval();
             });
         },
 
-        attachResize(slider) {
+        attachResize(sliderInner) {
             let isFirstTime = true;
             const resizeObserver = new ResizeObserver((entries) => {
                 if (isFirstTime) {
@@ -356,11 +358,11 @@ export default {
                 });
             });
 
-            resizeObserver.observe(slider);
+            resizeObserver.observe(sliderInner);
         },
 
-        attachDrag(slider) {
-            const theSlider = this.$refs['slider-inner'];
+        attachDrag(sliderInner) {
+            const theSliderInner = this.$refs.sliderInner;
 
             let isMousedown = false;
             let isDragging = false;
@@ -373,7 +375,7 @@ export default {
             this.isDragging = isDragging;
 
             const momentumLoop = () => {
-                theSlider.scrollLeft += velX;
+                theSliderInner.scrollLeft += velX;
                 velX *= 0.95;
 
                 if (Math.abs(velX) < 0.5) return;
@@ -391,7 +393,7 @@ export default {
                 momentumID = window.requestAnimationFrame(momentumLoop);
             };
 
-            slider.addEventListener('mousedown', (event) => {
+            sliderInner.addEventListener('mousedown', (event) => {
                 event.preventDefault();
 
                 isMousedown = true;
@@ -399,23 +401,23 @@ export default {
 
                 this.isDragging = isDragging;
 
-                this.snap({ slider, snap: true });
+                this.snap({ sliderInner, snap: true });
 
-                startX = event.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
+                startX = event.pageX - sliderInner.offsetLeft;
+                scrollLeft = sliderInner.scrollLeft;
                 cancelMomentumTracking();
             });
 
-            slider.addEventListener('mouseleave', () => {
+            sliderInner.addEventListener('mouseleave', () => {
                 isMousedown = false;
             });
 
-            slider.addEventListener('mouseup', () => {
+            sliderInner.addEventListener('mouseup', () => {
                 isMousedown = false;
                 beginMomentumTracking();
             });
 
-            slider.addEventListener('mousemove', (event) => {
+            sliderInner.addEventListener('mousemove', (event) => {
                 if (!isMousedown) return;
 
                 event.preventDefault();
@@ -423,18 +425,18 @@ export default {
                 isDragging = true;
                 this.isDragging = isDragging;
 
-                const x = event.pageX - slider.offsetLeft;
+                const x = event.pageX - sliderInner.offsetLeft;
                 const walk = (x - startX) * 3;
-                const prevScrollLeft = slider.scrollLeft;
-                theSlider.scrollLeft = scrollLeft - walk;
-                velX = slider.scrollLeft - prevScrollLeft;
+                const prevScrollLeft = sliderInner.scrollLeft;
+                theSliderInner.scrollLeft = scrollLeft - walk;
+                velX = sliderInner.scrollLeft - prevScrollLeft;
             });
 
-            slider.addEventListener('wheel', () => {
+            sliderInner.addEventListener('wheel', () => {
                 cancelMomentumTracking();
             });
 
-            const items = [...slider.children];
+            const items = [...sliderInner.children];
             items.forEach((item) => {
                 const links = item.querySelectorAll('a');
                 links.forEach((link) => {
@@ -445,11 +447,11 @@ export default {
             });
         },
 
-        attachScroll(slider) {
+        attachScroll(sliderInner) {
             let rafID;
             let timeoutID;
 
-            slider.addEventListener('scroll', () => {
+            sliderInner.addEventListener('scroll', () => {
                 if (rafID) {
                     window.cancelAnimationFrame(rafID);
                     clearTimeout(timeoutID);
@@ -465,15 +467,15 @@ export default {
             });
         },
 
-        prepareItems(slider) {
-            const { dir } = slider.parentElement;
+        prepareItems(sliderInner) {
+            const { dir } = sliderInner.parentElement;
             const {
                 offsetWidth: sliderWidth,
                 scrollWidth: sliderScrollWidth,
-            } = slider;
-            const items = [...slider.children];
+            } = sliderInner;
+            const items = [...sliderInner.children];
             const screens = this.getRanges(sliderWidth, sliderScrollWidth);
-            const sliderGapPx = parseInt(getComputedStyle(slider).gap, 10);
+            const sliderGapPx = parseInt(getComputedStyle(sliderInner).gap, 10);
 
             let lastItemScreen = null;
 
@@ -563,10 +565,10 @@ export default {
             return output;
         },
 
-        snap({ slider, snap }) {
+        snap({ sliderInner, snap }) {
             const verb = snap ? 'add' : 'remove';
 
-            slider.classList[verb]('slider-remove-snap');
+            sliderInner.classList[verb]('slider-remove-snap');
         },
     },
 };
