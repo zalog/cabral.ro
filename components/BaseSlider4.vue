@@ -480,19 +480,22 @@ export default {
             let lastItemScreen = null;
 
             return items.map((item, index) => {
+                const itemPrev = index && items[index - 1];
+                let itemPrevEnd = itemPrev ? itemPrev.offsetLeft + itemPrev.offsetWidth : 0;
                 const {
                     offsetLeft: itemStart,
                     offsetWidth: itemWidth,
                 } = item;
                 let itemDir = {
-                    itemStart,
+                    itemStart: itemPrevEnd,
                     itemEnd: itemStart + itemWidth,
                 };
                 let scrollTo = itemDir.itemStart;
 
                 if (dir === 'rtl') {
+                    itemPrevEnd = itemPrev ? sliderWidth - itemPrev.offsetLeft : 0;
                     itemDir = {
-                        itemStart: sliderWidth - (itemStart + itemWidth),
+                        itemStart: itemPrevEnd,
                         itemEnd: sliderWidth - itemStart,
                     };
                     scrollTo = -itemDir.itemStart;
