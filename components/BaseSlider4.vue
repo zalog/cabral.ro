@@ -124,6 +124,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        dragging: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data: () => ({
@@ -179,7 +183,6 @@ export default {
             this.$emit('onDragging', newValue);
         },
         isScrolling(newValue) {
-            this.$emit('onDragging', true);
             this.$emit('onScrolling', newValue);
         },
     },
@@ -195,7 +198,7 @@ export default {
         this.attachObserveItems(sliderInner);
         this.attachAutoplay(slider, sliderInner);
         this.attachResize(sliderInner);
-        this.attachDrag(sliderInner);
+        if (this.dragging) this.attachDrag(sliderInner);
         this.attachScroll(sliderInner);
     },
 
