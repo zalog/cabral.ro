@@ -178,15 +178,6 @@ export default {
         },
     },
 
-    watch: {
-        isDragging(newValue) {
-            this.$emit('onDragging', newValue);
-        },
-        isScrolling(newValue) {
-            this.$emit('onScrolling', newValue);
-        },
-    },
-
     mounted() {
         const {
             slider,
@@ -375,7 +366,7 @@ export default {
             let momentumID;
             let velX = 0;
 
-            this.isDragging = isDragging;
+            this.onDragging(isDragging);
 
             const momentumLoop = () => {
                 theSliderInner.scrollLeft += velX;
@@ -387,7 +378,7 @@ export default {
             };
             const cancelMomentumTracking = () => {
                 isDragging = false;
-                this.isDragging = isDragging;
+                this.onDragging(isDragging);
 
                 window.cancelAnimationFrame(momentumID);
             };
@@ -402,7 +393,7 @@ export default {
                 isMousedown = true;
                 isDragging = false;
 
-                this.isDragging = isDragging;
+                this.onDragging(isDragging);
 
                 this.snap({ sliderInner, snap: true });
 
@@ -426,7 +417,7 @@ export default {
                 event.preventDefault();
 
                 isDragging = true;
-                this.isDragging = isDragging;
+                this.onDragging(isDragging);
 
                 const x = event.pageX - sliderInner.offsetLeft;
                 const walk = (x - startX) * 3;
@@ -461,13 +452,23 @@ export default {
                 }
 
                 rafID = window.requestAnimationFrame(() => {
-                    this.isScrolling = true;
+                    this.onScrolling(true);
 
                     timeoutID = setTimeout(() => {
-                        this.isScrolling = false;
+                        this.onScrolling(false);
                     }, 100);
                 });
             });
+        },
+
+        onDragging(isDragging) {
+            this.isDragging = isDragging;
+            this.$emit('onDragging', isDragging);
+        },
+
+        onScrolling(isScrolling) {
+            this.isScrolling = isScrolling;
+            this.$emit('onScrolling', isScrolling);
         },
 
         prepareItems(sliderInner) {
