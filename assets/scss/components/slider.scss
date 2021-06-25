@@ -1,0 +1,51 @@
+@import "../app-component.scss";
+
+.slider {
+    position: relative;
+    margin-bottom: $spacer;
+}
+
+.slider-inner {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    &.row {
+        flex-wrap: nowrap;
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.slider-item {
+    scroll-snap-align: start;
+}
+
+.slider-control-prev,
+.slider-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slider-control-prev {
+    left: 0;
+}
+
+.slider-control-next {
+    right: 0;
+}
+
+.slider-remove-snap {
+    scroll-snap-type: unset;
+}
+
+:dir(rtl) {
+    .slider-control-next,
+    .slider-control-prev {
+        transform: rotate(180deg);
+    }
+}

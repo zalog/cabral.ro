@@ -10,6 +10,7 @@
             <div
                 ref="sliderInner"
                 class="slider-inner"
+                :class="innerClass"
             >
                 <slot v-if="$slots.default" />
             </div>
@@ -127,6 +128,10 @@ export default {
         dragging: {
             type: Boolean,
             default: false,
+        },
+        innerClass: {
+            type: [Boolean, String],
+            default: 'row',
         },
     },
 
@@ -581,7 +586,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "../assets/scss/components/slider.scss";
+
 .debugging {
     margin-top: 20px;
     font-size: 10px;
@@ -593,32 +600,6 @@ export default {
 
     > * + * {
         margin-left: 20px;
-    }
-}
-
-.slider {
-    position: relative;
-    background: #ced4da;
-}
-
-.slider-inner {
-    display: flex;
-    gap: 25px;
-    padding-bottom: 25px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding: 25px;
-    -webkit-overflow-scrolling: touch;
-}
-
-.slider-remove-snap {
-    scroll-snap-type: unset;
-}
-
-:dir(rtl) {
-    .slider-control-next,
-    .slider-control-prev {
-        transform: rotate(180deg);
     }
 }
 </style>

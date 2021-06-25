@@ -1,5 +1,8 @@
-<template>
-    <div class="slider-item">
+<template functional>
+    <div
+        class="slider-item"
+        :class="`${data.staticClass || 'col-auto'}`"
+    >
         <slot v-if="$slots.default" />
     </div>
 </template>
@@ -9,16 +12,3 @@ export default {
     name: 'BaseSlider4Slide',
 };
 </script>
-
-<style lang="scss" scoped>
-.slider-item {
-    flex: 0 0 auto;
-    height: 100%;
-    scroll-snap-align: start;
-    background: #adb5bd;
-
-    a {
-        display: block;
-    }
-}
-</style>
