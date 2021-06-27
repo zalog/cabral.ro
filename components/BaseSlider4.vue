@@ -246,6 +246,7 @@ export default {
                     offsetWidth: sliderWidth,
                 } = sliderInner;
 
+                let sliderChangedDirection = false;
                 const sliderScrollStart = Math.abs(sliderScrollLeft);
                 const sliderScrollEnd = sliderScrollStart + sliderWidth;
                 const scrollStartFinished = sliderScrollStart === 0 && to === 'prev';
@@ -255,8 +256,14 @@ export default {
 
                 if (scrollStartFinished || wantedEntityIndexStartFinished) {
                     wantedEntityIndex = entityLength - 1;
+                    sliderChangedDirection = true;
                 } else if (scrollEndFinished || wantedEntityIndexEndFinished) {
                     wantedEntityIndex = 0;
+                    sliderChangedDirection = true;
+                }
+
+                if (!this.infinite && sliderChangedDirection) {
+                    return false;
                 }
             }
 
@@ -269,18 +276,20 @@ export default {
                 left: scrollTo,
                 behavior: 'smooth',
             });
+
+            return wantedItem.index;
         },
         goToItemPrev() {
-            this.goTo('prev');
+            return this.goTo('prev');
         },
         goToItemNext() {
-            this.goTo('next');
+            return this.goTo('next');
         },
         goToScreenPrev() {
-            this.goTo('prev', 'screen');
+            return this.goTo('prev', 'screen');
         },
         goToScreenNext() {
-            this.goTo('next', 'screen');
+            return this.goTo('next', 'screen');
         },
 
         attachObserveItems(sliderInner) {
