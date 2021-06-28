@@ -127,7 +127,7 @@ export default {
         isDragging: false,
         isScrolling: false,
         internalItems: {},
-        intervalAutoplay: null,
+        intervalIntervalId: null,
     }),
 
     computed: {
@@ -197,7 +197,7 @@ export default {
         this.createStateItems(sliderInner);
 
         this.attachObserveItems(sliderInner);
-        this.attachAutoplay(slider, sliderInner);
+        this.attachInterval(slider, sliderInner);
         this.attachResize(sliderInner);
         if (this.dragging) this.attachDrag(sliderInner);
         this.attachScroll(sliderInner);
@@ -318,8 +318,8 @@ export default {
             });
         },
 
-        attachAutoplay(slider, sliderInner) {
-            let interval = this.intervalAutoplay;
+        attachInterval(slider, sliderInner) {
+            let interval = this.intervalIntervalId;
             const startInterval = () => {
                 interval = setInterval(() => {
                     this.goToItemNext();
