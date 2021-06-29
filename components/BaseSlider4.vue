@@ -128,6 +128,7 @@ export default {
         isScrolling: false,
         internalItems: {},
         intervalIntervalId: null,
+        intervalObserver: null,
     }),
 
     computed: {
@@ -319,23 +320,17 @@ export default {
         },
 
         attachInterval(slider, sliderInner) {
-            let interval = this.intervalIntervalId;
-            const startInterval = () => {
-                interval = setInterval(() => {
-                    this.goToItemNext();
-                }, 3000);
-            };
-
             const onIntersection = (entries) => {
-                clearInterval(interval);
+                this.clearInterval();
 
                 const { isIntersecting } = entries[0];
 
                 if (!isIntersecting) return;
 
-                startInterval();
+                this.startInterval();
             };
-            const observer = new IntersectionObserver(
+
+            this.intervalObserver = new IntersectionObserver(
                 onIntersection,
                 {
                     threshold: 0.5,
@@ -343,14 +338,31 @@ export default {
                 },
             );
 
-            observer.observe(sliderInner);
+            this.intervalObserver.observe(sliderInner);
+            slider.addEventListener('mouseover', this.clearInterval);
+            slider.addEventListener('mouseout', this.startInterval);
+        },
 
-            slider.addEventListener('mouseover', () => {
-                clearInterval(interval);
-            });
-            slider.addEventListener('mouseout', () => {
-                startInterval();
-            });
+        detachInterval(
+            slider = this.$refs.slider,
+            sliderInner = this.$refs.sliderInner,
+        ) {
+            this.clearInterval();
+            this.intervalObserver?.unobserve(sliderInner);
+            slider.removeEventListener('mouseover', this.clearInterval);
+            slider.removeEventListener('mouseout', this.startInterval);
+        },
+
+        startInterval() {
+            this.intervalIntervalId = setInterval(() => {
+                const itemIndex = this.goToItemNext();
+
+                if (itemIndex === false) this.detachInterval();
+            }, 5000);
+        },
+
+        clearInterval() {
+            clearInterval(this.intervalIntervalId);
         },
 
         attachResize(sliderInner) {
