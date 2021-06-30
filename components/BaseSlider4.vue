@@ -220,59 +220,80 @@ export default {
             };
         },
 
-        goTo(to, entity = 'item', items = this.internalItems) {
-            let wantedEntityIndex = to;
+        goToWantedEntityValidator(to, entityIndex, entityLength) {
+            let wantedEntityIndex = entityIndex;
+
             const { sliderInner } = this.$refs;
+            const {
+                scrollLeft: sliderScrollLeft,
+                scrollWidth: sliderScrollWidth,
+                offsetWidth: sliderWidth,
+            } = sliderInner;
 
-            if (['prev', 'next'].includes(to)) {
-                let direction = null;
-                if (to === 'prev') direction = -1;
-                else if (to === 'next') direction = +1;
+            let sliderChangedDirection = false;
+            const sliderScrollStart = Math.abs(sliderScrollLeft);
+            const sliderScrollEnd = sliderScrollStart + sliderWidth;
+            const scrollStartFinished = sliderScrollStart === 0 && to === 'prev';
+            const scrollEndFinished = sliderScrollEnd === sliderScrollWidth && to === 'next';
+            const wantedEntityIndexStartFinished = wantedEntityIndex < 0;
+            const wantedEntityIndexEndFinished = wantedEntityIndex + 1 > entityLength;
 
-                let entityIndex = null;
-                let entityLength = null;
-                if (entity === 'item') {
-                    entityIndex = this.itemInViewFirst.index;
-                    entityLength = this.itemsLength;
-                } else if (entity === 'screen') {
-                    entityIndex = this.screenInViewFirst;
-                    entityLength = this.screensLength;
-                }
+            if (scrollStartFinished || wantedEntityIndexStartFinished) {
+                wantedEntityIndex = entityLength - 1;
+                sliderChangedDirection = true;
+            } else if (scrollEndFinished || wantedEntityIndexEndFinished) {
+                wantedEntityIndex = 0;
+                sliderChangedDirection = true;
+            }
 
-                wantedEntityIndex = entityIndex + direction;
+            if (!this.infinite && sliderChangedDirection) {
+                return false;
+            }
 
-                const {
-                    scrollLeft: sliderScrollLeft,
-                    scrollWidth: sliderScrollWidth,
-                    offsetWidth: sliderWidth,
-                } = sliderInner;
+            return wantedEntityIndex;
+        },
+        goToWantedEntity(to, entity, items) {
+            let wantedEntityIndex = null;
 
-                let sliderChangedDirection = false;
-                const sliderScrollStart = Math.abs(sliderScrollLeft);
-                const sliderScrollEnd = sliderScrollStart + sliderWidth;
-                const scrollStartFinished = sliderScrollStart === 0 && to === 'prev';
-                const scrollEndFinished = sliderScrollEnd === sliderScrollWidth && to === 'next';
-                const wantedEntityIndexStartFinished = wantedEntityIndex < 0;
-                const wantedEntityIndexEndFinished = wantedEntityIndex + 1 > entityLength;
+            let direction = null;
+            if (to === 'prev') direction = -1;
+            else if (to === 'next') direction = +1;
 
-                if (scrollStartFinished || wantedEntityIndexStartFinished) {
-                    wantedEntityIndex = entityLength - 1;
-                    sliderChangedDirection = true;
-                } else if (scrollEndFinished || wantedEntityIndexEndFinished) {
-                    wantedEntityIndex = 0;
-                    sliderChangedDirection = true;
-                }
+            let entityIndex = null;
+            let entityLength = null;
+            if (entity === 'item') {
+                entityIndex = this.itemInViewFirst.index;
+                entityLength = this.itemsLength;
+            } else if (entity === 'screen') {
+                entityIndex = this.screenInViewFirst;
+                entityLength = this.screensLength;
+                const itemFromScreenNotInView = Object.values(items)
+                    .find((item) => item.screen === entityIndex && !item.inView);
 
-                if (!this.infinite && sliderChangedDirection) {
-                    return false;
+                if (to === 'prev' && itemFromScreenNotInView) {
+                    direction = 0;
                 }
             }
+
+            wantedEntityIndex = entityIndex + direction;
+
+            return this.goToWantedEntityValidator(to, wantedEntityIndex, entityLength);
+        },
+        goTo(to, entity = 'item', items = this.internalItems) {
+            let wantedEntityIndex = to;
+
+            if (['prev', 'next'].includes(to)) {
+                wantedEntityIndex = this.goToWantedEntity(to, entity, items);
+            }
+
+            if (!wantedEntityIndex && wantedEntityIndex !== 0) return false;
 
             let wantedItem = null;
             if (entity === 'item') wantedItem = items[wantedEntityIndex];
             else if (entity === 'screen') wantedItem = Object.values(items).find((item) => item.screen === wantedEntityIndex);
             const { scrollTo } = wantedItem;
 
+            const { sliderInner } = this.$refs;
             sliderInner.scrollTo({
                 left: scrollTo,
                 behavior: 'smooth',
