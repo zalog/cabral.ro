@@ -105,6 +105,10 @@ export default {
     name: 'BaseSlider4',
 
     props: {
+        interval: {
+            type: [Boolean, Number],
+            default: false,
+        },
         infinite: {
             type: Boolean,
             default: true,
@@ -198,7 +202,7 @@ export default {
         this.createStateItems(sliderInner);
 
         this.attachObserveItems(sliderInner);
-        this.attachInterval(slider, sliderInner);
+        if (this.interval) this.attachInterval(slider, sliderInner);
         this.attachResize(sliderInner);
         if (this.dragging) this.attachDrag(sliderInner);
         this.attachScroll(sliderInner);
@@ -375,11 +379,13 @@ export default {
         },
 
         startInterval() {
+            const getInterval = typeof this.interval === 'number' ? this.interval : 5000;
+
             this.intervalIntervalId = setInterval(() => {
                 const itemIndex = this.goToItemNext();
 
                 if (itemIndex === false) this.detachInterval();
-            }, 5000);
+            }, getInterval);
         },
 
         clearInterval() {
