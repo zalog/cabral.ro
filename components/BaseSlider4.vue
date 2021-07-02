@@ -405,6 +405,8 @@ export default {
 
                 items.forEach((item, index) => {
                     this.updateStateItem(index, {
+                        width: item.width,
+                        scrollTo: item.scrollTo,
                         screen: item.screen,
                     });
                 });
