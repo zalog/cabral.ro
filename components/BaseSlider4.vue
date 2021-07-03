@@ -539,7 +539,6 @@ export default {
             } = sliderInner;
             const items = [...sliderInner.children];
             const screens = this.getRanges(sliderWidth, sliderScrollWidth);
-            const sliderGapPx = parseInt(getComputedStyle(sliderInner).gap, 10);
 
             let lastItemScreen = null;
 
@@ -566,11 +565,9 @@ export default {
                 }
 
                 const getAproxItemScreen = this.getAproxItemScreen({
-                    itemIndex: index,
                     ...itemDir,
                     lastItemScreen,
                     screens,
-                    sliderGapPx,
                 });
 
                 lastItemScreen = getAproxItemScreen;
@@ -586,18 +583,15 @@ export default {
         },
 
         getAproxItemScreen({
-            itemIndex,
             itemStart, itemEnd,
             lastItemScreen,
             screens,
-            sliderGapPx,
         }) {
-            const gap = sliderGapPx * (itemIndex + 1);
             const itemScreen = screens
                 .findIndex((screen) => {
-                    const itemEndInScreen = itemEnd - gap <= screen.max;
-                    const itemStartInScreen = screen.min <= itemStart - gap;
-                    const itemStartInPrevScreen = itemStart - gap <= screen.min;
+                    const itemEndInScreen = itemEnd <= screen.max;
+                    const itemStartInScreen = screen.min <= itemStart;
+                    const itemStartInPrevScreen = itemStart <= screen.min;
                     const exactMatch = itemStartInScreen && itemEndInScreen;
                     const aproxMatch = itemStartInPrevScreen || itemEndInScreen;
                     return exactMatch || aproxMatch;
