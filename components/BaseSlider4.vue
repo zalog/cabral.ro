@@ -43,7 +43,7 @@
                 </button>
             </template>
 
-            <ul class="list-inline text-center">
+            <ul v-if="false" class="list-inline text-center">
                 <li
                     v-for="(item, index) in internalItems"
                     :key="`items-${index}`"
@@ -60,7 +60,7 @@
                 </li>
             </ul>
 
-            <ul class="list-inline text-center">
+            <ul v-if="false" class="list-inline text-center">
                 <li
                     v-for="(_, index) in screensLength"
                     :key="`screens-${index}`"
