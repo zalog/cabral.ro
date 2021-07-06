@@ -43,6 +43,40 @@
                 </button>
             </template>
 
+            <ul
+                v-if="indicators"
+                class="slider-indicators"
+            >
+                <template v-if="indicators !== 'screen'">
+                    <li
+                        v-for="(item, index) in internalItems"
+                        :key="`items-${index}`"
+                        :class="{ 'active': item.inView }"
+                    >
+                        <a
+                            :href="`#item-${index}`"
+                            @click.prevent="goTo(index)"
+                        >
+                            {{ index }}
+                        </a>
+                    </li>
+                </template>
+                <template v-else>
+                    <li
+                        v-for="(_, index) in screensLength"
+                        :key="`screens-${index}`"
+                        :class="{ 'active': screensInView.has(index) }"
+                    >
+                        <button
+                            type="button"
+                            @click="goTo(index, 'screen')"
+                        >
+                            {{ index }}
+                        </button>
+                    </li>
+                </template>
+            </ul>
+
             <ul v-if="false" class="list-inline text-center">
                 <li
                     v-for="(item, index) in internalItems"
@@ -124,6 +158,10 @@ export default {
         controls: {
             type: [Boolean, String],
             default: true,
+        },
+        indicators: {
+            type: [Boolean, String],
+            default: false,
         },
     },
 

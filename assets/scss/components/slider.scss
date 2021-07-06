@@ -39,6 +39,35 @@
     right: 0;
 }
 
+.slider-indicators {
+    position: absolute;
+    bottom: ($grid-gutter-width / 2);
+    left: 50%;
+    display: flex;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+    transform: translateX(-50%);
+
+    li {
+        opacity: .5;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
+    a,
+    button {
+        display: inline-block;
+        width: 30px;
+        height: 4px;
+        text-indent: -999px;
+        vertical-align: middle;
+        background: $white;
+    }
+}
+
 .slider-remove-snap {
     scroll-snap-type: unset;
 }
