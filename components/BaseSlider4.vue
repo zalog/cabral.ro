@@ -76,8 +76,10 @@
                     </li>
                 </template>
             </ul>
+        </div>
 
-            <ul v-if="false" class="list-inline text-center">
+        <div v-if="false" class="debugging">
+            <ul class="list-inline text-center">
                 <li
                     v-for="(item, index) in internalItems"
                     :key="`items-${index}`"
@@ -94,7 +96,7 @@
                 </li>
             </ul>
 
-            <ul v-if="false" class="list-inline text-center">
+            <ul class="list-inline text-center">
                 <li
                     v-for="(_, index) in screensLength"
                     :key="`screens-${index}`"
@@ -110,17 +112,18 @@
                     </button>
                 </li>
             </ul>
-        </div>
-        <div class="d-flex debugging">
-            <pre class="items">{{ internalItems }}</pre>
-            <div>
-                <pre>{{ { isDragging, isScrolling } }}</pre>
-                <pre v-if="itemInViewFirst">{{
-                    `items ${itemInViewFirst.index + 1}/${itemsLength}`
-                }}</pre>
-                <pre v-if="screenInViewFirst >= 0">{{
-                    `screens ${screenInViewFirst + 1}/${screensLength}`
-                }}</pre>
+
+            <div class="d-flex">
+                <pre class="items">{{ internalItems }}</pre>
+                <div>
+                    <pre>{{ { isDragging, isScrolling } }}</pre>
+                    <pre v-if="itemInViewFirst">{{
+                        `items ${itemInViewFirst.index + 1}/${itemsLength}`
+                    }}</pre>
+                    <pre v-if="screenInViewFirst >= 0">{{
+                        `screens ${screenInViewFirst + 1}/${screensLength}`
+                    }}</pre>
+                </div>
             </div>
         </div>
     </div>
