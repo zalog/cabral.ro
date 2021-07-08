@@ -1,7 +1,7 @@
-<template functional>
+<template>
     <div
         class="slider-item"
-        :class="`${data.staticClass || 'col-auto'}`"
+        :class="colClass"
     >
         <slot v-if="$slots.default" />
     </div>
@@ -10,5 +10,12 @@
 <script>
 export default {
     name: 'BaseSlider4Slide',
+
+    props: {
+        colClass: {
+            type: String,
+            default: 'col-auto',
+        },
+    },
 };
 </script>
