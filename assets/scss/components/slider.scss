@@ -21,7 +21,12 @@
 }
 
 .slider-item {
+    border: 1px solid transparent;
     scroll-snap-align: start;
+
+    &.active {
+        border-color: $primary;
+    }
 }
 
 .slider-control-prev,

@@ -1,7 +1,10 @@
 <template>
     <div
         class="slider-item"
-        :class="colClass"
+        :class="[
+            colClass,
+            { 'active': active }
+        ]"
     >
         <slot v-if="$slots.default" />
     </div>
@@ -15,6 +18,10 @@ export default {
         colClass: {
             type: String,
             default: 'col-auto',
+        },
+        active: {
+            type: Boolean,
+            default: false,
         },
     },
 };
