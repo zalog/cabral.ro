@@ -16,12 +16,14 @@
         />
         <base-slider-4
             v-else-if="Number($route.params.id) === 4"
+            v-model="slider4.active"
             @onDragging="slider4.isDragging = $event"
         >
             <base-slider4-slide
                 v-for="(item, index) in items"
                 :id="`item-${index}`"
                 :key="index"
+                :active="slider4.active === index"
             >
                 <div style="text-align: center;">
                     <a href="https://www.google.com/">{{ index }}</a>
@@ -94,6 +96,7 @@ export default {
         ],
         slider4: {
             isDragging: null,
+            active: 3,
         },
     }),
 };

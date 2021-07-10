@@ -141,7 +141,16 @@ const defaultItem = {
 export default {
     name: 'BaseSlider4',
 
+    model: {
+        prop: 'active',
+        event: 'active:change',
+    },
+
     props: {
+        active: {
+            type: Number,
+            default: 0,
+        },
         interval: {
             type: [Boolean, Number],
             default: false,
@@ -231,6 +240,12 @@ export default {
             }
 
             return output;
+        },
+    },
+
+    watch: {
+        active(index) {
+            this.goTo(index);
         },
     },
 
@@ -343,6 +358,8 @@ export default {
                 left: scrollTo,
                 behavior: 'smooth',
             });
+
+            this.$emit('active:change', wantedItem.index);
 
             return wantedItem.index;
         },
