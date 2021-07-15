@@ -14,32 +14,23 @@
             v-else-if="Number($route.params.id) === 3"
             :items="items"
         />
-        <base-slider-4-inner
+        <base-slider-4
             v-else-if="Number($route.params.id) === 4"
             v-model="slider4.active"
-            @onDragging="slider4.isDragging = $event"
         >
-            <base-slider4-slide
+            <template
                 v-for="(item, index) in items"
-                :id="`item-${index}`"
-                :key="index"
-                :active="slider4.active === index"
+                #[index]
             >
-                <div style="text-align: center;">
-                    <a href="https://www.google.com/">{{ index }}</a>
-                </div>
-                <nuxt-link
-                    :event="!slider4.isDragging ? 'click': ''"
-                    to="https://www.google.com/"
-                >
+                <div :key="index">
                     <img
                         :src="item.src"
                         :width="item.width"
                         :height="item.height"
                     >
-                </nuxt-link>
-            </base-slider4-slide>
-        </base-slider-4-inner>
+                </div>
+            </template>
+        </base-slider-4>
     </div>
 </template>
 
@@ -47,16 +38,14 @@
 import BaseSlider1 from '~/components/BaseSlider1.vue';
 import BaseSlider2 from '~/components/BaseSlider2.vue';
 import BaseSlider3 from '~/components/BaseSlider3.vue';
-import BaseSlider4Inner from '~/components/BaseSlider4Inner.vue';
-import BaseSlider4Slide from '~/components/BaseSlider4Slide.vue';
+import BaseSlider4 from '~/components/BaseSlider4.vue';
 
 export default {
     components: {
         BaseSlider1,
         BaseSlider2,
         BaseSlider3,
-        BaseSlider4Inner,
-        BaseSlider4Slide,
+        BaseSlider4,
     },
 
     layout: 'slider-test',
@@ -95,8 +84,7 @@ export default {
             },
         ],
         slider4: {
-            isDragging: null,
-            active: 3,
+            active: 0,
         },
     }),
 };
