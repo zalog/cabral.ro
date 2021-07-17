@@ -1,14 +1,16 @@
 <template>
-    <base-slider-4-inner
-        v-model="internalActive"
-    >
-        <base-slider-4-slide
-            v-for="(_, index) in $slots"
-            :key="index"
+    <div>
+        <base-slider-4-inner
+            v-model="internalActive"
         >
-            <slot :name="index" />
-        </base-slider-4-slide>
-    </base-slider-4-inner>
+            <base-slider-4-slide
+                v-for="(_, index) in $slots"
+                :key="index"
+            >
+                <slot :name="index" />
+            </base-slider-4-slide>
+        </base-slider-4-inner>
+    </div>
 </template>
 
 <script>
