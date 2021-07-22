@@ -271,6 +271,8 @@ export default {
             items.forEach((item, index) => {
                 this.$set(this.internalItems, index, item);
             });
+
+            this.$emit('updateItems', this.internalItems);
         },
 
         updateStateItem(index, payload) {
@@ -278,6 +280,8 @@ export default {
                 ...this.internalItems[index],
                 ...payload,
             };
+
+            this.$emit('updateItems', this.internalItems);
         },
 
         goToWantedEntityValidator(to, entityIndex, entityLength) {

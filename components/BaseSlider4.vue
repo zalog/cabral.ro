@@ -2,6 +2,7 @@
     <div>
         <base-slider-4-inner
             v-model="internalActive"
+            @updateItems="items = $event"
         >
             <base-slider-4-slide
                 v-for="(_, index) in $slots"
@@ -36,6 +37,10 @@ export default {
             default: 0,
         },
     },
+
+    data: () => ({
+        items: {},
+    }),
 
     computed: {
         internalActive: {
