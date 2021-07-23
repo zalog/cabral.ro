@@ -47,6 +47,13 @@ export default {
             get() { return this.active; },
             set(value) { return this.$emit('active:change', value); },
         },
+        screensLength() {
+            const [lastItem] = Object.values(this.items).slice(-1);
+
+            if (!lastItem) return null;
+
+            return lastItem.screen + 1;
+        },
     },
 };
 </script>

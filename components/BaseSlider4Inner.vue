@@ -209,6 +209,7 @@ export default {
         screenInViewFirst() {
             return this.screensInView.values().next().value;
         },
+        // TODO move screensLength to BaseSlider4
         screensLength() {
             const [lastItem] = Object.values(this.internalItems).slice(-1);
 
