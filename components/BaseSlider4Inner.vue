@@ -2,6 +2,7 @@
     <div>
         <h2>css + js</h2>
 
+        <!-- TODO move `class="slider"` to BaseSlider4 -->
         <div
             ref="slider"
             class="slider"
@@ -42,40 +43,6 @@
                     <span class="visually-hidden">→</span>
                 </button>
             </template>
-
-            <ul
-                v-if="indicators"
-                class="slider-indicators"
-            >
-                <template v-if="indicators !== 'screen'">
-                    <li
-                        v-for="(item, index) in internalItems"
-                        :key="`items-${index}`"
-                        :class="{ 'active': item.inView }"
-                    >
-                        <a
-                            :href="`#item-${index}`"
-                            @click.prevent="goTo(index)"
-                        >
-                            {{ index }}
-                        </a>
-                    </li>
-                </template>
-                <template v-else>
-                    <li
-                        v-for="(_, index) in screensLength"
-                        :key="`screens-${index}`"
-                        :class="{ 'active': screensInView.has(index) }"
-                    >
-                        <button
-                            type="button"
-                            @click="goTo(index, 'screen')"
-                        >
-                            {{ index }}
-                        </button>
-                    </li>
-                </template>
-            </ul>
         </div>
 
         <div v-if="false" class="debugging">
@@ -170,10 +137,6 @@ export default {
         controls: {
             type: [Boolean, String],
             default: true,
-        },
-        indicators: {
-            type: [Boolean, String],
-            default: false,
         },
     },
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="slider">
         <base-slider-4-inner
             v-model="internalActive"
             @updateItems="items = $event"
@@ -11,6 +11,26 @@
                 <slot :name="index" />
             </base-slider-4-slide>
         </base-slider-4-inner>
+
+        <ul
+            v-if="indicators"
+            class="slider-indicators"
+        >
+            <template v-if="indicators">
+                <li
+                    v-for="(item, index) in items"
+                    :key="`items-${index}`"
+                    :class="{ 'active': item.inView }"
+                >
+                    <a
+                        :href="`#item-${index}`"
+                        @click.prevent="goTo(index)"
+                    >
+                        {{ index }}
+                    </a>
+                </li>
+            </template>
+        </ul>
     </div>
 </template>
 
@@ -36,6 +56,10 @@ export default {
             type: Number,
             default: 0,
         },
+        indicators: {
+            type: [Boolean, String],
+            default: false,
+        },
     },
 
     data: () => ({
@@ -53,6 +77,12 @@ export default {
             if (!lastItem) return null;
 
             return lastItem.screen + 1;
+        },
+    },
+
+    methods: {
+        goTo(index) {
+            this.internalActive = Number(index);
         },
     },
 };
