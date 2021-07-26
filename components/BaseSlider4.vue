@@ -13,6 +13,34 @@
             </base-slider-4-slide>
         </base-slider-4-inner>
 
+        <template v-if="controls">
+            <button
+                type="button"
+                class="btn btn-primary slider-control-prev"
+                :disabled="controls !== 'screen' ? !hasBtn.itemPrev : !hasBtn.screenPrev"
+                @click="controls !== 'screen' ? goToItemPrev() : goToScreenPrev()"
+            >
+                <span
+                    class="slider-control-prev-icon"
+                    aria-hidden="true"
+                />
+                <span class="visually-hidden">←</span>
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-primary slider-control-next"
+                :disabled="controls !== 'screen' ? !hasBtn.itemNext : !hasBtn.screenNext"
+                @click="controls !== 'screen' ? goToItemNext() : goToScreenNext()"
+            >
+                <span
+                    class="slider-control-next-icon"
+                    aria-hidden="true"
+                />
+                <span class="visually-hidden">→</span>
+            </button>
+        </template>
+
         <ul
             v-if="indicators"
             class="slider-indicators"
@@ -71,6 +99,14 @@ export default {
             type: Number,
             default: 0,
         },
+        controls: {
+            type: [Boolean, String],
+            default: true,
+        },
+        infinite: {
+            type: Boolean,
+            default: true,
+        },
         indicators: {
             type: [Boolean, String],
             default: false,
@@ -86,11 +122,20 @@ export default {
             get() { return this.active; },
             set(value) { return this.$emit('active:change', value); },
         },
+        itemsLength() {
+            return Object.keys(this.items).length;
+        },
         itemsInView() {
             const items = Object.values(this.items)
                 .filter((item) => item.inView);
 
             return items || [];
+        },
+        itemInViewFirst() {
+            return this.itemsInView[0];
+        },
+        itemInViewLast() {
+            return this.itemsInView[this.itemsInView.length - 1];
         },
         screensInView() {
             const screens = new Set();
@@ -100,12 +145,37 @@ export default {
 
             return screens;
         },
+        screenInViewFirst() {
+            return this.screensInView.values().next().value;
+        },
         screensLength() {
             const [lastItem] = Object.values(this.items).slice(-1);
 
             if (!lastItem) return null;
 
             return lastItem.screen + 1;
+        },
+        hasBtn() {
+            const output = {
+                itemPrev: null,
+                itemNext: null,
+                screenPrev: null,
+                screenNext: null,
+            };
+
+            if (this.infinite) {
+                output.itemPrev = true;
+                output.itemNext = true;
+                output.screenPrev = true;
+                output.screenNext = true;
+            } else {
+                output.itemPrev = this.itemInViewFirst?.index !== 0;
+                output.itemNext = this.itemInViewLast?.index + 1 !== this.itemsLength;
+                output.screenPrev = this.screenInViewFirst === 0;
+                output.screenNext = this.screenInViewFirst + 1 === this.screensLength;
+            }
+
+            return output;
         },
     },
 

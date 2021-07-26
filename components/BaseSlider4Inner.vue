@@ -15,34 +15,6 @@
             >
                 <slot v-if="$slots.default" />
             </div>
-
-            <template v-if="controls">
-                <button
-                    type="button"
-                    class="btn btn-primary slider-control-prev"
-                    :disabled="controls !== 'screen' ? !hasBtn.itemPrev : !hasBtn.screenPrev"
-                    @click="controls !== 'screen' ? goToItemPrev() : goToScreenPrev()"
-                >
-                    <span
-                        class="slider-control-prev-icon"
-                        aria-hidden="true"
-                    />
-                    <span class="visually-hidden">←</span>
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-primary slider-control-next"
-                    :disabled="controls !== 'screen' ? !hasBtn.itemNext : !hasBtn.screenNext"
-                    @click="controls !== 'screen' ? goToItemNext() : goToScreenNext()"
-                >
-                    <span
-                        class="slider-control-next-icon"
-                        aria-hidden="true"
-                    />
-                    <span class="visually-hidden">→</span>
-                </button>
-            </template>
         </div>
 
         <div v-if="false" class="debugging">
@@ -122,10 +94,6 @@ export default {
             type: [Boolean, Number],
             default: false,
         },
-        infinite: {
-            type: Boolean,
-            default: true,
-        },
         dragging: {
             type: Boolean,
             default: false,
@@ -133,10 +101,6 @@ export default {
         innerClass: {
             type: [Boolean, String],
             default: 'row',
-        },
-        controls: {
-            type: [Boolean, String],
-            default: true,
         },
     },
 
@@ -149,18 +113,6 @@ export default {
     }),
 
     computed: {
-        itemsInView() {
-            const items = Object.values(this.internalItems)
-                .filter((item) => item.inView);
-
-            return items || [];
-        },
-        itemInViewFirst() {
-            return this.itemsInView[0];
-        },
-        itemInViewLast() {
-            return this.itemsInView[this.itemsInView.length - 1];
-        },
         screensInView() {
             const screens = new Set();
             this.itemsInView.forEach((item) => {
@@ -168,9 +120,6 @@ export default {
             });
 
             return screens;
-        },
-        screenInViewFirst() {
-            return this.screensInView.values().next().value;
         },
         // TODO move screensLength to BaseSlider4
         screensLength() {
@@ -182,28 +131,6 @@ export default {
         },
         itemsLength() {
             return Object.keys(this.internalItems).length;
-        },
-        hasBtn() {
-            const output = {
-                itemPrev: null,
-                itemNext: null,
-                screenPrev: null,
-                screenNext: null,
-            };
-
-            if (this.infinite) {
-                output.itemPrev = true;
-                output.itemNext = true;
-                output.screenPrev = true;
-                output.screenNext = true;
-            } else {
-                output.itemPrev = this.itemInViewFirst?.index !== 0;
-                output.itemNext = this.itemInViewLast?.index + 1 !== this.itemsLength;
-                output.screenPrev = this.screenInViewFirst === 0;
-                output.screenNext = this.screenInViewFirst + 1 === this.screensLength;
-            }
-
-            return output;
         },
     },
 
