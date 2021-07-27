@@ -74,6 +74,54 @@
                 </li>
             </template>
         </ul>
+
+        <div v-if="false" class="debugging">
+            <ul class="list-inline text-center">
+                <li
+                    v-for="(item, index) in items"
+                    :key="`items-${index}`"
+                    class="list-inline-item"
+                >
+                    <a
+                        :href="`#item-${index}`"
+                        class="btn btn-primary"
+                        :style="[ item.inView && { background: 'red' }]"
+                        @click.prevent="goTo(index)"
+                    >
+                        {{ `${index} - ${item.screen}` }}
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="list-inline text-center">
+                <li
+                    v-for="(_, index) in screensLength"
+                    :key="`screens-${index}`"
+                    class="list-inline-item"
+                >
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        :style="[ screensInView.has(index) && { background: 'red' }]"
+                        @click="goTo(index, 'screen')"
+                    >
+                        {{ index }}
+                    </button>
+                </li>
+            </ul>
+
+            <div class="d-flex">
+                <pre class="items">{{ items }}</pre>
+                <div>
+                    <pre v-if="itemInViewFirst">{{
+                        `items ${itemInViewFirst.index + 1}/${itemsLength}`
+                    }}</pre>
+                    <pre v-if="screenInViewFirst >= 0">{{
+                        `screens ${screenInViewFirst + 1}/${screensLength}`
+                    }}</pre>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -280,3 +328,19 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.debugging {
+    margin-top: 20px;
+    font-size: 10px;
+
+    pre.items {
+        height: 300px;
+        overflow-y: scroll;
+    }
+
+    > * + * {
+        margin-left: 20px;
+    }
+}
+</style>
