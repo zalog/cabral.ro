@@ -2,10 +2,8 @@
     <div>
         <h2>css + js</h2>
 
-        <!-- TODO move `class="slider"` to BaseSlider4 -->
         <div
             ref="slider"
-            class="slider"
             style="width: 100%;"
         >
             <div
