@@ -1,18 +1,11 @@
 <template>
-    <div>
-        <h2>css + js</h2>
-
+    <div ref="slider">
         <div
-            ref="slider"
-            style="width: 100%;"
+            ref="sliderInner"
+            class="slider-inner"
+            :class="innerClass"
         >
-            <div
-                ref="sliderInner"
-                class="slider-inner"
-                :class="innerClass"
-            >
-                <slot v-if="$slots.default" />
-            </div>
+            <slot v-if="$slots.default" />
         </div>
     </div>
 </template>
