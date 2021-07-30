@@ -55,14 +55,6 @@ export default {
     }),
 
     computed: {
-        screensInView() {
-            const screens = new Set();
-            this.itemsInView.forEach((item) => {
-                screens.add(item.screen);
-            });
-
-            return screens;
-        },
         // TODO move screensLength to BaseSlider4
         screensLength() {
             const [lastItem] = Object.values(this.internalItems).slice(-1);
