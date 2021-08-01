@@ -32,10 +32,6 @@ export default {
             type: Number,
             default: 0,
         },
-        interval: {
-            type: [Boolean, Number],
-            default: false,
-        },
         dragging: {
             type: Boolean,
             default: false,
@@ -50,8 +46,6 @@ export default {
         isDragging: false,
         isScrolling: false,
         internalItems: {},
-        intervalIntervalId: null,
-        intervalObserver: null,
     }),
 
     computed: {
@@ -75,15 +69,11 @@ export default {
     },
 
     mounted() {
-        const {
-            slider,
-            sliderInner,
-        } = this.$refs;
+        const { sliderInner } = this.$refs;
 
         this.createStateItems(sliderInner);
 
         this.attachObserveItems(sliderInner);
-        if (this.interval) this.attachInterval(slider, sliderInner);
         this.attachResize(sliderInner);
         if (this.dragging) this.attachDrag(sliderInner);
         this.attachScroll(sliderInner);
@@ -229,54 +219,6 @@ export default {
             items.forEach((item) => {
                 observer.observe(item);
             });
-        },
-
-        attachInterval(slider, sliderInner) {
-            const onIntersection = (entries) => {
-                this.clearInterval();
-
-                const { isIntersecting } = entries[0];
-
-                if (!isIntersecting) return;
-
-                this.startInterval();
-            };
-
-            this.intervalObserver = new IntersectionObserver(
-                onIntersection,
-                {
-                    threshold: 0.5,
-                    thresholds: [0, 0.5, 1],
-                },
-            );
-
-            this.intervalObserver.observe(sliderInner);
-            slider.addEventListener('mouseover', this.clearInterval);
-            slider.addEventListener('mouseout', this.startInterval);
-        },
-
-        detachInterval(
-            slider = this.$refs.slider,
-            sliderInner = this.$refs.sliderInner,
-        ) {
-            this.clearInterval();
-            this.intervalObserver?.unobserve(sliderInner);
-            slider.removeEventListener('mouseover', this.clearInterval);
-            slider.removeEventListener('mouseout', this.startInterval);
-        },
-
-        startInterval() {
-            const getInterval = typeof this.interval === 'number' ? this.interval : 5000;
-
-            this.intervalIntervalId = setInterval(() => {
-                const itemIndex = this.goToItemNext();
-
-                if (itemIndex === false) this.detachInterval();
-            }, getInterval);
-        },
-
-        clearInterval() {
-            clearInterval(this.intervalIntervalId);
         },
 
         attachResize(sliderInner) {

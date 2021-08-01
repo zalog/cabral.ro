@@ -1,5 +1,8 @@
 <template>
-    <div class="slider">
+    <div
+        ref="slider"
+        class="slider"
+    >
         <base-slider-4-inner
             ref="sliderInnerRef"
             v-model="internalActive"
@@ -159,10 +162,16 @@ export default {
             type: [Boolean, String],
             default: false,
         },
+        interval: {
+            type: [Boolean, Number],
+            default: false,
+        },
     },
 
     data: () => ({
         items: {},
+        intervalIntervalId: null,
+        intervalObserver: null,
     }),
 
     computed: {
@@ -225,6 +234,15 @@ export default {
 
             return output;
         },
+    },
+
+    mounted() {
+        const {
+            slider,
+            sliderInnerRef,
+        } = this.$refs;
+
+        if (this.interval) this.attachInterval(slider, sliderInnerRef.$el);
     },
 
     methods: {
@@ -324,6 +342,51 @@ export default {
         },
         goToScreenNext() {
             return this.goTo('next', 'screen');
+        },
+
+        attachInterval(slider, sliderInner) {
+            const onIntersection = (entries) => {
+                this.clearInterval();
+
+                const { isIntersecting } = entries[0];
+
+                if (!isIntersecting) return;
+
+                this.startInterval();
+            };
+
+            this.intervalObserver = new IntersectionObserver(
+                onIntersection,
+                {
+                    threshold: 0.5,
+                    thresholds: [0, 0.5, 1],
+                },
+            );
+
+            this.intervalObserver.observe(sliderInner);
+            slider.addEventListener('mouseover', this.clearInterval);
+            slider.addEventListener('mouseout', this.startInterval);
+        },
+        detachInterval(
+            slider = this.$refs.slider,
+            sliderInner = this.$refs.sliderInnerRef.$el,
+        ) {
+            this.clearInterval();
+            this.intervalObserver?.unobserve(sliderInner);
+            slider.removeEventListener('mouseover', this.clearInterval);
+            slider.removeEventListener('mouseout', this.startInterval);
+        },
+        startInterval() {
+            const getInterval = typeof this.interval === 'number' ? this.interval : 5000;
+
+            this.intervalIntervalId = setInterval(() => {
+                const itemIndex = this.goToItemNext();
+
+                if (itemIndex === false) this.detachInterval();
+            }, getInterval);
+        },
+        clearInterval() {
+            clearInterval(this.intervalIntervalId);
         },
     },
 };
