@@ -1,12 +1,10 @@
 <template>
-    <div ref="slider">
-        <div
-            ref="sliderInner"
-            class="slider-inner"
-            :class="innerClass"
-        >
-            <slot v-if="$slots.default" />
-        </div>
+    <div
+        ref="sliderInner"
+        class="slider-inner"
+        :class="innerClass"
+    >
+        <slot v-if="$slots.default" />
     </div>
 </template>
 

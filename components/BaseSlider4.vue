@@ -250,12 +250,11 @@ export default {
             let wantedEntityIndex = entityIndex;
 
             const { sliderInnerRef } = this.$refs;
-            const sliderInner = sliderInnerRef.$el.querySelector('.slider-inner');
             const {
                 scrollLeft: sliderScrollLeft,
                 scrollWidth: sliderScrollWidth,
                 offsetWidth: sliderWidth,
-            } = sliderInner;
+            } = sliderInnerRef;
 
             let sliderChangedDirection = false;
             const sliderScrollStart = Math.abs(sliderScrollLeft);
@@ -321,7 +320,7 @@ export default {
             const { scrollTo } = wantedItem;
 
             const { sliderInnerRef } = this.$refs;
-            const sliderInner = sliderInnerRef.$el.querySelector('.slider-inner');
+            const sliderInner = sliderInnerRef.$el;
             sliderInner.scrollTo({
                 left: scrollTo,
                 behavior: 'smooth',
