@@ -46,26 +46,6 @@ export default {
         internalItems: {},
     }),
 
-    computed: {
-        // TODO move screensLength to BaseSlider4
-        screensLength() {
-            const [lastItem] = Object.values(this.internalItems).slice(-1);
-
-            if (!lastItem) return null;
-
-            return lastItem.screen + 1;
-        },
-        itemsLength() {
-            return Object.keys(this.internalItems).length;
-        },
-    },
-
-    watch: {
-        active(index) {
-            this.goTo(index);
-        },
-    },
-
     mounted() {
         const { sliderInner } = this.$refs;
 
@@ -95,102 +75,6 @@ export default {
             };
 
             this.$emit('updateItems', this.internalItems);
-        },
-
-        goToWantedEntityValidator(to, entityIndex, entityLength) {
-            let wantedEntityIndex = entityIndex;
-
-            const { sliderInner } = this.$refs;
-            const {
-                scrollLeft: sliderScrollLeft,
-                scrollWidth: sliderScrollWidth,
-                offsetWidth: sliderWidth,
-            } = sliderInner;
-
-            let sliderChangedDirection = false;
-            const sliderScrollStart = Math.abs(sliderScrollLeft);
-            const sliderScrollEnd = sliderScrollStart + sliderWidth;
-            const scrollStartFinished = sliderScrollStart === 0 && to === 'prev';
-            const scrollEndFinished = sliderScrollEnd === sliderScrollWidth && to === 'next';
-            const wantedEntityIndexStartFinished = wantedEntityIndex < 0;
-            const wantedEntityIndexEndFinished = wantedEntityIndex + 1 > entityLength;
-
-            if (scrollStartFinished || wantedEntityIndexStartFinished) {
-                wantedEntityIndex = entityLength - 1;
-                sliderChangedDirection = true;
-            } else if (scrollEndFinished || wantedEntityIndexEndFinished) {
-                wantedEntityIndex = 0;
-                sliderChangedDirection = true;
-            }
-
-            if (!this.infinite && sliderChangedDirection) {
-                return false;
-            }
-
-            return wantedEntityIndex;
-        },
-        goToWantedEntity(to, entity, items) {
-            let wantedEntityIndex = null;
-
-            let direction = null;
-            if (to === 'prev') direction = -1;
-            else if (to === 'next') direction = +1;
-
-            let entityIndex = null;
-            let entityLength = null;
-            if (entity === 'item') {
-                entityIndex = this.itemInViewFirst.index;
-                entityLength = this.itemsLength;
-            } else if (entity === 'screen') {
-                entityIndex = this.screenInViewFirst;
-                entityLength = this.screensLength;
-                const itemFromScreenNotInView = Object.values(items)
-                    .find((item) => item.screen === entityIndex && !item.inView);
-
-                if (to === 'prev' && itemFromScreenNotInView) {
-                    direction = 0;
-                }
-            }
-
-            wantedEntityIndex = entityIndex + direction;
-
-            return this.goToWantedEntityValidator(to, wantedEntityIndex, entityLength);
-        },
-        goTo(to, entity = 'item', items = this.internalItems) {
-            let wantedEntityIndex = to;
-
-            if (['prev', 'next'].includes(to)) {
-                wantedEntityIndex = this.goToWantedEntity(to, entity, items);
-            }
-
-            if (!wantedEntityIndex && wantedEntityIndex !== 0) return false;
-
-            let wantedItem = null;
-            if (entity === 'item') wantedItem = items[wantedEntityIndex];
-            else if (entity === 'screen') wantedItem = Object.values(items).find((item) => item.screen === wantedEntityIndex);
-            const { scrollTo } = wantedItem;
-
-            const { sliderInner } = this.$refs;
-            sliderInner.scrollTo({
-                left: scrollTo,
-                behavior: 'smooth',
-            });
-
-            this.$emit('active:change', wantedItem.index);
-
-            return wantedItem.index;
-        },
-        goToItemPrev() {
-            return this.goTo('prev');
-        },
-        goToItemNext() {
-            return this.goTo('next');
-        },
-        goToScreenPrev() {
-            return this.goTo('prev', 'screen');
-        },
-        goToScreenNext() {
-            return this.goTo('next', 'screen');
         },
 
         attachObserveItems(sliderInner) {
