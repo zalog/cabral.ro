@@ -392,6 +392,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/scss/components/slider.scss";
+
 .debugging {
     margin-top: 20px;
     font-size: 10px;
