@@ -4,7 +4,7 @@
         class="slider"
     >
         <base-slider-4-inner
-            ref="sliderInnerRef"
+            ref="sliderInner"
             v-model="internalActive"
             @updateItems="items = $event"
         >
@@ -239,22 +239,22 @@ export default {
     mounted() {
         const {
             slider,
-            sliderInnerRef,
+            sliderInner,
         } = this.$refs;
 
-        if (this.interval) this.attachInterval(slider, sliderInnerRef.$el);
+        if (this.interval) this.attachInterval(slider, sliderInner.$el);
     },
 
     methods: {
         goToWantedEntityValidator(to, entityIndex, entityLength) {
             let wantedEntityIndex = entityIndex;
 
-            const { sliderInnerRef } = this.$refs;
+            const { sliderInner } = this.$refs;
             const {
                 scrollLeft: sliderScrollLeft,
                 scrollWidth: sliderScrollWidth,
                 offsetWidth: sliderWidth,
-            } = sliderInnerRef;
+            } = sliderInner;
 
             let sliderChangedDirection = false;
             const sliderScrollStart = Math.abs(sliderScrollLeft);
@@ -319,9 +319,8 @@ export default {
             else if (entity === 'screen') wantedItem = Object.values(items).find((item) => item.screen === wantedEntityIndex);
             const { scrollTo } = wantedItem;
 
-            const { sliderInnerRef } = this.$refs;
-            const sliderInner = sliderInnerRef.$el;
-            sliderInner.scrollTo({
+            const { sliderInner } = this.$refs;
+            sliderInner.$el.scrollTo({
                 left: scrollTo,
                 behavior: 'smooth',
             });
@@ -368,7 +367,7 @@ export default {
         },
         detachInterval(
             slider = this.$refs.slider,
-            sliderInner = this.$refs.sliderInnerRef.$el,
+            sliderInner = this.$refs.sliderInner.$el,
         ) {
             this.clearInterval();
             this.intervalObserver?.unobserve(sliderInner);
