@@ -228,8 +228,8 @@ export default {
             } else {
                 output.itemPrev = this.itemInViewFirst?.index !== 0;
                 output.itemNext = this.itemInViewLast?.index + 1 !== this.itemsLength;
-                output.screenPrev = this.screenInViewFirst === 0;
-                output.screenNext = this.screenInViewFirst + 1 === this.screensLength;
+                output.screenPrev = this.screenInViewFirst !== 0;
+                output.screenNext = this.screenInViewFirst + 1 !== this.screensLength;
             }
 
             return output;
