@@ -67,9 +67,14 @@
         display: inline-block;
         width: 30px;
         height: 4px;
+        overflow: hidden;
         text-indent: -999px;
         vertical-align: middle;
         background: $white;
+    }
+
+    button {
+        border: 0;
     }
 }
 
