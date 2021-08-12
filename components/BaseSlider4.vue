@@ -242,6 +242,7 @@ export default {
             sliderInner,
         } = this.$refs;
 
+        this.goTo(this.active, 'item', this.items, 'auto');
         if (this.interval) this.attachInterval(slider, sliderInner.$el);
     },
 
@@ -305,7 +306,7 @@ export default {
 
             return this.goToWantedEntityValidator(to, wantedEntityIndex, entityLength);
         },
-        goTo(to, entity = 'item', items = this.items) {
+        goTo(to, entity = 'item', items = this.items, behavior = 'smooth') {
             let wantedEntityIndex = to;
 
             if (['prev', 'next'].includes(to)) {
@@ -322,7 +323,7 @@ export default {
             const { sliderInner } = this.$refs;
             sliderInner.$el.scrollTo({
                 left: scrollTo,
-                behavior: 'smooth',
+                behavior,
             });
 
             this.$emit('active:change', wantedItem.index);
