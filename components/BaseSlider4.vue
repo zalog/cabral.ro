@@ -250,7 +250,8 @@ export default {
         goToWantedEntityValidator(to, entityIndex, entityLength) {
             let wantedEntityIndex = entityIndex;
 
-            const { sliderInner } = this.$refs;
+            const { sliderInner: sliderInnerVue } = this.$refs;
+            const sliderInner = sliderInnerVue.$el;
             const {
                 scrollLeft: sliderScrollLeft,
                 scrollWidth: sliderScrollWidth,
