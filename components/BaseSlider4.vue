@@ -239,19 +239,18 @@ export default {
     mounted() {
         const {
             slider,
-            sliderInner,
+            sliderInner: { $el: sliderInner },
         } = this.$refs;
 
         this.goTo(this.active, 'item', this.items, 'auto');
-        if (this.interval) this.attachInterval(slider, sliderInner.$el);
+        if (this.interval) this.attachInterval(slider, sliderInner);
     },
 
     methods: {
         goToWantedEntityValidator(to, entityIndex, entityLength) {
             let wantedEntityIndex = entityIndex;
 
-            const { sliderInner: sliderInnerVue } = this.$refs;
-            const sliderInner = sliderInnerVue.$el;
+            const { sliderInner: { $el: sliderInner } } = this.$refs;
             const {
                 scrollLeft: sliderScrollLeft,
                 scrollWidth: sliderScrollWidth,
@@ -321,8 +320,8 @@ export default {
             else if (entity === 'screen') wantedItem = Object.values(items).find((item) => item.screen === wantedEntityIndex);
             const { scrollTo } = wantedItem;
 
-            const { sliderInner } = this.$refs;
-            sliderInner.$el.scrollTo({
+            const { sliderInner: { $el: sliderInner } } = this.$refs;
+            sliderInner.scrollTo({
                 left: scrollTo,
                 behavior,
             });
