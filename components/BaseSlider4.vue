@@ -321,6 +321,9 @@ export default {
             const { scrollTo } = wantedItem;
 
             const { sliderInner: { $el: sliderInner } } = this.$refs;
+
+            if (scrollTo === sliderInner.scrollLeft) return false;
+
             sliderInner.scrollTo({
                 left: scrollTo,
                 behavior,
