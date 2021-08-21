@@ -16,7 +16,7 @@
             </base-slider-4-slide>
         </base-slider-4-inner>
 
-        <template v-if="controls">
+        <template v-if="hasControls">
             <button
                 type="button"
                 class="btn btn-primary slider-control-prev"
@@ -233,6 +233,11 @@ export default {
             }
 
             return output;
+        },
+        hasControls() {
+            const itemsNotInView = this.itemsInView.length > 0
+                && this.itemsInView.length < this.itemsLength;
+            return this.controls && itemsNotInView;
         },
     },
 
