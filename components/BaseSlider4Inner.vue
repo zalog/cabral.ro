@@ -43,7 +43,7 @@ export default {
     data: () => ({
         isDragging: false,
         isScrolling: false,
-        internalItems: {},
+        items: {},
     }),
 
     mounted() {
@@ -62,19 +62,19 @@ export default {
             const items = this.prepareItems(sliderInner);
 
             items.forEach((item, index) => {
-                this.$set(this.internalItems, index, item);
+                this.$set(this.items, index, item);
             });
 
-            this.$emit('updateItems', this.internalItems);
+            this.$emit('updateItems', this.items);
         },
 
         updateStateItem(index, payload) {
-            this.internalItems[index] = {
-                ...this.internalItems[index],
+            this.items[index] = {
+                ...this.items[index],
                 ...payload,
             };
 
-            this.$emit('updateItems', this.internalItems);
+            this.$emit('updateItems', this.items);
         },
 
         attachObserveItems(sliderInner) {
