@@ -14,7 +14,7 @@
             v-else-if="Number($route.params.id) === 3"
             :items="items"
         />
-        <base-slider-4
+        <base-slider
             v-else-if="Number($route.params.id) === 4"
             v-model="slider4.active"
         >
@@ -30,7 +30,7 @@
                     >
                 </div>
             </template>
-        </base-slider-4>
+        </base-slider>
     </div>
 </template>
 
@@ -38,14 +38,14 @@
 import BaseSlider1 from '~/components/BaseSlider1.vue';
 import BaseSlider2 from '~/components/BaseSlider2.vue';
 import BaseSlider3 from '~/components/BaseSlider3.vue';
-import BaseSlider4 from '~/components/BaseSlider4.vue';
+import BaseSlider from '~/components/BaseSlider.vue';
 
 export default {
     components: {
         BaseSlider1,
         BaseSlider2,
         BaseSlider3,
-        BaseSlider4,
+        BaseSlider,
     },
 
     layout: 'slider-test',

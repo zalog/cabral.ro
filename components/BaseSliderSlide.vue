@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: 'BaseSlider4Slide',
+    name: 'BaseSliderSlide',
 
     props: {
         colClass: {

@@ -3,18 +3,18 @@
         ref="slider"
         class="slider"
     >
-        <base-slider-4-inner
+        <base-slider-inner
             ref="sliderInner"
             v-model="internalActive"
             @updateItems="items = $event"
         >
-            <base-slider-4-slide
+            <base-slider-slide
                 v-for="(_, index) in $slots"
                 :key="index"
             >
                 <slot :name="index" />
-            </base-slider-4-slide>
-        </base-slider-4-inner>
+            </base-slider-slide>
+        </base-slider-inner>
 
         <template v-if="hasControls">
             <button
@@ -129,15 +129,15 @@
 </template>
 
 <script>
-import BaseSlider4Inner from '~/components/BaseSlider4Inner.vue';
-import BaseSlider4Slide from '~/components/BaseSlider4Slide.vue';
+import BaseSliderInner from '~/components/BaseSliderInner.vue';
+import BaseSliderSlide from '~/components/BaseSliderSlide.vue';
 
 export default {
-    name: 'BaseSlider4',
+    name: 'BaseSlider',
 
     components: {
-        BaseSlider4Inner,
-        BaseSlider4Slide,
+        BaseSliderInner,
+        BaseSliderSlide,
     },
 
     model: {

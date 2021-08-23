@@ -18,7 +18,7 @@ const defaultItem = {
 };
 
 export default {
-    name: 'BaseSlider4Inner',
+    name: 'BaseSliderInner',
 
     model: {
         prop: 'active',
