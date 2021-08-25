@@ -2,12 +2,8 @@
     <div class="container-fluid">
         <h1>Slider test {{ $route.params.id }}</h1>
 
-        <base-slider-2
-            v-if="Number($route.params.id) === 2"
-            :items="items"
-        />
         <base-slider-3
-            v-else-if="Number($route.params.id) === 3"
+            v-if="Number($route.params.id) === 3"
             :items="items"
         />
         <base-slider
@@ -31,13 +27,11 @@
 </template>
 
 <script>
-import BaseSlider2 from '~/components/BaseSlider2.vue';
 import BaseSlider3 from '~/components/BaseSlider3.vue';
 import BaseSlider from '~/components/BaseSlider.vue';
 
 export default {
     components: {
-        BaseSlider2,
         BaseSlider3,
         BaseSlider,
     },
