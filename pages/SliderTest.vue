@@ -1,15 +1,8 @@
 <template>
     <div class="container-fluid">
-        <h1>Slider test {{ $route.params.id }}</h1>
+        <h1>Slider test page</h1>
 
-        <base-slider-3
-            v-if="Number($route.params.id) === 3"
-            :items="items"
-        />
-        <base-slider
-            v-else-if="Number($route.params.id) === 4"
-            v-model="slider4.active"
-        >
+        <base-slider v-model="slider.active">
             <template
                 v-for="(item, index) in items"
                 #[index]
@@ -27,12 +20,10 @@
 </template>
 
 <script>
-import BaseSlider3 from '~/components/BaseSlider3.vue';
 import BaseSlider from '~/components/BaseSlider.vue';
 
 export default {
     components: {
-        BaseSlider3,
         BaseSlider,
     },
 
@@ -71,7 +62,7 @@ export default {
                 height: '256',
             },
         ],
-        slider4: {
+        slider: {
             active: 0,
         },
     }),

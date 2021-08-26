@@ -32,7 +32,7 @@ const createRouter = () => new Router({
         // tests
         {
             name: 'SliderTest',
-            path: '/slider-test/:id',
+            path: '/slider-test/',
             component: PageSliderTest,
         },
 
