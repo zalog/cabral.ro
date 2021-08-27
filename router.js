@@ -6,6 +6,7 @@ Vue.use(Router);
 const PageHome = () => import(/* webpackChunkName: "page-home" */ '@/pages/Home.vue').then((m) => m.default || m);
 const PageCategory = () => import(/* webpackChunkName: "page-category" */ '@/pages/Category.vue').then((m) => m.default || m);
 const PageSingle = () => import(/* webpackChunkName: "page-single" */ '@/pages/Single.vue').then((m) => m.default || m);
+const PageSliderTest = () => import(/* webpackChunkName: "page-slider-test" */ '@/pages/SliderTest.vue').then((m) => m.default || m);
 
 const createRouter = () => new Router({
     mode: 'history',
@@ -26,6 +27,13 @@ const createRouter = () => new Router({
             path: '/page/:id/',
             pathToRegexpOptions: { strict: true },
             component: PageHome,
+        },
+
+        // tests
+        {
+            name: 'SliderTest',
+            path: '/slider-test/',
+            component: PageSliderTest,
         },
 
         // single
