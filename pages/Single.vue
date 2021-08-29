@@ -254,6 +254,6 @@ export default {
 
 /deep/ {
     @import "~bootstrap/scss/alert";
-    @import "~/assets/scss/pages/single";
+    @import "~/assets/scss/07-pages/single";
 }
 </style>
