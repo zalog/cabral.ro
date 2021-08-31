@@ -400,7 +400,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/scss/05-components/slider.scss";
+@import "~/assets/scss/05-components/slider";
 
 .debugging {
     margin-top: 20px;
