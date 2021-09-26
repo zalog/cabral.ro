@@ -1,0 +1,56 @@
+@import "../app-component.scss";
+
+.icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2rem;
+    margin-top: -3px; // TODO: find a way to remove fixed px
+    line-height: 0; // keep this square if children is text
+    vertical-align: middle;
+
+    &::before {
+        display: block;
+        padding-top: 100%;
+        content: "";
+    }
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+
+        use {
+            pointer-events: none;
+        }
+    }
+
+    // sizes
+    &.icon-sm {
+        width: 1rem;
+        font-size: $font-size-sm;
+    }
+    &.icon-lg {
+        width: 1.75rem;
+        font-size: $font-size-base;
+    }
+    &.icon-xl {
+        width: 2.5rem;
+        font-size: $font-size-lg;
+    }
+
+    // shapes
+    &.icon-circle {
+        border: $border-width solid $border-color;
+        border-radius: 50%;
+
+        svg {
+            width: 75%;
+            height: 75%;
+        }
+    }
+}
