@@ -1,0 +1,22 @@
+@import "../app-component.scss";
+
+.list-comments {
+    &,
+    ul {
+        @include list-unstyled;
+    }
+
+    .comment {
+        padding: map-get($spacers, 4);
+    }
+
+    > li {
+        margin-top: map-get($spacers, 4);
+        background-color: $white;
+        box-shadow: $box-shadow-sm;
+
+        > * + * {
+            border-top: $border-width solid $border-color;
+        }
+    }
+}
