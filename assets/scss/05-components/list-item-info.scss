@@ -1,0 +1,21 @@
+@import "../app-component.scss";
+
+.list-item-info {
+    @include list-unstyled;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: $font-size-sm;
+
+    &,
+    a {
+        color: $text-muted;
+    }
+
+    .icon {
+        color: rgba($text-muted, .8);
+    }
+
+    li + li {
+        margin-left: map-get($spacers, 2);
+    }
+}
