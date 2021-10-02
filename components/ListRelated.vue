@@ -39,19 +39,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-@import "~bootstrap/scss/card";
-
-.row-related {
-    > div > div {
-        height: 100%;
-    }
-
-    /deep/ {
-        .card-title {
-            font-size: $font-size-base;
-        }
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/list-related";
 </style>

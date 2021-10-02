@@ -1,0 +1,12 @@
+@import "../app-component.scss";
+@import "~bootstrap/scss/card";
+
+.row-related {
+    > div > div {
+        height: 100%;
+    }
+
+    .card-title {
+        font-size: $font-size-base;
+    }
+}
