@@ -106,10 +106,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-/deep/ {
-    @import "node_modules/photoswipe/dist/photoswipe.css";
-    $pswp__assets-path: "~photoswipe/src/css/default-skin/";
-    @import "~photoswipe/src/css/default-skin/default-skin.scss";
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/photoswipe";
 </style>
