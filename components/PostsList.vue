@@ -76,30 +76,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-
-$pagination-color:            $body-color;
-$pagination-bg:               transparent;
-$pagination-border-width:     0;
-$pagination-hover-color:      $pagination-color;
-$pagination-hover-bg:         transparent;
-$pagination-active-color:     $pagination-hover-color;
-$pagination-active-bg:        $gray-100;
-$pagination-focus-box-shadow: none;
-
-@import "~bootstrap/scss/pagination";
-
-.cards-posts {
-    .card {
-        margin-bottom: map-get($spacers, 5);
-    }
-
-    .pagination {
-        .active {
-            font-weight: bold;
-            box-shadow: $box-shadow;
-        }
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/posts-list";
 </style>
