@@ -199,10 +199,6 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/scss/app-component.scss";
 
-.container-fluid {
-    max-width: 800px;
-}
-
 .entry-img-hero {
     position: relative;
     z-index: -1;
