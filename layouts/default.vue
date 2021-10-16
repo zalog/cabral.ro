@@ -7,5 +7,5 @@
 </template>
 
 <style lang="scss">
-@import "~/assets/scss/07-pages/layout-default.scss";
+@import "~/assets/scss/07-trumps/layout-default.scss";
 </style>
