@@ -197,5 +197,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/07-trumps/single.scss";
+@import "~/assets/scss/07-trumps/page-single";
 </style>
