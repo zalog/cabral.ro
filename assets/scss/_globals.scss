@@ -20,55 +20,6 @@ svg {
     margin-left: $spacer;
 }
 
-// gallery
-.gallery {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-}
-
-.gallery-item {
-    margin-bottom: 5px;
-    text-align: center;
-}
-
-@for $i from 1 through 9 {
-    .gallery-columns-#{$i} {
-        .gallery-item {
-            flex-basis: calc(#{percentage(1/$i)} - 3px);
-        }
-    }
-}
-
-.gallery-icon {
-    position: relative;
-    padding-top: percentage(9 / 16);
-    overflow: hidden;
-
-    img {
-        position: absolute;
-        top: 50%;
-        bottom: 0;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.gallery-caption {
-    display: block;
-    padding: ceil($spacer / 4) 0;
-    color: fade($gray-100, 80%);
-    font-size: $font-size-sm;
-}
-
-[class*="gallery-columns"] {
-    .gallery-caption {
-        display: none;
-    }
-}
-
 // highlight animations
 .highlight-background {
     animation: highlight .25s linear 0s 5 alternate;
