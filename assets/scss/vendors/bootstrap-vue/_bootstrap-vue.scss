@@ -1,6 +1,6 @@
 // Include variables and utilities first
-// @import "~bootstrap-vue/src/variables";
-// @import "~bootstrap-vue/src/utilities";
+// @import "~bootstrap-vue/src/variables";                          // 00-settings
+// @import "~bootstrap-vue/src/utilities";                          // 06-utilities
 
 // Include custom SCSS for components
 // @import "~bootstrap-vue/src/components/card/index";
@@ -18,7 +18,7 @@
 // @import "~bootstrap-vue/src/components/pagination-nav/index";
 // @import "~bootstrap-vue/src/components/popover/index";
 // @import "~bootstrap-vue/src/components/table/index";
-// @import "~bootstrap-vue/src/components/toast/index";
+// @import "~bootstrap-vue/src/components/toast/index";             // 05-components/toast
 // @import "~bootstrap-vue/src/components/tooltip/index";
 
 // Include custom SCSS for icons
