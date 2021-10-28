@@ -47,26 +47,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-
-.list-item-info {
-    @include list-unstyled;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: $font-size-sm;
-
-    &,
-    a {
-        color: $text-muted;
-    }
-
-    .icon {
-        color: rgba($text-muted, .8);
-    }
-
-    li + li {
-        margin-left: map-get($spacers, 2);
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/list-item-info";
 </style>

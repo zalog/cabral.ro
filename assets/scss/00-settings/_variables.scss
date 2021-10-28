@@ -1,0 +1,13 @@
+$font-family-serif:           "Merriweather", serif;
+
+@import "./variables-bootstrap";
+@import "~bootstrap/scss/variables";
+
+@import "~bootstrap-vue/src/variables";
+
+$social-colors: (
+    "facebook":   #3b5998,
+    "whatsapp":   #25d366,
+    "twitter":    #1da1f2,
+    "rss":        #f26522
+);

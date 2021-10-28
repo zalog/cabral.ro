@@ -1,7 +1,5 @@
-@import "./variables";
-
-@import "./vendors/bootstrap";
-@import "./vendors/bootstrap-vue";
-
-@import "./globals";
-@import "./structure";
+@import "./required";
+@import "./02-generic/index";
+@import "./03-elements/index";
+@import "./04-objects/index";
+@import "./06-utilities/index";

@@ -1,0 +1,25 @@
+@import "../required";
+
+.list-share {
+    @include list-unstyled;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: $font-size-sm;
+
+    li + li {
+        margin-left: $spacer;
+    }
+}
+
+.btn-facebook {
+    color: map-get($social-colors, "facebook");
+    border-color: map-get($social-colors, "facebook");
+}
+.btn-whatsapp {
+    color: map-get($social-colors, "whatsapp");
+    border-color: map-get($social-colors, "whatsapp");
+}
+.btn-twitter {
+    color: map-get($social-colors, "twitter");
+    border-color: map-get($social-colors, "twitter");
+}

@@ -123,23 +123,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-@import "~bootstrap/scss/nav";
-@import "~bootstrap/scss/navbar";
-
-/deep/ {
-    .form-inline {
-        .form-control {
-            color: $navbar-dark-active-color;
-            background-color: rgba($white, .02);
-            border-color: transparent;
-
-            &:focus {
-                background-color: rgba($white, .06);
-                box-shadow: none;
-            }
-        }
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/the-header-menu";
 </style>

@@ -44,37 +44,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-
-.comment {
-    color: $gray-700;
-
-    /deep/ {
-        a {
-            color: $gray-700;
-        }
-    }
-}
-
-.comment-header {
-    margin-bottom: $spacer;
-
-    div:first-child {
-        margin-bottom: map-get($spacers, 1);
-        font-weight: bold;
-    }
-}
-
-.comment-content {
-    /deep/ {
-        p {
-            word-wrap: break-word;
-        }
-
-        > p:last-child {
-            margin-bottom: 0;
-        }
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/comments-list-comment";
 </style>

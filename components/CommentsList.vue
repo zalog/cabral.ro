@@ -85,27 +85,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-
-.list-comments {
-    &,
-    ul {
-        @include list-unstyled;
-    }
-
-    .comment {
-        padding: map-get($spacers, 4);
-    }
-
-    > li {
-        margin-top: map-get($spacers, 4);
-        background-color: $white;
-        box-shadow: $box-shadow-sm;
-
-        * + * {
-            border-top: $border-width solid $border-color;
-        }
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/comments-list";
 </style>

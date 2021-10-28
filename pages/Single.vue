@@ -196,64 +196,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-
-.container-fluid {
-    max-width: 800px;
-}
-
-.entry-img-hero {
-    position: relative;
-    z-index: -1;
-    height: calc(100vh - 56px);
-    margin-top: -(map-get($spacers, 4));
-    margin-bottom: -40vh;
-    overflow: hidden;
-    background-color: $black;
-
-    &::after {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        content: " ";
-    }
-
-    /deep/ {
-        img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: auto;
-            min-width: 100%;
-            max-width: none;
-            height: auto;
-            min-height: 100%;
-            max-height: none;
-            transform: translate(-50%, -50%);
-        }
-    }
-}
-
-.entry-img-hero + .container-fluid {
-    padding-top: $grid-gutter-width;
-    padding-bottom: $grid-gutter-width;
-    background-color: $body-bg;
-    border-top-left-radius: $border-radius-lg;
-    border-top-right-radius: $border-radius-lg;
-
-    @include media-breakpoint-up(md) {
-        padding: map-get($spacers, 5);
-        border-radius: 0;
-    }
-}
-
-.entry-content {
-    word-wrap: break-word;
-}
-
-/deep/ {
-    @import "~bootstrap/scss/alert";
-    @import "~/assets/scss/pages/single";
-}
+<style lang="scss">
+@import "~/assets/scss/07-trumps/page-single";
 </style>

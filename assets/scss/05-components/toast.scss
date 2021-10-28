@@ -1,6 +1,7 @@
-@import "~bootstrap-vue/src/index"; // to do: import only what's needed
+@import "../required";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap-vue/src/components/toast/index";
 
-// Override bootstrap-vue
 .b-toaster.b-toaster-bottom-center .b-toaster-slot {
     bottom: 0;
 

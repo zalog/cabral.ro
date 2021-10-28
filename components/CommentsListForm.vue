@@ -170,51 +170,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/scss/app-component.scss";
-@import "~bootstrap/scss/alert";
-
-.form-reply {
-    padding: map-get($spacers, 4);
-    background-color: $white;
-    box-shadow: $box-shadow-sm;
-
-    .label,
-    .form {
-        overflow: hidden;
-        transition: max-height .2s ease, opacity .2s ease;
-    }
-
-    .label {
-        max-height: 30px;
-    }
-
-    .form {
-        max-height: 0;
-        opacity: 0;
-    }
-
-    &.open {
-        .label {
-            max-height: 0;
-            opacity: 0;
-        }
-        .form {
-            max-height: 500px;
-            overflow: visible;
-            opacity: 1;
-        }
-    }
-}
-
-.list-comments {
-    .form-reply {
-        background-color: transparent;
-        box-shadow: none;
-
-        .text-muted {
-            font-size: $font-size-sm;
-        }
-    }
-}
+<style lang="scss">
+@import "~/assets/scss/05-components/comments-list-form";
 </style>
