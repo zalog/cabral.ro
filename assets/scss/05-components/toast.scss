@@ -1,4 +1,5 @@
 @import "../required";
+@import "~bootstrap/scss/close";
 @import "~bootstrap/scss/toasts";
 
 $b-toaster-offset-top: map-get($spacers, 4);
