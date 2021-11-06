@@ -30,7 +30,7 @@ export default {
         },
         variant: {
             type: String,
-            default: '',
+            default: 'default',
         },
     },
 
