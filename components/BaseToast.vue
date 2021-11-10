@@ -4,6 +4,7 @@
         :variant="variant"
         toaster="b-toaster-bottom-left"
         no-close-button
+        :no-auto-hide="noAutoHide"
         @hide="$emit('hide')"
     >
         <slot />
@@ -31,6 +32,10 @@ export default {
         variant: {
             type: String,
             default: 'default',
+        },
+        noAutoHide: {
+            type: Boolean,
+            default: false,
         },
     },
 
