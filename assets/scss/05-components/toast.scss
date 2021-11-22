@@ -1,25 +1,20 @@
 @import "../required";
 @import "~bootstrap/scss/close";
+
+$toast-color:               $gray-300;
+$toast-background-color:    $black;
+$toast-border-width:        0;
+
+$toast-header-color:                $gray-600;
+$toast-header-background-color:     rgba($white, .05);
+
 @import "~bootstrap/scss/toasts";
 
-$b-toaster-offset-top: map-get($spacers, 4);
-$b-toaster-offset-bottom: $b-toaster-offset-top;
-$b-toaster-offset-left: $b-toaster-offset-top;
-$b-toaster-offset-right: $b-toaster-offset-top;
+$b-toast-background-opacity:        1;
+
+$b-toaster-offset-top:      map-get($spacers, 4);
+$b-toaster-offset-bottom:   $b-toaster-offset-top;
+$b-toaster-offset-left:     $b-toaster-offset-top;
+$b-toaster-offset-right:    $b-toaster-offset-top;
 
 @import "~bootstrap-vue/src/components/toast/index";
-
-.b-toaster.b-toaster-bottom-center .b-toaster-slot {
-    bottom: 0;
-
-    .b-toast:last-child {
-        .toast {
-            border-bottom: 0;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-    }
-}
-.b-toast {
-    background-color: $white;
-}
