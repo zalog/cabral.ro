@@ -3,7 +3,9 @@
         v-model="computedVisible"
         :variant="variant"
         toaster="b-toaster-bottom-left"
+        :toast-class="toastClass"
         no-close-button
+        :no-auto-hide="noAutoHide"
         @hide="$emit('hide')"
     >
         <slot />
@@ -30,7 +32,15 @@ export default {
         },
         variant: {
             type: String,
-            default: '',
+            default: 'default',
+        },
+        toastClass: {
+            type: String,
+            default: null,
+        },
+        noAutoHide: {
+            type: Boolean,
+            default: false,
         },
     },
 

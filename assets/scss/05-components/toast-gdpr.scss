@@ -1,0 +1,11 @@
+@import "../required";
+
+.toast-gdpr {
+    p {
+        margin-bottom: map-get($spacers, 2);
+    }
+
+    a {
+        color: lighten($primary, 35%);
+    }
+}

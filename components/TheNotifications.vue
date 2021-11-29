@@ -10,6 +10,9 @@
                 {{ notification.message }}
             </lazy-base-toast>
         </template>
+        <lazy-toast-gdpr
+            v-if="!$cookies.get('cookie-consent-user-accepted')"
+        />
     </div>
 </template>
 

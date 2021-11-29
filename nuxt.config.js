@@ -21,6 +21,7 @@ export default {
     modules: [
         '@nuxtjs/gtm',
         '@nuxtjs/axios',
+        'cookie-universal-nuxt',
         '@nuxtjs/svg-sprite',
     ],
     svgSprite: {
