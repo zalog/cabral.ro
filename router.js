@@ -14,6 +14,7 @@ const createRouter = () => new Router({
         let output = { x: 0, y: 0 };
 
         if (savedPosition) output = savedPosition;
+        if (to.hash) output = { selector: to.hash };
 
         return output;
     },
