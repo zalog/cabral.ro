@@ -10,6 +10,14 @@ const PageSliderTest = () => import(/* webpackChunkName: "page-slider-test" */ '
 
 const createRouter = () => new Router({
     mode: 'history',
+    scrollBehavior(to, from, savedPosition) {
+        let output = { x: 0, y: 0 };
+
+        if (savedPosition) output = savedPosition;
+        if (to.hash) output = { selector: to.hash };
+
+        return output;
+    },
     routes: [
         // homepage
         {
