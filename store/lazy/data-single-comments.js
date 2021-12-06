@@ -62,7 +62,7 @@ export default {
                     commit('SET_PAGE_DATA', payloadCommit);
                 }
 
-                let toastMessage = `${comment.author.name}, comentariul tău`;
+                let toastMessage = `${comment.author.node.name}, comentariul tău`;
                 let toastVariant = 'success';
                 if (comment.status === 'hold') {
                     toastMessage += ' urmează să fie aprobat.';
@@ -79,7 +79,7 @@ export default {
                     variant: toastVariant,
                 }, { root: true });
 
-                return comment.id;
+                return comment.databaseId;
             } catch {
                 throw new Error('action postComment');
             }

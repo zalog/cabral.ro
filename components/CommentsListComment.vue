@@ -35,8 +35,8 @@ export default {
 
     methods: {
         printAuthor(comment) {
-            let output = comment.author.name;
-            if (comment.author.url) output = `<a href="${comment.author.url}" target="_blank">${output}</a>`;
+            let output = comment.author.node.name;
+            if (comment.author.node.url) output = `<a href="${comment.author.node.url}" target="_blank">${output}</a>`;
 
             return output;
         },

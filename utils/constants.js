@@ -2,7 +2,7 @@ const HOST = 'https://www.cabral.ro';
 const API_HOST = `${HOST}/wp-json/`;
 
 export const ENDPOINTS = {
-    GRAPHQL: `${HOST}/graphql`,
+    GRAPHQL: `${HOST}/wordpress/graphql`,
     HEAD: `${API_HOST}yoast/v1/get_head`,
     MENU: `${API_HOST}custom/menu`,
     POSTS: `${API_HOST}wp/v2/posts`,

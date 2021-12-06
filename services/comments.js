@@ -22,11 +22,15 @@ export async function fetchComments(payload) {
                     comments(
                         first: $first,
                         after: $after,
-                        where: {contentId: $id}
+                        where: {
+                            contentId: $id
+                            parent: null
+                            order: DESC
+                        }
                     ) {
                         nodes {
                             ...CommentFields
-                            replies: children {
+                            replies {
                                 nodes {
                                     ...CommentFields
                                 }
@@ -40,9 +44,9 @@ export async function fetchComments(payload) {
                 }
 
                 fragment CommentFields on Comment {
-                    commentId
+                    databaseId
                     author {
-                        ... on CommentAuthor {
+                        node {
                             name
                             url
                         }

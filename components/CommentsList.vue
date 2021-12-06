@@ -7,8 +7,8 @@
         <ul class="list-comments">
             <li
                 v-for="(comment, index) in comments && comments.nodes"
-                :id="`comment-${comment.commentId}`"
-                :key="'comments-comment-' + comment.commentId"
+                :id="`comment-${comment.databaseId}`"
+                :key="'comments-comment-' + comment.databaseId"
             >
                 <comments-list-comment
                     v-observe-visibility="{
@@ -21,8 +21,8 @@
                 <ul v-if="comment.replies && comment.replies.nodes.length">
                     <li
                         v-for="commentReply in comment.replies.nodes"
-                        :id="`comment-${commentReply.commentId}`"
-                        :key="'comments-comment-l1-' + commentReply.commentId"
+                        :id="`comment-${commentReply.databaseId}`"
+                        :key="'comments-comment-l1-' + commentReply.databaseId"
                     >
                         <comments-list-comment
                             :comment="commentReply"
@@ -34,7 +34,7 @@
                     :data="{
                         label: 'răspunde...',
                         singleId,
-                        commentId: comment.commentId,
+                        commentId: comment.databaseId,
                         index
                     }"
                 />

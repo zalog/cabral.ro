@@ -1,8 +1,10 @@
 export default (payload) => ({
-    commentId: payload.id,
+    databaseId: payload.id,
     author: {
-        name: payload.author_name,
-        url: payload.author_url,
+        node: {
+            name: payload.author_name,
+            url: payload.author_url,
+        },
     },
     content: payload.content.rendered,
     date: payload.date,
