@@ -4,7 +4,7 @@
             :to="'/'"
             class="navbar-brand"
         >
-            Navbar
+            {{ SITE.TITLE }}
         </nuxt-link>
 
         <button
@@ -86,6 +86,10 @@ export default {
         menu() {
             return this.$store.state.ui.menu;
         },
+    },
+
+    beforeMount() {
+        this.SITE = SITE;
     },
 
     methods: {
