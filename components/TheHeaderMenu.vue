@@ -25,20 +25,6 @@
             is-nav
         >
             <b-navbar-nav class="flex-grow-1">
-                <b-nav-form
-                    action="/"
-                    class="mr-md-auto order-last order-md-first py-3 py-md-0"
-                    form-class="flex-grow-1"
-                    @submit.prevent="goToSearch($event)"
-                >
-                    <b-form-input
-                        type="search"
-                        size="sm"
-                        class="flex-grow-1"
-                        name="s"
-                        placeholder="Caută aici..."
-                    />
-                </b-nav-form>
                 <b-nav-item
                     v-for="item in menu"
                     :key="item.ID"
@@ -49,14 +35,25 @@
                 </b-nav-item>
             </b-navbar-nav>
         </b-collapse>
+
+        <form
+            action="/"
+            @submit.prevent="goToSearch($event)"
+        >
+            <input
+                type="search"
+                class="form-control form-control-sm"
+                name="s"
+                placeholder="Caută aici..."
+            >
+        </form>
     </nav>
 </template>
 
 <script>
 import {
-    BNavbarNav, BNavForm, BNavItem,
+    BNavbarNav, BNavItem,
     BCollapse,
-    BFormInput,
 } from 'bootstrap-vue';
 import menu from '../store/lazy/menu';
 import { SITE } from '../utils/constants';
@@ -66,10 +63,8 @@ export default {
 
     components: {
         BNavbarNav,
-        BNavForm,
         BNavItem,
         BCollapse,
-        BFormInput,
     },
 
     data: () => ({
