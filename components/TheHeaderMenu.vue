@@ -24,16 +24,22 @@
             v-model="navCollapse"
             is-nav
         >
-            <b-navbar-nav class="flex-grow-1">
-                <b-nav-item
+            <ul class="navbar-nav flex-grow-1">
+                <li
                     v-for="item in menu"
                     :key="item.ID"
-                    :to="menuItemTo(item)"
-                    :active="menuItemActive(item)"
+                    class="nav-item"
                 >
-                    {{ item.title }}
-                </b-nav-item>
-            </b-navbar-nav>
+                    <nuxt-link
+                        :to="menuItemTo(item)"
+                        class="nav-link"
+                        exact-active-class="active"
+                        @click.native="navCollapse = false"
+                    >
+                        {{ item.title }}
+                    </nuxt-link>
+                </li>
+            </ul>
         </b-collapse>
 
         <form
@@ -51,10 +57,7 @@
 </template>
 
 <script>
-import {
-    BNavbarNav, BNavItem,
-    BCollapse,
-} from 'bootstrap-vue';
+import { BCollapse } from 'bootstrap-vue';
 import menu from '../store/lazy/menu';
 import { SITE } from '../utils/constants';
 
@@ -62,8 +65,6 @@ export default {
     name: 'TheHeaderMenu',
 
     components: {
-        BNavbarNav,
-        BNavItem,
         BCollapse,
     },
 
