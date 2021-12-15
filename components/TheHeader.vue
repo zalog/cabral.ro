@@ -1,5 +1,5 @@
 <template>
-    <div class="app-Header fixed-top">
+    <div class="app-Header sticky-top">
         <the-header-menu />
     </div>
 </template>

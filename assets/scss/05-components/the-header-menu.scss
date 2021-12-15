@@ -18,6 +18,16 @@
         }
     }
 
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        padding-right: $navbar-padding-x;
+        padding-left: $navbar-padding-x;
+        background-color: $dark;
+    }
+
     @include media-breakpoint-up(md) {
         form {
             flex-basis: auto;
@@ -29,8 +39,12 @@
         }
 
         .navbar-collapse {
+            position: static;
             flex-grow: 0;
             order: 3;
+            padding-right: 0;
+            padding-left: 0;
+            background-color: transparent;
         }
     }
 }
