@@ -3,6 +3,7 @@
         <nuxt-link
             :to="'/'"
             class="navbar-brand"
+            @click.native="navCollapse = false"
         >
             {{ SITE.TITLE }}
         </nuxt-link>
