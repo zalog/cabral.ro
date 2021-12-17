@@ -51,6 +51,7 @@
                 type="search"
                 class="form-control form-control-sm"
                 name="s"
+                :value="$route.query.s"
                 placeholder="Caută aici..."
             >
         </form>
