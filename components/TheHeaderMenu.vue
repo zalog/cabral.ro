@@ -107,12 +107,6 @@ export default {
 
             return output;
         },
-        menuItemActive(item) {
-            const menuItemTo = this.menuItemTo(item);
-            const itemPath = (typeof menuItemTo === 'string') ? menuItemTo : `/${menuItemTo.params.singleSlug}/`;
-
-            return this.$route.path === itemPath;
-        },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
 
