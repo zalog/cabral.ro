@@ -1,4 +1,5 @@
 import { ENDPOINTS } from '../utils/constants';
+import { menu } from '~/utils/adaptors';
 
 const fetchMenu = async (payload) => {
     try {
@@ -7,7 +8,7 @@ const fetchMenu = async (payload) => {
             url: ENDPOINTS.MENU,
         });
 
-        return response.data;
+        return menu(response.data);
     } catch (error) {
         throw error.response;
     }

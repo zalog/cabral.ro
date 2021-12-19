@@ -1,5 +1,7 @@
 export { default as head } from './head';
 
+export { default as menu } from './menu';
+
 export { default as pageCategory } from './page-category';
 export { default as pageSinglePost } from './page-single-post';
 export { default as pageSinglePage } from './page-single-page';
