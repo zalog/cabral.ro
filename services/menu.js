@@ -1,4 +1,4 @@
-import { ENDPOINTS } from '../utils/constants';
+import { ENDPOINTS } from '~/utils/constants';
 import { menu } from '~/utils/adaptors';
 
 const fetchMenu = async (payload) => {
