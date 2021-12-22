@@ -32,7 +32,7 @@
                     class="nav-item"
                 >
                     <nuxt-link
-                        :to="menuItemTo(item)"
+                        :to="item.to"
                         class="nav-link"
                         exact-active-class="active"
                         @click.native="navCollapse = false"
@@ -91,22 +91,6 @@ export default {
     },
 
     methods: {
-        menuItemTo(item) {
-            const url = new URL(item.url, SITE.LINK);
-            let output = url.pathname;
-
-            if (['post', 'page'].includes(item.object)) {
-                output = {
-                    name: 'Single',
-                    params: {
-                        singleSlug: url.pathname.slice(1, -1),
-                        singleType: item.object,
-                    },
-                };
-            }
-
-            return output;
-        },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
 
