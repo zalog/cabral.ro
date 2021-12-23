@@ -31,7 +31,9 @@
     .navbar-body-search {
         // empty for now
     }
+}
 
+.navbar-expand-md {
     @include media-breakpoint-up(md) {
         form {
             flex-basis: auto;
