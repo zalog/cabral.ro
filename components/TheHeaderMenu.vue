@@ -12,7 +12,7 @@
             type="button"
             class="navbar-toggler"
             :class="{ 'collapsed': navCollapse }"
-            aria-controls="navbar-content"
+            aria-controls="navbar-body-main"
             :aria-expanded="navCollapse && 'true' || 'false'"
             aria-label="Toggle navigation"
             @click="navCollapse = !navCollapse"
@@ -21,8 +21,9 @@
         </button>
 
         <b-collapse
-            id="navbar-content"
+            id="navbar-body-main"
             v-model="navCollapse"
+            class="navbar-body-main"
             is-nav
         >
             <ul class="navbar-nav flex-grow-1">
@@ -45,6 +46,7 @@
 
         <form
             action="/"
+            class="navbar-body-search"
             @submit.prevent="goToSearch($event)"
         >
             <input

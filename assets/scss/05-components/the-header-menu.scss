@@ -18,7 +18,7 @@
         }
     }
 
-    .navbar-collapse {
+    .navbar-body-main {
         position: absolute;
         top: 100%;
         right: 0;
@@ -26,6 +26,10 @@
         padding-right: $navbar-padding-x;
         padding-left: $navbar-padding-x;
         background-color: $dark;
+    }
+
+    .navbar-body-search {
+        // empty for now
     }
 
     @include media-breakpoint-up(md) {
@@ -38,7 +42,7 @@
             order: 1;
         }
 
-        .navbar-collapse {
+        .navbar-body-main {
             position: static;
             flex-grow: 0;
             order: 3;
