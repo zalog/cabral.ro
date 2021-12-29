@@ -17,20 +17,20 @@
             box-shadow: none;
         }
     }
+}
 
-    .navbar-body-main {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: 0;
-        padding-right: $navbar-padding-x;
-        padding-left: $navbar-padding-x;
-        background-color: $dark;
-    }
+.navbar-body-main {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    padding-right: $navbar-padding-x;
+    padding-left: $navbar-padding-x;
+    background-color: $dark;
+}
 
-    .navbar-body-search {
-        // empty for now
-    }
+.navbar-body-search {
+    // empty for now
 }
 
 .navbar-expand-md {
