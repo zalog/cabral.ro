@@ -3,7 +3,7 @@
         <nuxt-link
             :to="'/'"
             class="navbar-brand"
-            @click.native="navCollapse = false"
+            @click.native="show.navbarBodyMain = false"
         >
             {{ SITE.TITLE }}
         </nuxt-link>
@@ -12,9 +12,9 @@
             type="button"
             class="navbar-toggler"
             aria-controls="navbar-body-main"
-            :aria-expanded="navCollapse && 'true' || 'false'"
+            :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
             aria-label="Toggle navigation"
-            @click="navCollapse = !navCollapse"
+            @click="show.navbarBodyMain = !show.navbarBodyMain"
         >
             <span class="navbar-toggler-icon" />
         </button>
@@ -22,7 +22,7 @@
         <div
             id="navbar-body-main"
             class="navbar-body-main"
-            :class="{ 'show': navCollapse }"
+            :class="{ 'show': show.navbarBodyMain }"
         >
             <ul class="navbar-nav flex-grow-1">
                 <li
@@ -34,7 +34,7 @@
                         :to="item.to"
                         class="nav-link"
                         exact-active-class="active"
-                        @click.native="navCollapse = false"
+                        @click.native="show.navbarBodyMain = false"
                     >
                         {{ item.title }}
                     </nuxt-link>
@@ -66,7 +66,9 @@ export default {
     name: 'TheHeaderMenu',
 
     data: () => ({
-        navCollapse: false,
+        show: {
+            navbarBodyMain: false,
+        },
     }),
 
     async fetch() {
@@ -92,7 +94,7 @@ export default {
             if (!s) return;
 
             this.$router.push({ path: '/', query: { s } });
-            this.navCollapse = false;
+            this.show.navbarBodyMain = false;
         },
     },
 };
