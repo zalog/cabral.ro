@@ -24,9 +24,14 @@
     top: 100%;
     right: 0;
     left: 0;
+    display: none;
     padding-right: $navbar-padding-x;
     padding-left: $navbar-padding-x;
     background-color: $dark;
+
+    &.show {
+        display: block;
+    }
 }
 
 .navbar-body-search {
@@ -46,6 +51,7 @@
 
         .navbar-body-main {
             position: static;
+            display: block;
             flex-grow: 0;
             order: 3;
             padding-right: 0;

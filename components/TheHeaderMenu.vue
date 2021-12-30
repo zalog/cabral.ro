@@ -11,7 +11,6 @@
         <button
             type="button"
             class="navbar-toggler"
-            :class="{ 'collapsed': navCollapse }"
             aria-controls="navbar-body-main"
             :aria-expanded="navCollapse && 'true' || 'false'"
             aria-label="Toggle navigation"
@@ -20,11 +19,10 @@
             <span class="navbar-toggler-icon" />
         </button>
 
-        <b-collapse
+        <div
             id="navbar-body-main"
-            v-model="navCollapse"
             class="navbar-body-main"
-            is-nav
+            :class="{ 'show': navCollapse }"
         >
             <ul class="navbar-nav flex-grow-1">
                 <li
@@ -42,7 +40,7 @@
                     </nuxt-link>
                 </li>
             </ul>
-        </b-collapse>
+        </div>
 
         <form
             action="/"
@@ -61,16 +59,11 @@
 </template>
 
 <script>
-import { BCollapse } from 'bootstrap-vue';
 import menu from '../store/lazy/menu';
 import { SITE } from '../utils/constants';
 
 export default {
     name: 'TheHeaderMenu',
-
-    components: {
-        BCollapse,
-    },
 
     data: () => ({
         navCollapse: false,
