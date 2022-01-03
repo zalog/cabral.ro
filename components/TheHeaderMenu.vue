@@ -24,7 +24,7 @@
             class="navbar-body-main"
             :class="{ 'show': show.navbarBodyMain }"
         >
-            <ul class="navbar-nav flex-grow-1">
+            <ul class="navbar-nav">
                 <li
                     v-for="item in menu"
                     :key="item.ID"
