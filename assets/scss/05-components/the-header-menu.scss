@@ -19,12 +19,25 @@
     }
 }
 
+.navbar-brand {
+    order: 1;
+}
+
+.navbar-toggler {
+    order: 2;
+}
+
+.navbar-body-search {
+    order: 3;
+}
+
 .navbar-body-main {
     position: absolute;
     top: 100%;
     right: 0;
     left: 0;
     display: none;
+    order: 4;
     padding-right: $navbar-padding-x;
     padding-left: $navbar-padding-x;
     background-color: $dark;
@@ -34,26 +47,16 @@
     }
 }
 
-.navbar-body-search {
-    // empty for now
-}
-
 .navbar-expand-md {
     @include media-breakpoint-up(md) {
         form {
             flex-basis: auto;
-            order: 2;
-        }
-
-        .navbar-brand {
-            order: 1;
         }
 
         .navbar-body-main {
             position: static;
             display: block;
             flex-grow: 0;
-            order: 3;
             padding-right: 0;
             padding-left: 0;
             background-color: transparent;
