@@ -47,19 +47,19 @@
     }
 }
 
-.navbar-expand-md {
-    @include media-breakpoint-up(md) {
+@include media-breakpoint-up(md) {
+    .navbar-expand-md {
         form {
             flex-basis: auto;
         }
+    }
 
-        .navbar-body-main {
-            position: static;
-            display: block;
-            flex-grow: 0;
-            padding-right: 0;
-            padding-left: 0;
-            background-color: transparent;
-        }
+    .navbar-body-main {
+        position: static;
+        display: block;
+        flex-grow: 0;
+        padding-right: 0;
+        padding-left: 0;
+        background-color: transparent;
     }
 }
