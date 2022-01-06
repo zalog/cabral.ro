@@ -1,5 +1,8 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav
+        class="navbar navbar-expand-md navbar-dark bg-dark"
+        :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
+    >
         <nuxt-link
             :to="'/'"
             class="navbar-brand"
@@ -22,7 +25,6 @@
         <div
             id="navbar-body-main"
             class="navbar-body-main"
-            :class="{ 'show': show.navbarBodyMain }"
         >
             <ul class="navbar-nav">
                 <li

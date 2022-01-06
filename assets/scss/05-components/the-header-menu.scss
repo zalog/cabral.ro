@@ -3,6 +3,8 @@
 @import "~bootstrap/scss/navbar";
 
 .navbar {
+    align-content: flex-start;
+
     form {
         flex: 1 1 100%;
     }
@@ -19,6 +21,10 @@
     }
 }
 
+.navbar-body-main-open {
+    height: 100vh;
+}
+
 .navbar-brand {
     order: 1;
 }
@@ -32,17 +38,13 @@
 }
 
 .navbar-body-main {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    left: 0;
     display: none;
     order: 4;
     padding-right: $navbar-padding-x;
     padding-left: $navbar-padding-x;
     background-color: $dark;
 
-    &.show {
+    .navbar-body-main-open & {
         display: block;
     }
 }
@@ -52,6 +54,10 @@
         form {
             flex-basis: auto;
         }
+    }
+
+    .navbar-body-main-open {
+        height: auto;
     }
 
     .navbar-body-main {
