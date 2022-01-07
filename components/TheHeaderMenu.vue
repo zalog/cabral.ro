@@ -3,24 +3,26 @@
         class="navbar navbar-expand-md navbar-dark bg-dark"
         :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
     >
-        <nuxt-link
-            :to="'/'"
-            class="navbar-brand"
-            @click.native="show.navbarBodyMain = false"
-        >
-            {{ SITE.TITLE }}
-        </nuxt-link>
+        <div class="navbar-bar">
+            <nuxt-link
+                :to="'/'"
+                class="navbar-brand"
+                @click.native="show.navbarBodyMain = false"
+            >
+                {{ SITE.TITLE }}
+            </nuxt-link>
 
-        <button
-            type="button"
-            class="navbar-toggler"
-            aria-controls="navbar-body-main"
-            :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
-            aria-label="Toggle navigation"
-            @click="show.navbarBodyMain = !show.navbarBodyMain"
-        >
-            <span class="navbar-toggler-icon" />
-        </button>
+            <button
+                type="button"
+                class="navbar-toggler"
+                aria-controls="navbar-body-main"
+                :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
+                aria-label="Toggle navigation"
+                @click="show.navbarBodyMain = !show.navbarBodyMain"
+            >
+                <span class="navbar-toggler-icon" />
+            </button>
+        </div>
 
         <div
             id="navbar-body-main"

@@ -25,21 +25,20 @@
     height: 100vh;
 }
 
-.navbar-brand {
+.navbar-bar {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
     order: 1;
 }
 
-.navbar-toggler {
-    order: 2;
-}
-
 .navbar-body-search {
-    order: 3;
+    order: 2;
 }
 
 .navbar-body-main {
     display: none;
-    order: 4;
+    order: 3;
     padding-right: $navbar-padding-x;
     padding-left: $navbar-padding-x;
     background-color: $dark;
@@ -58,6 +57,10 @@
 
     .navbar-body-main-open {
         height: auto;
+    }
+
+    .navbar-bar {
+        flex-grow: 0;
     }
 
     .navbar-body-main {
