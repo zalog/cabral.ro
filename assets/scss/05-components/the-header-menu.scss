@@ -3,7 +3,9 @@
 @import "~bootstrap/scss/navbar";
 
 .navbar {
-    align-content: flex-start;
+    flex-flow: column nowrap;
+    align-items: normal;
+    justify-content: flex-start;
 
     .form-control {
         color: $navbar-dark-active-color;
@@ -23,21 +25,21 @@
 
 .navbar-bar {
     display: flex;
-    flex-grow: 1;
     justify-content: space-between;
     order: 1;
 }
 
 .navbar-body-search {
-    flex: 1 1 100%;
     order: 2;
 }
 
 .navbar-body-main {
     display: none;
+    flex-grow: 1;
     order: 3;
     padding-right: $navbar-padding-x;
     padding-left: $navbar-padding-x;
+    overflow-y: auto;
     background-color: $dark;
 
     .navbar-body-main-open & {
@@ -46,6 +48,12 @@
 }
 
 @include media-breakpoint-up(md) {
+    .navbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     .navbar-body-main-open {
         height: auto;
     }
@@ -55,7 +63,7 @@
     }
 
     .navbar-body-search {
-        flex-basis: auto;
+        flex-grow: 1;
     }
 
     .navbar-body-main {
