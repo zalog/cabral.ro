@@ -37,8 +37,7 @@
     display: none;
     flex-grow: 1;
     order: 3;
-    padding-right: $navbar-padding-x;
-    padding-left: $navbar-padding-x;
+    padding: $navbar-padding-y 0;
     overflow-y: auto;
     background-color: $dark;
 
@@ -70,8 +69,7 @@
         position: static;
         display: block;
         flex-grow: 0;
-        padding-right: 0;
-        padding-left: 0;
+        padding: 0;
         background-color: transparent;
     }
 }
