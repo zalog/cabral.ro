@@ -3,16 +3,73 @@
 @import "~bootstrap/scss/navbar";
 
 .navbar {
-    .form-inline {
-        .form-control {
-            color: $navbar-dark-active-color;
-            background-color: rgba($white, .02);
-            border-color: transparent;
+    flex-flow: column nowrap;
+    align-items: normal;
+    justify-content: flex-start;
 
-            &:focus {
-                background-color: rgba($white, .06);
-                box-shadow: none;
-            }
+    .form-control {
+        color: $navbar-dark-active-color;
+        background-color: rgba($white, .02);
+        border-color: transparent;
+
+        &:focus {
+            background-color: rgba($white, .06);
+            box-shadow: none;
         }
+    }
+}
+
+.navbar-body-main-open {
+    height: 100vh;
+}
+
+.navbar-bar {
+    display: flex;
+    justify-content: space-between;
+    order: 1;
+}
+
+.navbar-body-search {
+    order: 2;
+}
+
+.navbar-body-main {
+    display: none;
+    flex-grow: 1;
+    order: 3;
+    padding: $navbar-padding-y 0;
+    overflow-y: auto;
+    background-color: $dark;
+
+    .navbar-body-main-open & {
+        display: block;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .navbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar-body-main-open {
+        height: auto;
+    }
+
+    .navbar-bar {
+        flex-grow: 0;
+    }
+
+    .navbar-body-search {
+        flex-grow: 1;
+    }
+
+    .navbar-body-main {
+        position: static;
+        display: block;
+        flex-grow: 0;
+        padding: 0;
+        background-color: transparent;
     }
 }
