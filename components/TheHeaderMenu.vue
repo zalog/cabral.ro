@@ -87,7 +87,7 @@ export default {
         },
     },
 
-    beforeMount() {
+    created() {
         this.SITE = SITE;
     },
 
