@@ -13,6 +13,7 @@ const createRouter = () => new Router({
     scrollBehavior(to, from, savedPosition) {
         let output = { x: 0, y: 0 };
 
+        if (from.hash) output = null;
         if (savedPosition) output = savedPosition;
         if (to.hash) {
             const blacklist = ['#pid'];
