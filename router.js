@@ -20,10 +20,11 @@ const createRouter = () => new Router({
             const isHashBlacklisted = blacklist
                 .findIndex((entry) => to.hash.indexOf(entry) === 0) >= 0
                 && true;
+            let selector = to.hash;
 
-            if (isHashBlacklisted) return null;
+            if (isHashBlacklisted) selector = null;
 
-            output = { selector: to.hash };
+            output = { selector };
         }
 
         return output;
