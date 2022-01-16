@@ -69,7 +69,6 @@ export default {
 
     methods: {
         initPhotoSwipe() {
-            const that = this;
             const gallery = new PhotoSwipe(
                 this.$refs.pswp,
                 PhotoSwipeUIDefault,
@@ -82,7 +81,7 @@ export default {
 
             gallery.listen('destroy', () => {
                 this.$router.push({ hash: false });
-                that.$emit('closed');
+                this.$emit('closed');
             });
             gallery.listen('gettingData', (index, getItem) => {
                 const item = getItem;
