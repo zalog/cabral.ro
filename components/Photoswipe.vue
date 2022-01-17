@@ -52,6 +52,11 @@ import PhotoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 export default {
     name: 'Photoswipe',
 
+    model: {
+        prop: 'index',
+        event: 'update:index',
+    },
+
     props: {
         items: {
             type: Array,
@@ -103,6 +108,7 @@ export default {
 
                 await this.$router.push({ hash: `pid=${index}` });
                 this.$emit('changed-item', index);
+                this.$emit('update:index', index);
             });
 
             gallery.init();
