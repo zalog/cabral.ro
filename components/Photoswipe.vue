@@ -107,7 +107,6 @@ export default {
                 const index = gallery.getCurrentIndex();
 
                 await this.$router.push({ hash: `pid=${index}` });
-                this.$emit('changed-item', index);
                 this.$emit('update:index', index);
             });
 

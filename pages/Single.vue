@@ -63,10 +63,10 @@
 
         <lazy-photoswipe
             v-if="typeof photoswipe.index === 'number'"
+            v-model="photoswipe.index"
             :items="photoswipe.items"
-            :index="photoswipe.index"
             @closed="photoswipe.index = false"
-            @changed-item="onPhotoswipeChangedItem($event)"
+            @update:index="onPhotoswipeChangedItem($event)"
         />
     </div>
 </template>
