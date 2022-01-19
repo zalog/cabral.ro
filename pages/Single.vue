@@ -173,14 +173,13 @@ export default {
                     this.photoswipe.index = index;
                 });
             });
+
+            this.pageTitleInitial = this.pageTitle;
         },
         onPhotoswipeChangedItem(itemIndex) {
             const route = this.$route;
             const itemNr = itemIndex + 1;
-            const imageString = ' Image ';
-            const pageTitle = (!this.pageTitle.indexOf(imageString) === -1)
-                ? `${this.pageTitle} - Image ${itemNr}`
-                : `${this.pageTitle.split(imageString)[0]} - Image ${itemNr}`;
+            const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
 
             this.$store.dispatch('data/setPageData', {
                 route,
