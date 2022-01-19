@@ -177,10 +177,10 @@ export default {
         onPhotoswipeChangedItem(itemIndex) {
             const route = this.$route;
             const itemNr = itemIndex + 1;
-            const imageRegex = / Image \d/;
-            const pageTitle = (this.pageTitle.search(imageRegex) === -1)
+            const imageString = ' Image ';
+            const pageTitle = (!this.pageTitle.indexOf(imageString) === -1)
                 ? `${this.pageTitle} - Image ${itemNr}`
-                : this.pageTitle.replace(imageRegex, ` - Image ${itemNr}`);
+                : `${this.pageTitle.split(imageString)[0]} - Image ${itemNr}`;
 
             this.$store.dispatch('data/setPageData', {
                 route,
