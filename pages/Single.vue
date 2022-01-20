@@ -66,7 +66,7 @@
             v-model="photoswipe.index"
             :items="photoswipe.items"
             @closed="onPhotoswipeClosed()"
-            @update:index="onPhotoswipeChangedItem($event)"
+            @update:index="onPhotoswipeUpdate($event)"
         />
     </div>
 </template>
@@ -176,7 +176,7 @@ export default {
 
             this.pageTitleInitial = this.pageTitle;
         },
-        onPhotoswipeChangedItem(itemIndex) {
+        onPhotoswipeUpdate(itemIndex) {
             const route = this.$route;
             const itemNr = itemIndex + 1;
             const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
