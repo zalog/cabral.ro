@@ -65,7 +65,7 @@
             v-if="typeof photoswipe.index === 'number'"
             v-model="photoswipe.index"
             :items="photoswipe.items"
-            @closed="photoswipe.index = false"
+            @closed="onPhotoswipeClosed()"
             @update:index="onPhotoswipeChangedItem($event)"
         />
     </div>
@@ -189,6 +189,15 @@ export default {
             this.sendPageView({
                 title: pageTitle,
                 url: route.fullPath,
+            });
+        },
+        onPhotoswipeClosed() {
+            this.photoswipe.index = false;
+
+            this.$store.dispatch('data/setPageData', {
+                route: this.$route,
+                prop: 'head.title',
+                data: this.pageTitleInitial,
             });
         },
     },
