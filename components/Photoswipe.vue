@@ -105,9 +105,12 @@ export default {
             });
             gallery.listen('afterChange', async () => {
                 const index = gallery.getCurrentIndex();
+                const hash = `pid=${index}`;
 
-                await this.$router.push({ hash: `pid=${index}` });
                 this.$emit('update:index', index);
+                if (!this.$route.hash.includes(`${hash}`)) {
+                    await this.$router.push({ hash });
+                }
             });
 
             gallery.init();
