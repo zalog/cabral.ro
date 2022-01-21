@@ -175,6 +175,12 @@ export default {
             });
 
             this.pageTitleInitial = this.pageTitle;
+
+            const { hash } = this.$route;
+            if (hash.includes('pid=')) {
+                const index = hash.split('=')[1];
+                this.photoswipe.index = Number(index);
+            }
         },
         onPhotoswipeUpdate(itemIndex) {
             const route = this.$route;
