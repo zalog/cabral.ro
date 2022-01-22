@@ -105,7 +105,7 @@ export default {
             });
             gallery.listen('afterChange', async () => {
                 const index = gallery.getCurrentIndex();
-                const hash = `pid=${index}`;
+                const hash = `pid=${index + 1}`;
 
                 this.$emit('update:index', index);
                 if (!this.$route.hash.includes(`${hash}`)) {
