@@ -52,6 +52,11 @@ import PhotoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 export default {
     name: 'Photoswipe',
 
+    model: {
+        prop: 'index',
+        event: 'update:index',
+    },
+
     props: {
         items: {
             type: Array,
@@ -64,44 +69,52 @@ export default {
     },
 
     mounted() {
-        const that = this;
-        const gallery = new PhotoSwipe(
-            this.$refs.pswp,
-            PhotoSwipeUIDefault,
-            this.items,
-            {
-                index: this.index,
-                history: false,
-            },
-        );
+        this.initPhotoSwipe();
+    },
 
-        gallery.listen('destroy', () => {
-            this.$router.push({ hash: false });
-            that.$emit('closed');
-        });
-        gallery.listen('gettingData', (index, getItem) => {
-            const item = getItem;
+    methods: {
+        initPhotoSwipe() {
+            const gallery = new PhotoSwipe(
+                this.$refs.pswp,
+                PhotoSwipeUIDefault,
+                this.items,
+                {
+                    index: this.index,
+                    history: false,
+                },
+            );
 
-            if (item.w < 1 || item.h < 1) {
-                const img = new Image();
+            gallery.listen('destroy', () => {
+                this.$router.push({ hash: false });
+                this.$emit('closed');
+            });
+            gallery.listen('gettingData', (index, getItem) => {
+                const item = getItem;
 
-                img.onload = function onload() {
-                    item.w = this.width;
-                    item.h = this.height;
-                    gallery.updateSize(true);
-                };
+                if (item.w < 1 || item.h < 1) {
+                    const img = new Image();
 
-                img.src = item.src;
-            }
-        });
-        gallery.listen('afterChange', async () => {
-            const index = gallery.getCurrentIndex();
+                    img.onload = function onload() {
+                        item.w = this.width;
+                        item.h = this.height;
+                        gallery.updateSize(true);
+                    };
 
-            await this.$router.push({ hash: `pid=${index}` });
-            this.$emit('changed-item', index);
-        });
+                    img.src = item.src;
+                }
+            });
+            gallery.listen('afterChange', async () => {
+                const index = gallery.getCurrentIndex();
+                const hash = `pid=${index + 1}`;
 
-        gallery.init();
+                this.$emit('update:index', index);
+                if (!this.$route.hash.includes(`${hash}`)) {
+                    await this.$router.push({ hash });
+                }
+            });
+
+            gallery.init();
+        },
     },
 };
 </script>

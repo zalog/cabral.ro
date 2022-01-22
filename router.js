@@ -13,8 +13,19 @@ const createRouter = () => new Router({
     scrollBehavior(to, from, savedPosition) {
         let output = { x: 0, y: 0 };
 
+        if (from.hash) output = null;
         if (savedPosition) output = savedPosition;
-        if (to.hash) output = { selector: to.hash };
+        if (to.hash) {
+            const blacklist = ['#pid'];
+            const isHashBlacklisted = blacklist
+                .findIndex((entry) => to.hash.indexOf(entry) === 0) >= 0
+                && true;
+            let selector = to.hash;
+
+            if (isHashBlacklisted) selector = null;
+
+            output = { selector };
+        }
 
         return output;
     },

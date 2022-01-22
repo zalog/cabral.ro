@@ -63,10 +63,10 @@
 
         <lazy-photoswipe
             v-if="typeof photoswipe.index === 'number'"
+            v-model="photoswipe.index"
             :items="photoswipe.items"
-            :index="photoswipe.index"
-            @closed="photoswipe.index = false"
-            @changed-item="onPhotoswipeChangedItem($event)"
+            @closed="onPhotoswipeClosed()"
+            @update:index="onPhotoswipeUpdate($event)"
         />
     </div>
 </template>
@@ -173,14 +173,19 @@ export default {
                     this.photoswipe.index = index;
                 });
             });
+
+            this.pageTitleInitial = this.pageTitle;
+
+            const { hash } = this.$route;
+            if (hash.includes('pid=')) {
+                const index = hash.split('=')[1];
+                this.photoswipe.index = Number(index);
+            }
         },
-        onPhotoswipeChangedItem(itemIndex) {
+        onPhotoswipeUpdate(itemIndex) {
             const route = this.$route;
             const itemNr = itemIndex + 1;
-            const imageRegex = / Image \d/;
-            const pageTitle = (this.pageTitle.search(imageRegex) === -1)
-                ? `${this.pageTitle} - Image ${itemNr}`
-                : this.pageTitle.replace(imageRegex, ` - Image ${itemNr}`);
+            const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
 
             this.$store.dispatch('data/setPageData', {
                 route,
@@ -190,6 +195,15 @@ export default {
             this.sendPageView({
                 title: pageTitle,
                 url: route.fullPath,
+            });
+        },
+        onPhotoswipeClosed() {
+            this.photoswipe.index = false;
+
+            this.$store.dispatch('data/setPageData', {
+                route: this.$route,
+                prop: 'head.title',
+                data: this.pageTitleInitial,
             });
         },
     },
