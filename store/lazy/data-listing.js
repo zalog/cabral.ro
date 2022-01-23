@@ -28,7 +28,7 @@ export default {
                 const responseCategory = await fetchCategory({
                     $axios: this.$axios,
                     params: {
-                        slug: pageCategorySlug,
+                        slug: pageCategorySlug.split('/').pop(),
                     },
                 });
                 pageTitle = responseCategory.name;
