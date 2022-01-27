@@ -1,11 +1,14 @@
 import { ENDPOINTS } from '../utils/constants';
 import { head } from '../utils/adaptors';
 
-const fetchHead = async (payload) => {
+const fetchHead = async ({
+    $axios,
+    url,
+}) => {
     try {
-        const response = await payload.$axios({
+        const response = await $axios({
             method: 'get',
-            url: `${ENDPOINTS.HEAD}?url=${payload.url}`,
+            url: `${ENDPOINTS.HEAD}?url=${url}`,
         });
 
         return head(response.data.html);
