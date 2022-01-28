@@ -1,9 +1,9 @@
 import { ENDPOINTS } from '~/utils/constants';
 import { menu } from '~/utils/adaptors';
 
-const fetchMenu = async (payload) => {
+const fetchMenu = async ({ $axios }) => {
     try {
-        const response = await payload.$axios({
+        const response = await $axios({
             method: 'get',
             url: ENDPOINTS.MENU,
         });
