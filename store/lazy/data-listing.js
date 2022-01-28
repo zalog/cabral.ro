@@ -65,7 +65,9 @@ export default {
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
-            const payloadPosts = {
+            if (isValidPropData(currentPage, prop)) return;
+
+            const response = await fetchPosts({
                 $axios: this.$axios,
                 params: {
                     fields: [
@@ -83,11 +85,7 @@ export default {
                     itemsOnPage: postsOnPage,
                     currentPage: parseInt(payload.route.params.id, 10) || 1,
                 },
-            };
-
-            if (isValidPropData(currentPage, prop)) return;
-
-            const response = await fetchPosts(payloadPosts);
+            });
 
             commit('SET_PAGE_DATA', {
                 prop,
