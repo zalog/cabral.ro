@@ -2,13 +2,10 @@ import { ENDPOINTS } from '~/utils/constants';
 import { pageSinglePost, pageSinglePage } from '~/utils/adaptors';
 
 export async function fetchPost(payload) {
-    const params = {
-        fields: [],
-        ...payload.params,
-    };
+    const { params } = payload;
 
     // prepare params data values
-    if (params.fields.length) params.fields = params.fields.join(',');
+    if (payload.fields?.length) params.fields = payload.fields.join(',');
 
     const response = await payload.$axios({
         method: 'get',
@@ -22,13 +19,10 @@ export async function fetchPost(payload) {
 }
 
 export async function fetchPage(payload) {
-    const params = {
-        fields: [],
-        ...payload.params,
-    };
+    const { params } = payload;
 
     // prepare params data values
-    if (params.fields.length) params.fields = params.fields.join(',');
+    if (payload.fields?.length) params.fields = payload.fields.join(',');
 
     const response = await payload.$axios({
         method: 'get',
