@@ -1,13 +1,17 @@
 import { ENDPOINTS } from '~/utils/constants';
 import { pageSinglePost, pageSinglePage } from '~/utils/adaptors';
 
-export async function fetchPost(payload) {
-    const { params } = payload;
+export async function fetchPost({
+    $axios,
+    params,
+    fields = [],
+}) {
+    Object.assign(params, {
+        fields: fields.join(','),
+        ...params,
+    });
 
-    // prepare params data values
-    if (payload.fields?.length) params.fields = payload.fields.join(',');
-
-    const response = await payload.$axios({
+    const response = await $axios({
         method: 'get',
         url: `${ENDPOINTS.POSTS}`,
         params,
