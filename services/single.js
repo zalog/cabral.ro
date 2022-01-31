@@ -22,13 +22,17 @@ export async function fetchPost({
     return pageSinglePost(response.data[0]);
 }
 
-export async function fetchPage(payload) {
-    const { params } = payload;
+export async function fetchPage({
+    $axios,
+    params,
+    fields = [],
+}) {
+    Object.assign(params, {
+        fields: fields.join(','),
+        ...params,
+    });
 
-    // prepare params data values
-    if (payload.fields?.length) params.fields = payload.fields.join(',');
-
-    const response = await payload.$axios({
+    const response = await $axios({
         method: 'get',
         url: `${ENDPOINTS.PAGES}`,
         params,
