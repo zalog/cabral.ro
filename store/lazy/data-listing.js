@@ -9,19 +9,22 @@ export default {
     namespaced: false,
 
     actions: {
-        async fetchPageListing({ getters, commit, dispatch }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPageListing(
+            { getters, commit, dispatch },
+            { route, categories },
+        ) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             let pageTitle = SITE.TITLE;
             let pageDescription = null;
 
-            const pageSearch = payload.route.query.s;
+            const pageSearch = route.query.s;
             if (pageSearch) {
                 pageTitle = `Caută după "${pageSearch}"`;
             }
 
             // TODO adds category name
-            const pageCategorySlug = payload.route.params.categorySlug;
+            const pageCategorySlug = route.params.categorySlug;
             if (pageCategorySlug) {
                 if (isValidPropData(currentPage, 'title')) return;
 
@@ -35,7 +38,7 @@ export default {
                 pageDescription = responseCategory.description;
             }
 
-            const pageNumber = payload.route.params.id;
+            const pageNumber = route.params.id;
             if (pageNumber) {
                 pageTitle = formatTitle([
                     pageTitle,
@@ -56,8 +59,8 @@ export default {
             });
 
             await dispatch('fetchPosts', {
-                route: payload.route,
-                categories: payload.categories,
+                route,
+                categories,
             });
         },
         async fetchPosts({ getters, commit }, payload) {
