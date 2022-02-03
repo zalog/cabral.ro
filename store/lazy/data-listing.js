@@ -63,8 +63,11 @@ export default {
                 categories,
             });
         },
-        async fetchPosts({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPosts(
+            { getters, commit },
+            { route, categories },
+        ) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -77,16 +80,16 @@ export default {
                         'title', 'slug', 'excerpt', 'date', 'modified',
                         'embed', 'embed_featured_media', 'comments_number',
                     ],
-                    ...(payload.route.query.s && {
-                        search: payload.route.query.s,
+                    ...(route.query.s && {
+                        search: route.query.s,
                     }),
                 },
-                ...(payload.categories && {
-                    categories: payload.categories,
+                ...(categories && {
+                    categories,
                 }),
                 pagination: {
                     itemsOnPage: postsOnPage,
-                    currentPage: parseInt(payload.route.params.id, 10) || 1,
+                    currentPage: parseInt(route.params.id, 10) || 1,
                 },
             });
 
