@@ -36,13 +36,16 @@ export default {
                 data: response.pageInfo,
             });
         },
-        async postComment({ commit, dispatch }, payload) {
-            const pageKey = payload.route.fullPath;
+        async postComment(
+            { commit, dispatch },
+            { route, params, index },
+        ) {
+            const pageKey = route.fullPath;
 
             try {
                 const comment = await postComment({
                     $axios: this.$axios,
-                    params: payload.params,
+                    params,
                 });
 
                 if (comment.status === 'approved') {
@@ -54,8 +57,8 @@ export default {
                         unshift: true,
                     };
 
-                    if (typeof payload.index === 'number') {
-                        payloadCommit.prop = `${payloadCommit.prop}.${payload.index}.replies.nodes`;
+                    if (typeof index === 'number') {
+                        payloadCommit.prop = `${payloadCommit.prop}.${index}.replies.nodes`;
                         payloadCommit.unshift = false;
                     }
 
