@@ -4,8 +4,8 @@ export default {
     namespaced: false,
 
     actions: {
-        async fetchComments({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchComments({ getters, commit }, { route }) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const pageComments = currentPage.comments;
             const pageSingleId = currentPage.main.id;
