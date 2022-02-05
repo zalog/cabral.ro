@@ -46,8 +46,8 @@ export default {
                 routePath: pageKey,
             });
         },
-        async fetchPagePage({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPagePage({ getters, commit }, { route }) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -56,7 +56,7 @@ export default {
             const response = await fetchPage({
                 $axios: this.$axios,
                 params: {
-                    slug: payload.route.path,
+                    slug: route.path,
                 },
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
