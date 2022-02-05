@@ -9,8 +9,8 @@ export default {
             await dispatch('fetchPagePost', { route });
             await dispatch('fetchPagePage', { route });
         },
-        async fetchPagePost({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPagePost({ getters, commit }, { route }) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -20,7 +20,7 @@ export default {
                 $axios: this.$axios,
                 params: {
                     embed_featured_media_size: 'full',
-                    slug: payload.route.path,
+                    slug: route.path,
                 },
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
