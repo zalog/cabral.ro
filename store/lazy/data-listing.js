@@ -76,14 +76,14 @@ export default {
             const response = await fetchPosts({
                 $axios: this.$axios,
                 params: {
-                    fields: [
-                        'title', 'slug', 'excerpt', 'date', 'modified',
-                        'embed', 'embed_featured_media', 'comments_number',
-                    ],
                     ...(route.query.s && {
                         search: route.query.s,
                     }),
                 },
+                fields: [
+                    'title', 'slug', 'excerpt', 'date', 'modified',
+                    'embed', 'embed_featured_media', 'comments_number',
+                ],
                 ...(categories && {
                     categories,
                 }),

@@ -8,11 +8,12 @@ const itemsOnPage = 10;
 const fetchPosts = async ({
     $axios,
     params,
+    fields = [],
     categories = [],
     pagination,
 }) => {
     Object.assign(params, {
-        fields: [],
+        fields: fields.join(','),
         search: '',
         ...params,
     });
@@ -26,7 +27,7 @@ const fetchPosts = async ({
     // posts: params
     const paramsPosts = {
         ...(params.fields.length && {
-            fields: params.fields.join(','),
+            fields,
         }),
         ...(params.search && {
             search: params.search,
