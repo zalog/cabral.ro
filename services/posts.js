@@ -14,7 +14,7 @@ const fetchPosts = async ({
 }) => {
     Object.assign(params, {
         ...(fields.length && {
-            fields: fields.join(','),
+            _fields: fields.join(','),
         }),
         ...(categories.length && {
             'filter[category_name]': categories.join(','),

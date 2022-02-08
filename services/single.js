@@ -7,7 +7,7 @@ export async function fetchPost({
     fields = [],
 }) {
     Object.assign(params, {
-        fields: fields.join(','),
+        _fields: fields.join(','),
         ...params,
     });
 
@@ -28,7 +28,7 @@ export async function fetchPage({
     fields = [],
 }) {
     Object.assign(params, {
-        fields: fields.join(','),
+        _fields: fields.join(','),
         ...params,
     });
 
