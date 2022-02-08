@@ -13,8 +13,14 @@ const fetchPosts = async ({
     pagination,
 }) => {
     Object.assign(params, {
-        fields: fields.join(','),
-        search: '',
+        ...(fields.length && {
+            fields: fields.join(','),
+        }),
+        ...(categories.length && {
+            'filter[category_name]': categories.join(','),
+        }),
+        per_page: pagination.itemsOnPage,
+        page: pagination.currentPage,
         ...params,
     });
     Object.assign(pagination, {
@@ -24,26 +30,11 @@ const fetchPosts = async ({
     });
     const output = {};
 
-    // posts: params
-    const paramsPosts = {
-        ...(params.fields.length && {
-            fields,
-        }),
-        ...(params.search && {
-            search: params.search,
-        }),
-        ...(categories.length && {
-            'filter[category_name]': categories.join(','),
-        }),
-        per_page: pagination.itemsOnPage,
-        page: pagination.currentPage,
-    };
-
     // posts: fetch
     const responsePosts = await $axios({
         method: 'get',
         url: ENDPOINTS.POSTS,
-        params: paramsPosts,
+        params,
     });
 
     output.posts = responsePosts.data.map((post) => itemPost(post));
