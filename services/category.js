@@ -1,12 +1,15 @@
 import { ENDPOINTS } from '../utils/constants';
 import { pageCategory } from '../utils/adaptors';
 
-const fetchCategory = async (payload) => {
+const fetchCategory = async ({
+    $axios,
+    params,
+}) => {
     try {
-        const response = await payload.$axios({
+        const response = await $axios({
             method: 'get',
             url: ENDPOINTS.CATEGORIES,
-            params: payload.params,
+            params,
         });
 
         return pageCategory(response.data[0]);

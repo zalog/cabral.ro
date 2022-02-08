@@ -9,33 +9,36 @@ export default {
     namespaced: false,
 
     actions: {
-        async fetchPageListing({ getters, commit, dispatch }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPageListing(
+            { getters, commit, dispatch },
+            { route, categories },
+        ) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             let pageTitle = SITE.TITLE;
             let pageDescription = null;
 
-            const pageSearch = payload.route.query.s;
+            const pageSearch = route.query.s;
             if (pageSearch) {
                 pageTitle = `Caută după "${pageSearch}"`;
             }
 
             // TODO adds category name
-            const pageCategorySlug = payload.route.params.categorySlug;
+            const pageCategorySlug = route.params.categorySlug;
             if (pageCategorySlug) {
                 if (isValidPropData(currentPage, 'title')) return;
 
                 const responseCategory = await fetchCategory({
                     $axios: this.$axios,
                     params: {
-                        slug: pageCategorySlug,
+                        slug: pageCategorySlug.split('/').pop(),
                     },
                 });
                 pageTitle = responseCategory.name;
                 pageDescription = responseCategory.description;
             }
 
-            const pageNumber = payload.route.params.id;
+            const pageNumber = route.params.id;
             if (pageNumber) {
                 pageTitle = formatTitle([
                     pageTitle,
@@ -56,38 +59,39 @@ export default {
             });
 
             await dispatch('fetchPosts', {
-                route: payload.route,
-                categories: payload.categories,
+                route,
+                categories,
             });
         },
-        async fetchPosts({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPosts(
+            { getters, commit },
+            { route, categories },
+        ) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
-            const payloadPosts = {
+            if (isValidPropData(currentPage, prop)) return;
+
+            const response = await fetchPosts({
                 $axios: this.$axios,
                 params: {
-                    fields: [
-                        'title', 'slug', 'excerpt', 'date', 'modified',
-                        'embed', 'embed_featured_media', 'comments_number',
-                    ],
-                    ...(payload.route.query.s && {
-                        search: payload.route.query.s,
+                    ...(route.query.s && {
+                        search: route.query.s,
                     }),
                 },
-                ...(payload.categories && {
-                    categories: payload.categories,
+                fields: [
+                    'title', 'slug', 'excerpt', 'date', 'modified',
+                    'embed', 'embed_featured_media', 'comments_number',
+                ],
+                ...(categories && {
+                    categories,
                 }),
                 pagination: {
                     itemsOnPage: postsOnPage,
-                    currentPage: parseInt(payload.route.params.id, 10) || 1,
+                    currentPage: parseInt(route.params.id, 10) || 1,
                 },
-            };
-
-            if (isValidPropData(currentPage, prop)) return;
-
-            const response = await fetchPosts(payloadPosts);
+            });
 
             commit('SET_PAGE_DATA', {
                 prop,

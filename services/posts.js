@@ -5,41 +5,36 @@ import { itemPost } from '~/utils/adaptors';
 const paginationMaxPages = 8;
 const itemsOnPage = 10;
 
-const fetchPosts = async (payload) => {
+const fetchPosts = async ({
+    $axios,
+    params,
+    fields = [],
+    categories = [],
+    pagination,
+}) => {
+    Object.assign(params, {
+        ...(fields.length && {
+            _fields: fields.join(','),
+        }),
+        ...(categories.length && {
+            'filter[category_name]': categories.join(','),
+        }),
+        per_page: pagination.itemsOnPage,
+        page: pagination.currentPage,
+        ...params,
+    });
+    Object.assign(pagination, {
+        itemsOnPage,
+        currentPage: 1,
+        ...pagination,
+    });
     const output = {};
-    const payloadDefault = {
-        params: {
-            fields: [],
-            search: '',
-        },
-        categories: [],
-        pagination: {
-            itemsOnPage,
-            currentPage: 1,
-        },
-    };
-    Object.assign(payloadDefault, payload);
-
-    // posts: params
-    const paramsPosts = {
-        ...(payloadDefault.params.fields.length && {
-            fields: payloadDefault.params.fields.join(','),
-        }),
-        ...(payloadDefault.params.search && {
-            search: payloadDefault.params.search,
-        }),
-        ...(payloadDefault.categories.length && {
-            'filter[category_name]': payloadDefault.categories.join(','),
-        }),
-        per_page: payloadDefault.pagination.itemsOnPage,
-        page: payloadDefault.pagination.currentPage,
-    };
 
     // posts: fetch
-    const responsePosts = await payload.$axios({
+    const responsePosts = await $axios({
         method: 'get',
         url: ENDPOINTS.POSTS,
-        params: paramsPosts,
+        params,
     });
 
     output.posts = responsePosts.data.map((post) => itemPost(post));
@@ -47,8 +42,8 @@ const fetchPosts = async (payload) => {
     // posts: pagination
     const responsePagination = paginate(
         parseInt(responsePosts.headers['x-wp-total'], 10),
-        payload.pagination.currentPage,
-        payload.pagination.itemsOnPage,
+        pagination.currentPage,
+        pagination.itemsOnPage,
         paginationMaxPages,
     );
 

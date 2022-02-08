@@ -2,14 +2,14 @@ import { ENDPOINTS } from '../utils/constants';
 import { itemComment } from '../utils/adaptors';
 import { objectRenameKeys } from '../utils';
 
-export async function fetchComments(payload) {
-    const params = {
-        onPage: 10,
-        after: null,
-        ...payload,
-    };
+export async function fetchComments({
+    $axios,
+    singleId,
+    after = null,
+}) {
+    const onPage = 10;
 
-    const response = await payload.$axios({
+    const response = await $axios({
         method: 'post',
         url: ENDPOINTS.GRAPHQL,
         data: {
@@ -56,9 +56,9 @@ export async function fetchComments(payload) {
                 }
             `,
             variables: {
-                id: params.singleId,
-                first: params.onPage,
-                after: params.after,
+                id: singleId,
+                first: onPage,
+                after,
             },
         },
     });

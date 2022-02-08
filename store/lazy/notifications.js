@@ -12,8 +12,8 @@ export default {
         PUSH: (state, payload) => {
             state.push(payload);
         },
-        DELETE: (state, payloadIndex) => {
-            state.splice(payloadIndex, 1);
+        DELETE: (state, index) => {
+            state.splice(index, 1);
         },
     },
 
@@ -29,10 +29,10 @@ export default {
 
             commit('PUSH', output);
         },
-        delete: ({ state, commit }, payloadIndex) => {
-            if (!state[payloadIndex]) return;
+        delete: ({ state, commit }, index) => {
+            if (!state[index]) return;
 
-            commit('DELETE', payloadIndex);
+            commit('DELETE', index);
         },
     },
 };

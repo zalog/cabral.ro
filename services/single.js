@@ -1,16 +1,17 @@
 import { ENDPOINTS } from '~/utils/constants';
 import { pageSinglePost, pageSinglePage } from '~/utils/adaptors';
 
-export async function fetchPost(payload) {
-    const params = {
-        fields: [],
-        ...payload.params,
-    };
+export async function fetchPost({
+    $axios,
+    params,
+    fields = [],
+}) {
+    Object.assign(params, {
+        _fields: fields.join(','),
+        ...params,
+    });
 
-    // prepare params data values
-    if (params.fields.length) params.fields = params.fields.join(',');
-
-    const response = await payload.$axios({
+    const response = await $axios({
         method: 'get',
         url: `${ENDPOINTS.POSTS}`,
         params,
@@ -21,16 +22,17 @@ export async function fetchPost(payload) {
     return pageSinglePost(response.data[0]);
 }
 
-export async function fetchPage(payload) {
-    const params = {
-        fields: [],
-        ...payload.params,
-    };
+export async function fetchPage({
+    $axios,
+    params,
+    fields = [],
+}) {
+    Object.assign(params, {
+        _fields: fields.join(','),
+        ...params,
+    });
 
-    // prepare params data values
-    if (params.fields.length) params.fields = params.fields.join(',');
-
-    const response = await payload.$axios({
+    const response = await $axios({
         method: 'get',
         url: `${ENDPOINTS.PAGES}`,
         params,

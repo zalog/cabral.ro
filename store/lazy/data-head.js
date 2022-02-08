@@ -5,8 +5,11 @@ export default {
     namespaced: false,
 
     actions: {
-        async fetchHead({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchHead(
+            { getters, commit },
+            { route, url },
+        ) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'head';
 
@@ -14,7 +17,7 @@ export default {
 
             const response = await fetchHead({
                 $axios: this.$axios,
-                url: payload.url,
+                url,
             });
 
             commit('SET_PAGE_DATA', {

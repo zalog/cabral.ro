@@ -5,12 +5,12 @@ export default {
     namespaced: false,
 
     actions: {
-        async fetchPageSingle({ dispatch }, payload) {
-            await dispatch('fetchPagePost', payload);
-            await dispatch('fetchPagePage', payload);
+        async fetchPageSingle({ dispatch }, { route }) {
+            await dispatch('fetchPagePost', { route });
+            await dispatch('fetchPagePage', { route });
         },
-        async fetchPagePost({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPagePost({ getters, commit }, { route }) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -19,13 +19,13 @@ export default {
             const response = await fetchPost({
                 $axios: this.$axios,
                 params: {
-                    fields: [
-                        'id', 'link', 'title', 'date', 'modified', 'content',
-                        'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts',
-                    ],
                     embed_featured_media_size: 'full',
-                    slug: payload.route.path,
+                    slug: route.path,
                 },
+                fields: [
+                    'id', 'link', 'title', 'date', 'modified', 'content',
+                    'embed', 'embed_featured_media', 'comments_number', 'yoast_meta', 'jetpack-related-posts',
+                ],
             });
 
             commit('SET_PAGE_DATA', {
@@ -46,8 +46,8 @@ export default {
                 routePath: pageKey,
             });
         },
-        async fetchPagePage({ getters, commit }, payload) {
-            const pageKey = payload.route.fullPath;
+        async fetchPagePage({ getters, commit }, { route }) {
+            const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -56,12 +56,12 @@ export default {
             const response = await fetchPage({
                 $axios: this.$axios,
                 params: {
-                    fields: [
-                        'id', 'link', 'title', 'date', 'modified', 'content',
-                        'comments_number', 'yoast_meta',
-                    ],
-                    slug: payload.route.path,
+                    slug: route.path,
                 },
+                fields: [
+                    'id', 'link', 'title', 'date', 'modified', 'content',
+                    'comments_number', 'yoast_meta',
+                ],
             });
 
             commit('SET_PAGE_DATA', {
