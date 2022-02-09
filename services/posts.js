@@ -36,12 +36,13 @@ const fetchPosts = async ({
         url: ENDPOINTS.POSTS,
         params,
     });
+    const responsePostsCount = parseInt(responsePosts.headers['x-wp-total'], 10);
 
     output.posts = responsePosts.data.map((post) => itemPost(post));
 
     // posts: pagination
     const responsePagination = paginate(
-        parseInt(responsePosts.headers['x-wp-total'], 10),
+        responsePostsCount,
         pagination.currentPage,
         pagination.itemsOnPage,
         paginationMaxPages,
