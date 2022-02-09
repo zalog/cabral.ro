@@ -19,7 +19,7 @@ const fetchPosts = async ({
         ...(categories.length && {
             'filter[category_name]': categories.join(','),
         }),
-        per_page: pagination.itemsOnPage,
+        per_page: pagination.itemsOnPage || itemsOnPage,
         page: pagination.currentPage,
         ...params,
     });
