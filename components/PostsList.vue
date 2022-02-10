@@ -25,7 +25,10 @@
             />
         </template>
 
-        <nav aria-label="Page navigation">
+        <nav
+            v-if="posts.pagination"
+            aria-label="Page navigation"
+        >
             <ul class="pagination justify-content-center">
                 <router-link
                     v-for="(page, index) in posts.pagination.pages"

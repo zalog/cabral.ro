@@ -37,21 +37,24 @@ const fetchPosts = async ({
         params,
     });
     const responsePostsCount = parseInt(responsePosts.headers['x-wp-total'], 10);
+    const responsePostsPages = responsePostsCount > pagination.itemsOnPage;
 
     output.posts = responsePosts.data.map((post) => itemPost(post));
 
     // posts: pagination
-    const responsePagination = paginate(
-        responsePostsCount,
-        pagination.currentPage,
-        pagination.itemsOnPage,
-        paginationMaxPages,
-    );
+    if (responsePostsPages) {
+        const responsePagination = paginate(
+            responsePostsCount,
+            pagination.currentPage,
+            pagination.itemsOnPage,
+            paginationMaxPages,
+        );
 
-    output.pagination = {
-        pages: responsePagination.pages,
-        currentPage: responsePagination.currentPage,
-    };
+        output.pagination = {
+            pages: responsePagination.pages,
+            currentPage: responsePagination.currentPage,
+        };
+    }
 
     return output;
 };
