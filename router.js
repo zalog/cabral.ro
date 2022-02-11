@@ -55,18 +55,6 @@ const createRouter = () => new Router({
             component: PageSliderTest,
         },
 
-        // single
-        {
-            name: 'Single',
-            path: '/:singleSlug/',
-            pathToRegexpOptions: { strict: true },
-            component: PageSingle,
-        },
-        {
-            path: '/:singleSlug',
-            redirect: { name: 'Single' },
-        },
-
         // archive pagination
         {
             path: '/(category)/:categorySlug+/page/(1|:id)',
@@ -92,6 +80,18 @@ const createRouter = () => new Router({
             path: '/(category)/:categorySlug+/',
             pathToRegexpOptions: { strict: true },
             component: PageArchive,
+        },
+
+        // single
+        {
+            name: 'Single',
+            path: '/:singleSlug/',
+            pathToRegexpOptions: { strict: true },
+            component: PageSingle,
+        },
+        {
+            path: '/:singleSlug',
+            redirect: { name: 'Single' },
         },
     ],
 });
