@@ -69,13 +69,11 @@ const createRouter = () => new Router({
 
         // archive pagination
         {
-            path: '/(category)/:categorySlug+/page/1',
-            redirect: (to) => `/${to.params.pathMatch}/${to.params.categorySlug}/`,
-        },
-        {
-            path: '/(category)/:categorySlug+/page/:id',
-            pathToRegexpOptions: { strict: true },
-            redirect: (to) => `/${to.params.pathMatch}/${to.params.categorySlug}/page/${to.params.id}/`,
+            path: '/(category)/:categorySlug+/page/(1|:id)',
+            redirect: (to) => {
+                const page = (to.params.id > 1) ? `page/${to.params.id}/` : '';
+                return `/${to.params.pathMatch}/${to.params.categorySlug}/${page}`;
+            },
         },
         {
             name: 'ArchivePage',
