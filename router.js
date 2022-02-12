@@ -55,31 +55,48 @@ const createRouter = () => new Router({
             component: PageSliderTest,
         },
 
-        // archive pagination
-        {
-            path: '/(category)/:categorySlug+/page/(1|:id)',
-            redirect: (to) => {
-                const page = (to.params.id > 1) ? `page/${to.params.id}/` : '';
-                return `/${to.params.pathMatch}/${to.params.categorySlug}/${page}`;
-            },
-        },
-        {
-            name: 'ArchivePage',
-            path: '/(category)/:categorySlug+/page/:id/',
-            pathToRegexpOptions: { strict: true },
-            component: PageArchive,
-        },
         // archive
         {
-            path: '/(category)/:categorySlug+',
+            path: '/(category)',
             pathToRegexpOptions: { strict: true },
-            redirect: (to) => `/${to.params.pathMatch}/${to.params.categorySlug}/`,
+            redirect: (to) => `/${to.params.pathMatch}/`,
         },
         {
             name: 'Archive',
-            path: '/(category)/:categorySlug+/',
+            path: '/(category)/',
             pathToRegexpOptions: { strict: true },
             component: PageArchive,
+            children: [
+                {
+                    path: ':categorySlug+',
+                    pathToRegexpOptions: { strict: true },
+                    redirect: (to) => `/${to.params.pathMatch}/${to.params.categorySlug}/`,
+                },
+                {
+                    path: ':categorySlug+/',
+                    pathToRegexpOptions: { strict: true },
+                    children: [
+                        {
+                            path: 'page/:id([2-9]|\\d\\d\\d*)/',
+                            pathToRegexpOptions: { strict: true },
+                        },
+                        {
+                            path: 'page/:id?',
+                            redirect: ({ params }) => {
+                                const { pathMatch, categorySlug } = params;
+                                const categorySlugCleaned = categorySlug.split('/page')[0];
+                                const page = (params.id > 1) ? `page/${params.id}/` : '';
+
+                                return `/${pathMatch}/${categorySlugCleaned}/${page}`;
+                            },
+                        },
+                    ],
+                },
+                {
+                    path: '*',
+                    redirect: '/',
+                },
+            ],
         },
 
         // single
