@@ -67,7 +67,7 @@ export default {
 
     methods: {
         paginationTo(page) {
-            const routeCategory = this.$route.params.categorySlug;
+            const routeCategory = this.$route.params.slug;
             const routeS = (typeof this.$route.query.s !== 'undefined' && `?s=${this.$route.query.s}`) || '';
             let url = `/page/${page}/${routeS}`;
 

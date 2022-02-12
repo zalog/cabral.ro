@@ -24,14 +24,14 @@ export default {
             }
 
             // TODO adds category name
-            const pageCategorySlug = route.params.categorySlug;
-            if (pageCategorySlug) {
+            const pageSlug = route.params.slug;
+            if (pageSlug) {
                 if (isValidPropData(currentPage, 'title')) return;
 
                 const responseCategory = await fetchCategory({
                     $axios: this.$axios,
                     params: {
-                        slug: pageCategorySlug.split('/').pop(),
+                        slug: pageSlug.split('/').pop(),
                     },
                 });
                 pageTitle = responseCategory.name;

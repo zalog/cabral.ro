@@ -68,12 +68,12 @@ const createRouter = () => new Router({
             component: PageArchive,
             children: [
                 {
-                    path: ':categorySlug+',
+                    path: ':slug+',
                     pathToRegexpOptions: { strict: true },
-                    redirect: (to) => `/${to.params.pathMatch}/${to.params.categorySlug}/`,
+                    redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
                 },
                 {
-                    path: ':categorySlug+/',
+                    path: ':slug+/',
                     pathToRegexpOptions: { strict: true },
                     children: [
                         {
@@ -83,11 +83,11 @@ const createRouter = () => new Router({
                         {
                             path: 'page/:id?',
                             redirect: ({ params }) => {
-                                const { pathMatch, categorySlug } = params;
-                                const categorySlugCleaned = categorySlug.split('/page')[0];
+                                const { pathMatch, slug } = params;
+                                const slugCleaned = slug.split('/page')[0];
                                 const page = (params.id > 1) ? `page/${params.id}/` : '';
 
-                                return `/${pathMatch}/${categorySlugCleaned}/${page}`;
+                                return `/${pathMatch}/${slugCleaned}/${page}`;
                             },
                         },
                     ],
