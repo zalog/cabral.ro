@@ -67,11 +67,11 @@ export default {
 
     methods: {
         paginationTo(page) {
-            const routeCategory = this.$route.params.slug;
+            const { slug } = this.$route.params;
             const routeS = (typeof this.$route.query.s !== 'undefined' && `?s=${this.$route.query.s}`) || '';
             let url = `/page/${page}/${routeS}`;
 
-            if (routeCategory) url = `/category/${routeCategory}${url}`;
+            if (slug) url = `/category/${slug}${url}`;
 
             return url;
         },
