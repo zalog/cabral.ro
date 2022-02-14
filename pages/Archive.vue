@@ -44,12 +44,12 @@ export default {
             store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
         }
 
-        const { slug } = route.params;
+        const { pathMatch, slug } = route.params;
 
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/category/${slug}/`,
+                url: `${SITE.LINK}/${pathMatch}/${slug}/`,
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
