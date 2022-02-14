@@ -68,12 +68,13 @@ export default {
     methods: {
         paginationTo(page) {
             const { pathMatch, slug } = this.$route.params;
-            const routeS = (typeof this.$route.query.s !== 'undefined' && `?s=${this.$route.query.s}`) || '';
-            let url = `/page/${page}/${routeS}`;
+            let output = '/';
 
-            if (slug) url = `/${pathMatch}/${slug}${url}`;
+            if (pathMatch && slug) output += `${pathMatch}/${slug}/`;
+            output += `page/${page}/`;
+            if (typeof this.$route.query.s !== 'undefined') output += `?s=${this.$route.query.s}`;
 
-            return url;
+            return output;
         },
     },
 };
