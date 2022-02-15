@@ -71,7 +71,7 @@ export default {
             let output = '/';
 
             if (pathMatch && slug) output += `${pathMatch}/${slug.split('/page/')[0]}/`;
-            output += `page/${page}/`;
+            if (page > 1) output += `page/${page}/`;
             if (typeof this.$route.query.s !== 'undefined') output += `?s=${this.$route.query.s}`;
 
             return output;
