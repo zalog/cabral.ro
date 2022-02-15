@@ -11,7 +11,7 @@ export default {
     actions: {
         async fetchPageListing(
             { getters, commit, dispatch },
-            { route, categories },
+            { route, categories = [] },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -24,7 +24,7 @@ export default {
             }
 
             // TODO adds category name
-            const pageSlug = route.params.slug;
+            const pageSlug = categories[0]?.split('/').slice(-1)[0] || false;
             if (pageSlug) {
                 if (isValidPropData(currentPage, 'title')) return;
 
