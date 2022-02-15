@@ -45,15 +45,17 @@ export default {
         }
 
         const { pathMatch, slug } = route.params;
+        const [pageSlug, pageNumber] = slug.split('/page/');
 
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/${pathMatch}/${slug}/`,
+                url: `${SITE.LINK}/${pathMatch}/${pageSlug}/`,
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
-                categories: [slug],
+                categories: [pageSlug],
+                pageNumber,
             }),
         ]);
     },

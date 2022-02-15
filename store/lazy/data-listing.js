@@ -11,7 +11,7 @@ export default {
     actions: {
         async fetchPageListing(
             { getters, commit, dispatch },
-            { route, categories = [] },
+            { route, categories = [], pageNumber },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -38,7 +38,6 @@ export default {
                 pageDescription = responseCategory.description;
             }
 
-            const pageNumber = route.params.id;
             if (pageNumber) {
                 pageTitle = formatTitle([
                     pageTitle,
@@ -61,11 +60,12 @@ export default {
             await dispatch('fetchPosts', {
                 route,
                 categories,
+                pageNumber,
             });
         },
         async fetchPosts(
             { getters, commit },
-            { route, categories },
+            { route, categories, pageNumber },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -89,7 +89,7 @@ export default {
                 }),
                 pagination: {
                     itemsOnPage: postsOnPage,
-                    currentPage: parseInt(route.params.id, 10) || 1,
+                    currentPage: pageNumber,
                 },
             });
 

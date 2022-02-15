@@ -58,45 +58,22 @@ const createRouter = () => new Router({
         // archive
         {
             path: '/(category)',
+            redirect: '/',
+        },
+        {
+            path: '/(category)/:slug+/(page|page/1)',
+            redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
+        },
+        {
+            path: '/(category)/:slug+',
             pathToRegexpOptions: { strict: true },
-            redirect: (to) => `/${to.params.pathMatch}/`,
+            redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
         },
         {
             name: 'Archive',
-            path: '/(category)/',
+            path: '/(category)/:slug+/',
             pathToRegexpOptions: { strict: true },
             component: PageArchive,
-            children: [
-                {
-                    path: ':slug+',
-                    pathToRegexpOptions: { strict: true },
-                    redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
-                },
-                {
-                    path: ':slug+/',
-                    pathToRegexpOptions: { strict: true },
-                    children: [
-                        {
-                            path: 'page/:id([2-9]|\\d\\d\\d*)/',
-                            pathToRegexpOptions: { strict: true },
-                        },
-                        {
-                            path: 'page/:id?',
-                            redirect: ({ params }) => {
-                                const { pathMatch, slug } = params;
-                                const slugCleaned = slug.split('/page')[0];
-                                const page = (params.id > 1) ? `page/${params.id}/` : '';
-
-                                return `/${pathMatch}/${slugCleaned}/${page}`;
-                            },
-                        },
-                    ],
-                },
-                {
-                    path: '*',
-                    redirect: '/',
-                },
-            ],
         },
 
         // single

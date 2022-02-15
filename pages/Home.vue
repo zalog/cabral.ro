@@ -39,6 +39,7 @@ export default {
             store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
         }
 
+        const { id: pageNumber } = route.params;
         const pageS = route.query.s;
         let fetchHeadUrl = `${SITE.LINK}/`;
         if (pageS) fetchHeadUrl += `?s=${pageS}`;
@@ -50,6 +51,7 @@ export default {
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
+                pageNumber,
             }),
         ]);
     },

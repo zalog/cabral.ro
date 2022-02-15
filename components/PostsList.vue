@@ -70,7 +70,7 @@ export default {
             const { pathMatch, slug } = this.$route.params;
             let output = '/';
 
-            if (pathMatch && slug) output += `${pathMatch}/${slug}/`;
+            if (pathMatch && slug) output += `${pathMatch}/${slug.split('/page/')[0]}/`;
             output += `page/${page}/`;
             if (typeof this.$route.query.s !== 'undefined') output += `?s=${this.$route.query.s}`;
 
