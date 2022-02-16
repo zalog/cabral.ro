@@ -17,7 +17,7 @@ const fetchPosts = async ({
             _fields: fields.join(','),
         }),
         ...(categories.length && {
-            'filter[category_name]': categories.join(','),
+            'filter[category_name]': categories.join(',') || undefined,
         }),
         per_page: pagination.itemsOnPage || itemsOnPage,
         page: pagination.currentPage,
