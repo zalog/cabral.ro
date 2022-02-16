@@ -54,7 +54,9 @@ export default {
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
-                category: pageSlug,
+                taxonomy: {
+                    category: pageSlug,
+                },
                 pageNumber,
             }),
         ]);

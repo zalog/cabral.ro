@@ -11,7 +11,11 @@ export default {
     actions: {
         async fetchPageListing(
             { getters, commit, dispatch },
-            { route, category = '', pageNumber },
+            {
+                route,
+                taxonomy = { category: '' },
+                pageNumber,
+            },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -24,8 +28,9 @@ export default {
             }
 
             // TODO adds category name
-            const pageSlug = category.split('/').slice(-1)[0] || false;
-            if (pageSlug) {
+            if (taxonomy.category) {
+                const pageSlug = taxonomy.category.split('/').slice(-1)[0];
+
                 if (isValidPropData(currentPage, 'title')) return;
 
                 const responseCategory = await fetchCategory({
@@ -59,13 +64,19 @@ export default {
 
             await dispatch('fetchPosts', {
                 route,
-                categories: [category],
+                taxonomy: {
+                    categories: [taxonomy.category],
+                },
                 pageNumber,
             });
         },
         async fetchPosts(
             { getters, commit },
-            { route, categories, pageNumber },
+            {
+                route,
+                taxonomy = { categories: [] },
+                pageNumber,
+            },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -84,9 +95,7 @@ export default {
                     'title', 'slug', 'excerpt', 'date', 'modified',
                     'embed', 'embed_featured_media', 'comments_number',
                 ],
-                ...(categories && {
-                    categories,
-                }),
+                taxonomy,
                 pagination: {
                     itemsOnPage: postsOnPage,
                     currentPage: pageNumber,

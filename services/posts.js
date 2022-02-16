@@ -9,15 +9,17 @@ const fetchPosts = async ({
     $axios,
     params,
     fields = [],
-    categories = [],
+    taxonomy = {
+        categories: [],
+    },
     pagination,
 }) => {
     Object.assign(params, {
         ...(fields.length && {
             _fields: fields.join(','),
         }),
-        ...(categories.length && {
-            'filter[category_name]': categories.join(',') || undefined,
+        ...(taxonomy.categories.length && {
+            'filter[category_name]': taxonomy.categories.join(',') || undefined,
         }),
         per_page: pagination.itemsOnPage || itemsOnPage,
         page: pagination.currentPage,
