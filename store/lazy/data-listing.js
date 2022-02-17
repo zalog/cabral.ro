@@ -13,7 +13,7 @@ export default {
             { getters, commit, dispatch },
             {
                 route,
-                taxonomy = { category: '' },
+                taxonomy = { category: '', tag: '' },
                 pageNumber,
             },
         ) {
@@ -66,6 +66,7 @@ export default {
                 route,
                 taxonomy: {
                     categories: [taxonomy.category],
+                    tags: [taxonomy.tag],
                 },
                 pageNumber,
             });
@@ -74,7 +75,7 @@ export default {
             { getters, commit },
             {
                 route,
-                taxonomy = { categories: [] },
+                taxonomy = { categories: [], tags: [] },
                 pageNumber,
             },
         ) {

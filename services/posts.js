@@ -11,6 +11,7 @@ const fetchPosts = async ({
     fields = [],
     taxonomy = {
         categories: [],
+        tags: [],
     },
     pagination,
 }) => {
@@ -20,6 +21,9 @@ const fetchPosts = async ({
         }),
         ...(taxonomy.categories.length && {
             'filter[category_name]': taxonomy.categories.join(',') || undefined,
+        }),
+        ...(taxonomy.tags.length && {
+            'filter[tag]': taxonomy.tags.join(',') || undefined,
         }),
         per_page: pagination.itemsOnPage || itemsOnPage,
         page: pagination.currentPage,

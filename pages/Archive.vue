@@ -46,6 +46,7 @@ export default {
 
         const { pathMatch, slug } = route.params;
         const [pageSlug, pageNumber] = slug.split('/page/');
+        const taxonomyName = (pathMatch === 'tag') ? 'tag' : 'category';
 
         await Promise.all([
             store.dispatch('data/fetchHead', {
@@ -55,7 +56,7 @@ export default {
             store.dispatch('data/fetchPageListing', {
                 route,
                 taxonomy: {
-                    category: pageSlug,
+                    [taxonomyName]: pageSlug,
                 },
                 pageNumber,
             }),

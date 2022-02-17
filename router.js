@@ -57,21 +57,21 @@ const createRouter = () => new Router({
 
         // archive
         {
-            path: '/(category)',
+            path: '/(category|tag)',
             redirect: '/',
         },
         {
-            path: '/(category)/:slug+/(page|page/1)',
+            path: '/(category|tag)/:slug+/(page|page/1)',
             redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
         },
         {
-            path: '/(category)/:slug+',
+            path: '/(category|tag)/:slug+',
             pathToRegexpOptions: { strict: true },
             redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
         },
         {
             name: 'Archive',
-            path: '/(category)/:slug+/',
+            path: '/(category|tag)/:slug+/',
             pathToRegexpOptions: { strict: true },
             component: PageArchive,
         },
