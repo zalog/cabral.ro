@@ -44,16 +44,21 @@ export default {
             store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
         }
 
-        const { categorySlug } = route.params;
+        const { pathMatch, slug } = route.params;
+        const [pageSlug, pageNumber] = slug.split('/page/');
+        const taxonomyName = (pathMatch === 'tag') ? 'tag' : 'category';
 
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/category/${categorySlug}/`,
+                url: `${SITE.LINK}/${pathMatch}/${pageSlug}/`,
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
-                categories: [categorySlug],
+                taxonomy: {
+                    [taxonomyName]: pageSlug,
+                },
+                pageNumber,
             }),
         ]);
     },

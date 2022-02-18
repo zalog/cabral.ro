@@ -4,7 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 const PageHome = () => import(/* webpackChunkName: "page-home" */ '@/pages/Home.vue').then((m) => m.default || m);
-const PageCategory = () => import(/* webpackChunkName: "page-category" */ '@/pages/Category.vue').then((m) => m.default || m);
+const PageArchive = () => import(/* webpackChunkName: "page-archive" */ '@/pages/Archive.vue').then((m) => m.default || m);
 const PageSingle = () => import(/* webpackChunkName: "page-single" */ '@/pages/Single.vue').then((m) => m.default || m);
 const PageSliderTest = () => import(/* webpackChunkName: "page-slider-test" */ '@/pages/SliderTest.vue').then((m) => m.default || m);
 
@@ -55,6 +55,27 @@ const createRouter = () => new Router({
             component: PageSliderTest,
         },
 
+        // archive
+        {
+            path: '/(category|tag)',
+            redirect: '/',
+        },
+        {
+            path: '/(category|tag)/:slug+/(page|page/1)',
+            redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
+        },
+        {
+            path: '/(category|tag)/:slug+',
+            pathToRegexpOptions: { strict: true },
+            redirect: (to) => `/${to.params.pathMatch}/${to.params.slug}/`,
+        },
+        {
+            name: 'Archive',
+            path: '/(category|tag)/:slug+/',
+            pathToRegexpOptions: { strict: true },
+            component: PageArchive,
+        },
+
         // single
         {
             name: 'Single',
@@ -65,36 +86,6 @@ const createRouter = () => new Router({
         {
             path: '/:singleSlug',
             redirect: { name: 'Single' },
-        },
-
-        // category: redirect page 1
-        {
-            path: '/category/:categorySlug+/page/1',
-            redirect: (to) => `/category/${to.params.categorySlug}/`,
-        },
-        // category: pagination
-        {
-            path: '/category/:categorySlug+/page/:id',
-            pathToRegexpOptions: { strict: true },
-            redirect: (to) => `/category/${to.params.categorySlug}/page/${to.params.id}/`,
-        },
-        {
-            name: 'CategoryPage',
-            path: '/category/:categorySlug+/page/:id/',
-            pathToRegexpOptions: { strict: true },
-            component: PageCategory,
-        },
-        // category
-        {
-            path: '/category/:categorySlug+',
-            pathToRegexpOptions: { strict: true },
-            redirect: (to) => `/category/${to.params.categorySlug}/`,
-        },
-        {
-            name: 'Category',
-            path: '/category/:categorySlug+/',
-            pathToRegexpOptions: { strict: true },
-            component: PageCategory,
         },
     ],
 });

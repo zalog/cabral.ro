@@ -11,7 +11,11 @@ export default {
     actions: {
         async fetchPageListing(
             { getters, commit, dispatch },
-            { route, categories },
+            {
+                route,
+                taxonomy = { category: '', tag: '' },
+                pageNumber,
+            },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -24,21 +28,21 @@ export default {
             }
 
             // TODO adds category name
-            const pageCategorySlug = route.params.categorySlug;
-            if (pageCategorySlug) {
+            if (taxonomy.category) {
+                const pageSlug = taxonomy.category.split('/').slice(-1)[0];
+
                 if (isValidPropData(currentPage, 'title')) return;
 
                 const responseCategory = await fetchCategory({
                     $axios: this.$axios,
                     params: {
-                        slug: pageCategorySlug.split('/').pop(),
+                        slug: pageSlug.split('/').pop(),
                     },
                 });
                 pageTitle = responseCategory.name;
                 pageDescription = responseCategory.description;
             }
 
-            const pageNumber = route.params.id;
             if (pageNumber) {
                 pageTitle = formatTitle([
                     pageTitle,
@@ -60,12 +64,20 @@ export default {
 
             await dispatch('fetchPosts', {
                 route,
-                categories,
+                taxonomy: {
+                    categories: [taxonomy.category],
+                    tags: [taxonomy.tag],
+                },
+                pageNumber,
             });
         },
         async fetchPosts(
             { getters, commit },
-            { route, categories },
+            {
+                route,
+                taxonomy = { categories: [], tags: [] },
+                pageNumber,
+            },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -84,12 +96,10 @@ export default {
                     'title', 'slug', 'excerpt', 'date', 'modified',
                     'embed', 'embed_featured_media', 'comments_number',
                 ],
-                ...(categories && {
-                    categories,
-                }),
+                taxonomy,
                 pagination: {
                     itemsOnPage: postsOnPage,
-                    currentPage: parseInt(route.params.id, 10) || 1,
+                    currentPage: pageNumber,
                 },
             });
 

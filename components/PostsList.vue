@@ -25,7 +25,10 @@
             />
         </template>
 
-        <nav aria-label="Page navigation">
+        <nav
+            v-if="posts.pagination"
+            aria-label="Page navigation"
+        >
             <ul class="pagination justify-content-center">
                 <router-link
                     v-for="(page, index) in posts.pagination.pages"
@@ -64,13 +67,14 @@ export default {
 
     methods: {
         paginationTo(page) {
-            const routeCategory = this.$route.params.categorySlug;
-            const routeS = (typeof this.$route.query.s !== 'undefined' && `?s=${this.$route.query.s}`) || '';
-            let url = `/page/${page}/${routeS}`;
+            const { pathMatch, slug } = this.$route.params;
+            let output = '/';
 
-            if (routeCategory) url = `/category/${routeCategory}${url}`;
+            if (pathMatch && slug) output += `${pathMatch}/${slug.split('/page/')[0]}/`;
+            if (page > 1) output += `page/${page}/`;
+            if (typeof this.$route.query.s !== 'undefined') output += `?s=${this.$route.query.s}`;
 
-            return url;
+            return output;
         },
     },
 };
