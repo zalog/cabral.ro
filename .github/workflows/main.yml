@@ -10,6 +10,19 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      # see https://docs.github.com/en/actions/advanced-guides/caching-dependencies-to-speed-up-workflows
+      - name: cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: 📦 install dependencies
         run: npm ci
 
