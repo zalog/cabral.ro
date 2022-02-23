@@ -1,0 +1,85 @@
+name: deploy
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        required: false
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install ssh key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: '# known hosts'
+      - name: add known hosts
+        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      # see https://docs.github.com/en/actions/advanced-guides/caching-dependencies-to-speed-up-workflows
+      - name: cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: npm clean install
+        run: npm ci
+
+      - name: npm build
+        run: |
+          npm run nuxt:build
+
+      - name: zip
+        run: |
+          7z a nuxt.zip .nuxt/
+
+      - name: copy
+        run: |
+          scp nuxt.zip ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.PATH_HOME }}
+
+      - name: unzip and start or restart
+        run: |
+          ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
+            cd ${{ secrets.PATH_HOME }}
+            rm -rf .nuxt && mkdir .nuxt
+            unzip -qq nuxt.zip
+            pm2 startOrRestart ecosystem.config.js -s --only cabral.ro-test
+          '
+
+  deploy:
+    if: ${{ github.event.inputs.deploy }}
+
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: install ssh key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: '# known hosts'
+      - name: add known hosts
+        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: start or reload
+        run: |
+          ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
+            cd ${{ secrets.PATH_HOME }}
+            pm2 startOrReload ecosystem.config.js -s --only cabral.ro
+          '
