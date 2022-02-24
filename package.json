@@ -6,7 +6,7 @@
     "start": "npm run nuxt:dev",
     "prod": "npm run nuxt:build && npm run pm2:start",
     "nuxt:dev": "nuxt dev",
-    "nuxt:build": "nuxt build",
+    "nuxt:build": "nuxt build --standalone",
     "nuxt:start": "nuxt start",
     "pm2:start": "pm2 start",
     "lint": "npm run lint:css && npm run lint:js",
