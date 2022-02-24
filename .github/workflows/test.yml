@@ -1,14 +1,9 @@
-name: deploy
+name: test
 
 on:
   push:
     branches:
       - develop
-  workflow_dispatch:
-    inputs:
-      deploy:
-        required: false
-        type: boolean
 
 jobs:
   build:
@@ -61,27 +56,4 @@ jobs:
             rm -rf .nuxt && mkdir .nuxt
             unzip -qq nuxt.zip
             pm2 startOrRestart ecosystem.config.js -s --only cabral.ro-test
-          '
-
-  deploy:
-    if: ${{ github.event.inputs.deploy }}
-
-    runs-on: ubuntu-latest
-
-    needs: build
-
-    steps:
-      - name: install ssh key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: '# known hosts'
-      - name: add known hosts
-        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-
-      - name: start or reload
-        run: |
-          ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
-            cd ${{ secrets.PATH_HOME }}
-            pm2 startOrReload ecosystem.config.js -s --only cabral.ro
           '
