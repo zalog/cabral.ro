@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="navbar navbar-expand-md navbar-dark bg-dark"
+        class="navbar navbar-expand-xl navbar-dark bg-dark"
         :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
     >
         <div class="navbar-bar">
