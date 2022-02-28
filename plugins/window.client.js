@@ -4,6 +4,7 @@ export default ({ app, store }) => {
             store.dispatch('ui/window/attachResizeObserve', {
                 el: app.router.app.$el,
             });
+            store.dispatch('ui/window/attachScroll');
         },
     });
 };
