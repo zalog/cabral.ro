@@ -20,6 +20,7 @@ export default {
         attachScroll({ commit, state }) {
             let latestKnownScrollY = 0;
             let ticking = false;
+            let timeoutID;
 
             const update = () => {
                 ticking = false;
@@ -38,6 +39,19 @@ export default {
                         value: scrollDirectionValue,
                     });
                 }
+
+                commit('SET', {
+                    key: 'isScrolling',
+                    value: true,
+                });
+
+                clearTimeout(timeoutID);
+                timeoutID = setTimeout(() => {
+                    commit('SET', {
+                        key: 'isScrolling',
+                        value: false,
+                    });
+                }, 100);
 
                 latestKnownScrollY = window.scrollY;
             };
