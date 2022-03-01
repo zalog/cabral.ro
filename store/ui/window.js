@@ -1,3 +1,5 @@
+import { breakpoints } from '~/utils/constants/';
+
 export default {
     state: () => ({}),
 
@@ -10,9 +12,16 @@ export default {
     },
 
     actions: {
-        attachResizeObserve({ commit }, { el }) {
+        attachResizeObserve({ commit, state }, { el }) {
             const ro = new ResizeObserver((entries) => entries.forEach((entry) => {
-                commit('SET', { key: 'width', value: entry.contentRect.width });
+                const getBreakpoint = Object.entries(breakpoints)
+                    .reverse()
+                    .find((breakpoint) => entry.contentRect.width >= breakpoint[1]);
+                const [breakpoint] = getBreakpoint;
+
+                if (state.breakpoint === breakpoint) return;
+
+                commit('SET', { key: 'breakpoint', value: breakpoint });
             }));
 
             ro.observe(el);
