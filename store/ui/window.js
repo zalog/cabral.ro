@@ -1,7 +1,11 @@
 import { breakpoints } from '~/utils/constants/';
 
 export default {
-    state: () => ({}),
+    state: () => ({
+        breakpoint: null,
+        scrollDirection: null,
+        isScrolling: null,
+    }),
 
     mutations: {
         SET: (state, { key, value }) => {
