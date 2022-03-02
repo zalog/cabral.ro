@@ -3,14 +3,15 @@ import { breakpoints } from '../utils/constants';
 const isBreakpoint = ({ breakpointNeeded, breakpointCurrent, direction = 'up' }) => {
     if (!breakpointCurrent) return null;
 
-    const breakpointKeys = Object.keys(breakpoints);
-    if (direction === 'down') breakpointKeys.reverse();
+    const getBreakpoints = [...breakpoints];
+    if (direction === 'down') getBreakpoints.reverse();
 
-    const breakpointIndex = breakpointKeys
-        .findIndex((item) => item === breakpointNeeded);
-    const breakpointsNext = breakpointKeys
-        .splice(breakpointIndex, breakpointKeys.length);
-    const breakpointActive = breakpointsNext.findIndex((item) => item === breakpointCurrent);
+    const breakpointIndex = getBreakpoints
+        .findIndex((item) => item.key === breakpointNeeded);
+    const breakpointsNext = getBreakpoints
+        .splice(breakpointIndex, getBreakpoints.length);
+    const breakpointActive = breakpointsNext
+        .findIndex((item) => item.key === breakpointCurrent);
 
     if (breakpointActive !== -1) return true;
 

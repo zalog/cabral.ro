@@ -17,12 +17,12 @@ export default {
 
     actions: {
         attachResizeObserve({ commit, state }, { el }) {
-            const breakpointsReverse = Object.entries(breakpoints).reverse();
+            const getBreakpoints = [...breakpoints].reverse();
 
             const ro = new ResizeObserver((entries) => entries.forEach((entry) => {
-                const getBreakpoint = breakpointsReverse
-                    .find((breakpoint) => entry.contentRect.width >= breakpoint[1]);
-                const [breakpoint] = getBreakpoint;
+                const getBreakpoint = getBreakpoints
+                    .find((breakpoint) => entry.contentRect.width >= breakpoint.width);
+                const { key: breakpoint } = getBreakpoint;
 
                 if (state.breakpoint === breakpoint) return;
 
