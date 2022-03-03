@@ -1,7 +1,7 @@
-import { SITE } from '~/utils/constants';
+import getUrl from './url';
 
 const to = ({ url, object }) => {
-    const newUrl = new URL(url, SITE.LINK);
+    const newUrl = getUrl(url);
     let output = newUrl.pathname;
 
     if (['post', 'page'].includes(object)) {
