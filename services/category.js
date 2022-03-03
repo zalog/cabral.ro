@@ -12,7 +12,7 @@ const fetchCategory = async ({
             params,
         });
 
-        return pageCategory(response.data[0]);
+        return pageCategory(response.data);
     } catch (error) {
         throw error.response;
     }
