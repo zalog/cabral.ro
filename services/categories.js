@@ -1,9 +1,10 @@
 import { ENDPOINTS } from '../utils/constants';
 import { pageCategory } from '../utils/adaptors';
 
-const fetchCategory = async ({
+const fetchCategories = async ({
     $axios,
     params,
+    adaptor,
 }) => {
     try {
         const response = await $axios({
@@ -12,10 +13,13 @@ const fetchCategory = async ({
             params,
         });
 
-        return pageCategory(response.data);
+        let adaptorFunction;
+        if (adaptor === 'pageCategory') adaptorFunction = pageCategory;
+
+        return adaptorFunction(response.data);
     } catch (error) {
         throw error.response;
     }
 };
 
-export { fetchCategory as default };
+export { fetchCategories as default };
