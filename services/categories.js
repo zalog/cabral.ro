@@ -1,5 +1,5 @@
 import { ENDPOINTS } from '../utils/constants';
-import { pageCategory } from '../utils/adaptors';
+import { pageCategory, navCategories } from '../utils/adaptors';
 
 const fetchCategories = async ({
     $axios,
@@ -15,6 +15,7 @@ const fetchCategories = async ({
 
         let adaptorFunction;
         if (adaptor === 'pageCategory') adaptorFunction = pageCategory;
+        else if (adaptor === 'navCategories') adaptorFunction = navCategories;
 
         return adaptorFunction(response.data);
     } catch (error) {
