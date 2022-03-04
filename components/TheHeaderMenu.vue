@@ -54,6 +54,7 @@
                         :to="category.to"
                         class="nav-link"
                         exact-active-class="active"
+                        @click.native="show.navbarBodyMain = false"
                     >
                         {{ category.title }}
                     </nuxt-link>
