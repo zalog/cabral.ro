@@ -46,6 +46,9 @@ const createRouter = () => new Router({
             path: '/page/:id/',
             pathToRegexpOptions: { strict: true },
             component: PageHome,
+            meta: {
+                class: 'home',
+            },
         },
 
         // tests
