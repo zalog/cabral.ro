@@ -2,7 +2,9 @@
 
 $page-padding-y:    map-get($spacers, 4);
 
-.page {
-    padding-top: $page-padding-y;
-    padding-bottom: $page-padding-y;
+.layout-default {
+    .page {
+        padding-top: $page-padding-y;
+        padding-bottom: $page-padding-y;
+    }
 }

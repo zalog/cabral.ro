@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="layout-default">
         <the-header />
         <Nuxt class="page" />
         <lazy-the-notifications />
