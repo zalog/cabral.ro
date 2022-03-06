@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div>
         <h1>Slider test page</h1>
 
         <base-slider v-model="slider.active">
