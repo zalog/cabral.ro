@@ -4,6 +4,7 @@ $page-padding-y:    map-get($spacers, 4);
 
 .layout-default {
     .page {
+        position: static;
         padding-top: $page-padding-y;
         padding-bottom: $page-padding-y;
     }
