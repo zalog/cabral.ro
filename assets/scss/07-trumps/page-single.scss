@@ -207,3 +207,10 @@
     float: right;
     margin-left: $spacer;
 }
+
+.body-single {
+    .sidebar-left,
+    .sidebar-right {
+        padding-top: calc(100vh - 56px + #{$spacer});
+    }
+}
