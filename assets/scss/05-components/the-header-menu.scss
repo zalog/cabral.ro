@@ -17,24 +17,6 @@
             box-shadow: none;
         }
     }
-
-    .nav-pills {
-        .nav-item {
-            display: inline-block;
-            margin: $spacer $spacer 0 0;
-        }
-
-        .nav-link {
-            color: $navbar-dark-color;
-            background-color: lighten($dark, 10%);
-
-            &:hover,
-            &.active {
-                color: $navbar-light-color;
-                background-color: lighten($dark, 50%);
-            }
-        }
-    }
 }
 
 .navbar-body-main-open {

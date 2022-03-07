@@ -128,4 +128,5 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/05-components/the-header-menu";
+@import "~/assets/scss/05-components/nav-categories";
 </style>
