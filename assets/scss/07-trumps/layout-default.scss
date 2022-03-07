@@ -1,11 +1,21 @@
 @import "../required";
 
-$page-padding-y:    map-get($spacers, 4);
+$page-padding:      map-get($spacers, 4);
 
 .layout-default {
+    .sidebar-left {
+        padding-top: $page-padding;
+        padding-right: $page-padding;
+        padding-bottom: $page-padding;
+    }
     .page {
         position: static;
-        padding-top: $page-padding-y;
-        padding-bottom: $page-padding-y;
+        padding-top: $page-padding;
+        padding-bottom: $page-padding;
+    }
+    .sidebar-right {
+        padding-top: $page-padding;
+        padding-bottom: $page-padding;
+        padding-left: $page-padding;
     }
 }
