@@ -121,6 +121,18 @@ export default {
         },
     }),
 
+    head() {
+        const bodyClass = this.data.main.featuredMedia && 'body-single-hero';
+
+        if (!bodyClass) return null;
+
+        return {
+            bodyAttrs: {
+                class: [bodyClass],
+            },
+        };
+    },
+
     mounted() {
         this.setDataPhotoswipe();
     },
