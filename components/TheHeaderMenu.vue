@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="navbar navbar-expand-md navbar-dark bg-dark"
+        class="navbar navbar-expand-xl navbar-dark bg-dark"
         :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
     >
         <div class="navbar-bar">
@@ -44,6 +44,27 @@
                     </nuxt-link>
                 </li>
             </ul>
+            <portal
+                to="widget-categories"
+                :disabled="$mediaBreakpointDown('lg')"
+            >
+                <ul class="nav nav-pills nav-categories">
+                    <li
+                        v-for="(category, index) in categories"
+                        :key="`navbar-categories-${index}`"
+                        class="nav-item"
+                    >
+                        <nuxt-link
+                            :to="category.to"
+                            class="nav-link"
+                            exact-active-class="active"
+                            @click.native="show.navbarBodyMain = false"
+                        >
+                            {{ category.title }}
+                        </nuxt-link>
+                    </li>
+                </ul>
+            </portal>
         </div>
 
         <form
@@ -64,6 +85,7 @@
 
 <script>
 import menu from '../store/lazy/menu';
+import navCategories from '../store/lazy/nav-categories';
 import { SITE } from '../utils/constants';
 
 export default {
@@ -77,13 +99,18 @@ export default {
 
     async fetch() {
         this.$store.registerModule(['ui', 'menu'], menu, { preserveState: false });
-
         await this.$store.dispatch('ui/menu/fetch');
+
+        this.$store.registerModule(['ui', 'nav-categories'], navCategories, { preserveState: false });
+        await this.$store.dispatch('ui/nav-categories/fetch');
     },
 
     computed: {
         menu() {
             return this.$store.state.ui.menu;
+        },
+        categories() {
+            return this.$store.state.ui['nav-categories'];
         },
     },
 
@@ -106,4 +133,5 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/05-components/the-header-menu";
+@import "~/assets/scss/05-components/nav-categories";
 </style>

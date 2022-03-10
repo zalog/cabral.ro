@@ -1,4 +1,4 @@
-import { fetchMenu } from '../../services';
+import { fetchCategories } from '../../services';
 
 export default {
     namespaced: true,
@@ -14,8 +14,15 @@ export default {
 
     actions: {
         async fetch({ commit }) {
-            const response = await fetchMenu({
+            const response = await fetchCategories({
                 $axios: this.$axios,
+                params: {
+                    orderby: 'count',
+                    order: 'desc',
+                    per_page: 10,
+                },
+                fields: ['name', 'slug', 'link', 'count'],
+                adaptor: 'navCategories',
             });
 
             commit('SET', response);

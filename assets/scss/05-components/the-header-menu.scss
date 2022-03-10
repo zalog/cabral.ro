@@ -46,11 +46,15 @@
     }
 }
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(xl) {
     .navbar {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
+        .nav-pills {
+            display: none;
+        }
     }
 
     .navbar-body-main-open {

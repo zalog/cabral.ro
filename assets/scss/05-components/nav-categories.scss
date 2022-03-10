@@ -1,0 +1,40 @@
+.nav-categories {
+    .nav-item {
+        display: inline-block;
+        margin: $spacer $spacer 0 0;
+    }
+
+    .nav-link {
+        background-color: darken($light, 4%);
+        border: $border-width solid darken($light, 5%);
+
+        &,
+        &.active {
+            color: rgba($dark, .65);
+        }
+
+        &:hover,
+        &.active {
+            background-color: darken($light, 8%);
+            border-color: darken($light, 20%);
+        }
+    }
+
+    .bg-dark & {
+        .nav-link {
+            background-color: lighten($dark, 4%);
+            border: $border-width solid lighten($dark, 5%);
+
+            &,
+            &.active {
+                color: rgba($light, .65);
+            }
+
+            &:hover,
+            &.active {
+                background-color: lighten($dark, 8%);
+                border-color: lighten($dark, 20%);
+            }
+        }
+    }
+}

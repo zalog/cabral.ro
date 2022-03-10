@@ -1,4 +1,4 @@
-import { fetchPosts, fetchCategory } from '~/services';
+import { fetchPosts, fetchCategories } from '~/services';
 import { isValidPropData } from '~/utils/store';
 import { formatTitle, formatPageTitle } from '~/utils';
 import { SITE } from '~/utils/constants';
@@ -33,11 +33,12 @@ export default {
 
                 if (isValidPropData(currentPage, 'title')) return;
 
-                const responseCategory = await fetchCategory({
+                const responseCategory = await fetchCategories({
                     $axios: this.$axios,
                     params: {
                         slug: pageSlug.split('/').pop(),
                     },
+                    adaptor: 'pageCategory',
                 });
                 pageTitle = responseCategory.name;
                 pageDescription = responseCategory.description;

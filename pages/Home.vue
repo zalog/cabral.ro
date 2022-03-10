@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="data"
-        class="container-fluid"
-    >
+    <div v-if="data">
         <h1
             v-if="showPageTitle(data.title)"
             class="mb-4"
