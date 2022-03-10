@@ -3,7 +3,9 @@
         <the-header />
         <div class="container-fluid">
             <div class="row no-gutters">
-                <div class="d-none d-xl-block col-xl-3 sidebar-left" />
+                <div class="d-none d-xl-block col-xl-3 sidebar-left">
+                    <portal-target name="widget-categories" />
+                </div>
                 <Nuxt class="col-12 col-xl-6 page" />
                 <div class="d-none d-xl-block col-xl-3 sidebar-right" />
             </div>
