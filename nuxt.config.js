@@ -16,6 +16,7 @@ export default {
         '~/plugins/vue-lazysizes.client.js',
         '~/plugins/webfontloader.client.js',
         '~/plugins/window.js',
+        '~/plugins/portal-vue.js',
     ],
     buildModules: [
         '@nuxtjs/router',
