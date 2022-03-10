@@ -4,9 +4,17 @@ import { pageCategory, navCategories } from '../utils/adaptors';
 const fetchCategories = async ({
     $axios,
     params,
+    fields,
     adaptor,
 }) => {
     try {
+        if (fields) {
+            Object.assign(params, {
+                ...params,
+                _fields: fields.join(','),
+            });
+        }
+
         const response = await $axios({
             method: 'get',
             url: ENDPOINTS.CATEGORIES,

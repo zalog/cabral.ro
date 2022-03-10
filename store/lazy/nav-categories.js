@@ -16,7 +16,12 @@ export default {
         async fetch({ commit }) {
             const response = await fetchCategories({
                 $axios: this.$axios,
-                params: {},
+                params: {
+                    orderby: 'count',
+                    order: 'desc',
+                    per_page: 10,
+                },
+                fields: ['name', 'slug', 'link', 'count'],
                 adaptor: 'navCategories',
             });
 
