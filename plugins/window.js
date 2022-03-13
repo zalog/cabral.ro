@@ -42,7 +42,7 @@ export default ({ app, store }, inject) => {
             store.dispatch('ui/client/attachResizeObserve', {
                 el: app.router.app.$el,
             });
-            store.dispatch('ui/client/attachScroll');
+            store.dispatch('ui/client/attachWindowScroll');
         },
     });
 };

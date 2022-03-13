@@ -31,7 +31,7 @@ export default {
 
             ro.observe(el);
         },
-        attachScroll({ commit, state }) {
+        attachWindowScroll({ commit, state }) {
             let latestKnownScrollY = 0;
             let ticking = false;
             let timeoutID;
