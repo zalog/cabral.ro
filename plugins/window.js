@@ -39,9 +39,7 @@ export default ({ app, store }, inject) => {
 
     Object.assign(app, {
         mounted() {
-            store.dispatch('ui/client/attachResizeObserve', {
-                el: app.router.app.$el,
-            });
+            store.dispatch('ui/client/attachBodyResizeObserve');
             store.dispatch('ui/client/attachWindowScroll');
         },
     });

@@ -16,7 +16,7 @@ export default {
     },
 
     actions: {
-        attachResizeObserve({ commit, state }, { el }) {
+        attachBodyResizeObserve({ commit, state }) {
             const getBreakpoints = [...breakpoints].reverse();
 
             const ro = new ResizeObserver((entries) => entries.forEach((entry) => {
@@ -29,7 +29,7 @@ export default {
                 commit('SET', { key: 'breakpoint', value: breakpoint });
             }));
 
-            ro.observe(el);
+            ro.observe(window.document.body);
         },
         attachWindowScroll({ commit, state }) {
             let latestKnownScrollY = 0;
