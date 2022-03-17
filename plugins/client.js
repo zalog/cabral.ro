@@ -18,7 +18,17 @@ const isBreakpoint = ({ breakpointNeeded, breakpointCurrent, direction = 'up' })
     return false;
 };
 
-export default ({ app, store }, inject) => {
+export default ({ app, store, req }, inject) => {
+    if (process.server) {
+        const isMobile = /Mobi/i.test(req.headers['user-agent']);
+        store.commit('ui/client/SET', {
+            key: 'breakpoint',
+            value:
+                (isMobile && 'xs')
+                || 'lg',
+        });
+    }
+
     inject('mediaBreakpoint', (breakpoint) => {
         if (breakpoint === store.state.ui.client.breakpoint) return true;
 
