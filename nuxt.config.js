@@ -1,5 +1,4 @@
 export default {
-    serverMiddleware: ['~/middleware/server/spa.js'],
     components: true,
     css: [
         '~/assets/scss/app.scss',
@@ -15,7 +14,7 @@ export default {
         '~/plugins/filters.js',
         '~/plugins/vue-lazysizes.client.js',
         '~/plugins/webfontloader.client.js',
-        '~/plugins/window.js',
+        '~/plugins/client.js',
         '~/plugins/portal-vue.js',
     ],
     buildModules: [

@@ -18,31 +18,39 @@ const isBreakpoint = ({ breakpointNeeded, breakpointCurrent, direction = 'up' })
     return false;
 };
 
-export default ({ app, store }, inject) => {
+export default ({ app, store, req }, inject) => {
+    if (process.server) {
+        const isMobile = /Mobi/i.test(req.headers['user-agent']);
+        store.commit('ui/client/SET', {
+            key: 'breakpoint',
+            value:
+                (isMobile && 'xs')
+                || 'lg',
+        });
+    }
+
     inject('mediaBreakpoint', (breakpoint) => {
-        if (breakpoint === store.state.ui.window.breakpoint) return true;
+        if (breakpoint === store.state.ui.client.breakpoint) return true;
 
         return false;
     });
 
     inject('mediaBreakpointUp', (breakpoint) => isBreakpoint({
         breakpointNeeded: breakpoint,
-        breakpointCurrent: store.state.ui.window.breakpoint,
+        breakpointCurrent: store.state.ui.client.breakpoint,
         direction: 'up',
     }));
 
     inject('mediaBreakpointDown', (breakpoint) => isBreakpoint({
         breakpointNeeded: breakpoint,
-        breakpointCurrent: store.state.ui.window.breakpoint,
+        breakpointCurrent: store.state.ui.client.breakpoint,
         direction: 'down',
     }));
 
     Object.assign(app, {
         mounted() {
-            store.dispatch('ui/window/attachResizeObserve', {
-                el: app.router.app.$el,
-            });
-            store.dispatch('ui/window/attachScroll');
+            store.dispatch('ui/client/attachBodyResizeObserve');
+            store.dispatch('ui/client/attachWindowScroll');
         },
     });
 };
