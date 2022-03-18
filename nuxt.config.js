@@ -1,5 +1,4 @@
 export default {
-    serverMiddleware: ['~/middleware/server/spa.js'],
     components: true,
     css: [
         '~/assets/scss/app.scss',
