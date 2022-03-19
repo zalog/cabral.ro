@@ -3,7 +3,7 @@ export default (payload) => {
     const payloadModified = new Date(payload.modified);
     const date = ((payloadModified > payloadDate && payloadModified) || payloadDate).toString();
 
-    const output = {
+    return {
         head: {
             title: payload.title.rendered,
             link: [
@@ -20,6 +20,4 @@ export default (payload) => {
             date,
         },
     };
-
-    return output;
 };

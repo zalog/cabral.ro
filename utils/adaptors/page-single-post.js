@@ -32,7 +32,7 @@ export default (payload) => {
         };
     });
 
-    const output = {
+    return {
         head: {
             title: payload.title.rendered,
             link: [
@@ -52,6 +52,4 @@ export default (payload) => {
         },
         related,
     };
-
-    return output;
 };
