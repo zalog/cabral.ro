@@ -15,7 +15,7 @@ export default {
 
             return page || false;
         },
-        currentPageTitle: (state, getters) => (path) => {
+        currentPageTitle: (_state, getters) => (path) => {
             const page = getters.currentPage(path);
 
             if (!page.head) return undefined;
