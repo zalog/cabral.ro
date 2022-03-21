@@ -15,7 +15,6 @@ export default (payload) => {
     const featuredMediaValid = (
         featuredMediaRatio > 1.2
         && featuredMedia.width > 1200
-        && true
     ) || false;
 
     let related = payload['jetpack-related-posts']
