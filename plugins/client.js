@@ -13,9 +13,7 @@ const isBreakpoint = ({ breakpointNeeded, breakpointCurrent, direction = 'up' })
     const breakpointActive = breakpointsNext
         .findIndex((item) => item.key === breakpointCurrent);
 
-    if (breakpointActive !== -1) return true;
-
-    return false;
+    return breakpointActive !== -1;
 };
 
 export default ({ app, store, req }, inject) => {
@@ -29,11 +27,7 @@ export default ({ app, store, req }, inject) => {
         });
     }
 
-    inject('mediaBreakpoint', (breakpoint) => {
-        if (breakpoint === store.state.ui.client.breakpoint) return true;
-
-        return false;
-    });
+    inject('mediaBreakpoint', (breakpoint) => breakpoint === store.state.ui.client.breakpoint);
 
     inject('mediaBreakpointUp', (breakpoint) => isBreakpoint({
         breakpointNeeded: breakpoint,
