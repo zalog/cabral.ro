@@ -21,7 +21,7 @@ export default {
 
             const ro = new ResizeObserver((entries) => entries.forEach((entry) => {
                 const getBreakpoint = getBreakpoints
-                    .find((breakpoint) => entry.contentRect.width >= breakpoint.width);
+                    .find(({ width }) => entry.contentRect.width >= width);
                 const { key: breakpoint } = getBreakpoint;
 
                 if (state.breakpoint === breakpoint) return;
