@@ -88,7 +88,7 @@ export default {
                 this.$router.push({ hash: false });
                 this.$emit('closed');
             });
-            gallery.listen('gettingData', (index, getItem) => {
+            gallery.listen('gettingData', (_index, getItem) => {
                 const item = getItem;
 
                 if (item.w < 1 || item.h < 1) {

@@ -6,9 +6,7 @@ const isValidPropData = (currentPage, prop, bypass = false, expireMinutes = 5) =
     const timestampNow = new Date().getTime();
     const dataExpired = (currentPage.timestamp[prop] + (expireMinutes * 60 * 1000)) < timestampNow;
 
-    const isValid = !dataExpired;
-
-    return isValid;
+    return !dataExpired;
 };
 
 export { isValidPropData as default };

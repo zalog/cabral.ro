@@ -18,8 +18,7 @@ const createRouter = () => new Router({
         if (to.hash) {
             const blacklist = ['#pid'];
             const isHashBlacklisted = blacklist
-                .findIndex((entry) => to.hash.indexOf(entry) === 0) >= 0
-                && true;
+                .findIndex((entry) => to.hash.indexOf(entry) === 0) >= 0;
             let selector = to.hash;
 
             if (isHashBlacklisted) selector = null;

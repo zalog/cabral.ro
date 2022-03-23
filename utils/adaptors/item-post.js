@@ -9,7 +9,7 @@ export default (payload) => {
         link: category.link.replace(SITE.LINK, ''),
     }));
 
-    const output = {
+    return {
         excerpt: payload.excerpt.rendered,
         featuredMedia: payload.embed_featured_media.html,
         slug: payload.slug,
@@ -18,6 +18,4 @@ export default (payload) => {
         categories,
         date,
     };
-
-    return output;
 };
