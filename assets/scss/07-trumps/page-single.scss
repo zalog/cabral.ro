@@ -14,10 +14,10 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: auto;
+        width: auto !important;
         min-width: 100%;
         max-width: none;
-        height: auto;
+        height: auto !important;
         min-height: 100%;
         max-height: none;
         transform: translate(-50%, -50%);
@@ -51,8 +51,9 @@
     }
 
     img {
+        width: auto !important;
         max-width: 100%;
-        height: auto;
+        height: auto !important;
     }
 
     p > iframe,
