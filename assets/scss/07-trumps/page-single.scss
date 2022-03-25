@@ -2,11 +2,11 @@
 
 .entry-img-hero {
     position: absolute;
-    top: 56px;
+    top: 50px;
     right: 0;
     left: 0;
     z-index: -1;
-    height: calc(100vh - 56px);
+    height: 65vh;
     overflow: hidden;
     background-color: $black;
 
@@ -212,6 +212,6 @@
 .body-single-hero {
     .sidebar-left,
     .sidebar-right {
-        padding-top: calc(100vh - 56px + #{$spacer});
+        padding-top: 65vh;
     }
 }
