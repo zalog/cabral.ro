@@ -7,7 +7,7 @@
             <nuxt-link
                 :to="'/'"
                 class="navbar-brand"
-                @click.native="show.navbarBodyMain = false"
+                @click.native="toggleMenu(false)"
             >
                 {{ SITE.TITLE }}
             </nuxt-link>
@@ -18,7 +18,7 @@
                 aria-controls="navbar-body-main"
                 :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
                 aria-label="Toggle navigation"
-                @click="show.navbarBodyMain = !show.navbarBodyMain"
+                @click="toggleMenu()"
             >
                 <span class="navbar-toggler-icon" />
             </button>
@@ -38,7 +38,7 @@
                         :to="item.to"
                         class="nav-link"
                         exact-active-class="active"
-                        @click.native="show.navbarBodyMain = false"
+                        @click.native="toggleMenu(false)"
                     >
                         {{ item.title }}
                     </nuxt-link>
@@ -58,7 +58,7 @@
                             :to="category.to"
                             class="nav-link"
                             exact-active-class="active"
-                            @click.native="show.navbarBodyMain = false"
+                            @click.native="toggleMenu(false)"
                         >
                             {{ category.title }}
                         </nuxt-link>
@@ -119,13 +119,18 @@ export default {
     },
 
     methods: {
+        toggleMenu(value = null) {
+            this.show.navbarBodyMain = (typeof value === 'boolean')
+                ? value
+                : !this.show.navbarBodyMain;
+        },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
 
             if (!s) return;
 
             this.$router.push({ path: '/', query: { s } });
-            this.show.navbarBodyMain = false;
+            this.toggleMenu(false);
         },
     },
 };
