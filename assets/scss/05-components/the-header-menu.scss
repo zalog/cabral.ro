@@ -77,3 +77,11 @@
         background-color: transparent;
     }
 }
+
+.body-navbar-open {
+    overflow-y: hidden;
+
+    @include media-breakpoint-up(xl) {
+        overflow-y: auto;
+    }
+}

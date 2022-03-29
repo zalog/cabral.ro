@@ -116,13 +116,28 @@ export default {
 
     created() {
         this.SITE = SITE;
+
+        this.initMeta();
     },
 
     methods: {
+        initMeta() {
+            const { set, remove } = this.$meta().addApp('body-class-menu');
+
+            this.meta = {
+                set: () => set({
+                    bodyAttrs: { class: 'body-navbar-open' },
+                }),
+                remove: () => remove(),
+            };
+        },
         toggleMenu(value = null) {
             this.show.navbarBodyMain = (typeof value === 'boolean')
                 ? value
                 : !this.show.navbarBodyMain;
+
+            if (this.show.navbarBodyMain) this.meta.set();
+            else this.meta.remove();
         },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
