@@ -7,7 +7,7 @@
             <nuxt-link
                 :to="'/'"
                 class="navbar-brand"
-                @click.native="toggleMenu(false)"
+                @click.native="menuClose()"
             >
                 {{ SITE.TITLE }}
             </nuxt-link>
@@ -38,7 +38,7 @@
                         :to="item.to"
                         class="nav-link"
                         exact-active-class="active"
-                        @click.native="toggleMenu(false)"
+                        @click.native="menuClose()"
                     >
                         {{ item.title }}
                     </nuxt-link>
@@ -58,7 +58,7 @@
                             :to="category.to"
                             class="nav-link"
                             exact-active-class="active"
-                            @click.native="toggleMenu(false)"
+                            @click.native="menuClose()"
                         >
                             {{ category.title }}
                         </nuxt-link>
@@ -131,13 +131,17 @@ export default {
                 remove: () => remove(),
             };
         },
-        toggleMenu(value = null) {
-            this.show.navbarBodyMain = (typeof value === 'boolean')
-                ? value
-                : !this.show.navbarBodyMain;
-
-            if (this.show.navbarBodyMain) this.meta.set();
-            else this.meta.remove();
+        toggleMenu() {
+            if (!this.show.navbarBodyMain) this.menuOpen();
+            else this.menuClose();
+        },
+        menuOpen() {
+            this.show.navbarBodyMain = true;
+            this.meta.set();
+        },
+        menuClose() {
+            this.show.navbarBodyMain = false;
+            this.meta.remove();
         },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
@@ -145,7 +149,7 @@ export default {
             if (!s) return;
 
             this.$router.push({ path: '/', query: { s } });
-            this.toggleMenu(false);
+            this.menuClose();
         },
     },
 };
