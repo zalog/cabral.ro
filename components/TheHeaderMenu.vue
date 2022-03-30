@@ -18,7 +18,7 @@
                 aria-controls="navbar-body-main"
                 :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
                 aria-label="Toggle navigation"
-                @click="toggleMenu()"
+                @click="menuToggle()"
             >
                 <span class="navbar-toggler-icon" />
             </button>
@@ -131,7 +131,7 @@ export default {
                 remove: () => remove(),
             };
         },
-        toggleMenu() {
+        menuToggle() {
             if (!this.show.navbarBodyMain) this.menuOpen();
             else this.menuClose();
         },
