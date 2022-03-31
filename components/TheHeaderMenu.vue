@@ -7,7 +7,7 @@
             <nuxt-link
                 :to="'/'"
                 class="navbar-brand"
-                @click.native="show.navbarBodyMain = false"
+                @click.native="menuClose()"
             >
                 {{ SITE.TITLE }}
             </nuxt-link>
@@ -18,7 +18,7 @@
                 aria-controls="navbar-body-main"
                 :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
                 aria-label="Toggle navigation"
-                @click="show.navbarBodyMain = !show.navbarBodyMain"
+                @click="menuToggle()"
             >
                 <span class="navbar-toggler-icon" />
             </button>
@@ -38,7 +38,7 @@
                         :to="item.to"
                         class="nav-link"
                         exact-active-class="active"
-                        @click.native="show.navbarBodyMain = false"
+                        @click.native="menuClose()"
                     >
                         {{ item.title }}
                     </nuxt-link>
@@ -58,7 +58,7 @@
                             :to="category.to"
                             class="nav-link"
                             exact-active-class="active"
-                            @click.native="show.navbarBodyMain = false"
+                            @click.native="menuClose()"
                         >
                             {{ category.title }}
                         </nuxt-link>
@@ -116,16 +116,40 @@ export default {
 
     created() {
         this.SITE = SITE;
+
+        this.initMeta();
     },
 
     methods: {
+        initMeta() {
+            const { set, remove } = this.$meta().addApp('body-class-menu');
+
+            this.meta = {
+                set: () => set({
+                    bodyAttrs: { class: 'body-navbar-open' },
+                }),
+                remove: () => remove(),
+            };
+        },
+        menuToggle() {
+            if (!this.show.navbarBodyMain) this.menuOpen();
+            else this.menuClose();
+        },
+        menuOpen() {
+            this.show.navbarBodyMain = true;
+            this.meta.set();
+        },
+        menuClose() {
+            this.show.navbarBodyMain = false;
+            this.meta.remove();
+        },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
 
             if (!s) return;
 
             this.$router.push({ path: '/', query: { s } });
-            this.show.navbarBodyMain = false;
+            this.menuClose();
         },
     },
 };
