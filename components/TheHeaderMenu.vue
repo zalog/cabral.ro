@@ -138,10 +138,12 @@ export default {
         menuOpen() {
             this.show.navbarBodyMain = true;
             this.meta.set();
+            this.$root.$el.addEventListener('click', this.onMenuOpenClick);
         },
         menuClose() {
             this.show.navbarBodyMain = false;
             this.meta.remove();
+            this.$root.$el.removeEventListener('click', this.onMenuOpenClick);
         },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
@@ -150,6 +152,14 @@ export default {
 
             this.$router.push({ path: '/', query: { s } });
             this.menuClose();
+        },
+        onMenuOpenClick(event) {
+            const clickedTo = (classes) => classes
+                .some((className) => event.target.classList.contains(className));
+
+            if (!clickedTo(['navbar-toggler', 'navbar-toggler-icon', 'form-control'])) {
+                this.menuClose();
+            }
         },
     },
 };
