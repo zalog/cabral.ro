@@ -139,11 +139,13 @@ export default {
             this.show.navbarBodyMain = true;
             this.meta.set();
             this.$root.$el.addEventListener('click', this.onMenuOpenClick);
+            this.$root.$el.addEventListener('keydown', this.onMenuOpenKeydown);
         },
         menuClose() {
             this.show.navbarBodyMain = false;
             this.meta.remove();
             this.$root.$el.removeEventListener('click', this.onMenuOpenClick);
+            this.$root.$el.removeEventListener('keydown', this.onMenuOpenKeydown);
         },
         goToSearch($event) {
             const s = $event.target.elements.s.value;
@@ -158,6 +160,11 @@ export default {
                 .some((className) => event.target.classList.contains(className));
 
             if (!clickedTo(['navbar-toggler', 'navbar-toggler-icon', 'form-control'])) {
+                this.menuClose();
+            }
+        },
+        onMenuOpenKeydown(event) {
+            if (['Escape', 'Esc'].includes(event.key)) {
                 this.menuClose();
             }
         },
