@@ -7,6 +7,10 @@ $page-padding:      map-get($spacers, 4);
         padding-top: $page-padding;
         padding-right: $page-padding;
         padding-bottom: $page-padding;
+
+        > * {
+            margin-bottom: $spacer;
+        }
     }
     .page {
         position: static;

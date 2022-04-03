@@ -41,6 +41,10 @@
     overflow-y: auto;
     background-color: $dark;
 
+    > * {
+        margin-bottom: $spacer;
+    }
+
     .navbar-body-main-open & {
         display: block;
     }
@@ -75,6 +79,10 @@
         flex-grow: 0;
         padding: 0;
         background-color: transparent;
+
+        > * {
+            margin-bottom: 0;
+        }
     }
 }
 
