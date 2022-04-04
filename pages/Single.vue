@@ -5,9 +5,7 @@
             class="entry-img-hero"
             v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
         />
-        <div
-            class="container-fluid"
-        >
+        <div class="entry-body">
             <h1
                 class="entry-title"
             >
@@ -33,13 +31,11 @@
             <list-share :url="data.main.link" />
         </div>
 
-        <div class="bg-light">
+        <div class="bg-light py-3 p-lg-5">
             <template
                 v-if="data.related"
             >
-                <div class="container-fluid">
-                    <list-related :data="data.related" />
-                </div>
+                <list-related :data="data.related" />
 
                 <hr class="d-none d-lg-block">
             </template>
@@ -50,7 +46,6 @@
                         ? isVisible => fetchComments(isVisible, true)
                         : false
                 "
-                class="container-fluid"
             >
                 <comments-list
                     :loading="comments.loading"
