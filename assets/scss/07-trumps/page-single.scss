@@ -75,7 +75,7 @@
         .wp-block-image,
         .wp-block-embed,
         .embed-youtube {
-            margin-right: -(map-get($spacers, 5) / 2);
+            margin-right: -180px;
             margin-left: -(map-get($spacers, 5) / 2);
         }
     }
