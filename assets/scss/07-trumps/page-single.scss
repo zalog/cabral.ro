@@ -2,7 +2,7 @@
 
 .entry-img-hero {
     position: absolute;
-    top: 50px;
+    top: 56px;
     right: 0;
     left: 0;
     z-index: -1;
@@ -210,8 +210,7 @@
 }
 
 .body-single-hero {
-    .sidebar-left,
-    .sidebar-right {
-        padding-top: 65vh;
+    .sidebar {
+        padding-top: calc(65vh + #{$grid-gutter-width / 2});
     }
 }
