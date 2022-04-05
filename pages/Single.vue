@@ -29,29 +29,27 @@
                 v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
             />
             <list-share :url="data.main.link" />
-        </div>
+            <template
+                v-if="data.related"
+            >
+                <list-related :data="data.related" />
 
-        <template
-            v-if="data.related"
-        >
-            <list-related :data="data.related" />
-
-            <hr class="d-none d-lg-block">
-        </template>
-
-        <div
-            v-observe-visibility="
-                !comments.shown
-                    ? isVisible => fetchComments(isVisible, true)
-                    : false
-            "
-        >
-            <comments-list
-                :loading="comments.loading"
-                :comments="data.comments"
-                :single-id="data.main.id"
-                @is-visible-last="fetchComments(true)"
-            />
+                <hr class="d-none d-lg-block">
+            </template>
+            <div
+                v-observe-visibility="
+                    !comments.shown
+                        ? isVisible => fetchComments(isVisible, true)
+                        : false
+                "
+            >
+                <comments-list
+                    :loading="comments.loading"
+                    :comments="data.comments"
+                    :single-id="data.main.id"
+                    @is-visible-last="fetchComments(true)"
+                />
+            </div>
         </div>
 
         <lazy-photoswipe
