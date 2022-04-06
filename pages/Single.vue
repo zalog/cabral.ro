@@ -29,13 +29,10 @@
                 v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
             />
             <list-share :url="data.main.link" />
-            <template
+            <list-related
                 v-if="data.related"
-            >
-                <list-related :data="data.related" />
-
-                <hr class="d-none d-lg-block">
-            </template>
+                :data="data.related"
+            />
             <div
                 v-observe-visibility="
                     !comments.shown
