@@ -27,7 +27,7 @@
 .entry-img-hero + .entry-body {
     width: auto;
     margin: #{50vh} -($grid-gutter-width / 2) 0 -($grid-gutter-width / 2);
-    padding: $grid-gutter-width;
+    padding: $grid-gutter-width / 2;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
     border-top-right-radius: $border-radius-lg;
