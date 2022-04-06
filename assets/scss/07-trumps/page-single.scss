@@ -40,6 +40,12 @@
     }
 }
 
+.entry-body {
+    > * {
+        margin-bottom: map-get($spacers, 5);
+    }
+}
+
 .entry-content {
     font-size: $font-size-lg;
     font-family: $font-family-serif;
