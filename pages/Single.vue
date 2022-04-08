@@ -28,7 +28,10 @@
                 class="entry-content"
                 v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
             />
-            <list-share :url="data.main.link" />
+            <list-share
+                class="scroll-x scroll-hide-bar"
+                :url="data.main.link"
+            />
             <list-related
                 v-if="data.related"
                 :data="data.related"

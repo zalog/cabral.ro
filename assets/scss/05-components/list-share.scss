@@ -3,7 +3,6 @@
 .list-share {
     @include list-unstyled;
     display: flex;
-    flex-wrap: wrap;
     font-size: $font-size-sm;
 
     li + li {
