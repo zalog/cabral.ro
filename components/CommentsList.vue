@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <h3>Comentarii</h3>
+    <div class="box">
+        <h3 class="box-title">
+            Comentarii
+        </h3>
 
         <comments-list-form :data="{ singleId }" />
 
