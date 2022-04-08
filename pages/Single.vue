@@ -6,23 +6,23 @@
             v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
         />
         <div class="entry-body">
-            <h1
-                class="entry-title"
-            >
-                {{ data.main.title }}
-            </h1>
-            <list-item-info
-                :data="[{
-                    icon: 'date',
-                    text: $options.filters.formatDate(data.main.date)
-                }, {
-                    icon: 'folder',
-                    links: data.main.categories
-                }, {
-                    icon: 'comment',
-                    text: data.main.commentsNumber
-                }]"
-            />
+            <div class="entry-header">
+                <h1>
+                    {{ data.main.title }}
+                </h1>
+                <list-item-info
+                    :data="[{
+                        icon: 'date',
+                        text: $options.filters.formatDate(data.main.date)
+                    }, {
+                        icon: 'folder',
+                        links: data.main.categories
+                    }, {
+                        icon: 'comment',
+                        text: data.main.commentsNumber
+                    }]"
+                />
+            </div>
             <div
                 ref="content"
                 class="entry-content"

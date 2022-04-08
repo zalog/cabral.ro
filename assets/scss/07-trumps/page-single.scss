@@ -46,6 +46,10 @@
     }
 }
 
+.entry-header {
+    margin-bottom: $spacer;
+}
+
 .entry-content {
     font-size: $font-size-lg;
     font-family: $font-family-serif;
@@ -85,11 +89,6 @@
             margin-left: -(map-get($spacers, 5) / 2);
         }
     }
-}
-
-// content
-.entry-title {
-    margin-bottom: map-get($spacers, 4);
 }
 
 // content childs
