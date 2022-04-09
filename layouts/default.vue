@@ -1,6 +1,11 @@
 <template>
     <div class="layout-default">
         <the-header />
+        <div
+            v-if="data.main.featuredMedia"
+            class="entry-img-hero"
+            v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
+        />
         <div class="container-fluid">
             <div class="row">
                 <div class="d-none d-xl-block col-xl-3 sidebar">
@@ -20,6 +25,16 @@
         <lazy-the-notifications />
     </div>
 </template>
+
+<script>
+import { currentPage } from '~/mixins';
+
+export default {
+    mixins: [
+        currentPage,
+    ],
+};
+</script>
 
 <style lang="scss">
 @import "~/assets/scss/07-trumps/layout-default";

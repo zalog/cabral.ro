@@ -1,10 +1,5 @@
 <template>
     <div v-if="data">
-        <div
-            v-if="data.main.featuredMedia"
-            class="entry-img-hero"
-            v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
-        />
         <div class="entry-body">
             <div class="entry-header">
                 <h1>
@@ -111,18 +106,6 @@ export default {
             loading: false,
         },
     }),
-
-    head() {
-        const bodyClass = this.data.main.featuredMedia && 'body-single-hero';
-
-        if (!bodyClass) return null;
-
-        return {
-            bodyAttrs: {
-                class: [bodyClass],
-            },
-        };
-    },
 
     mounted() {
         this.setDataPhotoswipe();
