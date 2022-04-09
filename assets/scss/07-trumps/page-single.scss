@@ -25,18 +25,16 @@
 }
 
 .entry-img-hero + .entry-body {
-    width: auto;
     margin: #{50vh} -($grid-gutter-width / 2) 0 -($grid-gutter-width / 2);
     padding: $grid-gutter-width / 2;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
     border-top-right-radius: $border-radius-lg;
 
-    @include media-breakpoint-up(md) {
-        margin-right: 0;
-        margin-left: 0;
-        padding: map-get($spacers, 5);
-        border-radius: 0;
+    @include media-breakpoint-up(sm) {
+        margin-right: -$grid-gutter-width;
+        margin-left: -$grid-gutter-width;
+        padding: $grid-gutter-width $grid-gutter-width 0 $grid-gutter-width;
     }
 }
 

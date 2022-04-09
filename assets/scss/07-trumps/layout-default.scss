@@ -5,7 +5,6 @@ $page-padding:      map-get($spacers, 4);
 .layout-default {
     .sidebar {
         padding-top: $page-padding;
-        padding-right: $page-padding;
         padding-bottom: $page-padding;
 
         > * {

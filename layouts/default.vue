@@ -2,11 +2,19 @@
     <div class="layout-default">
         <the-header />
         <div class="container-fluid">
-            <div class="row no-gutters">
+            <div class="row">
                 <div class="d-none d-xl-block col-xl-3 sidebar">
                     <portal-target name="widget-categories" />
                 </div>
-                <Nuxt class="col-12 col-xl-6 page" />
+                <Nuxt
+                    class="page"
+                    :class="[
+                        'col-12',
+                        'offset-sm-1', 'col-sm-10',
+                        'offset-lg-2', 'col-lg-8',
+                        'offset-xl-0', 'col-xl-6',
+                    ]"
+                />
             </div>
         </div>
         <lazy-the-notifications />
