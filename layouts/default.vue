@@ -2,8 +2,8 @@
     <div class="layout-default">
         <the-header />
         <div
-            v-if="data.main.featuredMedia"
-            class="entry-img-hero"
+            v-if="$route.name === 'Single' && data.main.featuredMedia"
+            class="layout-hero"
             v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
         />
         <div class="container-fluid">
