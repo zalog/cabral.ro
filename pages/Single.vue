@@ -32,11 +32,10 @@
                 :data="data.related"
             />
             <div
-                v-observe-visibility="
-                    !comments.shown
-                        ? isVisible => fetchComments(isVisible, true)
-                        : false
-                "
+                v-observe-visibility="{
+                    callback: isVisible => fetchComments(isVisible, true),
+                    once: true,
+                }"
             >
                 <comments-list
                     :loading="comments.loading"
@@ -102,7 +101,6 @@ export default {
             items: [],
         },
         comments: {
-            shown: false,
             loading: false,
         },
     }),
@@ -131,7 +129,6 @@ export default {
             if (hasNextPage === false) return;
 
             this.comments.loading = true;
-            this.comments.shown = true;
 
             if (!this.$store.hasModule(['data', 'dataComments'])) {
                 this.$store.registerModule(['data', 'dataComments'], dataComments, { preserveState: true });
