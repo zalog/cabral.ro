@@ -2,27 +2,6 @@
 
 $page-padding:      map-get($spacers, 4);
 
-.layout-hero {
-    position: relative;
-    z-index: -1;
-    height: 65vh;
-    overflow: hidden;
-    background-color: $black;
-
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: auto !important;
-        min-width: 100%;
-        max-width: none;
-        height: auto !important;
-        min-height: 100%;
-        max-height: none;
-        transform: translate(-50%, -50%);
-    }
-}
-
 .layout-default {
     .sidebar {
         padding-top: $page-padding;

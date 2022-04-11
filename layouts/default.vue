@@ -1,10 +1,9 @@
 <template>
     <div class="layout-default">
         <the-header />
-        <div
+        <layout-hero
             v-if="$route.name === 'Single' && data.main.featuredMedia"
-            class="layout-hero"
-            v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
+            :html="data.main.featuredMedia"
         />
         <div class="container-fluid">
             <div class="row">
@@ -28,8 +27,13 @@
 
 <script>
 import { currentPage } from '~/mixins';
+import LayoutHero from '~/components/layout-hero.vue';
 
 export default {
+    components: {
+        LayoutHero,
+    },
+
     mixins: [
         currentPage,
     ],
