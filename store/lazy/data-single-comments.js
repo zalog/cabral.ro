@@ -8,10 +8,10 @@ export default {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const pageComments = currentPage.comments;
-            const pageSingleId = currentPage.main.id;
+            const pageSingleSlug = route.params.singleSlug;
             let commentsFrom = null;
 
-            if (!currentPage || !pageSingleId) throw new Error('`fetchComments` needs `currentPage` or `pageSingleId`.');
+            if (!currentPage || !pageSingleSlug) throw new Error('`fetchComments` needs `currentPage` or `pageSingleSlug`.');
 
             if (pageComments && Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) {
@@ -21,7 +21,7 @@ export default {
 
             const response = await fetchComments({
                 $axios: this.$axios,
-                singleId: pageSingleId,
+                singleSlug: pageSingleSlug,
                 after: commentsFrom,
             });
 
