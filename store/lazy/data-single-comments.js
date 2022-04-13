@@ -11,7 +11,7 @@ export default {
             const pageSingleSlug = route.params.singleSlug;
             let commentsFrom = null;
 
-            if (!currentPage || !pageSingleSlug) throw new Error('`fetchComments` needs `currentPage` or `pageSingleSlug`.');
+            if (!pageSingleSlug) throw new Error('`fetchComments` needs `pageSingleSlug`.');
 
             if (pageComments && Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) {
