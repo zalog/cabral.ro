@@ -31,19 +31,12 @@
                 v-if="data.related"
                 :data="data.related"
             />
-            <div
-                v-observe-visibility="{
-                    callback: isVisible => fetchComments(isVisible, true),
-                    once: true,
-                }"
-            >
-                <comments-list
-                    :loading="comments.loading"
-                    :comments="data.comments"
-                    :single-id="data.main.id"
-                    @is-visible-last="fetchComments(true)"
-                />
-            </div>
+            <comments-list
+                :loading="comments.loading"
+                :comments="data.comments"
+                :single-id="data.main.id"
+                @is-visible-last="fetchComments(true)"
+            />
         </div>
 
         <lazy-photoswipe
@@ -57,8 +50,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { ObserveVisibility } from 'vue-observe-visibility';
 import dataSingle from '~/store/lazy/data-single';
 import dataComments from '../store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
@@ -67,11 +58,10 @@ import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
-Vue.directive('observe-visibility', ObserveVisibility);
-
 const registerModules = (store) => {
     store.$registerModules([
         { name: ['data', 'dataSingle'], imported: dataSingle, preserveStateCheck: true },
+        { name: ['data', 'dataComments'], imported: dataComments, preserveStateCheck: true },
     ]);
 };
 
@@ -94,9 +84,14 @@ export default {
         if (route.params.singleType === 'post') actionName = 'data/fetchPagePost';
         else if (route.params.singleType === 'page') actionName = 'data/fetchPagePage';
 
-        await store.dispatch(actionName, {
-            route,
-        });
+        await Promise.all([
+            store.dispatch(actionName, {
+                route,
+            }),
+            store.dispatch('data/fetchComments', {
+                route,
+            }),
+        ]);
     },
 
     data: () => ({
@@ -129,9 +124,6 @@ export default {
 
             this.comments.loading = true;
 
-            if (!this.$store.hasModule(['data', 'dataComments'])) {
-                this.$store.registerModule(['data', 'dataComments'], dataComments, { preserveState: true });
-            }
             await this.$store.dispatch('data/fetchComments', {
                 route: this.$route,
             });
