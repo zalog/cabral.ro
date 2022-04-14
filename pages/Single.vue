@@ -32,7 +32,7 @@
                 :data="data.related"
             />
             <comments-list
-                :loading="comments.loading"
+                ref="comments"
                 :comments="data.comments"
                 :single-id="data.main.id"
                 @is-visible-last="fetchComments(true)"
@@ -99,9 +99,6 @@ export default {
             index: false,
             items: [],
         },
-        comments: {
-            loading: false,
-        },
     }),
 
     mounted() {
@@ -112,7 +109,10 @@ export default {
 
     methods: {
         async fetchComments(isVisible, checkForData) {
-            if (!isVisible && !this.comments.loading) return;
+            const { classList: commentsClass } = this.$refs.comments.$el;
+            const loading = commentsClass.contains('loading');
+
+            if (!isVisible && !loading) return;
 
             if (checkForData && this.data.comments) return;
 
@@ -122,13 +122,13 @@ export default {
 
             if (hasNextPage === false) return;
 
-            this.comments.loading = true;
+            commentsClass.add('loading');
 
             await this.$store.dispatch('data/fetchComments', {
                 route: this.$route,
             });
 
-            this.comments.loading = false;
+            commentsClass.remove('loading');
         },
         setDataPhotoswipe() {
             this.$refs.content.querySelectorAll('img').forEach((img, index) => {

@@ -41,10 +41,7 @@
                     }"
                 />
             </li>
-            <li
-                v-if="loading"
-                class="py-4 text-center"
-            >
+            <li class="py-4 text-center">
                 <b-spinner variant="warning" label="Loading..." />
             </li>
         </ul>
@@ -71,7 +68,6 @@ export default {
     },
 
     props: {
-        loading: Boolean,
         comments: {
             type: Object,
             default: () => ({}),
