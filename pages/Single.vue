@@ -69,6 +69,12 @@ import CommentsList from '~/components/CommentsList.vue';
 
 Vue.directive('observe-visibility', ObserveVisibility);
 
+const registerModules = (store) => {
+    store.$registerModules([
+        { name: ['data', 'dataSingle'], imported: dataSingle, preserveStateCheck: true },
+    ]);
+};
+
 export default {
     components: {
         ListItemInfo,
@@ -82,9 +88,7 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        if (!store.hasModule(['data', 'dataSingle'])) {
-            store.registerModule(['data', 'dataSingle'], dataSingle, { preserveState: true });
-        }
+        registerModules(store);
 
         let actionName = 'data/fetchPageSingle';
         if (route.params.singleType === 'post') actionName = 'data/fetchPagePost';
@@ -106,14 +110,9 @@ export default {
     }),
 
     mounted() {
-        this.setDataPhotoswipe();
-    },
+        registerModules(this.$store);
 
-    beforeDestroy() {
-        this.$store.unregisterModule(['data', 'dataSingle']);
-        if (this.$store.hasModule(['data', 'dataComments'])) {
-            this.$store.unregisterModule(['data', 'dataComments']);
-        }
+        this.setDataPhotoswipe();
     },
 
     methods: {

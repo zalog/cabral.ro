@@ -19,6 +19,13 @@ import dataHead from '~/store/lazy/data-head';
 import { currentPage } from '~/mixins';
 import PostsList from '~/components/PostsList.vue';
 
+const registerModules = (store) => {
+    store.$registerModules([
+        { name: ['data', 'dataListing'], imported: dataListing, preserveStateCheck: true },
+        { name: ['data', 'dataHead'], imported: dataHead, preserveStateCheck: true },
+    ]);
+};
+
 export default {
     components: {
         PostsList,
@@ -29,12 +36,7 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        if (!store.hasModule(['data', 'dataListing'])) {
-            store.registerModule(['data', 'dataListing'], dataListing, { preserveState: true });
-        }
-        if (!store.hasModule(['data', 'dataHead'])) {
-            store.registerModule(['data', 'dataHead'], dataHead, { preserveState: true });
-        }
+        registerModules(store);
 
         const { id: pageNumber } = route.params;
         const pageS = route.query.s;
@@ -55,8 +57,8 @@ export default {
 
     watchQuery: ['s'],
 
-    beforeDestroy() {
-        this.$store.unregisterModule(['data', 'dataListing']);
+    mounted() {
+        registerModules(this.$store);
     },
 
     methods: {
