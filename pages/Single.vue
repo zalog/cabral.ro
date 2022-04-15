@@ -58,6 +58,8 @@ import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
+const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
+
 const registerModules = (store) => {
     store.$registerModules([
         { name: ['data', 'dataSingle'], imported: dataSingle, preserveStateCheck: true },
@@ -100,6 +102,11 @@ export default {
             items: [],
         },
     }),
+
+    created() {
+        const hasEntrysGalleryJetpack = this.data.main.content.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
+        if (hasEntrysGalleryJetpack) cssGallery();
+    },
 
     mounted() {
         registerModules(this.$store);

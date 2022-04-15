@@ -1,0 +1,97 @@
+// This is a jetpack component
+// See https://c0.wp.com/p/jetpack/10.8/css/jetpack.css
+
+.tiled-gallery {
+    clear: both;
+    margin: 0 0 20px;
+    overflow: hidden;
+}
+
+.tiled-gallery img {
+    margin: 2px !important;
+}
+
+.tiled-gallery .gallery-group {
+    position: relative;
+    float: left;
+}
+
+.tiled-gallery .tiled-gallery-item {
+    position: relative;
+    float: left;
+    width: inherit;
+    margin: 0;
+}
+
+.tiled-gallery .gallery-row {
+    overflow: hidden;
+}
+
+.tiled-gallery .tiled-gallery-item a {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    text-decoration: none;
+    background: 0 0;
+    border: none;
+}
+
+.tiled-gallery .tiled-gallery-item img,
+.tiled-gallery .tiled-gallery-item img:hover {
+    max-width: 100%;
+    padding: 0;
+    vertical-align: middle;
+    background: 0 0;
+    border: none;
+    box-shadow: none;
+}
+
+.tiled-gallery-caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    overflow: hidden;
+    color: #333;
+    font-weight: 400;
+    font-size: 13px;
+    white-space: nowrap;
+    text-indent: 10px;
+    text-overflow: ellipsis;
+    background: #f0f0f1;
+    background: rgba(255, 255, 255, .8);
+}
+
+.tiled-gallery .tiled-gallery-item-small .tiled-gallery-caption {
+    font-size: 11px;
+}
+
+.widget-gallery .tiled-gallery-unresized {
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.tiled-gallery .tiled-gallery-item img.grayscale {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tiled-gallery .tiled-gallery-item img.grayscale:hover {
+    opacity: 0;
+}
+
+.tiled-gallery.type-circle .tiled-gallery-item img {
+    object-fit: cover;
+    border-radius: 50% !important;
+}
+
+.tiled-gallery.type-circle .tiled-gallery-caption {
+    display: none;
+}
+
+.tiled-gallery.type-square .tiled-gallery-item img {
+    object-fit: cover;
+}
