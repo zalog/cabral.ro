@@ -12,8 +12,6 @@
 
 <script>
 export default {
-    name: 'BaseSliderSlide',
-
     props: {
         colClass: {
             type: String,

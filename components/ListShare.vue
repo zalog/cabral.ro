@@ -34,8 +34,6 @@
 import { fbButton, whatsapp, tw } from 'vanilla-sharing';
 
 export default {
-    name: 'ListShare',
-
     props: {
         url: {
             type: String,

@@ -8,8 +8,6 @@
 import TheHeaderMenu from './TheHeaderMenu.vue';
 
 export default {
-    name: 'TheHeader',
-
     components: {
         TheHeaderMenu,
     },

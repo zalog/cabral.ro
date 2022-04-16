@@ -30,8 +30,6 @@
 
 <script>
 export default {
-    name: 'ListItemInfo',
-
     props: {
         data: {
             type: Array,

@@ -30,8 +30,6 @@
 import BaseItemPost from './BaseItemPost.vue';
 
 export default {
-    name: 'ListRelated',
-
     components: {
         BaseItemPost,
     },

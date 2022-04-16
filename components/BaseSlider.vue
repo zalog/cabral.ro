@@ -133,8 +133,6 @@ import BaseSliderInner from '~/components/BaseSliderInner.vue';
 import BaseSliderSlide from '~/components/BaseSliderSlide.vue';
 
 export default {
-    name: 'BaseSlider',
-
     components: {
         BaseSliderInner,
         BaseSliderSlide,
