@@ -16,6 +16,10 @@ $pagination-focus-box-shadow: none;
         margin-bottom: map-get($spacers, 5);
     }
 
+    nav {
+        overflow-x: auto;
+    }
+
     .pagination {
         .active {
             font-weight: bold;

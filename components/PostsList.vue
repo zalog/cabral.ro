@@ -29,17 +29,26 @@
             v-if="posts.pagination"
             aria-label="Page navigation"
         >
-            <ul class="pagination justify-content-center">
-                <router-link
-                    v-for="(page, index) in posts.pagination.pages"
-                    :key="'pagination-page-' + index"
-                    tag="li"
-                    class="page-item"
-                    :to="paginationTo(page)"
-                    :class="{ active: [posts.pagination.currentPage] == page }"
-                >
-                    <a class="page-link">{{ page }}</a>
-                </router-link>
+            <ul class="pagination">
+                <template v-for="(page, index) in posts.pagination.pages">
+                    <router-link
+                        v-if="page !== '...'"
+                        :key="'pagination-item-' + index"
+                        tag="li"
+                        class="page-item"
+                        :to="paginationTo(page)"
+                        :class="{ active: [posts.pagination.currentPage] == page }"
+                    >
+                        <a class="page-link">{{ page }}</a>
+                    </router-link>
+                    <li
+                        v-else
+                        :key="'pagination-item-' + index"
+                        class="page-item"
+                    >
+                        {{ page }}
+                    </li>
+                </template>
             </ul>
         </nav>
     </div>
