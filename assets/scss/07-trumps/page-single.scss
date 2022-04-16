@@ -1,43 +1,27 @@
 @import "../required";
 
-.entry-img-hero {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    left: 0;
-    z-index: -1;
-    height: 65vh;
-    overflow: hidden;
-    background-color: $black;
-
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: auto !important;
-        min-width: 100%;
-        max-width: none;
-        height: auto !important;
-        min-height: 100%;
-        max-height: none;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.entry-img-hero + .container-fluid {
-    width: auto;
-    margin: #{50vh} -($grid-gutter-width / 2) 0 -($grid-gutter-width / 2);
-    padding: $grid-gutter-width;
+.layout-hero + .container-fluid .entry-body {
+    margin: (-100px) (-($grid-gutter-width / 2)) 0 (-($grid-gutter-width / 2));
+    padding: $grid-gutter-width / 2;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
     border-top-right-radius: $border-radius-lg;
 
-    @include media-breakpoint-up(md) {
-        margin-right: 0;
-        margin-left: 0;
-        padding: map-get($spacers, 5);
-        border-radius: 0;
+    @include media-breakpoint-up(sm) {
+        margin-right: -$grid-gutter-width;
+        margin-left: -$grid-gutter-width;
+        padding: $grid-gutter-width $grid-gutter-width 0 $grid-gutter-width;
     }
+}
+
+.entry-body {
+    > * {
+        margin-bottom: map-get($spacers, 5);
+    }
+}
+
+.entry-header {
+    margin-bottom: $spacer;
 }
 
 .entry-content {
@@ -75,15 +59,10 @@
         .wp-block-image,
         .wp-block-embed,
         .embed-youtube {
-            margin-right: -(map-get($spacers, 5) / 2);
+            margin-right: -180px;
             margin-left: -(map-get($spacers, 5) / 2);
         }
     }
-}
-
-// content
-.entry-title {
-    margin-bottom: map-get($spacers, 4);
 }
 
 // content childs
@@ -207,11 +186,4 @@
 .alignright {
     float: right;
     margin-left: $spacer;
-}
-
-.body-single-hero {
-    .sidebar-left,
-    .sidebar-right {
-        padding-top: 65vh;
-    }
 }

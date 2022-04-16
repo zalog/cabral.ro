@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <h3>Comentarii</h3>
+    <div class="box">
+        <h3 class="box-title">
+            Comentarii
+        </h3>
 
         <comments-list-form :data="{ singleId }" />
 
@@ -39,10 +41,7 @@
                     }"
                 />
             </li>
-            <li
-                v-if="loading"
-                class="py-4 text-center"
-            >
+            <li class="py-4 text-center">
                 <b-spinner variant="warning" label="Loading..." />
             </li>
         </ul>
@@ -50,6 +49,7 @@
 </template>
 
 <script>
+import { ObserveVisibility } from 'vue-observe-visibility';
 import { BSpinner } from 'bootstrap-vue';
 import CommentsListComment from './CommentsListComment.vue';
 import CommentsListForm from './CommentsListForm.vue';
@@ -63,8 +63,11 @@ export default {
         CommentsListForm,
     },
 
+    directives: {
+        ObserveVisibility,
+    },
+
     props: {
-        loading: Boolean,
         comments: {
             type: Object,
             default: () => ({}),

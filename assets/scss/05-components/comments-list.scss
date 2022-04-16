@@ -18,5 +18,13 @@
         > * + * {
             border-top: $border-width solid $border-color;
         }
+
+        &:last-child {
+            display: none;
+        }
+    }
+
+    .loading & > li:last-child {
+        display: block;
     }
 }

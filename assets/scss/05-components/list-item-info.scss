@@ -3,8 +3,13 @@
 .list-item-info {
     @include list-unstyled;
     display: flex;
-    flex-wrap: wrap;
+    overflow-x: scroll;
     font-size: $font-size-sm;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     &,
     a {

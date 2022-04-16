@@ -53,16 +53,15 @@ export default {
             set(state, [dataKeyPage, 'timestamp', dataKeyFirst], new Date().getTime());
 
             const stateKeys = Object.keys(state);
-            if (stateKeys.length > pagesToKeep) {
-                const keyToDelete = stateKeys
-                    .filter((key) => key !== dataKeyPage)
-                    .reduce((prev, curr) => {
-                        if (state[prev].timestamp.main < state[curr].timestamp.main) {
-                            return prev;
-                        }
+            const keyPages = stateKeys.filter((key) => key !== dataKeyPage && key[0] === '/' && state[key].timestamp);
+            if (keyPages.length > pagesToKeep) {
+                const keyToDelete = keyPages.reduce((prev, curr) => {
+                    if (state[prev].timestamp.main < state[curr].timestamp.main) {
+                        return prev;
+                    }
 
-                        return curr;
-                    });
+                    return curr;
+                });
 
                 del(state, [keyToDelete]);
             }

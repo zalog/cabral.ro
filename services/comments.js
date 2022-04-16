@@ -4,7 +4,7 @@ import { objectRenameKeys } from '../utils';
 
 export async function fetchComments({
     $axios,
-    singleId,
+    singleSlug,
     after = null,
 }) {
     const onPage = 10;
@@ -15,7 +15,7 @@ export async function fetchComments({
         data: {
             query: `
                 query GET_COMMENTS_FOR_POST(
-                    $id: ID,
+                    $singleSlug: String,
                     $first: Int,
                     $after: String
                 ) {
@@ -23,7 +23,7 @@ export async function fetchComments({
                         first: $first,
                         after: $after,
                         where: {
-                            contentId: $id
+                            contentName: $singleSlug
                             parent: null
                             order: DESC
                         }
@@ -56,7 +56,7 @@ export async function fetchComments({
                 }
             `,
             variables: {
-                id: singleId,
+                singleSlug,
                 first: onPage,
                 after,
             },

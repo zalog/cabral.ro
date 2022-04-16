@@ -10,6 +10,7 @@ export default {
         ],
     },
     plugins: [
+        '~/plugins/store-utils.js',
         '~/plugins/router-hooks.js',
         '~/plugins/filters.js',
         '~/plugins/vue-lazysizes.client.js',

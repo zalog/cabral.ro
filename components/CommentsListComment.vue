@@ -1,7 +1,19 @@
 <template>
     <div class="comment">
         <div class="comment-header">
-            <div v-html="printAuthor(comment)/* eslint-disable-line vue/no-v-html */" />
+            <template v-if="comment.author.node">
+                <template v-if="!comment.author.node.url">
+                    {{ comment.author.node.name }}
+                </template>
+                <a
+                    v-else
+                    :href="comment.author.node.url"
+                    target="_blank"
+                    rel="external nofollow ugc"
+                >
+                    {{ comment.author.node.name }}
+                </a>
+            </template>
             <list-item-info
                 :data="[{
                     icon: 'date',
@@ -30,15 +42,6 @@ export default {
         comment: {
             type: Object,
             required: true,
-        },
-    },
-
-    methods: {
-        printAuthor(comment) {
-            let output = comment.author.node.name;
-            if (comment.author.node.url) output = `<a href="${comment.author.node.url}" target="_blank">${output}</a>`;
-
-            return output;
         },
     },
 };

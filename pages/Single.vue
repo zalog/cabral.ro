@@ -1,64 +1,42 @@
 <template>
     <div v-if="data">
-        <div
-            v-if="data.main.featuredMedia"
-            class="entry-img-hero"
-            v-html="data.main.featuredMedia/* eslint-disable-line vue/no-v-html */"
-        />
-        <div
-            class="container-fluid"
-        >
-            <h1
-                class="entry-title"
-            >
-                {{ data.main.title }}
-            </h1>
-            <list-item-info
-                :data="[{
-                    icon: 'date',
-                    text: $options.filters.formatDate(data.main.date)
-                }, {
-                    icon: 'folder',
-                    links: data.main.categories
-                }, {
-                    icon: 'comment',
-                    text: data.main.commentsNumber
-                }]"
-            />
+        <div class="entry-body">
+            <div class="entry-header">
+                <h1>
+                    {{ data.main.title }}
+                </h1>
+                <list-item-info
+                    :data="[{
+                        icon: 'date',
+                        text: $options.filters.formatDate(data.main.date)
+                    }, {
+                        icon: 'folder',
+                        links: data.main.categories
+                    }, {
+                        icon: 'comment',
+                        text: data.main.commentsNumber
+                    }]"
+                />
+            </div>
             <div
                 ref="content"
                 class="entry-content"
                 v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
             />
-            <list-share :url="data.main.link" />
-        </div>
-
-        <div class="bg-light">
-            <template
+            <list-share
+                class="scroll-x scroll-hide-bar"
+                :url="data.main.link"
+            />
+            <list-related
                 v-if="data.related"
-            >
-                <div class="container-fluid">
-                    <list-related :data="data.related" />
-                </div>
-
-                <hr class="d-none d-lg-block">
-            </template>
-
-            <div
-                v-observe-visibility="
-                    !comments.shown
-                        ? isVisible => fetchComments(isVisible, true)
-                        : false
-                "
-                class="container-fluid"
-            >
-                <comments-list
-                    :loading="comments.loading"
-                    :comments="data.comments"
-                    :single-id="data.main.id"
-                    @is-visible-last="fetchComments(true)"
-                />
-            </div>
+                :data="data.related"
+            />
+            <comments-list
+                ref="comments"
+                :comments="data.comments"
+                :single-id="data.main.id"
+                @is-visible-last="fetchComments(true)"
+            />
         </div>
 
         <lazy-photoswipe
@@ -72,8 +50,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { ObserveVisibility } from 'vue-observe-visibility';
 import dataSingle from '~/store/lazy/data-single';
 import dataComments from '../store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
@@ -82,7 +58,14 @@ import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
-Vue.directive('observe-visibility', ObserveVisibility);
+const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
+
+const registerModules = (store) => {
+    store.$registerModules([
+        { name: ['data', 'dataSingle'], imported: dataSingle, preserveStateCheck: true },
+        { name: ['data', 'dataComments'], imported: dataComments, preserveStateCheck: true },
+    ]);
+};
 
 export default {
     components: {
@@ -97,17 +80,20 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        if (!store.hasModule(['data', 'dataSingle'])) {
-            store.registerModule(['data', 'dataSingle'], dataSingle, { preserveState: true });
-        }
+        registerModules(store);
 
         let actionName = 'data/fetchPageSingle';
         if (route.params.singleType === 'post') actionName = 'data/fetchPagePost';
         else if (route.params.singleType === 'page') actionName = 'data/fetchPagePage';
 
-        await store.dispatch(actionName, {
-            route,
-        });
+        await Promise.all([
+            store.dispatch(actionName, {
+                route,
+            }),
+            store.dispatch('data/fetchComments', {
+                route,
+            }),
+        ]);
     },
 
     data: () => ({
@@ -115,38 +101,25 @@ export default {
             index: false,
             items: [],
         },
-        comments: {
-            shown: false,
-            loading: false,
-        },
     }),
 
-    head() {
-        const bodyClass = this.data.main.featuredMedia && 'body-single-hero';
-
-        if (!bodyClass) return null;
-
-        return {
-            bodyAttrs: {
-                class: [bodyClass],
-            },
-        };
+    created() {
+        const hasEntrysGalleryJetpack = this.data.main.content.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
+        if (hasEntrysGalleryJetpack) cssGallery();
     },
 
     mounted() {
-        this.setDataPhotoswipe();
-    },
+        registerModules(this.$store);
 
-    beforeDestroy() {
-        this.$store.unregisterModule(['data', 'dataSingle']);
-        if (this.$store.hasModule(['data', 'dataComments'])) {
-            this.$store.unregisterModule(['data', 'dataComments']);
-        }
+        this.setDataPhotoswipe();
     },
 
     methods: {
         async fetchComments(isVisible, checkForData) {
-            if (!isVisible && !this.comments.loading) return;
+            const { classList: commentsClass } = this.$refs.comments.$el;
+            const loading = commentsClass.contains('loading');
+
+            if (!isVisible && !loading) return;
 
             if (checkForData && this.data.comments) return;
 
@@ -156,17 +129,13 @@ export default {
 
             if (hasNextPage === false) return;
 
-            this.comments.loading = true;
-            this.comments.shown = true;
+            commentsClass.add('loading');
 
-            if (!this.$store.hasModule(['data', 'dataComments'])) {
-                this.$store.registerModule(['data', 'dataComments'], dataComments, { preserveState: true });
-            }
             await this.$store.dispatch('data/fetchComments', {
                 route: this.$route,
             });
 
-            this.comments.loading = false;
+            commentsClass.remove('loading');
         },
         setDataPhotoswipe() {
             this.$refs.content.querySelectorAll('img').forEach((img, index) => {
