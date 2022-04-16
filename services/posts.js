@@ -49,6 +49,7 @@ const fetchPosts = async ({
 
     // posts: pagination
     if (responsePostsPages) {
+        const pages = [];
         const responsePagination = paginate(
             responsePostsCount,
             pagination.currentPage,
@@ -56,8 +57,22 @@ const fetchPosts = async ({
             paginationMaxPages,
         );
 
+        if (responsePagination.pages[0] !== 1) {
+            pages.push(...[
+                1,
+                '...',
+            ]);
+        }
+        pages.push(...responsePagination.pages);
+        if (responsePagination.pages[paginationMaxPages - 1] !== responsePagination.totalPages) {
+            pages.push(...[
+                '...',
+                responsePagination.totalPages,
+            ]);
+        }
+
         output.pagination = {
-            pages: responsePagination.pages,
+            pages,
             currentPage: responsePagination.currentPage,
         };
     }
