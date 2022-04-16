@@ -13,7 +13,7 @@
                 :data="imgInfo"
             />
         </div>
-        <div class="card-body" :to="postTo(slug)">
+        <div class="card-body">
             <h2 class="card-title">
                 <router-link :to="postTo(slug)">
                     {{ title }}
