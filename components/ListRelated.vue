@@ -13,7 +13,6 @@
                         class="col-sm-4 mb-3 mb-sm-0"
                     >
                         <base-item-post
-                            :post="post"
                             :img="post.featuredMedia"
                             :title="post.title"
                             :slug="post.slug"
