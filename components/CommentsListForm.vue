@@ -91,8 +91,6 @@ import {
 } from 'vuelidate/lib/validators';
 
 export default {
-    name: 'CommentsListForm',
-
     mixins: [validationMixin],
 
     props: {

@@ -18,8 +18,6 @@ const defaultItem = {
 };
 
 export default {
-    name: 'BaseSliderInner',
-
     model: {
         prop: 'active',
         event: 'active:change',

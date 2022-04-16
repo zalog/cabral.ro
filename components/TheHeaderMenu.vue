@@ -89,8 +89,6 @@ import navCategories from '../store/lazy/nav-categories';
 import { SITE } from '../utils/constants';
 
 export default {
-    name: 'TheHeaderMenu',
-
     data: () => ({
         show: {
             navbarBodyMain: false,

@@ -21,6 +21,7 @@
                 />
             </div>
         </div>
+        <the-footer />
         <lazy-the-notifications />
     </div>
 </template>

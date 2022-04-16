@@ -32,8 +32,6 @@
 import ListItemInfo from './ListItemInfo.vue';
 
 export default {
-    name: 'CommentsListComment',
-
     components: {
         ListItemInfo,
     },

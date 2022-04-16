@@ -50,8 +50,6 @@ import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default';
 
 export default {
-    name: 'Photoswipe',
-
     model: {
         prop: 'index',
         event: 'update:index',

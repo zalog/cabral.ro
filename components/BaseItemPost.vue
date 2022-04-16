@@ -35,8 +35,6 @@
 import ListItemInfo from '~/components/ListItemInfo.vue';
 
 export default {
-    name: 'BaseItemPost',
-
     components: {
         ListItemInfo,
     },

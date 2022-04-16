@@ -55,8 +55,6 @@ import CommentsListComment from './CommentsListComment.vue';
 import CommentsListForm from './CommentsListForm.vue';
 
 export default {
-    name: 'CommentsList',
-
     components: {
         BSpinner,
         CommentsListComment,

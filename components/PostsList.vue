@@ -61,8 +61,6 @@
 import BaseItemPost from '~/components/BaseItemPost.vue';
 
 export default {
-    name: 'PostsList',
-
     components: {
         BaseItemPost,
     },

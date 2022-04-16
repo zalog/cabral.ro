@@ -7,8 +7,6 @@
 
 <script>
 export default {
-    name: 'LayoutHero',
-
     props: {
         html: {
             type: String,
