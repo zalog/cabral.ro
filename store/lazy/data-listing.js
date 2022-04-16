@@ -69,7 +69,7 @@ export default {
                     categories: [taxonomy.category],
                     tags: [taxonomy.tag],
                 },
-                pageNumber,
+                pageNumber: Number(pageNumber) || null,
             });
         },
         async fetchPosts(
