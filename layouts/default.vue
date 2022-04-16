@@ -27,7 +27,7 @@
 
 <script>
 import { currentPage } from '~/mixins';
-import LayoutHero from '~/components/layout-hero.vue';
+import LayoutHero from '~/components/LayoutHero.vue';
 
 export default {
     components: {
