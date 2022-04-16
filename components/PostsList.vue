@@ -29,7 +29,7 @@
             v-if="posts.pagination"
             aria-label="Page navigation"
         >
-            <ul class="pagination justify-content-center">
+            <ul class="pagination">
                 <template v-for="(page, index) in posts.pagination.pages">
                     <router-link
                         v-if="page !== '...'"
