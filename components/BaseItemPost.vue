@@ -1,6 +1,6 @@
 <template>
     <router-link
-        :tag="tag"
+        tag="div"
         class="card"
         :to="postTo(slug)"
     >
@@ -40,10 +40,6 @@ export default {
     },
 
     props: {
-        tag: {
-            type: String,
-            default: 'div',
-        },
         img: {
             type: [String, Object],
             default: '',
