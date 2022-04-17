@@ -47,7 +47,7 @@ export default (payload) => {
         main: {
             id: payload.id,
             link: payload.link,
-            featuredMedia: (featuredMediaValid && featuredMedia.html) || false,
+            ...(featuredMediaValid && { featuredMedia }),
             title: payload.title.rendered,
             content: payload.content,
             commentsNumber: payload.comments_number,

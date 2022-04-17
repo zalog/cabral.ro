@@ -1,16 +1,22 @@
 <template>
-    <div
-        class="layout-hero"
-        v-html="html/* eslint-disable-line vue/no-v-html */"
-    />
+    <div class="layout-hero">
+        <img
+            :src="img.src"
+            :srcset="img.srcset"
+            :sizes="img.sizes"
+            :width="img.width"
+            :height="img.height"
+            :alt="img.alt"
+        >
+    </div>
 </template>
 
 <script>
 export default {
     props: {
-        html: {
-            type: String,
-            default: '',
+        img: {
+            type: [Boolean, Object],
+            default: false,
         },
     },
 };
