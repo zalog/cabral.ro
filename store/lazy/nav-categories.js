@@ -21,7 +21,7 @@ export default {
                     order: 'desc',
                     per_page: 10,
                 },
-                fields: ['name', 'slug', 'link', 'count'],
+                fields: ['name', 'link'],
                 adaptor: 'navCategories',
             });
 
