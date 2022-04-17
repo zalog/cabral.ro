@@ -21,7 +21,7 @@
             <div
                 ref="content"
                 class="entry-content"
-                v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
+                v-html="data.main.content.rendered/* eslint-disable-line vue/no-v-html */"
             />
             <list-share
                 class="scroll-x scroll-hide-bar"
@@ -104,7 +104,7 @@ export default {
     }),
 
     created() {
-        const hasEntrysGalleryJetpack = this.data.main.content.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
+        const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
         if (hasEntrysGalleryJetpack) cssGallery();
     },
 
@@ -139,7 +139,7 @@ export default {
         },
         setDataPhotoswipe() {
             this.$refs.content.querySelectorAll('img').forEach((img, index) => {
-                const src = (img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
+                const src = (img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
                 const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
 
                 this.photoswipe.items.push({
