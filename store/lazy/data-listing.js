@@ -38,6 +38,7 @@ export default {
                     params: {
                         slug: pageSlug.split('/').pop(),
                     },
+                    fields: ['name', 'description'],
                     adaptor: 'pageCategory',
                 });
                 pageTitle = responseCategory.name;
