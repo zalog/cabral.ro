@@ -3,7 +3,7 @@
         <the-header />
         <layout-hero
             v-if="$route.name === 'Single' && data.main.featuredMedia"
-            :html="data.main.featuredMedia"
+            :img="data.main.featuredMedia"
         />
         <div class="container-fluid">
             <div class="row">
