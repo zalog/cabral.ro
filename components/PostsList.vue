@@ -7,6 +7,7 @@
             <base-item-post
                 :key="`post-${index}`"
                 :img="post.featuredMedia"
+                :img-loading="index === 0 ? 'eager' : 'lazy'"
                 :img-info="[{
                     icon: 'comment',
                     text: post.commentsNumber
