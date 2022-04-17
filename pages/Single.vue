@@ -139,7 +139,7 @@ export default {
         },
         setDataPhotoswipe() {
             this.$refs.content.querySelectorAll('img').forEach((img, index) => {
-                const src = (img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
+                const src = (img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
                 const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
 
                 this.photoswipe.items.push({
