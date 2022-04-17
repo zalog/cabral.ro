@@ -21,7 +21,7 @@
             <div
                 ref="content"
                 class="entry-content"
-                v-html="data.main.content/* eslint-disable-line vue/no-v-html */"
+                v-html="data.main.content.rendered/* eslint-disable-line vue/no-v-html */"
             />
             <list-share
                 class="scroll-x scroll-hide-bar"
@@ -104,7 +104,7 @@ export default {
     }),
 
     created() {
-        const hasEntrysGalleryJetpack = this.data.main.content.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
+        const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
         if (hasEntrysGalleryJetpack) cssGallery();
     },
 
