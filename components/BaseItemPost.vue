@@ -8,7 +8,17 @@
             v-if="img"
             class="card-img-top"
         >
-            <div class="img" v-html="img/* eslint-disable-line vue/no-v-html */" />
+            <div class="img">
+                <img
+                    :loading="imgLoading"
+                    :src="img.src"
+                    :srcset="img.srcset"
+                    :sizes="img.sizes"
+                    :width="img.width"
+                    :height="img.height"
+                    :alt="img.alt"
+                >
+            </div>
             <list-item-info
                 :data="imgInfo"
             />
@@ -43,6 +53,10 @@ export default {
         img: {
             type: [String, Object],
             default: '',
+        },
+        imgLoading: {
+            type: String,
+            default: 'lazy',
         },
         imgInfo: {
             type: Array,

@@ -11,7 +11,7 @@ export default (payload) => {
 
     return {
         excerpt: payload.excerpt.rendered,
-        featuredMedia: payload.embed_featured_media.html,
+        featuredMedia: payload.embed_featured_media,
         slug: payload.slug,
         title: payload.title.rendered,
         commentsNumber: payload.comments_number,
