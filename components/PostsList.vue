@@ -6,8 +6,8 @@
         <template v-for="(post, index) in posts.posts">
             <base-item-post
                 :key="`post-${index}`"
-                :post="post"
                 :img="post.featuredMedia"
+                :img-loading="index === 0 ? 'eager' : 'lazy'"
                 :img-info="[{
                     icon: 'comment',
                     text: post.commentsNumber

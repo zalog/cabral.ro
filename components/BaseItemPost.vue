@@ -1,6 +1,6 @@
 <template>
     <router-link
-        :tag="tag"
+        tag="div"
         class="card"
         :to="postTo(slug)"
     >
@@ -8,12 +8,22 @@
             v-if="img"
             class="card-img-top"
         >
-            <div class="img" v-html="img/* eslint-disable-line vue/no-v-html */" />
+            <div class="img">
+                <img
+                    :loading="imgLoading"
+                    :src="img.src"
+                    :srcset="img.srcset"
+                    :sizes="img.sizes"
+                    :width="img.width"
+                    :height="img.height"
+                    :alt="img.alt"
+                >
+            </div>
             <list-item-info
                 :data="imgInfo"
             />
         </div>
-        <div class="card-body" :to="postTo(slug)">
+        <div class="card-body">
             <h2 class="card-title">
                 <router-link :to="postTo(slug)">
                     {{ title }}
@@ -40,13 +50,13 @@ export default {
     },
 
     props: {
-        tag: {
-            type: String,
-            default: 'div',
-        },
         img: {
             type: [String, Object],
             default: '',
+        },
+        imgLoading: {
+            type: String,
+            default: 'lazy',
         },
         imgInfo: {
             type: Array,
