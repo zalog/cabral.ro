@@ -27,7 +27,12 @@ export default (payload) => {
         return {
             title: post.title,
             slug,
-            featuredMedia: `<img src="${post.img.src}" alt="${post.img.alt_text || 'post featured image'}" />`,
+            featuredMedia: {
+                src: post.img.src,
+                width: post.img.width,
+                height: post.img.height,
+                alt: post.img.alt_text || 'post featured image',
+            },
         };
     });
 
