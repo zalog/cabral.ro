@@ -44,27 +44,22 @@
                     </nuxt-link>
                 </li>
             </ul>
-            <portal
-                to="widget-categories"
-                :disabled="$mediaBreakpointDown('lg')"
-            >
-                <ul class="nav nav-pills nav-categories">
-                    <li
-                        v-for="(category, index) in categories"
-                        :key="`navbar-categories-${index}`"
-                        class="nav-item"
+            <ul class="nav nav-pills nav-categories">
+                <li
+                    v-for="(category, index) in categories"
+                    :key="`navbar-categories-${index}`"
+                    class="nav-item"
+                >
+                    <nuxt-link
+                        :to="category.to"
+                        class="nav-link"
+                        exact-active-class="active"
+                        @click.native="menuClose()"
                     >
-                        <nuxt-link
-                            :to="category.to"
-                            class="nav-link"
-                            exact-active-class="active"
-                            @click.native="menuClose()"
-                        >
-                            {{ category.title }}
-                        </nuxt-link>
-                    </li>
-                </ul>
-            </portal>
+                        {{ category.title }}
+                    </nuxt-link>
+                </li>
+            </ul>
         </div>
 
         <form
