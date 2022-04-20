@@ -5,7 +5,10 @@
 .navbar {
     flex-flow: column nowrap;
     align-items: normal;
-    justify-content: flex-start;
+
+    > * {
+        margin-bottom: $spacer;
+    }
 
     .form-control {
         color: $navbar-dark-active-color;
@@ -19,31 +22,13 @@
     }
 }
 
-.navbar-body-main-open {
-    height: 100vh;
-}
-
 .navbar-bar {
     display: flex;
     justify-content: space-between;
-    order: 1;
-}
-
-.navbar-body-search {
-    order: 2;
 }
 
 .navbar-body-main {
     display: none;
-    flex-grow: 1;
-    order: 3;
-    padding: $navbar-padding-y 0;
-    overflow-y: auto;
-    background-color: $dark;
-
-    > * {
-        margin-bottom: $spacer;
-    }
 
     .navbar-body-main-open & {
         display: block;
@@ -56,39 +41,20 @@
         align-items: center;
         justify-content: space-between;
 
+        > * {
+            margin-bottom: 0;
+        }
+
         .nav-pills {
             display: none;
         }
     }
 
-    .navbar-body-main-open {
-        height: auto;
-    }
-
-    .navbar-bar {
-        flex-grow: 0;
+    .navbar-body-main {
+        display: block;
     }
 
     .navbar-body-search {
-        flex-grow: 1;
-    }
-
-    .navbar-body-main {
-        display: block;
-        flex-grow: 0;
-        padding: 0;
-        background-color: transparent;
-
-        > * {
-            margin-bottom: 0;
-        }
-    }
-}
-
-.body-navbar-open {
-    overflow-y: hidden;
-
-    @include media-breakpoint-up(xl) {
-        overflow-y: auto;
+        margin-left: auto;
     }
 }

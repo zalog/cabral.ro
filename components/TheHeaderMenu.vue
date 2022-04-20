@@ -44,22 +44,6 @@
                     </nuxt-link>
                 </li>
             </ul>
-            <ul class="nav nav-pills nav-categories">
-                <li
-                    v-for="(category, index) in categories"
-                    :key="`navbar-categories-${index}`"
-                    class="nav-item"
-                >
-                    <nuxt-link
-                        :to="category.to"
-                        class="nav-link"
-                        exact-active-class="active"
-                        @click.native="menuClose()"
-                    >
-                        {{ category.title }}
-                    </nuxt-link>
-                </li>
-            </ul>
         </div>
 
         <form
@@ -75,6 +59,23 @@
                 placeholder="Caută aici..."
             >
         </form>
+
+        <ul class="nav nav-pills nav-categories">
+            <li
+                v-for="(category, index) in categories"
+                :key="`navbar-categories-${index}`"
+                class="nav-item"
+            >
+                <nuxt-link
+                    :to="category.to"
+                    class="nav-link"
+                    exact-active-class="active"
+                    @click.native="menuClose()"
+                >
+                    {{ category.title }}
+                </nuxt-link>
+            </li>
+        </ul>
     </nav>
 </template>
 
@@ -109,34 +110,20 @@ export default {
 
     created() {
         this.SITE = SITE;
-
-        this.initMeta();
     },
 
     methods: {
-        initMeta() {
-            const { set, remove } = this.$meta().addApp('body-class-menu');
-
-            this.meta = {
-                set: () => set({
-                    bodyAttrs: { class: 'body-navbar-open' },
-                }),
-                remove: () => remove(),
-            };
-        },
         menuToggle() {
             if (!this.show.navbarBodyMain) this.menuOpen();
             else this.menuClose();
         },
         menuOpen() {
             this.show.navbarBodyMain = true;
-            this.meta.set();
             this.$root.$el.addEventListener('click', this.onMenuOpenClick);
             this.$root.$el.addEventListener('keydown', this.onMenuOpenKeydown);
         },
         menuClose() {
             this.show.navbarBodyMain = false;
-            this.meta.remove();
             this.$root.$el.removeEventListener('click', this.onMenuOpenClick);
             this.$root.$el.removeEventListener('keydown', this.onMenuOpenKeydown);
         },
