@@ -30,7 +30,7 @@
         >
             <ul class="navbar-nav">
                 <li
-                    v-for="item in menu"
+                    v-for="item in dataMenu"
                     :key="item.ID"
                     class="nav-item"
                 >
@@ -62,7 +62,7 @@
 
         <ul class="nav nav-pills nav-categories">
             <li
-                v-for="(category, index) in categories"
+                v-for="(category, index) in dataCategories"
                 :key="`navbar-categories-${index}`"
                 class="nav-item"
             >
@@ -80,33 +80,25 @@
 </template>
 
 <script>
-import menu from '../store/lazy/menu';
-import navCategories from '../store/lazy/nav-categories';
 import { SITE } from '../utils/constants';
 
 export default {
+    props: {
+        dataMenu: {
+            type: Array,
+            default: () => ([]),
+        },
+        dataCategories: {
+            type: Array,
+            default: () => ([]),
+        },
+    },
+
     data: () => ({
         show: {
             navbarBodyMain: false,
         },
     }),
-
-    async fetch() {
-        this.$store.registerModule(['ui', 'menu'], menu, { preserveState: false });
-        await this.$store.dispatch('ui/menu/fetch');
-
-        this.$store.registerModule(['ui', 'nav-categories'], navCategories, { preserveState: false });
-        await this.$store.dispatch('ui/nav-categories/fetch');
-    },
-
-    computed: {
-        menu() {
-            return this.$store.state.ui.menu;
-        },
-        categories() {
-            return this.$store.state.ui['nav-categories'];
-        },
-    },
 
     created() {
         this.SITE = SITE;
