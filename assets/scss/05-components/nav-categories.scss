@@ -13,6 +13,7 @@
     }
 
     .nav-link {
+        padding: ($nav-link-padding-y / 2) ($nav-link-padding-x / 2);
         background-color: darken($light, 4%);
         border: $border-width solid darken($light, 5%);
 
@@ -25,6 +26,10 @@
         &.active {
             background-color: darken($light, 8%);
             border-color: darken($light, 20%);
+        }
+
+        @include media-breakpoint-up(md) {
+            padding: $nav-link-padding-y $nav-link-padding-x;
         }
     }
 
