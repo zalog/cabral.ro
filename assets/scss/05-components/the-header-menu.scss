@@ -3,7 +3,7 @@
 @import "~bootstrap/scss/navbar";
 
 .navbar {
-    flex-flow: column nowrap;
+    flex-flow: column wrap;
     align-items: normal;
 
     > * {
@@ -29,13 +29,18 @@
 
 .navbar-body-main {
     display: none;
+    flex: 1 0 auto;
 
     .navbar-body-main-open & {
         display: block;
     }
 }
 
-@include media-breakpoint-up(xl) {
+.navbar-body-search {
+    flex: 1 0 auto;
+}
+
+@include media-breakpoint-up(sm) {
     .navbar {
         flex-direction: row;
         align-items: center;
@@ -53,8 +58,10 @@
     .navbar-body-main {
         display: block;
     }
+}
 
+@include media-breakpoint-up(lg) {
     .navbar-body-search {
-        margin-left: auto;
+        max-width: 20%;
     }
 }
