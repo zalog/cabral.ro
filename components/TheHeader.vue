@@ -1,9 +1,7 @@
 <template>
     <div class="app-Header">
-        <the-header-menu
-            :data-menu="$store.state.ui.menu"
-            :data-categories="$store.state.ui['nav-categories']"
-        />
+        <the-header-menu :data="$store.state.ui.menu" />
+        <the-header-categories :data="$store.state.ui['nav-categories']" />
     </div>
 </template>
 
@@ -11,10 +9,12 @@
 import menu from '../store/lazy/menu';
 import navCategories from '../store/lazy/nav-categories';
 import TheHeaderMenu from './TheHeaderMenu.vue';
+import TheHeaderCategories from './TheHeaderCategories.vue';
 
 export default {
     components: {
         TheHeaderMenu,
+        TheHeaderCategories,
     },
 
     async fetch() {

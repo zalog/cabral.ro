@@ -30,7 +30,7 @@
         >
             <ul class="navbar-nav">
                 <li
-                    v-for="item in dataMenu"
+                    v-for="item in data"
                     :key="item.ID"
                     class="nav-item"
                 >
@@ -59,23 +59,6 @@
                 placeholder="Caută aici..."
             >
         </form>
-
-        <ul class="nav nav-pills nav-categories">
-            <li
-                v-for="(category, index) in dataCategories"
-                :key="`navbar-categories-${index}`"
-                class="nav-item"
-            >
-                <nuxt-link
-                    :to="category.to"
-                    class="nav-link"
-                    exact-active-class="active"
-                    @click.native="menuClose()"
-                >
-                    {{ category.title }}
-                </nuxt-link>
-            </li>
-        </ul>
     </nav>
 </template>
 
@@ -84,11 +67,7 @@ import { SITE } from '../utils/constants';
 
 export default {
     props: {
-        dataMenu: {
-            type: Array,
-            default: () => ([]),
-        },
-        dataCategories: {
+        data: {
             type: Array,
             default: () => ([]),
         },
@@ -146,5 +125,4 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/05-components/the-header-menu";
-@import "~/assets/scss/05-components/nav-categories";
 </style>
