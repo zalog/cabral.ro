@@ -31,6 +31,11 @@
                 v-if="data.related"
                 :data="data.related"
             />
+            <banners v-if="data.main.categories">
+                <a href="http://www.runningmag.ro/" target="_blank" title="runningmag.ro" rel="external nofollow noopener">
+                    <img src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png" alt="runningmag.ro">
+                </a>
+            </banners>
             <comments-list
                 ref="comments"
                 :comments="data.comments"
@@ -56,6 +61,7 @@ import { currentPage } from '~/mixins';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
+import Banners from '~/components/Banners.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
@@ -72,6 +78,7 @@ export default {
         ListItemInfo,
         ListShare,
         ListRelated,
+        Banners,
         CommentsList,
     },
 
