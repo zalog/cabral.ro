@@ -6,6 +6,11 @@
         >
             {{ data.title }}
         </h1>
+
+        <base-alert>
+            Susțin <a href="https://www.anvelope.ro/" target="_blank" rel="external nofollow noopener">anvelope.ro</a>, specialistul meu în anvelope.
+        </base-alert>
+
         <posts-list
             :posts="data.main"
         />
@@ -17,6 +22,7 @@ import { SITE } from '~/utils/constants';
 import dataListing from '~/store/lazy/data-listing';
 import dataHead from '~/store/lazy/data-head';
 import { currentPage } from '~/mixins';
+import BaseAlert from '~/components/BaseAlert.vue';
 import PostsList from '~/components/PostsList.vue';
 
 const registerModules = (store) => {
@@ -28,6 +34,7 @@ const registerModules = (store) => {
 
 export default {
     components: {
+        BaseAlert,
         PostsList,
     },
 
