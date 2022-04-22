@@ -1,2 +1,12 @@
 @import "./00-settings/index";
 @import "./01-tools/index";
+
+// removes not needed map
+
+$theme-colors: map-remove(
+    $theme-colors,
+    "info",
+    "warning",
+    "light",
+    "dark"
+);

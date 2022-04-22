@@ -69,7 +69,7 @@ export default {
                 let toastVariant = 'success';
                 if (comment.status === 'hold') {
                     toastMessage += ' urmează să fie aprobat.';
-                    toastVariant = 'info';
+                    toastVariant = 'secondary';
                 } else if (comment.status === 'spam') {
                     toastMessage = ' a fost marcat ca spam.';
                     toastVariant = 'danger';
