@@ -42,7 +42,7 @@
                 />
             </li>
             <li class="py-4 text-center">
-                <b-spinner variant="warning" label="Loading..." />
+                <b-spinner variant="secondary" label="Loading..." />
             </li>
         </ul>
     </div>

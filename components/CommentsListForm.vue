@@ -61,7 +61,7 @@
 
             <base-alert
                 v-if="$v.form.data.$error"
-                variant="warning"
+                variant="danger"
             >
                 Câmpurile marcate cu roșu conțin erori.
             </base-alert>
