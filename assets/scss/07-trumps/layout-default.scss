@@ -1,19 +1,18 @@
 @import "../required";
 
-$page-padding:      map-get($spacers, 4);
-
 .layout-default {
-    .sidebar {
-        padding-top: $page-padding;
-        padding-bottom: $page-padding;
+    > .container-fluid {
+        padding-top: ($grid-gutter-width / 2);
+        padding-bottom: ($grid-gutter-width / 2);
 
-        > * {
-            margin-bottom: $spacer;
+        @include media-breakpoint-up(sm) {
+            padding-top: $grid-gutter-width;
+            padding-bottom: $grid-gutter-width;
         }
     }
+
     .page {
-        position: static;
-        padding-top: $page-padding;
-        padding-bottom: $page-padding;
+        max-width: 640px;
+        margin: 0 auto;
     }
 }

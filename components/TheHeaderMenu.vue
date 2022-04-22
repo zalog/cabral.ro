@@ -1,6 +1,6 @@
 <template>
     <nav
-        class="navbar navbar-expand-xl navbar-dark bg-dark"
+        class="navbar navbar-expand-sm navbar-dark bg-dark"
         :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
     >
         <div class="navbar-bar">
@@ -30,7 +30,7 @@
         >
             <ul class="navbar-nav">
                 <li
-                    v-for="item in menu"
+                    v-for="item in data"
                     :key="item.ID"
                     class="nav-item"
                 >
@@ -44,27 +44,6 @@
                     </nuxt-link>
                 </li>
             </ul>
-            <portal
-                to="widget-categories"
-                :disabled="$mediaBreakpointDown('lg')"
-            >
-                <ul class="nav nav-pills nav-categories">
-                    <li
-                        v-for="(category, index) in categories"
-                        :key="`navbar-categories-${index}`"
-                        class="nav-item"
-                    >
-                        <nuxt-link
-                            :to="category.to"
-                            class="nav-link"
-                            exact-active-class="active"
-                            @click.native="menuClose()"
-                        >
-                            {{ category.title }}
-                        </nuxt-link>
-                    </li>
-                </ul>
-            </portal>
         </div>
 
         <form
@@ -84,64 +63,38 @@
 </template>
 
 <script>
-import menu from '../store/lazy/menu';
-import navCategories from '../store/lazy/nav-categories';
 import { SITE } from '../utils/constants';
 
 export default {
+    props: {
+        data: {
+            type: Array,
+            default: () => ([]),
+        },
+    },
+
     data: () => ({
         show: {
             navbarBodyMain: false,
         },
     }),
 
-    async fetch() {
-        this.$store.registerModule(['ui', 'menu'], menu, { preserveState: false });
-        await this.$store.dispatch('ui/menu/fetch');
-
-        this.$store.registerModule(['ui', 'nav-categories'], navCategories, { preserveState: false });
-        await this.$store.dispatch('ui/nav-categories/fetch');
-    },
-
-    computed: {
-        menu() {
-            return this.$store.state.ui.menu;
-        },
-        categories() {
-            return this.$store.state.ui['nav-categories'];
-        },
-    },
-
     created() {
         this.SITE = SITE;
-
-        this.initMeta();
     },
 
     methods: {
-        initMeta() {
-            const { set, remove } = this.$meta().addApp('body-class-menu');
-
-            this.meta = {
-                set: () => set({
-                    bodyAttrs: { class: 'body-navbar-open' },
-                }),
-                remove: () => remove(),
-            };
-        },
         menuToggle() {
             if (!this.show.navbarBodyMain) this.menuOpen();
             else this.menuClose();
         },
         menuOpen() {
             this.show.navbarBodyMain = true;
-            this.meta.set();
             this.$root.$el.addEventListener('click', this.onMenuOpenClick);
             this.$root.$el.addEventListener('keydown', this.onMenuOpenKeydown);
         },
         menuClose() {
             this.show.navbarBodyMain = false;
-            this.meta.remove();
             this.$root.$el.removeEventListener('click', this.onMenuOpenClick);
             this.$root.$el.removeEventListener('keydown', this.onMenuOpenKeydown);
         },
@@ -172,5 +125,4 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/05-components/the-header-menu";
-@import "~/assets/scss/05-components/nav-categories";
 </style>

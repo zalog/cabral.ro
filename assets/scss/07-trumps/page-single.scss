@@ -60,7 +60,7 @@
         .wp-block-embed,
         .embed-youtube {
             margin-right: -180px;
-            margin-left: -(map-get($spacers, 5) / 2);
+            margin-left: -180px;
         }
     }
 }

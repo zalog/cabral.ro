@@ -15,7 +15,6 @@ export default {
         '~/plugins/filters.js',
         '~/plugins/webfontloader.client.js',
         '~/plugins/client.js',
-        '~/plugins/portal-vue.js',
     ],
     buildModules: [
         '@nuxtjs/router',
