@@ -7,6 +7,21 @@
         <comments-list-form :data="{ singleId }" />
 
         <ul class="list-comments">
+            <li>
+                <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                        <a href="https://zalog.ro/" target="_blank">Catalin Zălog</a>
+                        <div class="small">
+                            publicitate
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        <p>
+                            Colaborez cu cabral de prin 2014 și îmi place pentru că apreciază serviciile mele de <a href="https://zalog.ro/" target="_blank">web development</a>.
+                        </p>
+                    </div>
+                </div>
+            </li>
             <li
                 v-for="(comment, index) in comments && comments.nodes"
                 :id="`comment-${comment.databaseId}`"
