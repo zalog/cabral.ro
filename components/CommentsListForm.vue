@@ -59,13 +59,12 @@
                 </div>
             </div>
 
-            <div
+            <base-alert
                 v-if="$v.form.data.$error"
-                class="alert alert-warning"
-                role="alert"
+                variant="warning"
             >
                 Câmpurile marcate cu roșu conțin erori.
-            </div>
+            </base-alert>
 
             <button
                 type="submit"
@@ -89,8 +88,13 @@ import { validationMixin } from 'vuelidate';
 import {
     required, email, minLength, url,
 } from 'vuelidate/lib/validators';
+import BaseAlert from '~/components/BaseAlert.vue';
 
 export default {
+    components: {
+        BaseAlert,
+    },
+
     mixins: [validationMixin],
 
     props: {
