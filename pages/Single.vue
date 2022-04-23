@@ -119,6 +119,8 @@ export default {
         registerModules(this.$store);
 
         this.setDataPhotoswipe();
+
+        this.attachForm();
     },
 
     methods: {
@@ -193,6 +195,18 @@ export default {
                 prop: 'head.title',
                 data: this.pageTitleInitial,
             });
+        },
+        attachForm() {
+            const forms = this.$refs.content.querySelectorAll('.wpcf7-form');
+
+            if (!forms.length) return;
+
+            import('../utils/customs/form-cf7')
+                .then((module) => forms.forEach((formEl) => {
+                    const { default: Form } = module;
+                    const form = new Form(formEl, this.$axios);
+                    form.init();
+                }));
         },
     },
 };
