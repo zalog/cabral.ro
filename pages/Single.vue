@@ -56,7 +56,7 @@
 
 <script>
 import dataSingle from '~/store/lazy/data-single';
-import dataComments from '../store/lazy/data-single-comments';
+import dataComments from '~/store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
