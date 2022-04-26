@@ -1,37 +1,68 @@
-const DomParser = require('dom-parser');
+const objectToString = (object) => Object.values(object).join(', ');
 
-const stringToHTML = (str) => {
-    const parser = new DomParser();
-    return parser.parseFromString(str);
+const ogImageProperty = (key) => {
+    if (key === 'url') return 'og_image';
+
+    return `og_image:${key}`;
 };
 
+const metaKeysName = ['description', 'robots', 'twitter_card', 'twitter_site'];
+const metaKeysProperty = ['og_locale', 'og_type', 'og_title', 'og_description', 'og_url', 'og_site_name'];
+const metaKeyPropertyOgImage = 'og_image';
+const linkKeys = ['canonical'];
+const scriptKeySchema = 'schema';
+
 export default (payload) => {
-    const dom = stringToHTML(`<div id="all">${payload}</div>`);
-    const output = {};
+    let title = '';
+    const meta = [];
+    const link = [];
+    const script = [];
 
-    dom.getElementById('all').childNodes
-        .filter((node) => ['meta', 'link', 'script'].includes(node.nodeName))
-        .forEach((el) => {
-            const tag = el.nodeName;
-            const outputTag = {};
+    Object.keys(payload).forEach((key) => {
+        const value = payload[key];
 
-            el.attributes.forEach((attribute) => {
-                const { name, value } = attribute;
-
-                outputTag[name] = value;
-
-                if (name === 'type' && value === 'application/ld+json') {
-                    outputTag.json = JSON.parse(el.textContent);
-                }
+        if (key === 'title') title = value;
+        else if (key === metaKeyPropertyOgImage) {
+            value.forEach((item) => {
+                Object.keys(item).forEach((itemKey) => {
+                    meta.push({
+                        property: ogImageProperty(itemKey).replace('_', ':'),
+                        content: item[itemKey],
+                    });
+                });
             });
+        } else if (key === scriptKeySchema) {
+            script.push({
+                type: 'application/ld+json',
+                json: value,
+                class: 'yoast-schema-graph',
+            });
+        } else if (metaKeysName.includes(key)) {
+            const content = typeof value === 'object'
+                ? objectToString(value)
+                : value;
 
-            if (!output[tag]) output[tag] = [];
-
-            output[tag].push(outputTag);
-        });
+            meta.push({
+                name: key.replace('_', ':'),
+                content,
+            });
+        } else if (metaKeysProperty.includes(key)) {
+            meta.push({
+                property: key.replace('_', ':'),
+                content: value,
+            });
+        } else if (linkKeys.includes(key)) {
+            link.push({
+                rel: key,
+                href: value,
+            });
+        }
+    });
 
     return {
-        title: dom.getElementsByTagName('title')[0].textContent,
-        ...output,
+        title,
+        meta,
+        link,
+        script,
     };
 };
