@@ -23,11 +23,14 @@ export default (payload) => {
 
         if (key === 'title') title = value;
         else if (key === metaKeyPropertyOgImage) {
-            value.forEach((item) => {
+            value.forEach((item, index) => {
                 Object.keys(item).forEach((itemKey) => {
+                    const getOgImageProperty = ogImageProperty(itemKey);
+
                     meta.push({
-                        property: ogImageProperty(itemKey).replace('_', ':'),
+                        property: getOgImageProperty.replace('_', ':'),
                         content: item[itemKey],
+                        hid: `yoast-${key}-${index}-${getOgImageProperty}`,
                     });
                 });
             });
@@ -36,6 +39,7 @@ export default (payload) => {
                 type: 'application/ld+json',
                 json: value,
                 class: 'yoast-schema-graph',
+                hid: `yoast-${key}`,
             });
         } else if (metaKeysName.includes(key)) {
             const content = typeof value === 'object'
@@ -45,16 +49,19 @@ export default (payload) => {
             meta.push({
                 name: key.replace('_', ':'),
                 content,
+                hid: `yoast-${key}`,
             });
         } else if (metaKeysProperty.includes(key)) {
             meta.push({
                 property: key.replace('_', ':'),
                 content: value,
+                hid: `yoast-${key}`,
             });
         } else if (linkKeys.includes(key)) {
             link.push({
                 rel: key,
                 href: value,
+                hid: `yoast-${key}`,
             });
         }
     });
