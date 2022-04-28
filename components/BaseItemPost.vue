@@ -25,9 +25,10 @@
         </div>
         <div class="card-body">
             <h2 class="card-title">
-                <router-link :to="postTo(slug)">
-                    {{ title }}
-                </router-link>
+                <router-link
+                    :to="postTo(slug)"
+                    v-html="title /* eslint-disable-line vue/no-v-html */"
+                />
             </h2>
             <list-item-info
                 :data="bodyInfo"
