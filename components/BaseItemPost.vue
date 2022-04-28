@@ -51,8 +51,8 @@ export default {
 
     props: {
         img: {
-            type: [String, Object],
-            default: '',
+            type: [Boolean, Object],
+            default: false,
         },
         imgLoading: {
             type: String,
