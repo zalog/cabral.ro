@@ -62,8 +62,6 @@ export default {
         ]);
     },
 
-    watchQuery: ['s'],
-
     mounted() {
         registerModules(this.$store);
     },
