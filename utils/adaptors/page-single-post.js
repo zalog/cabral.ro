@@ -1,4 +1,5 @@
 import { SITE } from '~/utils/constants';
+import { head } from '.';
 
 export default (payload) => {
     const payloadDate = new Date(payload.date);
@@ -37,13 +38,7 @@ export default (payload) => {
     });
 
     return {
-        head: {
-            title: payload.title.rendered,
-            link: [
-                { rel: 'canonical', href: payload.link },
-            ],
-            meta: payload.yoast_meta,
-        },
+        head: head(payload.yoast_head_json),
         main: {
             id: payload.id,
             link: payload.link,

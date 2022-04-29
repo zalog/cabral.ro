@@ -20,7 +20,6 @@
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.21.2",
     "cookie-universal-nuxt": "^2.1.5",
-    "dom-parser": "^0.1.6",
     "jw-paginate": "^1.0.4",
     "nuxt": "^2.15.8",
     "photoswipe": "^4.1.3",

@@ -11,7 +11,7 @@ const fetchHead = async ({
             url: `${ENDPOINTS.HEAD}?url=${url}`,
         });
 
-        return head(response.data.html);
+        return head(response.data.json);
     } catch (error) {
         throw error.response;
     }

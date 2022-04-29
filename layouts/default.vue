@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { currentPage } from '~/mixins';
 import LayoutHero from '~/components/LayoutHero.vue';
 
 export default {
@@ -22,9 +21,12 @@ export default {
         LayoutHero,
     },
 
-    mixins: [
-        currentPage,
-    ],
+    computed: {
+        data() {
+            const pageKey = this.$route.fullPath;
+            return this.$store.getters['data/currentPage'](pageKey);
+        },
+    },
 };
 </script>
 

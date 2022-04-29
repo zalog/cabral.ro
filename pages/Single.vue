@@ -2,9 +2,9 @@
     <div v-if="data">
         <div class="entry-body">
             <div class="entry-header">
-                <h1>
-                    {{ data.main.title }}
-                </h1>
+                <h1
+                    v-html="data.main.title /* eslint-disable-line vue/no-v-html */"
+                />
                 <list-item-info
                     :data="[{
                         icon: 'date',
