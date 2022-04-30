@@ -1,0 +1,26 @@
+@import "../required";
+
+.list-item-info {
+    @include list-unstyled;
+    display: flex;
+    overflow-x: scroll;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &,
+    a {
+        color: $text-muted;
+    }
+
+    .icon {
+        color: rgba($text-muted, .8);
+    }
+
+    li + li {
+        margin-left: map-get($spacers, 2);
+    }
+}

@@ -1,0 +1,13 @@
+.box {
+    > * {
+        margin-bottom: 0;
+    }
+
+    > * + * {
+        margin-top: $spacer;
+    }
+}
+
+.box-title {
+    font-size: $h4-font-size;
+}

@@ -1,0 +1,28 @@
+@import "../required";
+
+.comment {
+    color: $gray-700;
+
+    a {
+        color: $gray-700;
+    }
+}
+
+.comment-header {
+    margin-bottom: $spacer;
+
+    div:first-child {
+        margin-bottom: map-get($spacers, 1);
+        font-weight: bold;
+    }
+}
+
+.comment-content {
+    p {
+        word-wrap: break-word;
+    }
+
+    > p:last-child {
+        margin-bottom: 0;
+    }
+}

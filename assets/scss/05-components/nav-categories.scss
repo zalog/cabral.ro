@@ -1,0 +1,42 @@
+@import "../required";
+
+.nav-categories {
+    flex-wrap: nowrap;
+    padding: $navbar-padding-x;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-item {
+        display: inline-block;
+        flex: 1 0 auto;
+        text-align: center;
+    }
+
+    .nav-item + .nav-item {
+        margin-left: $spacer;
+    }
+
+    .nav-link {
+        padding: ($nav-link-padding-y / 2) ($nav-link-padding-x / 2);
+        background-color: darken($light, 4%);
+        border: $border-width solid darken($light, 5%);
+
+        &,
+        &.active {
+            color: rgba($dark, .65);
+        }
+
+        &:hover,
+        &.active {
+            background-color: darken($light, 8%);
+            border-color: darken($light, 20%);
+        }
+
+        @include media-breakpoint-up(md) {
+            padding: $nav-link-padding-y $nav-link-padding-x;
+        }
+    }
+}

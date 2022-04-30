@@ -1,0 +1,69 @@
+bootstrap vendor
+This is a complete list of vendor imports
+
+// @import "~bootstrap/scss/functions";     // 00-settings
+// @import "~bootstrap/scss/variables";     // 00-settings
+// @import "~bootstrap/scss/mixins";        // 01-tools
+// @import "~bootstrap/scss/root";          // 02-generic
+// @import "~bootstrap/scss/reboot";        // 02-generic
+// @import "~bootstrap/scss/type";          // 03-elements
+// @import "~bootstrap/scss/images";
+// @import "~bootstrap/scss/code";
+// @import "~bootstrap/scss/grid";          // 04-objects
+// @import "~bootstrap/scss/tables";
+// @import "~bootstrap/scss/forms";         // 03-elements
+// @import "~bootstrap/scss/buttons";       // 04-objects
+// @import "~bootstrap/scss/transitions";   // 02-generic
+// @import "~bootstrap/scss/dropdown";
+// @import "~bootstrap/scss/button-group";
+// @import "~bootstrap/scss/input-group";
+// @import "~bootstrap/scss/custom-forms";
+// @import "~bootstrap/scss/nav";           // 05-components/the-header-menu
+// @import "~bootstrap/scss/navbar";        // 05-components/the-header-menu
+// @import "~bootstrap/scss/card";          // 05-components/base-item-post, 05-components/list-related
+// @import "~bootstrap/scss/breadcrumb";
+// @import "~bootstrap/scss/pagination";    // 05-components/posts-list
+// @import "~bootstrap/scss/badge";
+// @import "~bootstrap/scss/jumbotron";
+// @import "~bootstrap/scss/alert";         // 05-components/comments-list-form
+// @import "~bootstrap/scss/progress";
+// @import "~bootstrap/scss/media";
+// @import "~bootstrap/scss/list-group";
+// @import "~bootstrap/scss/close";
+// @import "~bootstrap/scss/toasts";        // 05-components/toast
+// @import "~bootstrap/scss/modal";
+// @import "~bootstrap/scss/tooltip";
+// @import "~bootstrap/scss/popover";
+// @import "~bootstrap/scss/carousel";
+// @import "~bootstrap/scss/spinners";      // 04-objects
+// @import "~bootstrap/scss/utilities";     // 06-utilities
+// @import "~bootstrap/scss/print";
+
+bootstrap-vue vendor
+This is a complete list of vendor imports
+
+// Include variables and utilities first
+// @import "~bootstrap-vue/src/variables";                          // 00-settings
+// @import "~bootstrap-vue/src/utilities";                          // 06-utilities
+
+// Include custom SCSS for components
+// @import "~bootstrap-vue/src/components/card/index";
+// @import "~bootstrap-vue/src/components/dropdown/index";
+// @import "~bootstrap-vue/src/components/form-checkbox/index";
+// @import "~bootstrap-vue/src/components/form-file/index";
+// @import "~bootstrap-vue/src/components/form-input/index";
+// @import "~bootstrap-vue/src/components/form-radio/index";
+// @import "~bootstrap-vue/src/components/form-tags/index";
+// @import "~bootstrap-vue/src/components/input-group/index";
+// @import "~bootstrap-vue/src/components/modal/index";
+// @import "~bootstrap-vue/src/components/nav/index";
+// @import "~bootstrap-vue/src/components/navbar/index";
+// @import "~bootstrap-vue/src/components/pagination/index";
+// @import "~bootstrap-vue/src/components/pagination-nav/index";
+// @import "~bootstrap-vue/src/components/popover/index";
+// @import "~bootstrap-vue/src/components/table/index";
+// @import "~bootstrap-vue/src/components/toast/index";             // 05-components/toast
+// @import "~bootstrap-vue/src/components/tooltip/index";
+
+// Include custom SCSS for icons
+// @import "~bootstrap-vue/src/icons/index";
