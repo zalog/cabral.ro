@@ -1,6 +1,6 @@
 {
-  "name": "cabral.ro-vue",
-  "version": "0.1.0",
+  "name": "cabral.ro",
+  "version": "7.0.0",
   "private": true,
   "scripts": {
     "start": "npm run nuxt:dev",
