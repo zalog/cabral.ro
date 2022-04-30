@@ -25,11 +25,18 @@ import { currentPage } from '~/mixins';
 import BaseAlert from '~/components/BaseAlert.vue';
 import PostsList from '~/components/PostsList.vue';
 
-const registerModules = (store) => {
-    store.$registerModules([
+const registerModules = (store, pageS) => {
+    const modules = [
         { name: ['data', 'dataListing'], imported: dataListing, preserveStateCheck: true },
-        { name: ['data', 'dataHead'], imported: dataHead, preserveStateCheck: true },
-    ]);
+    ];
+
+    if (!pageS) {
+        modules.push(
+            { name: ['data', 'dataHead'], imported: dataHead, preserveStateCheck: true }
+        );
+    }
+
+    store.$registerModules(modules);
 };
 
 export default {
@@ -43,29 +50,53 @@ export default {
     ],
 
     async asyncData({ store, route }) {
-        registerModules(store);
-
         const { id: pageNumber } = route.params;
         const pageS = route.query.s;
-        let fetchHeadUrl = `${SITE.LINK}/`;
-        if (pageS) fetchHeadUrl += `?s=${pageS}`;
 
-        await Promise.all([
-            store.dispatch('data/fetchHead', {
-                route,
-                url: fetchHeadUrl,
-            }),
+        registerModules(store, pageS);
+
+        const actions = [
             store.dispatch('data/fetchPageListing', {
                 route,
                 pageNumber,
             }),
-        ]);
+        ];
+
+        if (!pageS) {
+            actions.push(
+                store.dispatch('data/fetchHead', {
+                    route,
+                    url: `${SITE.LINK}/`,
+                }),
+            );
+        }
+
+        await Promise.all(actions);
+
+        const data = {};
+
+        if (pageS) {
+            // TODO get search pages head data from api and remove this
+            data.head = {
+                title: `Caută după "${pageS}" - ${SITE.TITLE.toLowerCase()}`,
+                meta: [{
+                    name: 'robots',
+                    content: 'noindex, follow',
+                }],
+            };
+        }
+
+        return data;
     },
+
+    data: () => ({
+        head: {},
+    }),
 
     watchQuery: ['s'],
 
     mounted() {
-        registerModules(this.$store);
+        registerModules(this.$store, this.$route.query.s);
     },
 
     methods: {
