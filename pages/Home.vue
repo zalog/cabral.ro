@@ -32,7 +32,7 @@ const registerModules = (store, pageS) => {
 
     if (!pageS) {
         modules.push(
-            { name: ['data', 'dataHead'], imported: dataHead, preserveStateCheck: true }
+            { name: ['data', 'dataHead'], imported: dataHead, preserveStateCheck: true },
         );
     }
 
