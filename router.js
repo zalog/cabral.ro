@@ -51,11 +51,11 @@ const createRouter = () => new Router({
         },
 
         // tests
-        {
-            name: 'SliderTest',
-            path: '/slider-test/',
-            component: PageSliderTest,
-        },
+        // {
+        //     name: 'SliderTest',
+        //     path: '/slider-test/',
+        //     component: PageSliderTest,
+        // },
 
         // archive
         {

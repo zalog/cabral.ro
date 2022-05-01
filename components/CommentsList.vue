@@ -10,14 +10,14 @@
             <li>
                 <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
-                        <a href="https://zalog.ro/" target="_blank">Catalin Zălog</a>
+                        <a href="https://zalog.ro/" target="_blank" rel="external noopener">Catalin Zălog</a>
                         <div class="small">
                             publicitate
                         </div>
                     </div>
                     <div class="comment-content">
                         <p>
-                            Colaborez cu cabral de prin 2014 și îmi place pentru că apreciază serviciile mele de <a href="https://zalog.ro/" target="_blank">web development</a>.
+                            Colaborez cu cabral de prin 2014. Îmi place pentru că apreciază <a href="https://zalog.ro/" title="web development" target="_blank" rel="external noopener">serviciile mele</a>.
                         </p>
                     </div>
                 </div>

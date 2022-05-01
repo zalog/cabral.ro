@@ -31,7 +31,7 @@ export default {
     },
     publicRuntimeConfig: {
         gtm: {
-            id: 'GTM-59M55JB',
+            id: process.env.NODE_ENV === 'production' && 'GTM-59M55JB',
         },
     },
 };
