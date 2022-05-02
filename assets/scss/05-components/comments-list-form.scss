@@ -1,9 +1,12 @@
 @import "../required";
 
 .form-reply {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     padding: map-get($spacers, 4);
     background-color: $white;
-    box-shadow: $box-shadow-sm;
+    box-shadow: $box-shadow;
 
     .label,
     .form {
@@ -35,6 +38,7 @@
 
 .list-comments {
     .form-reply {
+        position: static;
         margin-top: -(map-get($spacers, 4));
         padding-top: $spacer;
         background-color: transparent;
