@@ -41,7 +41,7 @@
         position: static;
         margin-top: -(map-get($spacers, 4));
         padding-top: $spacer;
-        background-color: transparent;
+        background-color: $light;
         border-top: 0;
         box-shadow: none;
 
