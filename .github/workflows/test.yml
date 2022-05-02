@@ -55,5 +55,5 @@ jobs:
             cd ${{ secrets.PATH_HOME }}
             rm -rf .nuxt && mkdir .nuxt
             unzip -qq nuxt.zip
-            pm2 startOrRestart ecosystem.config.js -s --only cabral.ro-test
+            npm run test
           '
