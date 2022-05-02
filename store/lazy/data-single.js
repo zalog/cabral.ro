@@ -10,7 +10,12 @@ export default {
             await dispatch('fetchPagePage', { route });
         },
         async fetchPagePost({ getters, commit }, { route }) {
-            const pageKey = route.fullPath;
+            const {
+                fullPath: pageKey,
+                params: {
+                    singleSlug: slug,
+                },
+            } = route;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -20,7 +25,7 @@ export default {
                 $axios: this.$axios,
                 params: {
                     embed_featured_media_size: 'full',
-                    slug: route.path,
+                    slug,
                 },
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
@@ -47,7 +52,12 @@ export default {
             });
         },
         async fetchPagePage({ getters, commit }, { route }) {
-            const pageKey = route.fullPath;
+            const {
+                fullPath: pageKey,
+                params: {
+                    singleSlug: slug,
+                },
+            } = route;
             const currentPage = getters.currentPage(pageKey);
             const prop = 'main';
 
@@ -56,7 +66,7 @@ export default {
             const response = await fetchPage({
                 $axios: this.$axios,
                 params: {
-                    slug: route.path,
+                    slug,
                 },
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
