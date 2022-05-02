@@ -49,7 +49,7 @@ jobs:
         run: |
           scp nuxt.zip ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.PATH_HOME }}
 
-      - name: unzip and start or restart
+      - name: unzip and start npm task
         run: |
           ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
             cd ${{ secrets.PATH_HOME }}

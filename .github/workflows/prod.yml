@@ -1,7 +1,9 @@
 name: prod
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - '*.*.*'
 
 jobs:
   deploy:
@@ -16,7 +18,7 @@ jobs:
       - name: add known hosts
         run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-      - name: start or reload
+      - name: start npm task
         run: |
           ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
             cd ${{ secrets.PATH_HOME }}
