@@ -6,7 +6,7 @@
         @submit.prevent="formSubmit"
     >
         <div class="label text-muted">
-            {{ data.label || 'Lasă un comentariu...' }}
+            {{ data.label || 'Lasă un comentariu la acest articol...' }}
         </div>
 
         <div class="form">

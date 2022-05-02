@@ -49,7 +49,7 @@
 
                 <comments-list-form
                     :data="{
-                        label: 'răspunde...',
+                        label: 'răspunde-i',
                         singleId,
                         commentId: comment.databaseId,
                         index
