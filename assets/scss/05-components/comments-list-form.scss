@@ -35,7 +35,10 @@
 
 .list-comments {
     .form-reply {
+        margin-top: -(map-get($spacers, 4));
+        padding-top: $spacer;
         background-color: transparent;
+        border-top: 0;
         box-shadow: none;
 
         .text-muted {
