@@ -49,11 +49,11 @@ jobs:
         run: |
           scp nuxt.zip ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.PATH_HOME }}
 
-      - name: unzip and start or restart
+      - name: unzip and start npm task
         run: |
           ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
             cd ${{ secrets.PATH_HOME }}
             rm -rf .nuxt && mkdir .nuxt
             unzip -qq nuxt.zip
-            pm2 startOrRestart ecosystem.config.js -s --only cabral.ro-test
+            npm run test
           '

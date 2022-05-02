@@ -29,9 +29,4 @@ export default {
         input: '~/assets/icons/sprite',
         elementClass: null,
     },
-    publicRuntimeConfig: {
-        gtm: {
-            id: process.env.NODE_ENV === 'production' && 'GTM-59M55JB',
-        },
-    },
 };
