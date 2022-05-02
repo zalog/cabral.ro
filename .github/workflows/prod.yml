@@ -20,5 +20,5 @@ jobs:
         run: |
           ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
             cd ${{ secrets.PATH_HOME }}
-            pm2 startOrReload ecosystem.config.js -s --only cabral.ro
+            npm start
           '
