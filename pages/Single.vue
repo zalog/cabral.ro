@@ -33,7 +33,7 @@
             />
             <banners v-if="data.main.categories">
                 <a href="http://www.runningmag.ro/" target="_blank" title="runningmag.ro" rel="external nofollow noopener">
-                    <img src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png" alt="runningmag.ro">
+                    <img src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png" width="300" height="250" alt="runningmag.ro">
                 </a>
             </banners>
             <comments-list

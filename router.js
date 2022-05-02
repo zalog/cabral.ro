@@ -82,6 +82,9 @@ const createRouter = () => new Router({
         {
             name: 'Single',
             path: '/:singleSlug/',
+            alias: [
+                '/:singleSlug/*',
+            ],
             pathToRegexpOptions: { strict: true },
             component: PageSingle,
         },
