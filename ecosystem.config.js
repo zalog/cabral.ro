@@ -1,14 +1,13 @@
 module.exports = {
     apps: [{
-        name: 'cabral.ro',
-        exec_mode: 'cluster',
-        instances: 'max', // Or a number of instances
+        name: 'cabral.ro-test',
+        instances: '1',
         script: './node_modules/nuxt/bin/nuxt.js',
         args: 'start',
         env: {
             HOST: '0.0.0.0',
-            PORT: 8080,
-            NODE_ENV: 'production',
+            PORT: 8081,
+            NODE_ENV: 'test',
         },
     }],
 };
