@@ -55,14 +55,18 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import dataSingle from '~/store/lazy/data-single';
 import dataComments from '~/store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
+import { ObserveVisibility } from 'vue-observe-visibility';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
 import Banners from '~/components/Banners.vue';
 import CommentsList from '~/components/CommentsList.vue';
+
+Vue.directive('observe-visibility', ObserveVisibility);
 
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
 

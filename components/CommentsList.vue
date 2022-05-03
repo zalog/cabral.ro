@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import { ObserveVisibility } from 'vue-observe-visibility';
 import { BSpinner } from 'bootstrap-vue';
 import CommentsListComment from './CommentsListComment.vue';
 import CommentsListForm from './CommentsListForm.vue';
@@ -74,10 +73,6 @@ export default {
         BSpinner,
         CommentsListComment,
         CommentsListForm,
-    },
-
-    directives: {
-        ObserveVisibility,
     },
 
     props: {
