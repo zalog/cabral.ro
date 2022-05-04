@@ -32,7 +32,7 @@
                 :data="data.related"
             />
             <div
-                v-observe-visibility="data.main.categories
+                v-observe-visibility="false && data.main.categories
                     ? {
                         callback: isVisible => isVisible && (load.banners = true),
                         once: true
