@@ -31,11 +31,21 @@
                 v-if="data.related"
                 :data="data.related"
             />
-            <banners v-if="data.main.categories">
-                <a href="http://www.runningmag.ro/" target="_blank" title="runningmag.ro" rel="external nofollow noopener">
-                    <img src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png" width="300" height="250" alt="runningmag.ro">
-                </a>
-            </banners>
+            <div
+                v-observe-visibility="data.main.categories
+                    ? {
+                        callback: isVisible => isVisible && (load.banners = true),
+                        once: true
+                    }
+                    : false
+                "
+            >
+                <lazy-banners v-if="load.banners">
+                    <a href="http://www.runningmag.ro/" target="_blank" title="runningmag.ro" rel="external nofollow noopener">
+                        <img src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png" width="300" height="250" alt="runningmag.ro">
+                    </a>
+                </lazy-banners>
+            </div>
             <comments-list
                 ref="comments"
                 :comments="data.comments"
@@ -63,7 +73,6 @@ import { ObserveVisibility } from 'vue-observe-visibility';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
-import Banners from '~/components/Banners.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
 Vue.directive('observe-visibility', ObserveVisibility);
@@ -82,7 +91,6 @@ export default {
         ListItemInfo,
         ListShare,
         ListRelated,
-        Banners,
         CommentsList,
     },
 
@@ -108,6 +116,9 @@ export default {
     },
 
     data: () => ({
+        load: {
+            banners: false,
+        },
         photoswipe: {
             index: false,
             items: [],
