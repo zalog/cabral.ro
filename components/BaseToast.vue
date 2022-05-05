@@ -52,3 +52,7 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@import "~/assets/scss/05-components/toast";
+</style>
