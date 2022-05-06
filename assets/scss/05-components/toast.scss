@@ -7,11 +7,8 @@ $toast-border-width:        0;
 
 @import "~bootstrap/scss/toasts";
 
-$b-toast-background-opacity:        1;
-
-$b-toaster-offset-top:      map-get($spacers, 4);
-$b-toaster-offset-bottom:   $b-toaster-offset-top;
-$b-toaster-offset-left:     $b-toaster-offset-top;
-$b-toaster-offset-right:    $b-toaster-offset-top;
-
-@import "~bootstrap-vue/src/components/toast/index";
+@each $color, $value in $theme-colors {
+    .toast-#{$color} {
+        @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+    }
+}

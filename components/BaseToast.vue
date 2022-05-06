@@ -1,25 +1,20 @@
 <template>
-    <b-toast
-        v-model="computedVisible"
-        :variant="variant"
-        toaster="b-toaster-bottom-left"
-        :toast-class="toastClass"
-        no-close-button
-        :no-auto-hide="noAutoHide"
-        @hide="$emit('hide')"
+    <div
+        v-if="visible"
+        class="toast show"
+        :class="[
+            { [`toast-${variant}`]: variant !== 'default' },
+            toastClass,
+        ]"
     >
-        <slot />
-    </b-toast>
+        <div class="toast-body">
+            <slot />
+        </div>
+    </div>
 </template>
 
 <script>
-import { BToast } from 'bootstrap-vue';
-
 export default {
-    components: {
-        'b-toast': BToast,
-    },
-
     model: {
         prop: 'visible',
         event: 'hidden',
@@ -44,10 +39,20 @@ export default {
         },
     },
 
-    computed: {
-        computedVisible: {
-            get() { return this.visible; },
-            set(value) { return this.$emit('hidden', value); },
+    destroyed() {
+        this.$emit('destroyed', this.$vnode.key);
+    },
+
+    mounted() {
+        if (!this.noAutoHide) this.attachAutoHide();
+    },
+
+    methods: {
+        attachAutoHide() {
+            setTimeout(() => {
+                this.$destroy();
+                this.$el.parentNode.removeChild(this.$el);
+            }, 5000);
         },
     },
 };

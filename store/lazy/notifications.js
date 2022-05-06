@@ -4,8 +4,7 @@ export default {
     state: () => ([]),
 
     getters: {
-        findIndex: (state) => (payload) => state.findIndex((item) => item.visible
-            && item.message === payload.message),
+        findIndex: (state) => (id) => state.findIndex((item) => item.id === id),
     },
 
     mutations: {
@@ -26,11 +25,14 @@ export default {
             const output = { ...payload };
 
             if (typeof payload.visible === 'undefined') output.visible = true;
+            if (!output.id) output.id = new Date().getTime();
 
             commit('PUSH', output);
         },
-        delete: ({ state, commit }, index) => {
-            if (!state[index]) return;
+        delete: ({ commit, getters }, id) => {
+            const index = getters.findIndex(id);
+
+            if (index === -1) return;
 
             commit('DELETE', index);
         },
