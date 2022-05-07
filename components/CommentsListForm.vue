@@ -71,11 +71,10 @@
                 class="btn btn-outline-secondary d-flex align-items-center"
                 :disabled="form.loading"
             >
-                <span
+                <base-spinner
                     v-if="form.loading"
-                    class="spinner-border spinner-border-sm mr-1"
-                    role="status"
-                    aria-hidden="true"
+                    class="mr-1"
+                    size="sm"
                 />
                 <span v-text="(!form.loading) ? 'Trimite' : 'se trimite...'" />
             </button>
@@ -89,10 +88,12 @@ import {
     required, email, minLength, url,
 } from 'vuelidate/lib/validators';
 import BaseAlert from '~/components/BaseAlert.vue';
+import BaseSpinner from '~/components/BaseSpinner.vue';
 
 export default {
     components: {
         BaseAlert,
+        BaseSpinner,
     },
 
     mixins: [validationMixin],
