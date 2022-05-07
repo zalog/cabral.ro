@@ -18,6 +18,7 @@ export default {
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         ],
     },
+    modern: true,
     plugins: [
         '~/plugins/store-utils.js',
         '~/plugins/router-hooks.js',
