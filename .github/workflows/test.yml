@@ -53,7 +53,8 @@ jobs:
         run: |
           ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
             cd ${{ secrets.PATH_HOME }}
-            rm -rf .nuxt && mkdir .nuxt
-            unzip -qq nuxt.zip
+            unzip -qq nuxt.zip -d .nuxt-temp/
+            rm -rf .nuxt-test
+            cp -rf .nuxt-temp/.nuxt .nuxt-test
             npm run test
           '

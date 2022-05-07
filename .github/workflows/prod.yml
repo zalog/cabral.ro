@@ -22,5 +22,7 @@ jobs:
         run: |
           ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
             cd ${{ secrets.PATH_HOME }}
+            rm -rf .nuxt
+            cp -rf .nuxt-test .nuxt
             npm start
           '
