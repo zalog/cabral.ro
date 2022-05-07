@@ -57,27 +57,22 @@
                 />
             </li>
             <li class="py-4 text-center">
-                <b-spinner variant="secondary" label="Loading..." />
+                <base-spinner />
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import { ObserveVisibility } from 'vue-observe-visibility';
-import { BSpinner } from 'bootstrap-vue';
+import BaseSpinner from './BaseSpinner.vue';
 import CommentsListComment from './CommentsListComment.vue';
 import CommentsListForm from './CommentsListForm.vue';
 
 export default {
     components: {
-        BSpinner,
+        BaseSpinner,
         CommentsListComment,
         CommentsListForm,
-    },
-
-    directives: {
-        ObserveVisibility,
     },
 
     props: {

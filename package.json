@@ -1,6 +1,6 @@
 {
   "name": "cabral.ro",
-  "version": "7.0.3",
+  "version": "7.1.0",
   "private": true,
   "scripts": {
     "start": "npm run nuxt:dev",
@@ -18,7 +18,6 @@
     "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/svg-sprite": "^0.5.2",
     "bootstrap": "^4.6.1",
-    "bootstrap-vue": "^2.21.2",
     "cookie-universal-nuxt": "^2.1.5",
     "jw-paginate": "^1.0.4",
     "nuxt": "^2.15.8",

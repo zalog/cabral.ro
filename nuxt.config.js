@@ -1,4 +1,13 @@
 export default {
+    build: {
+        extend(config, { isClient }) {
+            if (isClient) {
+                Object.assign(config, {
+                    devtool: 'source-map',
+                });
+            }
+        },
+    },
     components: true,
     css: [
         '~/assets/scss/app.scss',
@@ -9,6 +18,7 @@ export default {
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         ],
     },
+    modern: true,
     plugins: [
         '~/plugins/store-utils.js',
         '~/plugins/router-hooks.js',

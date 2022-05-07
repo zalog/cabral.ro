@@ -1,6 +1,5 @@
 <template>
     <base-toast
-        :visible="visible"
         toast-class="toast-gdpr"
         no-auto-hide
     >
@@ -29,16 +28,14 @@ export default {
         BaseToast,
     },
 
-    data: () => ({
-        visible: true,
-    }),
-
     methods: {
         onClickAgree() {
             this.$cookies.set('cookie-consent-user-accepted', 'true', {
                 maxAge: 60 * 60 * 24 * 180, // 6 months
             });
-            this.visible = false;
+
+            this.$destroy();
+            this.$el.parentNode.removeChild(this.$el);
         },
     },
 };

@@ -1,11 +1,14 @@
 <template>
-    <div v-if="notifications">
-        <template v-for="(notification, index) in notifications">
+    <div
+        v-if="notifications"
+        class="the-notifications"
+    >
+        <template v-for="notification in notifications">
             <lazy-base-toast
-                :key="index"
+                :key="notification.id"
                 v-model="notification.visible"
                 :variant="notification.variant"
-                @hide="$store.dispatch('ui/notifications/delete', index)"
+                @destroyed="$store.dispatch('ui/notifications/delete', $event)"
             >
                 {{ notification.message }}
             </lazy-base-toast>
