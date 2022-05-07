@@ -35,7 +35,7 @@ This is a complete list of vendor imports
 // @import "~bootstrap/scss/tooltip";
 // @import "~bootstrap/scss/popover";
 // @import "~bootstrap/scss/carousel";
-// @import "~bootstrap/scss/spinners";      // 04-objects
+// @import "~bootstrap/scss/spinners";      // BaseSpinner.vue
 // @import "~bootstrap/scss/utilities";     // 06-utilities
 // @import "~bootstrap/scss/print";
 
