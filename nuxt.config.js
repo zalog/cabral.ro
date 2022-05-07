@@ -1,4 +1,13 @@
 export default {
+    build: {
+        extend(config, { isClient }) {
+            if (isClient) {
+                Object.assign(config, {
+                    devtool: 'source-map',
+                });
+            }
+        },
+    },
     components: true,
     css: [
         '~/assets/scss/app.scss',
