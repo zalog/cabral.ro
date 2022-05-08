@@ -23,6 +23,7 @@ export default {
         '~/plugins/store-utils.js',
         '~/plugins/router-hooks.js',
         '~/plugins/filters.js',
+        '~/plugins/gtm.js',
         '~/plugins/webfontloader.client.js',
         '~/plugins/client.js',
     ],
@@ -41,5 +42,9 @@ export default {
     svgSprite: {
         input: '~/assets/icons/sprite',
         elementClass: null,
+    },
+    gtm: {
+        id: 'GTM-59M55JB',
+        autoInit: false,
     },
 };
