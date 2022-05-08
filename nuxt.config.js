@@ -35,6 +35,9 @@ export default {
         'cookie-universal-nuxt',
         '@nuxtjs/svg-sprite',
     ],
+    publicRuntimeConfig: {
+        PM2_NODE_ENV: process.env.NODE_ENV,
+    },
     svgSprite: {
         input: '~/assets/icons/sprite',
         elementClass: null,
