@@ -1,5 +1,5 @@
 import { SITE } from '~/utils/constants';
-import { head } from '.';
+import head from './head';
 
 export default (payload) => {
     const payloadDate = new Date(payload.date);
