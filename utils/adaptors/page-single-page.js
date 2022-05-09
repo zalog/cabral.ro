@@ -1,9 +1,8 @@
 import head from './head';
+import entityDate from './entity-date';
 
 export default (payload) => {
-    const payloadDate = new Date(payload.date);
-    const payloadModified = new Date(payload.modified);
-    const date = ((payloadModified > payloadDate && payloadModified) || payloadDate).toString();
+    const date = entityDate({ date: payload.date, modified: payload.modified });
 
     return {
         head: head(payload.yoast_head_json),
