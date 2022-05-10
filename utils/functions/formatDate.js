@@ -1,15 +1,9 @@
-const getLeadingZero = (number) => (number < 10 ? `0${number}` : number);
-const getMM = (number) => getLeadingZero(number + 1);
+import { SITE } from '~/utils/constants';
 
-const formatDate = (string) => {
-    if (!string || typeof string !== 'string') return undefined;
-
-    const date = new Date(string);
-    const dd = getLeadingZero(date.getDate());
-    const mm = getMM(date.getMonth());
-    const yy = date.getFullYear();
-
-    return `${dd}.${mm}.${yy}`;
-};
+const formatDate = (
+    string,
+    locale = SITE.LANG,
+    format = { year: 'numeric', month: '2-digit', day: '2-digit' },
+) => new Date(string).toLocaleString(locale, format);
 
 export { formatDate as default };

@@ -11,3 +11,5 @@ export { default as itemPost } from './item-post';
 export { default as itemComment } from './item-comment';
 
 export { default as url } from './url';
+
+export { default as entityDate } from './entity-date';
