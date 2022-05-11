@@ -3,7 +3,7 @@
 .form-reply {
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: $zindex-sticky;
     padding: map-get($spacers, 4);
     background-color: $white;
     box-shadow: $box-shadow;
