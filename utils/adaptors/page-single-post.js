@@ -1,10 +1,9 @@
 import { SITE } from '~/utils/constants';
-import { head } from '.';
+import head from './head';
+import entityDate from './entity-date';
 
 export default (payload) => {
-    const payloadDate = new Date(payload.date);
-    const payloadModified = new Date(payload.modified);
-    const date = ((payloadModified > payloadDate && payloadModified) || payloadDate).toString();
+    const date = entityDate({ date: payload.date, modified: payload.modified });
 
     const categories = payload.embed.categories.map((category) => ({
         ...category,
