@@ -126,16 +126,20 @@ export default {
     }),
 
     created() {
-        const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
-        if (hasEntrysGalleryJetpack) cssGallery();
+        if (this.data.main) {
+            const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
+            if (hasEntrysGalleryJetpack) cssGallery();
+        }
     },
 
     mounted() {
         registerModules(this.$store);
 
-        this.setDataPhotoswipe();
+        if (this.data.main) {
+            this.setDataPhotoswipe();
 
-        this.attachForm();
+            this.attachForm();
+        }
     },
 
     methods: {
