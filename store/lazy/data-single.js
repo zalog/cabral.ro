@@ -5,9 +5,20 @@ export default {
     namespaced: false,
 
     actions: {
-        async fetchPageSingle({ dispatch }, { route }) {
-            await dispatch('fetchPagePost', { route });
-            await dispatch('fetchPagePage', { route });
+        async fetchPageSingle({ dispatch, getters }, { route }) {
+            const {
+                fullPath: pageKey,
+            } = route;
+            const isValidMainData = () => {
+                const currentPage = () => getters.currentPage(pageKey);
+                return isValidPropData(currentPage(), 'main');
+            };
+
+            if (isValidMainData()) return;
+
+            if (!isValidMainData()) await dispatch('fetchPagePost', { route });
+
+            if (!isValidMainData()) await dispatch('fetchPagePage', { route });
         },
         async fetchPagePost({ getters, commit }, { route }) {
             const {
