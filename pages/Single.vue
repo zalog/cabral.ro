@@ -98,7 +98,7 @@ export default {
         currentPage,
     ],
 
-    async asyncData({ store, route }) {
+    async asyncData({ store, route, error }) {
         registerModules(store);
 
         let actionName = 'data/fetchPageSingle';
@@ -113,6 +113,12 @@ export default {
                 route,
             }),
         ]);
+
+        const data = store.getters['data/currentPage'](route.fullPath);
+
+        if (!data.main) return error({ statusCode: 404, message: 'Page not found' });
+
+        return null;
     },
 
     data: () => ({
