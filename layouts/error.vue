@@ -9,10 +9,15 @@
             </template>
         </h1>
         <p>
-            Go to
-            <nuxt-link to="/">
+            You can go to
+            <nuxt-link to="/" class="btn btn-outline-secondary">
                 home page
             </nuxt-link>
+            or
+            <nuxt-link to="/contact/" class="btn btn-outline-secondary">
+                contact
+            </nuxt-link>
+            now.
         </p>
     </div>
 </template>
