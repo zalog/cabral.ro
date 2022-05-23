@@ -116,7 +116,7 @@ export default {
 
         const data = store.getters['data/currentPage'](route.fullPath);
 
-        if (!data.main) return error({ statusCode: 404, message: 'Page not found' });
+        if (!data.main) return error({ statusCode: 404, message: 'Nu am găsit pagina' });
 
         return null;
     },
