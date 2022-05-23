@@ -1,7 +1,13 @@
 @import "../required";
 
 .layout-default {
+    display: flex;
+    flex-direction: column;
+
     > .container-fluid {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
         padding-top: ($grid-gutter-width / 2);
         padding-bottom: ($grid-gutter-width / 2);
 
@@ -12,6 +18,7 @@
     }
 
     .page {
+        width: 100%;
         max-width: 640px;
         margin: 0 auto;
 

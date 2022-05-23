@@ -2,8 +2,8 @@
     <div class="layout-default">
         <the-header />
         <layout-hero
-            v-if="$route.name === 'Single' && data.main.featuredMedia"
-            :img="data.main.featuredMedia"
+            v-if="singleFeaturedMedia"
+            :img="singleFeaturedMedia"
         />
         <div class="container-fluid">
             <Nuxt class="page" />
@@ -25,6 +25,11 @@ export default {
         data() {
             const pageKey = this.$route.fullPath;
             return this.$store.getters['data/currentPage'](pageKey);
+        },
+        singleFeaturedMedia() {
+            if (this.$route.name !== 'Single') return false;
+
+            return this.data.main?.featuredMedia;
         },
     },
 };
