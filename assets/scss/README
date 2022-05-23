@@ -13,7 +13,7 @@ This is a complete list of vendor imports
 // @import "~bootstrap/scss/tables";
 // @import "~bootstrap/scss/forms";         // 03-elements
 // @import "~bootstrap/scss/buttons";       // 04-objects
-// @import "~bootstrap/scss/transitions";   // 02-generic
+// @import "~bootstrap/scss/transitions";   // 04-objects
 // @import "~bootstrap/scss/dropdown";
 // @import "~bootstrap/scss/button-group";
 // @import "~bootstrap/scss/input-group";
@@ -25,7 +25,7 @@ This is a complete list of vendor imports
 // @import "~bootstrap/scss/pagination";    // 05-components/posts-list
 // @import "~bootstrap/scss/badge";
 // @import "~bootstrap/scss/jumbotron";
-// @import "~bootstrap/scss/alert";         // 05-components/comments-list-form
+// @import "~bootstrap/scss/alert";         // components/BaseAlert.vue
 // @import "~bootstrap/scss/progress";
 // @import "~bootstrap/scss/media";
 // @import "~bootstrap/scss/list-group";
