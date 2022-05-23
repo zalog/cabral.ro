@@ -3,7 +3,7 @@
         v-if="visible"
         class="toast show"
         :class="[
-            { [`toast-${variant}`]: variant !== 'default' },
+            { [`toast-${variant}`]: variant },
             toastClass,
         ]"
     >
@@ -27,7 +27,8 @@ export default {
         },
         variant: {
             type: String,
-            default: 'default',
+            default: undefined,
+            validator: (value) => [undefined, 'secondary', 'success', 'danger'].includes(value),
         },
         toastClass: {
             type: String,
