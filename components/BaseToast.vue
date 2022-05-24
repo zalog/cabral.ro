@@ -3,9 +3,12 @@
         v-if="visible"
         class="toast show"
         :class="[
-            { [`toast-${variant}`]: variant },
+            { [`text-bg-${variant}`]: variant },
             toastClass,
         ]"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
     >
         <div class="toast-body">
             <slot />

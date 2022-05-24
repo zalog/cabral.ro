@@ -1,8 +1,13 @@
 @import "../required";
-@import "~bootstrap/scss/close";
 
 $toast-color:               $gray-300;
 $toast-background-color:    $black;
 $toast-border-width:        0;
+$toast-spacing:             map-get($spacers, 3);
 
 @import "~bootstrap/scss/toasts";
+
+.toast-container {
+    position: fixed;
+    padding: $toast-spacing;
+}
