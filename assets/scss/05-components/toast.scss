@@ -6,9 +6,3 @@ $toast-background-color:    $black;
 $toast-border-width:        0;
 
 @import "~bootstrap/scss/toasts";
-
-@each $color, $value in $theme-colors {
-    .toast-#{$color} {
-        @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
-    }
-}

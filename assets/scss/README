@@ -1,40 +1,48 @@
 bootstrap vendor
 This is a complete list of vendor imports
 
-// @import "~bootstrap/scss/functions";     // 00-settings
-// @import "~bootstrap/scss/variables";     // 00-settings
-// @import "~bootstrap/scss/mixins";        // 01-tools
-// @import "~bootstrap/scss/root";          // 02-generic
-// @import "~bootstrap/scss/reboot";        // 02-generic
-// @import "~bootstrap/scss/type";          // 03-elements
-// @import "~bootstrap/scss/images";
-// @import "~bootstrap/scss/code";
-// @import "~bootstrap/scss/grid";          // 04-objects
-// @import "~bootstrap/scss/tables";
-// @import "~bootstrap/scss/forms";         // 03-elements
-// @import "~bootstrap/scss/buttons";       // 04-objects
-// @import "~bootstrap/scss/transitions";   // 04-objects
-// @import "~bootstrap/scss/dropdown";
-// @import "~bootstrap/scss/button-group";
-// @import "~bootstrap/scss/input-group";
-// @import "~bootstrap/scss/custom-forms";
-// @import "~bootstrap/scss/nav";           // 05-components/the-header-menu
-// @import "~bootstrap/scss/navbar";        // 05-components/the-header-menu
-// @import "~bootstrap/scss/card";          // 05-components/base-item-post, 05-components/list-related
-// @import "~bootstrap/scss/breadcrumb";
-// @import "~bootstrap/scss/pagination";    // 05-components/posts-list
-// @import "~bootstrap/scss/badge";
-// @import "~bootstrap/scss/jumbotron";
-// @import "~bootstrap/scss/alert";         // components/BaseAlert.vue
-// @import "~bootstrap/scss/progress";
-// @import "~bootstrap/scss/media";
-// @import "~bootstrap/scss/list-group";
-// @import "~bootstrap/scss/close";
-// @import "~bootstrap/scss/toasts";        // 05-components/toast
-// @import "~bootstrap/scss/modal";
-// @import "~bootstrap/scss/tooltip";
-// @import "~bootstrap/scss/popover";
-// @import "~bootstrap/scss/carousel";
-// @import "~bootstrap/scss/spinners";      // BaseSpinner.vue
-// @import "~bootstrap/scss/utilities";     // 06-utilities
-// @import "~bootstrap/scss/print";
+// Configuration
+@import "functions";        // 00-settings
+@import "variables";        // 00-settings
+@import "maps";             // 01-tools
+@import "mixins";           // 01-tools
+@import "utilities";        // 01-tools
+
+// Layout & components
+@import "root";             // 02-generic
+@import "reboot";           // 02-generic
+@import "type";             // 03-elements
+@import "images";
+@import "containers";       // 04-objects
+@import "grid";             // 04-objects
+@import "tables";
+@import "forms";            // 03-elements
+@import "buttons";          // 04-objects
+@import "transitions";      // 04-objects
+@import "dropdown";
+@import "button-group";
+@import "nav";              // 05-components/the-header-menu.scss
+@import "navbar";           // 05-components/the-header-menu.scss
+@import "card";             // 05-components/base-item-post.scss, 05-components/list-related.scss
+@import "accordion";
+@import "breadcrumb";
+@import "pagination";       // 05-components/posts-list.scss
+@import "badge";
+@import "alert";            // components/BaseAlert.vue
+@import "progress";
+@import "list-group";
+@import "close";
+@import "toasts";           // 05-components/toast.scss
+@import "modal";
+@import "tooltip";
+@import "popover";
+@import "carousel";
+@import "spinners";         // components/BaseSpinner.vue
+@import "offcanvas";
+@import "placeholders";
+
+// Helpers
+@import "helpers";          // 06-utilities
+
+// Utilities
+@import "utilities/api";    // 06-utilities
