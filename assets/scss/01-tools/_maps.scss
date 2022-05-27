@@ -1,0 +1,11 @@
+@import "~bootstrap/scss/maps";
+
+// removes not needed
+
+$theme-colors: map-remove(
+    $theme-colors,
+    "info",
+    "warning",
+    "light",
+    "dark"
+);
