@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="notifications"
-        class="the-notifications"
+        class="toast-container bottom-0"
     >
         <template v-for="notification in notifications">
             <lazy-base-toast
@@ -34,7 +34,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@import "~/assets/scss/05-components/the-notifications";
-</style>

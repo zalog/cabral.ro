@@ -3,9 +3,12 @@
         v-if="visible"
         class="toast show"
         :class="[
-            { [`toast-${variant}`]: variant !== 'default' },
+            { [`text-bg-${variant}`]: variant },
             toastClass,
         ]"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
     >
         <div class="toast-body">
             <slot />
@@ -27,7 +30,8 @@ export default {
         },
         variant: {
             type: String,
-            default: 'default',
+            default: undefined,
+            validator: (value) => [undefined, 'secondary', 'success', 'danger'].includes(value),
         },
         toastClass: {
             type: String,

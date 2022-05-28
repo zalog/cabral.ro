@@ -6,7 +6,7 @@
         }"
         role="status"
     >
-        <span class="sr-only" v-text="'Loading...'" />
+        <span class="visually-hidden" v-text="'Loading...'" />
     </div>
 </template>
 
