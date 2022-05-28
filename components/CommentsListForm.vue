@@ -11,7 +11,12 @@
 
         <div class="form">
             <div class="form-group">
-                <label :for="getIdSuffix('form-reply-message')" class="sr-only">Comentariu</label>
+                <label
+                    :for="getIdSuffix('form-reply-message')"
+                    class="visually-hidden"
+                >
+                    Comentariu
+                </label>
                 <textarea
                     :id="getIdSuffix('form-reply-message')"
                     v-model="form.data.message"
@@ -26,7 +31,7 @@
                 class="form-row"
             >
                 <div class="form-group col-sm-4">
-                    <label for="form-reply-name" class="sr-only">Nume</label>
+                    <label for="form-reply-name" class="visually-hidden">Nume</label>
                     <input
                         id="form-reply-name"
                         v-model="form.data.name"
@@ -37,7 +42,7 @@
                     >
                 </div>
                 <div class="form-group col-sm-4">
-                    <label for="form-reply-email" class="sr-only">Email</label>
+                    <label for="form-reply-email" class="visually-hidden">Email</label>
                     <input
                         id="form-reply-email"
                         v-model="form.data.email"
@@ -48,7 +53,7 @@
                     >
                 </div>
                 <div class="form-group col-sm-4">
-                    <label for="form-reply-site" class="sr-only">Site</label>
+                    <label for="form-reply-site" class="visually-hidden">Site</label>
                     <input
                         id="form-reply-site"
                         v-model="form.data.site"
