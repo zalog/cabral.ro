@@ -10,7 +10,7 @@
         </div>
 
         <div class="form">
-            <div class="form-group">
+            <div class="mb-3">
                 <label
                     :for="getIdSuffix('form-reply-message')"
                     class="visually-hidden"
@@ -30,7 +30,7 @@
                 v-if="form.data.message || form.data.name || form.data.email || form.data.site"
                 class="form-row"
             >
-                <div class="form-group col-sm-4">
+                <div class="mb-3 col-sm-4">
                     <label for="form-reply-name" class="visually-hidden">Nume</label>
                     <input
                         id="form-reply-name"
@@ -41,7 +41,7 @@
                         required
                     >
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="mb-3 col-sm-4">
                     <label for="form-reply-email" class="visually-hidden">Email</label>
                     <input
                         id="form-reply-email"
@@ -52,7 +52,7 @@
                         required
                     >
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="mb-3 col-sm-4">
                     <label for="form-reply-site" class="visually-hidden">Site</label>
                     <input
                         id="form-reply-site"
