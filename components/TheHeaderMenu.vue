@@ -3,62 +3,64 @@
         class="navbar navbar-expand-sm navbar-dark bg-dark"
         :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
     >
-        <div class="navbar-bar">
-            <nuxt-link
-                :to="'/'"
-                class="navbar-brand"
-                @click.native="menuClose()"
-            >
-                {{ SITE.TITLE }}
-            </nuxt-link>
-
-            <button
-                type="button"
-                class="navbar-toggler"
-                aria-controls="navbar-body-main"
-                :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
-                aria-label="Toggle navigation"
-                @click="menuToggle()"
-            >
-                <span class="navbar-toggler-icon" />
-            </button>
-        </div>
-
-        <div
-            id="navbar-body-main"
-            class="navbar-body-main"
-        >
-            <ul class="navbar-nav">
-                <li
-                    v-for="item in data"
-                    :key="item.ID"
-                    class="nav-item"
+        <div class="container-fluid">
+            <div class="navbar-bar">
+                <nuxt-link
+                    :to="'/'"
+                    class="navbar-brand"
+                    @click.native="menuClose()"
                 >
-                    <nuxt-link
-                        :to="item.to"
-                        class="nav-link"
-                        exact-active-class="active"
-                        @click.native="menuClose()"
-                    >
-                        {{ item.title }}
-                    </nuxt-link>
-                </li>
-            </ul>
-        </div>
+                    {{ SITE.TITLE }}
+                </nuxt-link>
 
-        <form
-            action="/"
-            class="navbar-body-search"
-            @submit.prevent="goToSearch($event)"
-        >
-            <input
-                type="search"
-                class="form-control form-control-sm"
-                name="s"
-                :value="$route.query.s"
-                placeholder="Caută aici..."
+                <button
+                    type="button"
+                    class="navbar-toggler"
+                    aria-controls="navbar-body-main"
+                    :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
+                    aria-label="Toggle navigation"
+                    @click="menuToggle()"
+                >
+                    <span class="navbar-toggler-icon" />
+                </button>
+            </div>
+
+            <div
+                id="navbar-body-main"
+                class="navbar-body-main"
             >
-        </form>
+                <ul class="navbar-nav">
+                    <li
+                        v-for="item in data"
+                        :key="item.ID"
+                        class="nav-item"
+                    >
+                        <nuxt-link
+                            :to="item.to"
+                            class="nav-link"
+                            exact-active-class="active"
+                            @click.native="menuClose()"
+                        >
+                            {{ item.title }}
+                        </nuxt-link>
+                    </li>
+                </ul>
+            </div>
+
+            <form
+                action="/"
+                class="navbar-body-search"
+                @submit.prevent="goToSearch($event)"
+            >
+                <input
+                    type="search"
+                    class="form-control form-control-sm"
+                    name="s"
+                    :value="$route.query.s"
+                    placeholder="Caută aici..."
+                >
+            </form>
+        </div>
     </nav>
 </template>
 

@@ -2,7 +2,7 @@
 
 .nav-categories {
     flex-wrap: nowrap;
-    padding: $navbar-padding-x;
+    padding: $grid-gutter-width / 2;
     overflow-x: auto;
 
     &::-webkit-scrollbar {

@@ -17,7 +17,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/svg-sprite": "^0.5.2",
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^5.2.0-beta1",
     "cookie-universal-nuxt": "^2.1.5",
     "jw-paginate": "^1.0.4",
     "nuxt": "^2.15.8",

@@ -1,0 +1,98 @@
+@import "~bootstrap/scss/utilities";
+
+// removes not needed
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "align": null,
+        "float": null,
+        "opacity": null,
+        "overflow": null,
+        "display": (
+            responsive: false,
+            print: false,
+            property: display,
+            class: d,
+            values: flex
+        ),
+        "shadow": null,
+        "position": null,
+        // top
+        // bottom
+        // start
+        // end
+        "translate-middle": null,
+        "border": null,
+        "border-top": null,
+        "border-end": null,
+        "border-bottom": null,
+        "border-start": null,
+        "border-color": null,
+        "border-width": null,
+        "border-opacity": null,
+        "width": null,
+        "max-width": null,
+        "viewport-width": null,
+        "min-viewport-width": null,
+        "height": null,
+        "max-height": null,
+        "viewport-height": null,
+        "min-viewport-height": null,
+        "flex": null,
+        "flex-direction": null,
+        "flex-grow": null,
+        "flex-shrink": null,
+        "flex-wrap": null,
+        // justify-content
+        // align-items
+        "align-content": null,
+        "align-self": null,
+        "order": null,
+        "margin": null,
+        "margin-x": null,
+        "margin-y": null,
+        "margin-top": null,
+        "margin-end": null,
+        // margin-bottom
+        "margin-start": null,
+        "negative-margin": null,
+        "negative-margin-x": null,
+        "negative-margin-y": null,
+        // negative-margin-top
+        "negative-margin-end": null,
+        "negative-margin-bottom": null,
+        "negative-margin-start": null,
+        // padding
+        "padding-x": null,
+        // padding-y
+        "padding-top": null,
+        "padding-end": null,
+        "padding-bottom": null,
+        "padding-start": null,
+        "gap": null,
+        "font-family": null,
+        "font-size": null,
+        "font-style": null,
+        "font-weight": null,
+        "line-height": null,
+        // text-align
+        "text-decoration": null,
+        "text-transform": null,
+        "white-space": null,
+        "word-wrap": null,
+        "color": null,
+        "text-opacity": null,
+        // background-color
+        "bg-opacity": null,
+        "gradient": null,
+        "user-select": null,
+        "pointer-events": null,
+        "rounded": null,
+        "rounded-top": null,
+        "rounded-end": null,
+        "rounded-bottom": null,
+        "rounded-start": null,
+        "visibility": null,
+    )
+);

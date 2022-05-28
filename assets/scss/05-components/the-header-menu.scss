@@ -3,11 +3,13 @@
 @import "~bootstrap/scss/navbar";
 
 .navbar {
-    flex-flow: column wrap;
-    align-items: normal;
+    .container-fluid {
+        flex-flow: column wrap;
+        align-items: normal;
 
-    > * {
-        margin-bottom: $spacer;
+        > * {
+            margin-bottom: $spacer;
+        }
     }
 
     .form-control {
@@ -42,14 +44,17 @@
 
 @include media-breakpoint-up(sm) {
     .navbar {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
         padding-top: $navbar-padding-y * 2;
         padding-bottom: $navbar-padding-y * 2;
 
-        > * {
-            margin-bottom: 0;
+        .container-fluid {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            > * {
+                margin-bottom: 0;
+            }
         }
 
         .nav-pills {
@@ -59,7 +64,7 @@
 
     .navbar-body-main {
         display: block;
-        margin-right: $navbar-padding-x;
+        margin-right: $navbar-brand-margin-end;
     }
 }
 
