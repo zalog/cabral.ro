@@ -1,5 +1,18 @@
 export default {
     build: {
+        babel: {
+            presets({ isClient }, preset) {
+                if (isClient) {
+                    Object.assign(preset[1], {
+                        targets: {
+                            chrome: '58',
+                        },
+                    });
+                }
+
+                return [preset];
+            },
+        },
         extend(config, { isClient }) {
             if (isClient) {
                 Object.assign(config, {
@@ -18,7 +31,6 @@ export default {
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         ],
     },
-    modern: true,
     plugins: [
         '~/plugins/store-utils.js',
         '~/plugins/router-hooks.js',
