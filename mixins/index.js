@@ -1,1 +1,2 @@
-export { default as currentPage } from './currentPage'; // eslint-disable-line import/prefer-default-export
+export { default as currentPage } from './currentPage';
+export { default as photoswipe } from './photoswipe';
