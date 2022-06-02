@@ -53,14 +53,6 @@
                 @is-visible-last="fetchComments(true)"
             />
         </div>
-
-        <lazy-photoswipe
-            v-if="typeof photoswipe.index === 'number'"
-            v-model="photoswipe.index"
-            :items="photoswipe.items"
-            @closed="onPhotoswipeClosed()"
-            @update:index="onPhotoswipeUpdate($event)"
-        />
     </div>
 </template>
 

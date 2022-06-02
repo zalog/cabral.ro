@@ -1,69 +1,190 @@
-export default {
-    data: () => ({
-        photoswipe: {
-            index: false,
-            items: [],
-        },
-    }),
+const PhotoSwipeModule = () => import('photoswipe/dist/photoswipe.esm');
+const PhotoSwipeModuleCss = () => import('photoswipe/dist/photoswipe.css');
 
+const setNaturalSizes = (imgEl, pswpContent) => {
+    const { naturalWidth, naturalHeight } = imgEl;
+
+    Object.assign(pswpContent.instance.options.dataSource[pswpContent.index], {
+        width: `${naturalWidth}`,
+        height: `${naturalHeight}`,
+    });
+
+    if (pswpContent.hasSlide) {
+        Object.assign(pswpContent.slide, {
+            width: naturalWidth,
+            height: naturalHeight,
+        });
+    } else if (!pswpContent.slide) {
+        Object.assign(pswpContent, {
+            width: naturalWidth,
+            height: naturalHeight,
+        });
+    }
+};
+
+export default {
     mounted() {
-        this.setDataPhotoswipe();
+        const imgs = this.$refs.content?.querySelectorAll('img');
+
+        if (!imgs?.length) return;
+
+        this.pageTitleInitial = this.data.head.title;
+
+        this.photoswipeSet({ imgs });
+
+        const { hash } = this.$route;
+        if (hash.includes('pid=')) {
+            let [, index2open] = hash.split('=');
+            index2open = Number(index2open) - 1;
+            this.photoswipeInit({ index: index2open });
+        }
     },
 
     methods: {
-        setDataPhotoswipe() {
-            const imgs = this.$refs.content?.querySelectorAll('img');
+        photoswipeSet({ imgs }) {
+            this.photoswipeOptions = {
+                dataSource: [],
+            };
 
-            if (!imgs?.length) return;
+            imgs.forEach((img, indexImg) => {
+                const a = img.parentElement;
 
-            imgs.forEach((img, index) => {
-                const src = (img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
-                const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
+                if (a.nodeName !== 'A') return;
 
-                this.photoswipe.items.push({
+                a.setAttribute('data-pswp-index', indexImg);
+
+                const size = img.getAttribute('data-orig-size')?.split(',') || [1, 1];
+                const src = img.getAttribute('data-orig-file') || a.getAttribute('href');
+
+                this.photoswipeOptions.dataSource.push({
                     src,
-                    w: size[0],
-                    h: size[1],
+                    width: size[0],
+                    height: size[1],
                 });
 
-                img.addEventListener('click', (event) => {
+                a.addEventListener('click', (event) => {
                     event.preventDefault();
 
-                    this.photoswipe.index = index;
+                    this.photoswipeInit({ options: this.photoswipeOptions, index: indexImg });
+                });
+            });
+        },
+        async photoswipeLoad() {
+            const [, PhotoSwipe] = await Promise.all([
+                PhotoSwipeModuleCss(),
+                PhotoSwipeModule(),
+            ]);
+
+            return PhotoSwipe.default;
+        },
+        async photoswipeInit({
+            options = this.photoswipeOptions,
+            index,
+        }) {
+            const imgFirstNeeded = new Image();
+            imgFirstNeeded.src = options.dataSource[index].src;
+            await imgFirstNeeded.decode();
+
+            Object.assign(options.dataSource[index], {
+                width: imgFirstNeeded.width,
+                height: imgFirstNeeded.height,
+            });
+
+            const PhotoSwipe = await this.photoswipeLoad();
+
+            const pswp = new PhotoSwipe({
+                ...options,
+                index,
+            });
+
+            pswp.addFilter('thumbEl', (thumbEl, data, indexCurrent) => document.querySelector(`a[data-pswp-index="${indexCurrent}"] img`) || thumbEl);
+
+            pswp.addFilter('placeholderSrc', (placeholderSrc, slide) => this.photoswipeOptions.dataSource[slide.index].src || placeholderSrc);
+
+            pswp.on('contentLoad', (eventPswp) => {
+                const { content } = eventPswp;
+
+                if (content.index === index) {
+                    eventPswp.preventDefault();
+
+                    content.element = imgFirstNeeded;
+                    content.element.className = 'pswp__img';
+                }
+            });
+
+            pswp.on('contentLoadImage', (eventPswp) => {
+                eventPswp.preventDefault();
+
+                const { content } = eventPswp;
+
+                content.element = document.createElement('img');
+                content.element.src = content.data.src;
+                content.element.className = 'pswp__img';
+
+                content.state = 'loading';
+
+                if (content.element.complete) {
+                    setNaturalSizes(content.element, content);
+
+                    content.onLoaded();
+                } else {
+                    content.element.onload = function onload({ target: imgLoaded }) {
+                        setNaturalSizes(imgLoaded, content);
+
+                        content.onLoaded();
+                    };
+
+                    content.element.onerror = () => {
+                        content.onError();
+                    };
+                }
+            });
+
+            pswp.on('contentAppendImage', (eventAppendImage) => {
+                const { content } = eventAppendImage;
+
+                content.element.decode().then(() => {
+                    if (
+                        content.width !== content.element.naturalWidth
+                        || content.height !== content.element.naturalHeight
+                    ) {
+                        content.width = content.element.naturalWidth;
+                        content.height = content.element.naturalHeight;
+
+                        content.instance.updateSize(true);
+                    }
                 });
             });
 
-            this.pageTitleInitial = this.pageTitle;
+            pswp.on('contentActivate', ({ content }) => {
+                const itemNr = content.index + 1;
+                const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
 
-            const { hash } = this.$route;
-            if (hash.includes('pid=')) {
-                const index = hash.split('=')[1];
-                this.photoswipe.index = Number(index);
-            }
-        },
-        onPhotoswipeUpdate(itemIndex) {
-            const route = this.$route;
-            const itemNr = itemIndex + 1;
-            const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
+                this.$router.push({ hash: `pid=${itemNr}` }, (route) => {
+                    this.$store.dispatch('data/setPageData', {
+                        route,
+                        prop: 'head.title',
+                        data: pageTitle,
+                    });
 
-            this.$store.dispatch('data/setPageData', {
-                route,
-                prop: 'head.title',
-                data: pageTitle,
+                    this.sendPageView({
+                        title: pageTitle,
+                        url: route.fullPath,
+                    });
+                });
             });
-            this.sendPageView({
-                title: pageTitle,
-                url: route.fullPath,
-            });
-        },
-        onPhotoswipeClosed() {
-            this.photoswipe.index = false;
 
-            this.$store.dispatch('data/setPageData', {
-                route: this.$route,
-                prop: 'head.title',
-                data: this.pageTitleInitial,
+            pswp.on('close', () => {
+                this.$router.push({ hash: false }, (route) => {
+                    this.$store.dispatch('data/setPageData', {
+                        route,
+                        prop: 'head.title',
+                        data: this.pageTitleInitial,
+                    });
+                });
             });
+
+            pswp.init();
         },
     },
 };
