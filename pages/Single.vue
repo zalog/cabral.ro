@@ -53,14 +53,6 @@
                 @is-visible-last="fetchComments(true)"
             />
         </div>
-
-        <lazy-photoswipe
-            v-if="typeof photoswipe.index === 'number'"
-            v-model="photoswipe.index"
-            :items="photoswipe.items"
-            @closed="onPhotoswipeClosed()"
-            @update:index="onPhotoswipeUpdate($event)"
-        />
     </div>
 </template>
 
@@ -68,7 +60,7 @@
 import Vue from 'vue';
 import dataSingle from '~/store/lazy/data-single';
 import dataComments from '~/store/lazy/data-single-comments';
-import { currentPage } from '~/mixins';
+import { currentPage, photoswipe } from '~/mixins';
 import { ObserveVisibility } from 'vue-observe-visibility';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
@@ -96,6 +88,7 @@ export default {
 
     mixins: [
         currentPage,
+        photoswipe,
     ],
 
     async asyncData({ store, route, error }) {
@@ -125,10 +118,6 @@ export default {
         load: {
             banners: false,
         },
-        photoswipe: {
-            index: false,
-            items: [],
-        },
     }),
 
     created() {
@@ -142,8 +131,6 @@ export default {
         registerModules(this.$store);
 
         if (this.data.main) {
-            this.setDataPhotoswipe();
-
             this.attachForm();
         }
     },
@@ -170,56 +157,6 @@ export default {
             });
 
             commentsClass.remove('loading');
-        },
-        setDataPhotoswipe() {
-            this.$refs.content.querySelectorAll('img').forEach((img, index) => {
-                const src = (img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
-                const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
-
-                this.photoswipe.items.push({
-                    src,
-                    w: size[0],
-                    h: size[1],
-                });
-
-                img.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    this.photoswipe.index = index;
-                });
-            });
-
-            this.pageTitleInitial = this.pageTitle;
-
-            const { hash } = this.$route;
-            if (hash.includes('pid=')) {
-                const index = hash.split('=')[1];
-                this.photoswipe.index = Number(index);
-            }
-        },
-        onPhotoswipeUpdate(itemIndex) {
-            const route = this.$route;
-            const itemNr = itemIndex + 1;
-            const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
-
-            this.$store.dispatch('data/setPageData', {
-                route,
-                prop: 'head.title',
-                data: pageTitle,
-            });
-            this.sendPageView({
-                title: pageTitle,
-                url: route.fullPath,
-            });
-        },
-        onPhotoswipeClosed() {
-            this.photoswipe.index = false;
-
-            this.$store.dispatch('data/setPageData', {
-                route: this.$route,
-                prop: 'head.title',
-                data: this.pageTitleInitial,
-            });
         },
         attachForm() {
             const forms = this.$refs.content.querySelectorAll('.wpcf7-form');
