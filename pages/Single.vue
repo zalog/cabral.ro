@@ -53,6 +53,12 @@
                 @is-visible-last="fetchComments(true)"
             />
         </div>
+        <base-gallery
+            v-if="galleryFull.show"
+            v-model="galleryFull.index"
+            :items="galleryFull.items"
+            @hidden="galleryFull.show = false"
+        />
     </div>
 </template>
 
@@ -60,7 +66,7 @@
 import Vue from 'vue';
 import dataSingle from '~/store/lazy/data-single';
 import dataComments from '~/store/lazy/data-single-comments';
-import { currentPage, photoswipe } from '~/mixins';
+import { currentPage } from '~/mixins';
 import { ObserveVisibility } from 'vue-observe-visibility';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
@@ -68,6 +74,8 @@ import ListRelated from '~/components/ListRelated.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
 Vue.directive('observe-visibility', ObserveVisibility);
+
+const BaseGallery = () => import('~/components/BaseGallery.vue');
 
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
 
@@ -84,11 +92,11 @@ export default {
         ListShare,
         ListRelated,
         CommentsList,
+        BaseGallery,
     },
 
     mixins: [
         currentPage,
-        photoswipe,
     ],
 
     async asyncData({ store, route, error }) {
@@ -118,6 +126,11 @@ export default {
         load: {
             banners: false,
         },
+        galleryFull: {
+            show: null,
+            index: null,
+            items: [],
+        },
     }),
 
     created() {
@@ -133,6 +146,8 @@ export default {
         if (this.data.main) {
             this.attachForm();
         }
+
+        this.attachGallery();
     },
 
     methods: {
@@ -169,6 +184,32 @@ export default {
                     const form = new Form(formEl, this.$axios);
                     form.init();
                 }));
+        },
+        attachGallery() {
+            const imgs = this.$refs.content.querySelectorAll('img');
+
+            imgs.forEach((img, imgIndex) => {
+                const a = img.parentElement;
+
+                if (!(a instanceof HTMLAnchorElement)) return;
+
+                const src = img.getAttribute('data-orig-file') || a.getAttribute('href');
+                this.galleryFull.items.push({
+                    src,
+                });
+
+                if (!this.galleryFull.items.length) return;
+
+                a.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    this.galleryFull = {
+                        show: true,
+                        index: imgIndex,
+                        items: this.galleryFull.items,
+                    };
+                });
+            });
         },
     },
 };
