@@ -57,7 +57,8 @@
             v-if="galleryFull.show"
             v-model="galleryFull.index"
             :items="galleryFull.items"
-            @hidden="galleryFull.show = false"
+            @update:index="onGalleryFullUpdate($event)"
+            @hidden="onGalleryFullHidden()"
         />
     </div>
 </template>
@@ -188,6 +189,8 @@ export default {
         attachGallery() {
             const imgs = this.$refs.content.querySelectorAll('img');
 
+            this.pageTitleInitial = this.$metaInfo.title;
+
             imgs.forEach((img, imgIndex) => {
                 const a = img.parentElement;
 
@@ -210,6 +213,22 @@ export default {
                     };
                 });
             });
+        },
+        onGalleryFullUpdate(index) {
+            this.$store.dispatch('data/setPageData', {
+                route: this.$route,
+                prop: 'head.title',
+                data: `${this.pageTitleInitial} - Image ${index + 1}`,
+            });
+        },
+        onGalleryFullHidden() {
+            this.$store.dispatch('data/setPageData', {
+                route: this.$route,
+                prop: 'head.title',
+                data: this.pageTitleInitial,
+            });
+
+            this.galleryFull.show = false;
         },
     },
 };
