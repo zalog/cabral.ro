@@ -189,6 +189,8 @@ export default {
         attachGallery() {
             const imgs = this.$refs.content.querySelectorAll('img');
 
+            if (!imgs.length) return;
+
             this.pageTitleInitial = this.$metaInfo.title;
 
             imgs.forEach((img, imgIndex) => {
