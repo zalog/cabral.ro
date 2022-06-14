@@ -45,9 +45,15 @@ export default {
             type: [Boolean, String],
             default: 'image',
         },
+        pageTitle: {
+            type: [Boolean, String],
+            default: false,
+        },
     },
 
     async mounted() {
+        if (this.pageTitle) this.pageTitleInitial = this.pageTitle;
+
         this.pswp = new PhotoSwipe({
             dataSource: this.items,
             index: this.index,
@@ -128,6 +134,8 @@ export default {
             });
 
             pswp.on('contentActivate', ({ content }) => {
+                if (this.pageTitle) this.pageTitleUpdate(content.index);
+
                 this.$emit('update:index', content.index);
             });
 
@@ -138,10 +146,24 @@ export default {
                     });
                 }
 
+                if (this.pageTitle) this.pageTitleUpdate();
+
                 this.$emit('hidden');
             });
 
             pswp.init();
+        },
+
+        pageTitleUpdate(index) {
+            const galleryTitle = (typeof index === 'number')
+                ? ` - Image ${index + 1}`
+                : '';
+
+            this.$store.dispatch('data/setPageData', {
+                route: this.$route,
+                prop: 'head.title',
+                data: this.pageTitleInitial + galleryTitle,
+            });
         },
     },
 };
