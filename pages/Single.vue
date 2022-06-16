@@ -57,7 +57,7 @@
             v-if="galleryFull.show"
             v-model="galleryFull.index"
             :items="galleryFull.items"
-            :page-title="pageTitle"
+            :page-title="$metaInfo.title"
             @hidden="galleryFull.show = false"
         />
     </div>
