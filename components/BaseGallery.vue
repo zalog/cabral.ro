@@ -51,6 +51,17 @@ export default {
         },
     },
 
+    watch: {
+        $route(to, from) {
+            if (
+                this.hash
+                && from.hash.indexOf(this.hash) !== -1 && to.hash.indexOf(this.hash) === -1
+            ) {
+                this.pswp.close();
+            }
+        },
+    },
+
     async mounted() {
         if (this.pageTitle) this.pageTitleInitial = this.pageTitle;
 
