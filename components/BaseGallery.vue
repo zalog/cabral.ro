@@ -80,15 +80,6 @@ export default {
                 return false;
             });
 
-            pswp.on('initialLayout', () => {
-                if (this.hash) {
-                    this.$router.push({
-                        hash: this.hash,
-                        query: this.$route.query,
-                    });
-                }
-            });
-
             pswp.on('contentLoadImage', (eventPswp) => {
                 const { content } = eventPswp;
                 const { width, height } = content.instance.options.dataSource[content.index];
@@ -145,6 +136,14 @@ export default {
             });
 
             pswp.on('contentActivate', ({ content }) => {
+                if (this.hash) {
+                    const verb = (!this.$route.hash) ? 'push' : 'replace';
+                    this.$router[verb]({
+                        hash: `${this.hash}=${content.index + 1}`,
+                        query: this.$route.query,
+                    });
+                }
+
                 if (this.pageTitle) this.pageTitleUpdate(content.index);
 
                 this.$emit('update:index', content.index);
