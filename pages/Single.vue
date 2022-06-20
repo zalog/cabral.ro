@@ -57,6 +57,7 @@
             v-if="galleryFull.show"
             v-model="galleryFull.index"
             :items="galleryFull.items"
+            hash="pid"
             :page-title="$metaInfo.title"
             @hidden="galleryFull.show = false"
         />
