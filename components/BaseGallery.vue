@@ -137,6 +137,9 @@ export default {
 
             pswp.on('contentActivate', ({ content }) => {
                 if (this.hash) {
+                    const currentIndex = Number(this.$route.hash.split('=')[1]);
+                    if (currentIndex === content.index + 1) return;
+
                     const verb = (!this.$route.hash) ? 'push' : 'replace';
                     this.$router[verb]({
                         hash: `${this.hash}=${content.index + 1}`,
