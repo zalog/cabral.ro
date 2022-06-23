@@ -214,6 +214,15 @@ export default {
                     };
                 });
             });
+
+            if (this.$route.hash.indexOf('pid=') !== -1) {
+                const hashIndex = Number(this.$route.hash.split('=')[1]);
+                this.galleryFull = {
+                    show: true,
+                    index: hashIndex - 1,
+                    items: this.galleryFull.items,
+                };
+            }
         },
     },
 };
