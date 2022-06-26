@@ -57,7 +57,7 @@
             v-if="galleryFull.show"
             v-model="galleryFull.index"
             :items="galleryFull.items"
-            hash="pid"
+            :hash="galleryFullHash"
             :page-title="$metaInfo.title"
             @hidden="galleryFull.show = false"
         />
@@ -80,6 +80,8 @@ Vue.directive('observe-visibility', ObserveVisibility);
 const BaseGallery = () => import('~/components/BaseGallery.vue');
 
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
+
+const galleryFullHash = 'pid';
 
 const registerModules = (store) => {
     store.$registerModules([
@@ -140,6 +142,8 @@ export default {
             const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
             if (hasEntrysGalleryJetpack) cssGallery();
         }
+
+        this.galleryFullHash = galleryFullHash;
     },
 
     mounted() {
@@ -215,7 +219,7 @@ export default {
                 });
             });
 
-            if (this.$route.hash.indexOf('pid=') !== -1) {
+            if (this.$route.hash.indexOf(`${galleryFullHash}=`) !== -1) {
                 const hashIndex = Number(this.$route.hash.split('=')[1]);
                 this.galleryFull = {
                     show: true,
