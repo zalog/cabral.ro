@@ -53,7 +53,7 @@
                 @is-visible-last="fetchComments(true)"
             />
         </div>
-        <base-gallery
+        <lazy-base-gallery
             v-if="galleryFull.show"
             v-model="galleryFull.index"
             :items="galleryFull.items"
@@ -77,8 +77,6 @@ import CommentsList from '~/components/CommentsList.vue';
 
 Vue.directive('observe-visibility', ObserveVisibility);
 
-const BaseGallery = () => import('~/components/BaseGallery.vue');
-
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
 
 const galleryFullHash = 'pid';
@@ -96,7 +94,6 @@ export default {
         ListShare,
         ListRelated,
         CommentsList,
-        BaseGallery,
     },
 
     mixins: [
