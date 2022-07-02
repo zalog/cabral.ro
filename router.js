@@ -16,9 +16,7 @@ const createRouter = () => new Router({
         if (from.hash) output = null;
         if (savedPosition) output = savedPosition;
         if (to.hash) {
-            const blacklist = ['#pid'];
-            const isHashBlacklisted = blacklist
-                .findIndex((entry) => to.hash.indexOf(entry) === 0) >= 0;
+            const isHashBlacklisted = to.hash.indexOf('=') > -1;
             let selector = to.hash;
 
             if (isHashBlacklisted) selector = null;
