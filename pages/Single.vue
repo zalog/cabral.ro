@@ -60,6 +60,7 @@
             :hash="galleryFullHash"
             :page-title="$metaInfo.title"
             @hidden="galleryFull.show = false"
+            @update:index="onGalleryFullUpdate()"
         />
     </div>
 </template>
@@ -224,6 +225,12 @@ export default {
                     items: this.galleryFull.items,
                 };
             }
+        },
+        onGalleryFullUpdate() {
+            this.sendPageView({
+                title: this.$metaInfo.title,
+                url: this.$route.fullPath,
+            });
         },
     },
 };
