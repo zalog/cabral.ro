@@ -135,13 +135,13 @@ export default {
                 });
             });
 
-            pswp.on('contentActivate', ({ content }) => {
+            pswp.on('contentActivate', async ({ content }) => {
                 if (this.hash) {
                     const currentIndex = Number(this.$route.hash.split('=')[1]);
                     if (currentIndex === content.index + 1) return;
 
                     const verb = (!this.$route.hash) ? 'push' : 'replace';
-                    this.$router[verb]({
+                    await this.$router[verb]({
                         hash: `${this.hash}=${content.index + 1}`,
                         query: this.$route.query,
                     });
