@@ -39,6 +39,8 @@
                         <router-link
                             :to="paginationTo(page)"
                             class="page-link"
+                            active-class
+                            exact-active-class
                             :class="{ active: [posts.pagination.currentPage] == page }"
                         >
                             {{ page }}
