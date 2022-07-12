@@ -31,16 +31,21 @@
         >
             <ul class="pagination">
                 <template v-for="(page, index) in posts.pagination.pages">
-                    <router-link
+                    <li
                         v-if="page !== '...'"
                         :key="'pagination-item-' + index"
-                        tag="li"
                         class="page-item"
-                        :to="paginationTo(page)"
-                        :class="{ active: [posts.pagination.currentPage] == page }"
                     >
-                        <a class="page-link">{{ page }}</a>
-                    </router-link>
+                        <router-link
+                            :to="paginationTo(page)"
+                            class="page-link"
+                            active-class
+                            exact-active-class
+                            :class="{ active: [posts.pagination.currentPage] == page }"
+                        >
+                            {{ page }}
+                        </router-link>
+                    </li>
                     <li
                         v-else
                         :key="'pagination-item-' + index"
