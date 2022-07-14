@@ -53,13 +53,14 @@
                 @is-visible-last="fetchComments(true)"
             />
         </div>
-
-        <lazy-photoswipe
-            v-if="typeof photoswipe.index === 'number'"
-            v-model="photoswipe.index"
-            :items="photoswipe.items"
-            @closed="onPhotoswipeClosed()"
-            @update:index="onPhotoswipeUpdate($event)"
+        <lazy-base-gallery
+            v-if="galleryFull.show"
+            v-model="galleryFull.index"
+            :items="galleryFull.items"
+            :hash="galleryFullHash"
+            :page-title="$metaInfo.title"
+            @hidden="galleryFull.show = false"
+            @update:index="onGalleryFullUpdate()"
         />
     </div>
 </template>
@@ -78,6 +79,8 @@ import CommentsList from '~/components/CommentsList.vue';
 Vue.directive('observe-visibility', ObserveVisibility);
 
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
+
+const galleryFullHash = 'pid';
 
 const registerModules = (store) => {
     store.$registerModules([
@@ -125,8 +128,9 @@ export default {
         load: {
             banners: false,
         },
-        photoswipe: {
-            index: false,
+        galleryFull: {
+            show: null,
+            index: null,
             items: [],
         },
     }),
@@ -136,16 +140,18 @@ export default {
             const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
             if (hasEntrysGalleryJetpack) cssGallery();
         }
+
+        this.galleryFullHash = galleryFullHash;
     },
 
     mounted() {
         registerModules(this.$store);
 
         if (this.data.main) {
-            this.setDataPhotoswipe();
-
             this.attachForm();
         }
+
+        this.attachGallery();
     },
 
     methods: {
@@ -171,56 +177,6 @@ export default {
 
             commentsClass.remove('loading');
         },
-        setDataPhotoswipe() {
-            this.$refs.content.querySelectorAll('img').forEach((img, index) => {
-                const src = (img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-orig-file')).split('?')[0];
-                const size = (img.getAttribute('data-orig-size') || '0,0').split(',');
-
-                this.photoswipe.items.push({
-                    src,
-                    w: size[0],
-                    h: size[1],
-                });
-
-                img.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    this.photoswipe.index = index;
-                });
-            });
-
-            this.pageTitleInitial = this.pageTitle;
-
-            const { hash } = this.$route;
-            if (hash.includes('pid=')) {
-                const index = hash.split('=')[1];
-                this.photoswipe.index = Number(index);
-            }
-        },
-        onPhotoswipeUpdate(itemIndex) {
-            const route = this.$route;
-            const itemNr = itemIndex + 1;
-            const pageTitle = `${this.pageTitleInitial} - Image ${itemNr}`;
-
-            this.$store.dispatch('data/setPageData', {
-                route,
-                prop: 'head.title',
-                data: pageTitle,
-            });
-            this.sendPageView({
-                title: pageTitle,
-                url: route.fullPath,
-            });
-        },
-        onPhotoswipeClosed() {
-            this.photoswipe.index = false;
-
-            this.$store.dispatch('data/setPageData', {
-                route: this.$route,
-                prop: 'head.title',
-                data: this.pageTitleInitial,
-            });
-        },
         attachForm() {
             const forms = this.$refs.content.querySelectorAll('.wpcf7-form');
 
@@ -232,6 +188,49 @@ export default {
                     const form = new Form(formEl, this.$axios);
                     form.init();
                 }));
+        },
+        attachGallery() {
+            const imgs = this.$refs.content.querySelectorAll('img');
+
+            if (!imgs.length) return;
+
+            imgs.forEach((img, imgIndex) => {
+                const a = img.parentElement;
+
+                if (!(a instanceof HTMLAnchorElement)) return;
+
+                const src = img.getAttribute('data-orig-file') || a.getAttribute('href');
+                this.galleryFull.items.push({
+                    src,
+                });
+
+                if (!this.galleryFull.items.length) return;
+
+                a.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    this.galleryFull = {
+                        show: true,
+                        index: imgIndex,
+                        items: this.galleryFull.items,
+                    };
+                });
+            });
+
+            if (this.$route.hash.indexOf(`${galleryFullHash}=`) !== -1) {
+                const hashIndex = Number(this.$route.hash.split('=')[1]);
+                this.galleryFull = {
+                    show: true,
+                    index: hashIndex - 1,
+                    items: this.galleryFull.items,
+                };
+            }
+        },
+        onGalleryFullUpdate() {
+            this.sendPageView({
+                title: this.$metaInfo.title,
+                url: this.$route.fullPath,
+            });
         },
     },
 };

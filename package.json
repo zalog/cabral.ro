@@ -1,6 +1,6 @@
 {
   "name": "cabral.ro",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "private": true,
   "scripts": {
     "start": "npm run nuxt:dev",
@@ -21,7 +21,7 @@
     "cookie-universal-nuxt": "^2.1.5",
     "jw-paginate": "^1.0.4",
     "nuxt": "^2.15.8",
-    "photoswipe": "^4.1.3",
+    "photoswipe": "^5.2.7",
     "vanilla-sharing": "^6.1.1",
     "vue": "^2.6.14",
     "vue-observe-visibility": "^1.0.0",
