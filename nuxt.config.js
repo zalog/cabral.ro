@@ -1,3 +1,5 @@
+import { SITE } from './utils/constants';
+
 export default {
     build: {
         babel: {
@@ -30,6 +32,9 @@ export default {
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         ],
+        htmlAttrs: {
+            lang: SITE.LANG,
+        },
     },
     plugins: [
         '~/plugins/store-utils.js',
