@@ -14,7 +14,7 @@ export const ENDPOINTS = {
 };
 
 export const SITE = {
-    LANG: 'ro-RO',
+    LANG_REGION: 'ro-RO',
     TITLE: 'Cabral.ro',
     LINK: HOST,
     GTM_ID: 'GTM-59M55JB',

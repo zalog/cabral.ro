@@ -33,7 +33,7 @@ export default {
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         ],
         htmlAttrs: {
-            lang: SITE.LANG,
+            lang: SITE.LANG_REGION,
         },
     },
     plugins: [
