@@ -40,7 +40,9 @@ export default {
                 },
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
-                    'embed', 'embed_featured_media', 'comments_number', 'yoast_head_json', 'jetpack-related-posts',
+                    'embed', 'embed_featured_media',
+                    'comments_number', 'comment_status',
+                    'yoast_head_json', 'jetpack-related-posts',
                 ],
             });
 
@@ -81,7 +83,8 @@ export default {
                 },
                 fields: [
                     'id', 'link', 'title', 'date', 'modified', 'content',
-                    'comments_number', 'yoast_head_json',
+                    'comments_number', 'comment_status',
+                    'yoast_head_json',
                 ],
             });
 
