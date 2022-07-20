@@ -1,10 +1,18 @@
 <template>
     <div class="box">
         <h3 class="box-title">
-            Comentarii
+            <template v-if="singleCommentStatus === 'open'">
+                Comentarii
+            </template>
+            <template v-else-if="singleCommentStatus === 'closed'">
+                Comentariile au fost închise
+            </template>
         </h3>
 
-        <comments-list-form :data="{ singleId }" />
+        <comments-list-form
+            v-if="singleCommentStatus === 'open'"
+            :data="{ singleId }"
+        />
 
         <ul class="list-comments">
             <li>
@@ -48,6 +56,7 @@
                 </ul>
 
                 <comments-list-form
+                    v-if="singleCommentStatus === 'open'"
                     :data="{
                         label: 'răspunde-i',
                         singleId,
@@ -82,6 +91,10 @@ export default {
         },
         singleId: {
             type: Number,
+            default: null,
+        },
+        singleCommentStatus: {
+            type: String, // 'open' || 'closed'
             default: null,
         },
     },

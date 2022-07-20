@@ -50,6 +50,7 @@
                 ref="comments"
                 :comments="data.comments"
                 :single-id="data.main.id"
+                :single-comment-status="data.main.commentStatus"
                 @is-visible-last="fetchComments(true)"
             />
         </div>
