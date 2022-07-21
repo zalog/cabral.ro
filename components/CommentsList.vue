@@ -2,7 +2,12 @@
     <div class="box">
         <h3 class="box-title">
             <template v-if="singleCommentStatus === 'open'">
-                Comentarii
+                <template v-if="!hideComments">
+                    Comentarii
+                </template>
+                <template v-else>
+                    Comentariile sunt ascunse
+                </template>
             </template>
             <template v-else-if="singleCommentStatus === 'closed'">
                 Comentariile au fost închise
@@ -14,7 +19,10 @@
             :data="{ singleId }"
         />
 
-        <ul class="list-comments">
+        <ul
+            v-if="!hideComments"
+            class="list-comments"
+        >
             <li>
                 <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
@@ -96,6 +104,10 @@ export default {
         singleCommentStatus: {
             type: String, // 'open' || 'closed'
             default: null,
+        },
+        hideComments: {
+            type: Boolean,
+            default: false,
         },
     },
 
