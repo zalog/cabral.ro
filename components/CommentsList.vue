@@ -1,17 +1,7 @@
 <template>
     <div class="box">
         <h3 class="box-title">
-            <template v-if="singleCommentStatus === 'open'">
-                <template v-if="!hideComments">
-                    Comentarii
-                </template>
-                <template v-else>
-                    Comentariile sunt ascunse
-                </template>
-            </template>
-            <template v-else-if="singleCommentStatus === 'closed'">
-                Comentariile au fost închise
-            </template>
+            {{ getTitle() }}
         </h3>
 
         <comments-list-form
@@ -116,6 +106,14 @@ export default {
             if (!isVisible || this.comments.nodes.length !== index) return;
 
             this.$emit('is-visible-last');
+        },
+        getTitle() {
+            let output = 'Comentarii';
+
+            if (this.singleCommentStatus === 'closed') output = 'Comentariile au fost închise';
+            else if (this.hideComments) output = 'Comentariile sunt ascunse momentan';
+
+            return output;
         },
     },
 };
