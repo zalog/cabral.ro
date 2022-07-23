@@ -1,12 +1,18 @@
 <template>
     <div class="box">
         <h3 class="box-title">
-            Comentarii
+            {{ getTitle() }}
         </h3>
 
-        <comments-list-form :data="{ singleId }" />
+        <comments-list-form
+            v-if="singleCommentStatus === 'open'"
+            :data="{ singleId }"
+        />
 
-        <ul class="list-comments">
+        <ul
+            v-if="!hideComments"
+            class="list-comments"
+        >
             <li>
                 <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
@@ -48,6 +54,7 @@
                 </ul>
 
                 <comments-list-form
+                    v-if="singleCommentStatus === 'open'"
                     :data="{
                         label: 'răspunde-i',
                         singleId,
@@ -84,6 +91,14 @@ export default {
             type: Number,
             default: null,
         },
+        singleCommentStatus: {
+            type: String, // 'open' || 'closed'
+            default: null,
+        },
+        hideComments: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     methods: {
@@ -91,6 +106,14 @@ export default {
             if (!isVisible || this.comments.nodes.length !== index) return;
 
             this.$emit('is-visible-last');
+        },
+        getTitle() {
+            let output = 'Comentarii';
+
+            if (this.singleCommentStatus === 'closed') output = 'Comentariile au fost închise';
+            else if (this.hideComments) output = 'Comentariile sunt ascunse momentan';
+
+            return output;
         },
     },
 };
