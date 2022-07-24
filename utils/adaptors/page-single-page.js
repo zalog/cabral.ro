@@ -12,6 +12,7 @@ export default (payload) => {
             title: payload.title.rendered,
             content: payload.content,
             commentsNumber: payload.comments_number,
+            commentStatus: payload.comment_status,
             date,
         },
     };

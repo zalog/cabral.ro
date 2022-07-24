@@ -50,6 +50,8 @@
                 ref="comments"
                 :comments="data.comments"
                 :single-id="data.main.id"
+                :single-comment-status="data.main.commentStatus"
+                :hide-comments="hideComments()"
                 @is-visible-last="fetchComments(true)"
             />
         </div>
@@ -176,6 +178,13 @@ export default {
             });
 
             commentsClass.remove('loading');
+        },
+        hideComments() {
+            const categoryContests = !!this.data.main.categories.find((item) => item.link === '/category/concursuri/');
+
+            if (!categoryContests) return false;
+
+            return this.data.main.commentStatus === 'open';
         },
         attachForm() {
             const forms = this.$refs.content.querySelectorAll('.wpcf7-form');
