@@ -180,7 +180,7 @@ export default {
             commentsClass.remove('loading');
         },
         hideComments() {
-            const categoryContests = !!this.data.main.categories.find((item) => item.link === '/category/concursuri/');
+            const categoryContests = !!this.data.main.categories?.find((item) => item.link === '/category/concursuri/');
 
             if (!categoryContests) return false;
 
