@@ -1,8 +1,11 @@
 <template>
     <div class="box">
         <h3 class="box-title">
-            {{ getTitle() }}
+            {{ getTitle().title }}
         </h3>
+        <p v-if="getTitle().subtitle">
+            {{ getTitle().subtitle }}
+        </p>
 
         <comments-list-form
             v-if="singleCommentStatus === 'open'"
@@ -108,10 +111,15 @@ export default {
             this.$emit('is-visible-last');
         },
         getTitle() {
-            let output = 'Comentarii';
+            const output = { title: 'Comentarii' };
 
-            if (this.singleCommentStatus === 'closed') output = 'Comentariile au fost închise';
-            else if (this.hideComments) output = 'Comentariile sunt ascunse momentan';
+            if (this.singleCommentStatus === 'closed') output.title = 'Comentariile au fost închise';
+            else if (this.hideComments) {
+                Object.assign(output, {
+                    title: 'Comentariile sunt ascunse momentan',
+                    subtitle: 'Dar tu poți adăuga oricând comentariul tău pentru concurs.',
+                });
+            }
 
             return output;
         },
