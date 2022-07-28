@@ -1,10 +1,10 @@
 <template>
     <div class="box">
         <h3 class="box-title">
-            {{ getTitle().title }}
+            {{ header.title }}
         </h3>
-        <p v-if="getTitle().subtitle">
-            {{ getTitle().subtitle }}
+        <p v-if="header.subtitle">
+            {{ header.subtitle }}
         </p>
 
         <comments-list-form
@@ -104,13 +104,17 @@ export default {
         },
     },
 
+    created() {
+        this.getHeader();
+    },
+
     methods: {
         emitVisibleLastComment(isVisible, index) {
             if (!isVisible || this.comments.nodes.length !== index) return;
 
             this.$emit('is-visible-last');
         },
-        getTitle() {
+        getHeader() {
             const output = { title: 'Comentarii' };
 
             if (this.singleCommentStatus === 'closed') output.title = 'Comentariile au fost închise';
@@ -121,7 +125,7 @@ export default {
                 });
             }
 
-            return output;
+            this.header = output;
         },
     },
 };
