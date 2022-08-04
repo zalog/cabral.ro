@@ -8,7 +8,7 @@
         </h1>
 
         <base-alert>
-            Susțin <a href="https://www.anvelope.ro/" target="_blank" rel="external nofollow noopener">anvelope.ro</a>, specialistul meu în anvelope.
+            Susțin <a href="https://www.anvelope.ro/" target="_blank" rel="external noopener">anvelope.ro</a>, specialistul meu în anvelope.
         </base-alert>
 
         <posts-list
