@@ -21,6 +21,11 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
       # see https://docs.github.com/en/actions/advanced-guides/caching-dependencies-to-speed-up-workflows
       - name: cache node modules
         uses: actions/cache@v2
