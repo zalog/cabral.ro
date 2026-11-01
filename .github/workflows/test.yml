@@ -19,16 +19,16 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: nodejs
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v7
         with:
           node-version: '16'
 
       # see https://docs.github.com/en/actions/advanced-guides/caching-dependencies-to-speed-up-workflows
       - name: cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         env:
           cache-name: cache-node-modules
         with:
