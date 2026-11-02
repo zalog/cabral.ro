@@ -20,7 +20,6 @@ export default {
             }
 
             const response = await fetchComments({
-                $axios: this.$axios,
                 singleSlug: pageSingleSlug,
                 after: commentsFrom,
             });
@@ -44,7 +43,6 @@ export default {
 
             try {
                 const comment = await postComment({
-                    $axios: this.$axios,
                     params,
                 });
 

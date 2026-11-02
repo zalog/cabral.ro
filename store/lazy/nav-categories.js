@@ -15,7 +15,6 @@ export default {
     actions: {
         async fetch({ commit }) {
             const response = await fetchCategories({
-                $axios: this.$axios,
                 params: {
                     orderby: 'count',
                     order: 'desc',

@@ -5,8 +5,8 @@
     >
         <base-slider-inner
             ref="sliderInner"
-            v-model="internalActive"
-            @updateItems="items = $event"
+            v-model:active="internalActive"
+            @update-items="items = $event"
         >
             <base-slider-slide
                 v-for="(_, index) in $slots"
@@ -138,11 +138,6 @@ export default {
         BaseSliderSlide,
     },
 
-    model: {
-        prop: 'active',
-        event: 'active:change',
-    },
-
     props: {
         active: {
             type: Number,
@@ -166,6 +161,8 @@ export default {
         },
     },
 
+    emits: ['update:active'],
+
     data: () => ({
         items: {},
         intervalIntervalId: null,
@@ -175,7 +172,7 @@ export default {
     computed: {
         internalActive: {
             get() { return this.active; },
-            set(value) { return this.$emit('active:change', value); },
+            set(value) { return this.$emit('update:active', value); },
         },
         itemsLength() {
             return Object.keys(this.items).length;
@@ -332,7 +329,7 @@ export default {
                 behavior,
             });
 
-            this.$emit('active:change', wantedItem.index);
+            this.$emit('update:active', wantedItem.index);
 
             return wantedItem.index;
         },

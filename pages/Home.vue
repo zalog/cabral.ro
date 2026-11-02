@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { defineNuxtComponent, useRoute } from '#imports';
 import { SITE } from '~/utils/constants';
 import dataListing from '~/store/lazy/data-listing';
 import dataHead from '~/store/lazy/data-head';
@@ -39,7 +40,7 @@ const registerModules = (store, pageS) => {
     store.$registerModules(modules);
 };
 
-export default {
+export default defineNuxtComponent({
     components: {
         BaseAlert,
         PostsList,
@@ -49,7 +50,8 @@ export default {
         currentPage,
     ],
 
-    async asyncData({ store, route }) {
+    async asyncData({ $store: store }) {
+        const route = { ...useRoute() };
         const { id: pageNumber } = route.params;
         const pageS = route.query.s;
 
@@ -89,12 +91,6 @@ export default {
         return data;
     },
 
-    data: () => ({
-        head: {},
-    }),
-
-    watchQuery: ['s'],
-
     mounted() {
         registerModules(this.$store, this.$route.query.s);
     },
@@ -104,5 +100,5 @@ export default {
             return title !== SITE.TITLE;
         },
     },
-};
+});
 </script>

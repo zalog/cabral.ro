@@ -33,7 +33,6 @@ export default {
             if (isValidPropData(currentPage, prop)) return;
 
             const response = await fetchPost({
-                $axios: this.$axios,
                 params: {
                     embed_featured_media_size: 'full',
                     slug,
@@ -77,7 +76,6 @@ export default {
             if (isValidPropData(currentPage, prop)) return;
 
             const response = await fetchPage({
-                $axios: this.$axios,
                 params: {
                     slug,
                 },

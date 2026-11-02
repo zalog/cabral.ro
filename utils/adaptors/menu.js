@@ -9,7 +9,6 @@ const to = ({ url, object }) => {
             name: 'Single',
             params: {
                 singleSlug: newUrl.pathname.slice(1, -1),
-                singleType: object,
             },
         };
     }

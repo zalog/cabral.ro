@@ -1,5 +1,5 @@
-import { fetchHead } from '../../services';
 import { isValidPropData } from '~/utils/store';
+import { fetchHead } from '../../services';
 
 export default {
     namespaced: false,
@@ -16,7 +16,6 @@ export default {
             if (isValidPropData(currentPage, prop)) return;
 
             const response = await fetchHead({
-                $axios: this.$axios,
                 url,
             });
 

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PhotoSwipe from 'photoswipe/dist/photoswipe.esm';
+import PhotoSwipe from 'photoswipe';
 
 const setNaturalSizes = (imgEl, pswpContent) => {
     const { naturalWidth, naturalHeight } = imgEl;
@@ -27,11 +27,6 @@ const setNaturalSizes = (imgEl, pswpContent) => {
 };
 
 export default {
-    model: {
-        prop: 'index',
-        event: 'update:index',
-    },
-
     props: {
         items: {
             type: Array,
@@ -51,11 +46,13 @@ export default {
         },
     },
 
+    emits: ['update:index', 'hidden'],
+
     watch: {
         $route(to, from) {
             if (
                 this.hash
-                && from.hash.indexOf(this.hash) !== -1 && to.hash.indexOf(this.hash) === -1
+                && from.hash.includes(this.hash) && !to.hash.includes(this.hash)
             ) {
                 this.pswp.close();
             }
@@ -142,7 +139,7 @@ export default {
 
                     const verb = (!this.$route.hash) ? 'push' : 'replace';
                     await this.$router[verb]({
-                        hash: `${this.hash}=${content.index + 1}`,
+                        hash: `#${this.hash}=${content.index + 1}`,
                         query: this.$route.query,
                     });
                 }
@@ -153,7 +150,7 @@ export default {
             });
 
             pswp.on('destroy', () => {
-                if (this.$route.hash.indexOf(this.hash) !== -1) {
+                if (this.$route.hash.includes(this.hash)) {
                     this.$router.replace({
                         query: this.$route.query,
                     });

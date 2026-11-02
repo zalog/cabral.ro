@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { defineNuxtComponent, useRoute } from '#imports';
 import { SITE } from '~/utils/constants';
 import dataListing from '~/store/lazy/data-listing';
 import dataHead from '~/store/lazy/data-head';
@@ -31,7 +32,7 @@ const registerModules = (store) => {
     ]);
 };
 
-export default {
+export default defineNuxtComponent({
     components: {
         PostsList,
     },
@@ -40,7 +41,9 @@ export default {
         currentPage,
     ],
 
-    async asyncData({ store, route }) {
+    async asyncData({ $store: store }) {
+        const route = { ...useRoute() };
+
         registerModules(store);
 
         const { pathMatch, slug } = route.params;
@@ -60,10 +63,12 @@ export default {
                 pageNumber,
             }),
         ]);
+
+        return {};
     },
 
     mounted() {
         registerModules(this.$store);
     },
-};
+});
 </script>

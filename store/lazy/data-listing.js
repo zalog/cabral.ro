@@ -34,7 +34,6 @@ export default {
                 if (isValidPropData(currentPage, 'title')) return;
 
                 const responseCategory = await fetchCategories({
-                    $axios: this.$axios,
                     params: {
                         slug: pageSlug.split('/').pop(),
                     },
@@ -88,7 +87,6 @@ export default {
             if (isValidPropData(currentPage, prop)) return;
 
             const response = await fetchPosts({
-                $axios: this.$axios,
                 params: {
                     ...(route.query.s && {
                         search: route.query.s,

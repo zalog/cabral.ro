@@ -104,6 +104,8 @@ export default {
         },
     },
 
+    emits: ['is-visible-last'],
+
     created() {
         this.getHeader();
     },

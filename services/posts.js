@@ -6,7 +6,6 @@ const paginationMaxPages = 8;
 const itemsOnPage = 10;
 
 const fetchPosts = async ({
-    $axios,
     params,
     fields = [],
     taxonomy = {
@@ -26,7 +25,9 @@ const fetchPosts = async ({
             'filter[tag]': taxonomy.tags.join(',') || undefined,
         }),
         per_page: pagination.itemsOnPage || itemsOnPage,
-        page: pagination.currentPage,
+        ...(pagination.currentPage && {
+            page: pagination.currentPage,
+        }),
         ...params,
     });
     Object.assign(pagination, {
@@ -36,18 +37,15 @@ const fetchPosts = async ({
     });
     const output = {};
 
-    // posts: fetch
-    const responsePosts = await $axios({
-        method: 'get',
-        url: ENDPOINTS.POSTS,
-        params,
+    const responsePosts = await $fetch.raw(ENDPOINTS.POSTS, {
+        query: params,
     });
-    const responsePostsCount = parseInt(responsePosts.headers['x-wp-total'], 10);
+    const responsePostsCount = parseInt(responsePosts.headers.get('x-wp-total'), 10);
     const responsePostsPages = responsePostsCount > pagination.itemsOnPage;
 
-    output.posts = responsePosts.data.map((post) => itemPost(post));
+    // eslint-disable-next-line no-underscore-dangle
+    output.posts = responsePosts._data.map((post) => itemPost(post));
 
-    // posts: pagination
     if (responsePostsPages) {
         const pages = [];
         const responsePagination = paginate(

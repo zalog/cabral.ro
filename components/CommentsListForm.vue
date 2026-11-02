@@ -20,7 +20,7 @@
                 <textarea
                     :id="getIdSuffix('form-reply-message')"
                     v-model="form.data.message"
-                    :class="['form-control', {'is-invalid': $v.form.data.message.$error }]"
+                    :class="['form-control', {'is-invalid': v$.form.data.message.$error }]"
                     rows="4"
                     placeholder="Scrie comentariul tău aici..."
                     required
@@ -36,7 +36,7 @@
                         id="form-reply-name"
                         v-model="form.data.name"
                         type="text"
-                        :class="['form-control', {'is-invalid': $v.form.data.name.$error}]"
+                        :class="['form-control', {'is-invalid': v$.form.data.name.$error}]"
                         placeholder="Nume"
                         required
                     >
@@ -47,7 +47,7 @@
                         id="form-reply-email"
                         v-model="form.data.email"
                         type="email"
-                        :class="['form-control', {'is-invalid': $v.form.data.email.$error}]"
+                        :class="['form-control', {'is-invalid': v$.form.data.email.$error}]"
                         placeholder="Email"
                         required
                     >
@@ -58,14 +58,14 @@
                         id="form-reply-site"
                         v-model="form.data.site"
                         type="url"
-                        :class="['form-control', {'is-invalid': $v.form.data.site.$error}]"
+                        :class="['form-control', {'is-invalid': v$.form.data.site.$error}]"
                         placeholder="Site"
                     >
                 </div>
             </div>
 
             <base-alert
-                v-if="$v.form.data.$error"
+                v-if="v$.form.data.$error"
                 variant="danger"
             >
                 Câmpurile marcate cu roșu conțin erori.
@@ -88,10 +88,11 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
+import { reactive } from 'vue';
+import useVuelidate from '@vuelidate/core';
 import {
     required, email, minLength, url,
-} from 'vuelidate/lib/validators';
+} from '@vuelidate/validators';
 import BaseAlert from '~/components/BaseAlert.vue';
 import BaseSpinner from '~/components/BaseSpinner.vue';
 
@@ -101,8 +102,6 @@ export default {
         BaseSpinner,
     },
 
-    mixins: [validationMixin],
-
     props: {
         data: {
             type: Object,
@@ -110,22 +109,23 @@ export default {
         },
     },
 
-    data: () => ({
-        form: {
+    setup() {
+        const form = reactive({
             data: {},
             loading: false,
-        },
-    }),
-
-    validations: {
-        form: {
-            data: {
-                message: { required, min: minLength(3) },
-                name: { required, min: minLength(3) },
-                email: { required, email },
-                site: { url },
+        });
+        const v$ = useVuelidate({
+            form: {
+                data: {
+                    message: { required, min: minLength(3) },
+                    name: { required, min: minLength(3) },
+                    email: { required, email },
+                    site: { url },
+                },
             },
-        },
+        }, { form });
+
+        return { form, v$ };
     },
 
     methods: {
@@ -145,8 +145,8 @@ export default {
             document.body.removeEventListener('click', this.formClose);
         },
         formSubmit() {
-            this.$v.form.data.$touch();
-            if (this.$v.form.data.$error) return;
+            this.v$.form.data.$touch();
+            if (this.v$.form.data.$error) return;
 
             this.form.loading = true;
 
@@ -162,7 +162,7 @@ export default {
                 const elComment = document.getElementById(`comment-${commentId}`);
 
                 this.form.data.message = null;
-                this.$v.form.data.$reset();
+                this.v$.form.data.$reset();
                 if (elComment) elComment.classList.add('highlight-background');
                 setTimeout(() => this.$el.classList.remove('open'), 2000);
             }).catch(() => {

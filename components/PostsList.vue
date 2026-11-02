@@ -3,37 +3,38 @@
         v-if="posts.posts.length"
         class="cards-posts"
     >
-        <template v-for="(post, index) in posts.posts">
-            <base-item-post
-                :key="`post-${index}`"
-                :img="post.featuredMedia"
-                :img-loading="index === 0 ? 'eager' : 'lazy'"
-                :img-info="[{
-                    icon: 'comment',
-                    text: post.commentsNumber
-                }]"
-                :title="post.title"
-                :slug="post.slug"
-                :body-info="[{
-                    icon: 'date',
-                    text: $options.filters.formatDate(post.date)
-                }, {
-                    icon: 'folder',
-                    links: post.categories
-                }]"
-                :body-text="post.excerpt"
-            />
-        </template>
+        <base-item-post
+            v-for="(post, index) in posts.posts"
+            :key="`post-${index}`"
+            :img="post.featuredMedia"
+            :img-loading="index === 0 ? 'eager' : 'lazy'"
+            :img-info="[{
+                icon: 'comment',
+                text: post.commentsNumber
+            }]"
+            :title="post.title"
+            :slug="post.slug"
+            :body-info="[{
+                icon: 'date',
+                text: formatDate(post.date)
+            }, {
+                icon: 'folder',
+                links: post.categories
+            }]"
+            :body-text="post.excerpt"
+        />
 
         <nav
             v-if="posts.pagination"
             aria-label="Page navigation"
         >
             <ul class="pagination">
-                <template v-for="(page, index) in posts.pagination.pages">
+                <template
+                    v-for="(page, index) in posts.pagination.pages"
+                    :key="'pagination-item-' + index"
+                >
                     <li
                         v-if="page !== '...'"
-                        :key="'pagination-item-' + index"
                         class="page-item"
                     >
                         <router-link
@@ -48,7 +49,6 @@
                     </li>
                     <li
                         v-else
-                        :key="'pagination-item-' + index"
                         class="page-item"
                     >
                         {{ page }}
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { formatDate } from '~/utils';
 import BaseItemPost from '~/components/BaseItemPost.vue';
 
 export default {
@@ -78,6 +79,7 @@ export default {
     },
 
     methods: {
+        formatDate,
         paginationTo(page) {
             const { pathMatch, slug } = this.$route.params;
             let output = '/';

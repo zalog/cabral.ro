@@ -92,7 +92,6 @@ export default {
                 name: 'Single',
                 params: {
                     singleSlug: slug,
-                    singleType: 'post',
                 },
             };
         },

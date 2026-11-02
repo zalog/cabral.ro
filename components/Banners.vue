@@ -1,4 +1,4 @@
-<template functional>
+<template>
     <div class="banners">
         <small>Parteneri</small>
         <slot />

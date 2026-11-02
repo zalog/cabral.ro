@@ -14,9 +14,7 @@ export default {
 
     actions: {
         async fetch({ commit }) {
-            const response = await fetchMenu({
-                $axios: this.$axios,
-            });
+            const response = await fetchMenu();
 
             commit('SET', response);
         },

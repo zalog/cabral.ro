@@ -2,12 +2,13 @@
     <div>
         <h1>Slider test page</h1>
 
-        <base-slider v-model="slider.active">
+        <base-slider v-model:active="slider.active">
             <template
                 v-for="(item, index) in items"
                 #[index]
+                :key="index"
             >
-                <div :key="index">
+                <div>
                     <img
                         :src="item.src"
                         :width="item.width"
@@ -26,8 +27,6 @@ export default {
     components: {
         BaseSlider,
     },
-
-    layout: 'slider-test',
 
     data: () => ({
         items: [

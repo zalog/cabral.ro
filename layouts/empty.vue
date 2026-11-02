@@ -1,7 +1,7 @@
 <template>
     <div class="layout-default">
         <div class="container-fluid">
-            <Nuxt class="page" />
+            <slot />
         </div>
     </div>
 </template>

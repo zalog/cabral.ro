@@ -1,14 +1,11 @@
 import { ENDPOINTS } from '~/utils/constants';
 import { menu } from '~/utils/adaptors';
 
-const fetchMenu = async ({ $axios }) => {
+const fetchMenu = async () => {
     try {
-        const response = await $axios({
-            method: 'get',
-            url: ENDPOINTS.MENU,
-        });
+        const response = await $fetch(ENDPOINTS.MENU);
 
-        return menu(response.data);
+        return menu(response);
     } catch (error) {
         throw error.response;
     }

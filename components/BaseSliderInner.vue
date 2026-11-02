@@ -18,11 +18,6 @@ const defaultItem = {
 };
 
 export default {
-    model: {
-        prop: 'active',
-        event: 'active:change',
-    },
-
     props: {
         active: {
             type: Number,
@@ -37,6 +32,8 @@ export default {
             default: 'row',
         },
     },
+
+    emits: ['updateItems', 'onDragging', 'onScrolling'],
 
     data: () => ({
         isDragging: false,
@@ -60,7 +57,7 @@ export default {
             const items = this.prepareItems(sliderInner);
 
             items.forEach((item, index) => {
-                this.$set(this.items, index, item);
+                this.items[index] = item;
             });
 
             this.$emit('updateItems', this.items);

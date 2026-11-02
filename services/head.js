@@ -2,16 +2,12 @@ import { ENDPOINTS } from '../utils/constants';
 import { head } from '../utils/adaptors';
 
 const fetchHead = async ({
-    $axios,
     url,
 }) => {
     try {
-        const response = await $axios({
-            method: 'get',
-            url: `${ENDPOINTS.HEAD}?url=${url}`,
-        });
+        const response = await $fetch(`${ENDPOINTS.HEAD}?url=${url}`);
 
-        return head(response.data.json);
+        return head(response.json);
     } catch (error) {
         throw error.response;
     }

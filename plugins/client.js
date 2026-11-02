@@ -1,3 +1,4 @@
+import { defineNuxtPlugin, useRequestHeaders } from '#imports';
 import { breakpoints } from '../utils/constants';
 
 const isBreakpoint = ({ breakpointNeeded, breakpointCurrent, direction = 'up' }) => {
@@ -16,9 +17,12 @@ const isBreakpoint = ({ breakpointNeeded, breakpointCurrent, direction = 'up' })
     return breakpointActive !== -1;
 };
 
-export default ({ app, store, req }, inject) => {
-    if (process.server) {
-        const isMobile = /Mobi/i.test(req.headers['user-agent']);
+export default defineNuxtPlugin((nuxtApp) => {
+    const { $store: store } = nuxtApp;
+
+    if (import.meta.server) {
+        const headers = useRequestHeaders(['user-agent']);
+        const isMobile = /Mobi/i.test(headers['user-agent']);
         store.commit('ui/client/SET', {
             key: 'breakpoint',
             value:
@@ -27,24 +31,24 @@ export default ({ app, store, req }, inject) => {
         });
     }
 
-    inject('mediaBreakpoint', (breakpoint) => breakpoint === store.state.ui.client.breakpoint);
-
-    inject('mediaBreakpointUp', (breakpoint) => isBreakpoint({
-        breakpointNeeded: breakpoint,
-        breakpointCurrent: store.state.ui.client.breakpoint,
-        direction: 'up',
-    }));
-
-    inject('mediaBreakpointDown', (breakpoint) => isBreakpoint({
-        breakpointNeeded: breakpoint,
-        breakpointCurrent: store.state.ui.client.breakpoint,
-        direction: 'down',
-    }));
-
-    Object.assign(app, {
-        mounted() {
-            store.dispatch('ui/client/attachBodyResizeObserve');
-            store.dispatch('ui/client/attachWindowScroll');
-        },
+    nuxtApp.hook('app:mounted', () => {
+        store.dispatch('ui/client/attachBodyResizeObserve');
+        store.dispatch('ui/client/attachWindowScroll');
     });
-};
+
+    return {
+        provide: {
+            mediaBreakpoint: (breakpoint) => breakpoint === store.state.ui.client.breakpoint,
+            mediaBreakpointUp: (breakpoint) => isBreakpoint({
+                breakpointNeeded: breakpoint,
+                breakpointCurrent: store.state.ui.client.breakpoint,
+                direction: 'up',
+            }),
+            mediaBreakpointDown: (breakpoint) => isBreakpoint({
+                breakpointNeeded: breakpoint,
+                breakpointCurrent: store.state.ui.client.breakpoint,
+                direction: 'down',
+            }),
+        },
+    };
+});

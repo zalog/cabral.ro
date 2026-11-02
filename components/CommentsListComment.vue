@@ -17,7 +17,7 @@
             <list-item-info
                 :data="[{
                     icon: 'date',
-                    text: $options.filters.formatDate(comment.date)
+                    text: formatDate(comment.date)
                 }]"
             />
         </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { formatDate } from '~/utils';
 import ListItemInfo from './ListItemInfo.vue';
 
 export default {
@@ -41,6 +42,10 @@ export default {
             type: Object,
             required: true,
         },
+    },
+
+    methods: {
+        formatDate,
     },
 };
 </script>

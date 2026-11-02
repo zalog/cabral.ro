@@ -1,15 +1,15 @@
 <template>
     <base-toast
+        v-if="!cookieConsent"
         toast-class="toast-gdpr"
         no-auto-hide
     >
         <p>
             Acest web site folosește cookie-uri pentru a furniza serviciile
             și pentru a analiza traficul,
-            <nuxt-link
-                to="/politica-de-acord-colectare-cookie/"
-                v-text="'detalii'"
-            />.
+            <nuxt-link to="/politica-de-acord-colectare-cookie/">
+                {{ 'detalii' }}
+            </nuxt-link>.
         </p>
         <button
             class="btn btn-sm btn-secondary"
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { useCookie } from '#imports';
 import BaseToast from './BaseToast.vue';
 
 export default {
@@ -28,14 +29,15 @@ export default {
         BaseToast,
     },
 
+    setup: () => ({
+        cookieConsent: useCookie('cookie-consent-user-accepted', {
+            maxAge: 60 * 60 * 24 * 180,
+        }),
+    }),
+
     methods: {
         onClickAgree() {
-            this.$cookies.set('cookie-consent-user-accepted', 'true', {
-                maxAge: 60 * 60 * 24 * 180, // 6 months
-            });
-
-            this.$destroy();
-            this.$el.parentNode.removeChild(this.$el);
+            this.cookieConsent = true;
         },
     },
 };

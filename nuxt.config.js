@@ -1,67 +1,44 @@
 import { SITE } from './utils/constants';
 
 export default {
-    build: {
-        babel: {
-            presets({ isClient }, preset) {
-                if (isClient) {
-                    Object.assign(preset[1], {
-                        targets: {
-                            chrome: '58',
-                        },
-                    });
-                }
-
-                return [preset];
-            },
-        },
-        extend(config, { isClient }) {
-            if (isClient) {
-                Object.assign(config, {
-                    devtool: 'source-map',
-                });
-            }
-        },
-    },
-    components: true,
+    compatibilityDate: '2026-11-02',
     css: [
         '~/assets/scss/app.scss',
     ],
-    head: {
-        meta: [
-            { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        ],
-        htmlAttrs: {
-            lang: SITE.LANG_REGION,
+    app: {
+        head: {
+            htmlAttrs: {
+                lang: SITE.LANG_REGION,
+            },
+            noscript: [
+                {
+                    tagPosition: 'bodyOpen',
+                    innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=${SITE.GTM_ID}" height="0" width="0" style="display:none;visibility:hidden" title="gtm"></iframe>`,
+                },
+            ],
         },
     },
-    plugins: [
-        '~/plugins/store-utils.js',
-        '~/plugins/router-hooks.js',
-        '~/plugins/filters.js',
-        '~/plugins/gtm.js',
-        '~/plugins/webfontloader.client.js',
-        '~/plugins/client.js',
-    ],
-    buildModules: [
-        '@nuxtjs/router',
-    ],
     modules: [
-        '@nuxtjs/gtm',
-        '@nuxtjs/axios',
-        'cookie-universal-nuxt',
         '@nuxtjs/svg-sprite',
     ],
-    publicRuntimeConfig: {
-        PM2_NODE_ENV: process.env.NODE_ENV,
+    sourcemap: {
+        client: true,
     },
     svgSprite: {
         input: '~/assets/icons/sprite',
-        elementClass: null,
     },
-    gtm: {
-        id: 'GTM-59M55JB',
-        autoInit: false,
+    vite: {
+        build: {
+            // svg sprites are referenced by `<use href>`, which does not load data URIs
+            assetsInlineLimit: (filePath) => (filePath.endsWith('.svg') ? false : undefined),
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    quietDeps: true,
+                    silenceDeprecations: ['import'],
+                },
+            },
+        },
     },
 };

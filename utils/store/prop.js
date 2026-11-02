@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 const get = (obj, props) => {
     const cloneProps = [...props];
     const prop = cloneProps.shift();
@@ -13,7 +11,7 @@ const set = (obj, props, value) => {
     const cloneProps = [...props];
     const prop = cloneProps.shift();
 
-    if (!obj[prop]) Vue.set(obj, prop, {});
+    if (!obj[prop]) Object.assign(obj, { [prop]: {} });
 
     if (!cloneProps.length) {
         let getValue = value;
@@ -22,7 +20,7 @@ const set = (obj, props, value) => {
             getValue = { ...obj[prop], ...value };
         }
 
-        Vue.set(obj, prop, getValue);
+        Object.assign(obj, { [prop]: getValue });
 
         return;
     }
@@ -36,7 +34,7 @@ const del = (obj, props) => {
     if (!obj[prop]) return;
 
     if (!props.length) {
-        Vue.delete(obj, prop);
+        delete obj[prop]; // eslint-disable-line no-param-reassign
 
         return;
     }

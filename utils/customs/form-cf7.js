@@ -11,9 +11,8 @@ const constants = {
 };
 
 export default class {
-    constructor(form, axios) {
+    constructor(form) {
         this.form = form;
-        this.$axios = axios;
     }
 
     #messageEl = null;
@@ -31,21 +30,19 @@ export default class {
                 data.set(el.name, el.value);
             });
 
-            this.$axios({
-                method: 'post',
-                url: this.#getEndpoint(),
-                data,
-                config: { headers: { 'Content-Type': 'multipart/form-data' } },
+            $fetch(this.#getEndpoint(), {
+                method: 'POST',
+                body: data,
             }).then((response) => {
                 const {
                     invalid_fields: invalidFields,
                     message,
                     status,
-                } = response.data;
+                } = response;
 
                 this.#feedback(status, invalidFields, message);
             }).catch((error) => {
-                console.error('axios error contact form: ', error);
+                console.error('fetch error contact form: ', error);
             });
         };
 

@@ -6,7 +6,7 @@
             :img="singleFeaturedMedia"
         />
         <div class="container-fluid">
-            <Nuxt class="page" />
+            <slot />
         </div>
         <the-footer />
         <lazy-the-notifications />
@@ -27,7 +27,7 @@ export default {
             return this.$store.getters['data/currentPage'](pageKey);
         },
         singleFeaturedMedia() {
-            if (this.$route.name !== 'Single') return false;
+            if (!['Single', 'SingleNested'].includes(this.$route.name)) return false;
 
             return this.data.main?.featuredMedia;
         },

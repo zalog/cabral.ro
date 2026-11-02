@@ -17,16 +17,14 @@ const fixCommentDate = (comment) => {
 };
 
 export async function fetchComments({
-    $axios,
     singleSlug,
     after = null,
 }) {
     const onPage = 10;
 
-    const response = await $axios({
-        method: 'post',
-        url: ENDPOINTS.GRAPHQL,
-        data: {
+    const response = await $fetch(ENDPOINTS.GRAPHQL, {
+        method: 'POST',
+        body: {
             query: `
                 query GET_COMMENTS_FOR_POST(
                     $singleSlug: String,
@@ -77,15 +75,15 @@ export async function fetchComments({
         },
     });
 
-    const nodes = response.data.data.comments.nodes.map((comment) => fixCommentDate(comment));
+    const nodes = response.data.comments.nodes.map((comment) => fixCommentDate(comment));
 
     return {
-        ...response.data.data.comments,
+        ...response.data.comments,
         nodes,
     };
 }
 
-export async function postComment({ params, $axios }) {
+export async function postComment({ params }) {
     const prepareParams = objectRenameKeys({
         singleId: 'post',
         commentId: 'parent',
@@ -96,13 +94,12 @@ export async function postComment({ params, $axios }) {
     }, params);
 
     try {
-        const response = await $axios({
-            method: 'post',
-            url: ENDPOINTS.COMMENTS,
-            params: prepareParams,
+        const response = await $fetch(ENDPOINTS.COMMENTS, {
+            method: 'POST',
+            query: prepareParams,
         });
 
-        return itemComment(response.data);
+        return itemComment(response);
     } catch (error) {
         throw error.response;
     }

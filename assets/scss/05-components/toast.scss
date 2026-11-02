@@ -5,7 +5,7 @@ $toast-background-color:    $black;
 $toast-border-width:        0;
 $toast-spacing:             map-get($spacers, 3);
 
-@import "~bootstrap/scss/toasts";
+@import "bootstrap/scss/toasts";
 
 .toast-container {
     position: fixed;

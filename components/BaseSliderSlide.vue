@@ -27,7 +27,7 @@ export default {
         getActive() {
             const childrenActive = this.active;
             const parentActive = this.$parent.active;
-            const childrenIndex = Number(this.$vnode.key);
+            const childrenIndex = Number(this.$.vnode.key);
 
             return childrenActive !== null
                 ? childrenActive

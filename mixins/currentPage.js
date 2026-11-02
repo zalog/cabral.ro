@@ -1,20 +1,24 @@
-export default {
-    head() {
-        return {
-            ...this.data.head,
-            ...this.head,
-        };
-    },
+import { useHead, useRoute } from '#imports';
 
+export default {
     computed: {
         data() {
-            const pageKey = this.$route.fullPath;
+            const pageKey = this.pageRoute.fullPath;
             return this.$store.getters['data/currentPage'](pageKey);
         },
         pageTitle() {
-            const pageKey = this.$route.fullPath;
+            const pageKey = this.pageRoute.fullPath;
             return this.$store.getters['data/currentPageTitle'](pageKey);
         },
+    },
+
+    created() {
+        this.pageRoute = useRoute();
+
+        useHead(() => ({
+            ...this.data.head,
+            ...this.head,
+        }));
     },
 
     mounted() {
