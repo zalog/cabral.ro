@@ -79,8 +79,6 @@
 
 <script>
 import { createError, defineNuxtComponent, useRoute } from '#imports';
-import dataSingle from '~/store/lazy/data-single';
-import dataComments from '~/store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
 import { formatDate } from '~/utils';
 import ListItemInfo from '~/components/ListItemInfo.vue';
@@ -91,13 +89,6 @@ import CommentsList from '~/components/CommentsList.vue';
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
 
 const galleryFullHash = 'pid';
-
-const registerModules = (store) => {
-    store.$registerModules([
-        { name: ['data', 'dataSingle'], imported: dataSingle, preserveStateCheck: true },
-        { name: ['data', 'dataComments'], imported: dataComments, preserveStateCheck: true },
-    ]);
-};
 
 export default defineNuxtComponent({
     components: {
@@ -111,21 +102,8 @@ export default defineNuxtComponent({
         currentPage,
     ],
 
-    async asyncData({ $store: store }) {
-        const route = { ...useRoute() };
-
-        registerModules(store);
-
-        await Promise.all([
-            store.dispatch('data/fetchPageSingle', {
-                route,
-            }),
-            store.dispatch('data/fetchComments', {
-                route,
-            }),
-        ]);
-
-        const data = store.getters['data/currentPage'](route.fullPath);
+    asyncData({ $store: store }) {
+        const data = store.getters['data/currentPage'](useRoute().fullPath);
 
         if (!data.main) {
             throw createError({ statusCode: 404, statusMessage: 'Nu am găsit pagina', fatal: true });
@@ -155,8 +133,6 @@ export default defineNuxtComponent({
     },
 
     mounted() {
-        registerModules(this.$store);
-
         if (this.data.main) {
             this.attachForm();
         }
