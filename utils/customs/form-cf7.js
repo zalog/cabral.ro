@@ -61,7 +61,7 @@ export default class {
             classNameAlertMessage = 'danger';
 
             invalidFields.forEach((field) => {
-                const fieldEl = this.form.querySelector(field.into);
+                const fieldEl = this.form.querySelector(`[data-name="${field.field}"]`);
 
                 fieldEl.querySelector(`.${constants.class.field}`).classList.add(constants.class.fieldInvalid);
 
