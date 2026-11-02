@@ -6,5 +6,5 @@
 </template>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/banners";
+@use "~/assets/scss/05-components/banners";
 </style>

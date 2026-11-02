@@ -1,22 +1,24 @@
-@import "../required";
+@use "sass:map";
+@use "sass:math";
+@use "../required" as *;
 
 .layout-hero + .container-fluid .entry-body {
-    margin: (-100px) (-($grid-gutter-width / 2)) 0 (-($grid-gutter-width / 2));
-    padding: $grid-gutter-width / 2;
+    padding: $grid-gutter-width * .5;
+    margin: -100px ($grid-gutter-width * -.5) 0;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
     border-top-right-radius: $border-radius-lg;
 
     @include media-breakpoint-up(sm) {
+        padding: $grid-gutter-width $grid-gutter-width 0 $grid-gutter-width;
         margin-right: -$grid-gutter-width;
         margin-left: -$grid-gutter-width;
-        padding: $grid-gutter-width $grid-gutter-width 0 $grid-gutter-width;
     }
 }
 
 .entry-body {
     > * {
-        margin-bottom: map-get($spacers, 5);
+        margin-bottom: map.get($spacers, 5);
     }
 }
 
@@ -25,10 +27,10 @@
 }
 
 .entry-content {
-    font-size: $font-size-lg;
     font-family: $font-family-serif;
+    font-size: $font-size-lg;
     line-height: 1.9;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     > * {
         margin-bottom: $spacer;
@@ -79,7 +81,7 @@
 
     &.is-type-video {
         &::before {
-            padding-top: percentage(9 / 16);
+            padding-top: math.percentage(math.div(9, 16));
         }
 
         .wp-block-embed__wrapper {
@@ -107,7 +109,7 @@
 
     &::before {
         display: block;
-        padding-top: percentage(9 / 16);
+        padding-top: math.percentage(math.div(9, 16));
         content: "";
     }
 
@@ -137,14 +139,14 @@
 @for $i from 1 through 9 {
     .gallery-columns-#{$i} {
         .gallery-item {
-            flex-basis: calc(#{percentage(1/$i)} - 3px);
+            flex-basis: calc(#{math.percentage(math.div(1, $i))} - 3px);
         }
     }
 }
 
 .gallery-icon {
     position: relative;
-    padding-top: percentage(9 / 16);
+    padding-top: math.percentage(math.div(9, 16));
     overflow: hidden;
 
     img {
@@ -160,9 +162,9 @@
 
 .gallery-caption {
     display: block;
-    padding: ceil($spacer / 4) 0;
-    color: fade($gray-100, 80%);
+    padding: math.ceil(math.div($spacer, 4)) 0;
     font-size: $font-size-sm;
+    color: fade($gray-100, 80%);
 }
 
 [class*="gallery-columns"] {

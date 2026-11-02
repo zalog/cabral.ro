@@ -1,4 +1,5 @@
-@import "../required";
+@use "sass:map";
+@use "../required" as *;
 
 .list-comments {
     &,
@@ -7,11 +8,11 @@
     }
 
     .comment {
-        padding: map-get($spacers, 4);
+        padding: map.get($spacers, 4);
     }
 
     > li {
-        margin-top: map-get($spacers, 4);
+        margin-top: map.get($spacers, 4);
         background-color: $white;
         box-shadow: $box-shadow-sm;
 

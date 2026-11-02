@@ -1,4 +1,6 @@
-@import "../required";
+@use "sass:map";
+@use "sass:math";
+@use "../required" as *;
 
 $card-border-radius:          $border-radius-lg;
 $card-border-color:           transparent;
@@ -7,7 +9,7 @@ $card-border-color:           transparent;
 
 .img {
     position: relative;
-    padding-top: percentage(9/16);
+    padding-top: math.percentage(math.div(9, 16));
     overflow: hidden;
 
     img {
@@ -31,9 +33,9 @@ $card-border-color:           transparent;
 }
 
 .card {
+    cursor: pointer;
     border: 0;
     box-shadow: $box-shadow-lg;
-    cursor: pointer;
 
     .card-img-top {
         position: relative;
@@ -50,8 +52,8 @@ $card-border-color:           transparent;
 
             li {
                 padding: $badge-padding-y * 1.8 $badge-padding-x * 2;
-                color: $gray-800;
                 font-size: $badge-font-size;
+                color: $gray-800;
                 background-color: rgba($white, .6);
                 border-radius: $badge-border-radius;
             }
@@ -72,7 +74,7 @@ $card-border-color:           transparent;
         }
 
         .list-item-info {
-            margin-top: -(map-get($spacers, 2));
+            margin-top: -(map.get($spacers, 2));
         }
     }
 }

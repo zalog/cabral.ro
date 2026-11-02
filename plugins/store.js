@@ -2,7 +2,6 @@ import { createStore } from 'vuex';
 import { defineNuxtPlugin } from '#imports';
 import data from '~/store/data';
 import ui from '~/store/ui';
-import uiClient from '~/store/ui/client';
 
 const registerModules = (store, modules) => {
     const preserveStateCheck = (state, path) => {
@@ -41,13 +40,7 @@ export default defineNuxtPlugin({
         const store = createStore({
             modules: {
                 data: { namespaced: true, ...data },
-                ui: {
-                    namespaced: true,
-                    ...ui,
-                    modules: {
-                        client: { namespaced: true, ...uiClient },
-                    },
-                },
+                ui: { namespaced: true, ...ui },
             },
         });
         store.$registerModules = (modules) => registerModules(store, modules);

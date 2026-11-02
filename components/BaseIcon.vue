@@ -3,13 +3,15 @@
         class="icon"
         :class="`icon-${name}`"
     >
-        <svg-icon
-            :name="name"
-        />
+        <svg>
+            <use :href="href" />
+        </svg>
     </span>
 </template>
 
 <script>
+import sprite from '~/assets/icons/sprite.svg';
+
 export default {
     props: {
         name: {
@@ -17,9 +19,14 @@ export default {
             required: true,
         },
     },
+    computed: {
+        href() {
+            return `${sprite}#${this.name}`;
+        },
+    },
 };
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/base-icon";
+@use "~/assets/scss/05-components/base-icon";
 </style>

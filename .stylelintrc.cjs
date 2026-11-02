@@ -1,19 +1,31 @@
 module.exports = {
     extends: [
-        'stylelint-config-standard',
-        'stylelint-config-recommended-scss',
-        'stylelint-config-rational-order',
+        'stylelint-config-standard-scss',
+        '@stylistic/stylelint-config',
+        'stylelint-config-recess-order',
+    ],
+    overrides: [
+        {
+            files: ['**/*.vue'],
+            customSyntax: 'postcss-html',
+        },
     ],
     rules: {
-        'indentation': 4,
         'rule-empty-line-before': null,
         'at-rule-empty-line-before': null,
         'declaration-empty-line-before': null,
         'no-descending-specificity': null,
-        'number-leading-zero': 'never',
-        'string-quotes': 'double',
+        'selector-class-pattern': null,
+        'selector-id-pattern': null,
 
-        'scss/at-import-no-partial-leading-underscore': true,
+        'scss/load-no-partial-leading-underscore': true,
         'scss/no-duplicate-mixins': true,
+        'scss/dollar-variable-colon-space-after': 'at-least-one-space',
+        'scss/dollar-variable-empty-line-before': null,
+
+        '@stylistic/indentation': 4,
+        '@stylistic/no-multiple-whitespaces': null,
+        '@stylistic/number-leading-zero': 'never',
+        '@stylistic/string-quotes': 'double',
     },
 };

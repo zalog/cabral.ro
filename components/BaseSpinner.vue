@@ -25,6 +25,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/scss/required";
+@use "../assets/scss/required" as *;
 @import "bootstrap/scss/spinners";
 </style>

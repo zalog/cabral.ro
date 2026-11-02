@@ -1,10 +1,11 @@
-@import "../required";
+@use "sass:map";
+@use "../required" as *;
 
 .form-reply {
     position: sticky;
     top: 0;
     z-index: $zindex-sticky;
-    padding: map-get($spacers, 4);
+    padding: map.get($spacers, 4);
     background-color: $white;
     box-shadow: $box-shadow;
 
@@ -39,8 +40,8 @@
 .list-comments {
     .form-reply {
         position: static;
-        margin-top: -(map-get($spacers, 4));
         padding-top: $spacer;
+        margin-top: -(map.get($spacers, 4));
         background-color: $light;
         border-top: 0;
         box-shadow: none;

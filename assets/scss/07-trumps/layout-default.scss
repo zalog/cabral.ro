@@ -1,4 +1,4 @@
-@import "../required";
+@use "../required" as *;
 
 .layout-default {
     display: flex;
@@ -6,10 +6,10 @@
 
     > .container-fluid {
         display: flex;
-        flex-direction: column;
         flex-grow: 1;
-        padding-top: ($grid-gutter-width / 2);
-        padding-bottom: ($grid-gutter-width / 2);
+        flex-direction: column;
+        padding-top: $grid-gutter-width * .5;
+        padding-bottom: $grid-gutter-width * .5;
 
         @include media-breakpoint-up(sm) {
             padding-top: $grid-gutter-width;

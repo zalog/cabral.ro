@@ -1,4 +1,4 @@
-@import "../required";
+@use "../required" as *;
 
 .layout-hero {
     position: relative;

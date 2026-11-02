@@ -1,5 +1,3 @@
-@import "bootstrap/scss/helpers";
-@import "bootstrap/scss/utilities/api";
-
-@import "scroll";
-@import "width";
+@use "./bootstrap";
+@use "./scroll";
+@use "./width";

@@ -1,4 +1,5 @@
-@import "../required";
+@use "sass:map";
+@use "../required" as *;
 
 .comment {
     color: $gray-700;
@@ -13,14 +14,14 @@
     margin-bottom: $spacer;
 
     div:first-child {
-        margin-bottom: map-get($spacers, 1);
+        margin-bottom: map.get($spacers, 1);
         font-weight: bold;
     }
 }
 
 .comment-content {
     p {
-        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     img,

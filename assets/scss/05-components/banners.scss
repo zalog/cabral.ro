@@ -1,4 +1,5 @@
-@import "../required";
+@use "sass:map";
+@use "../required" as *;
 
 .banners {
     display: flex;
@@ -11,6 +12,6 @@
     }
 
     > * {
-        margin: map-get($spacers, 2);
+        margin: map.get($spacers, 2);
     }
 }

@@ -31,5 +31,5 @@ export default defineNuxtComponent({
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/the-header.scss";
+@use "~/assets/scss/05-components/the-header";
 </style>

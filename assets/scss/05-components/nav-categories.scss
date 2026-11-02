@@ -1,8 +1,9 @@
-@import "../required";
+@use "sass:color";
+@use "../required" as *;
 
 .nav-categories {
     flex-wrap: nowrap;
-    padding: $grid-gutter-width / 2;
+    padding: $grid-gutter-width * .5;
     overflow-x: auto;
 
     &::-webkit-scrollbar {
@@ -20,9 +21,9 @@
     }
 
     .nav-link {
-        padding: ($nav-link-padding-y / 2) ($nav-link-padding-x / 2);
-        background-color: darken($light, 4%);
-        border: $border-width solid darken($light, 5%);
+        padding: ($nav-link-padding-y * .5) ($nav-link-padding-x * .5);
+        background-color: color.adjust($light, $lightness: -4%);
+        border: $border-width solid color.adjust($light, $lightness: -5%);
 
         &,
         &.active {
@@ -31,8 +32,8 @@
 
         &:hover,
         &.active {
-            background-color: darken($light, 8%);
-            border-color: darken($light, 20%);
+            background-color: color.adjust($light, $lightness: -8%);
+            border-color: color.adjust($light, $lightness: -20%);
         }
 
         @include media-breakpoint-up(md) {

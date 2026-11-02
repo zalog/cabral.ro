@@ -1,4 +1,5 @@
-@import "../required";
+@use "sass:map";
+@use "../required" as *;
 
 .list-item-info {
     @include list-unstyled;
@@ -21,6 +22,6 @@
     }
 
     li + li {
-        margin-left: map-get($spacers, 2);
+        margin-left: map.get($spacers, 2);
     }
 }

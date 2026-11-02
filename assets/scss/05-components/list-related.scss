@@ -1,4 +1,4 @@
-@import "../required";
+@use "../required" as *;
 @import "bootstrap/scss/card";
 
 .row-related {

@@ -1,9 +1,10 @@
-@import "../required";
+@use "sass:map";
+@use "../required" as *;
 
 $toast-color:               $gray-300;
 $toast-background-color:    $black;
 $toast-border-width:        0;
-$toast-spacing:             map-get($spacers, 3);
+$toast-spacing:             map.get($spacers, 3);
 
 @import "bootstrap/scss/toasts";
 
