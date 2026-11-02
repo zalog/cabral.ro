@@ -12,9 +12,11 @@
         >
             {{ notification.message }}
         </lazy-base-toast>
-        <lazy-toast-gdpr
-            v-if="!cookieConsent"
-        />
+        <client-only>
+            <lazy-toast-gdpr
+                v-if="!cookieConsent"
+            />
+        </client-only>
     </div>
 </template>
 

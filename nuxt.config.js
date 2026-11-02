@@ -20,10 +20,24 @@ export default {
     css: [
         '~/assets/scss/app.scss',
     ],
+    routeRules: {
+        '/**': { swr: 300 },
+    },
     sourcemap: {
         client: true,
     },
+    experimental: {
+        payloadExtraction: false,
+    },
     compatibilityDate: '2026-11-02',
+    nitro: {
+        storage: {
+            cache: {
+                driver: 'lru-cache',
+                max: 500,
+            },
+        },
+    },
     vite: {
         build: {
             // svg sprites are referenced by `<use href>`, which does not load data URIs
