@@ -77,6 +77,9 @@ export default {
             path: '/:singleSlug/',
             strict: true,
             component: PageSingle,
+            meta: {
+                middleware: 'single-data',
+            },
         },
         {
             name: 'SingleNested',
@@ -84,6 +87,7 @@ export default {
             component: PageSingle,
             meta: {
                 class: 'single',
+                middleware: 'single-data',
             },
         },
         {
