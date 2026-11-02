@@ -35,5 +35,6 @@
     "stylelint-config-recommended-scss": "^4.3.0",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-scss": "^3.21.0"
-  }
+  },
+  "type": "module"
 }
