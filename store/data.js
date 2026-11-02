@@ -31,7 +31,7 @@ export default {
             const dataKeyPage = dataKeys[0];
             const dataKeyFirst = dataKeys[1];
             const dataCurrent = get(state, dataKeys);
-            let data = null;
+            let data;
 
             if (Array.isArray(dataCurrent) || payload.type === 'array') {
                 const payloadData = (Array.isArray(payload.data)) ? payload.data : [payload.data];

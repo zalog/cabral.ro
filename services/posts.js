@@ -43,7 +43,6 @@ const fetchPosts = async ({
     const responsePostsCount = parseInt(responsePosts.headers.get('x-wp-total'), 10);
     const responsePostsPages = responsePostsCount > pagination.itemsOnPage;
 
-    // eslint-disable-next-line no-underscore-dangle
     output.posts = responsePosts._data.map((post) => itemPost(post));
 
     if (responsePostsPages) {

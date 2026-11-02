@@ -11,11 +11,17 @@
             </h1>
             <p>
                 Acum poți naviga către
-                <nuxt-link to="/" class="btn btn-outline-secondary">
+                <nuxt-link
+                    to="/"
+                    class="btn btn-outline-secondary"
+                >
                     home page
                 </nuxt-link>
                 sau pagina de
-                <nuxt-link to="/contact/" class="btn btn-outline-secondary">
+                <nuxt-link
+                    to="/contact/"
+                    class="btn btn-outline-secondary"
+                >
                     contact
                 </nuxt-link>
             </p>

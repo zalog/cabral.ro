@@ -17,7 +17,7 @@
             <list-item-info
                 :data="[{
                     icon: 'date',
-                    text: formatDate(comment.date)
+                    text: formatDate(comment.date),
                 }]"
             />
         </div>

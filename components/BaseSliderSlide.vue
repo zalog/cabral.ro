@@ -3,7 +3,7 @@
         class="slider-item"
         :class="[
             colClass,
-            { 'active': getActive }
+            { active: getActive },
         ]"
     >
         <slot v-if="$slots.default" />

@@ -39,7 +39,7 @@ export default {
             const update = () => {
                 ticking = false;
 
-                let scrollDirectionValue = null;
+                let scrollDirectionValue;
 
                 if (latestKnownScrollY > window.scrollY) {
                     scrollDirectionValue = 'up';

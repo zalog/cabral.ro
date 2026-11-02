@@ -1,9 +1,9 @@
 import { SITE } from './utils/constants';
 
 export default {
-    compatibilityDate: '2026-11-02',
-    css: [
-        '~/assets/scss/app.scss',
+    modules: [
+        '@nuxt/eslint',
+        '@nuxtjs/svg-sprite',
     ],
     app: {
         head: {
@@ -18,15 +18,13 @@ export default {
             ],
         },
     },
-    modules: [
-        '@nuxtjs/svg-sprite',
+    css: [
+        '~/assets/scss/app.scss',
     ],
     sourcemap: {
         client: true,
     },
-    svgSprite: {
-        input: '~/assets/icons/sprite',
-    },
+    compatibilityDate: '2026-11-02',
     vite: {
         build: {
             // svg sprites are referenced by `<use href>`, which does not load data URIs
@@ -43,5 +41,18 @@ export default {
                 },
             },
         },
+    },
+    eslint: {
+        config: {
+            stylistic: {
+                indent: 4,
+                semi: true,
+                braceStyle: '1tbs',
+                arrowParens: true,
+            },
+        },
+    },
+    svgSprite: {
+        input: '~/assets/icons/sprite',
     },
 };

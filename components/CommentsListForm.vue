@@ -20,7 +20,7 @@
                 <textarea
                     :id="getIdSuffix('form-reply-message')"
                     v-model="form.data.message"
-                    :class="['form-control', {'is-invalid': v$.form.data.message.$error }]"
+                    :class="['form-control', { 'is-invalid': v$.form.data.message.$error }]"
                     rows="4"
                     placeholder="Scrie comentariul tău aici..."
                     required
@@ -31,34 +31,43 @@
                 class="form-row"
             >
                 <div class="mb-3 col-sm-4">
-                    <label for="form-reply-name" class="visually-hidden">Nume</label>
+                    <label
+                        for="form-reply-name"
+                        class="visually-hidden"
+                    >Nume</label>
                     <input
                         id="form-reply-name"
                         v-model="form.data.name"
                         type="text"
-                        :class="['form-control', {'is-invalid': v$.form.data.name.$error}]"
+                        :class="['form-control', { 'is-invalid': v$.form.data.name.$error }]"
                         placeholder="Nume"
                         required
                     >
                 </div>
                 <div class="mb-3 col-sm-4">
-                    <label for="form-reply-email" class="visually-hidden">Email</label>
+                    <label
+                        for="form-reply-email"
+                        class="visually-hidden"
+                    >Email</label>
                     <input
                         id="form-reply-email"
                         v-model="form.data.email"
                         type="email"
-                        :class="['form-control', {'is-invalid': v$.form.data.email.$error}]"
+                        :class="['form-control', { 'is-invalid': v$.form.data.email.$error }]"
                         placeholder="Email"
                         required
                     >
                 </div>
                 <div class="mb-3 col-sm-4">
-                    <label for="form-reply-site" class="visually-hidden">Site</label>
+                    <label
+                        for="form-reply-site"
+                        class="visually-hidden"
+                    >Site</label>
                     <input
                         id="form-reply-site"
                         v-model="form.data.site"
                         type="url"
-                        :class="['form-control', {'is-invalid': v$.form.data.site.$error}]"
+                        :class="['form-control', { 'is-invalid': v$.form.data.site.$error }]"
                         placeholder="Site"
                     >
                 </div>

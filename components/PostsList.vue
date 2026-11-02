@@ -10,16 +10,16 @@
             :img-loading="index === 0 ? 'eager' : 'lazy'"
             :img-info="[{
                 icon: 'comment',
-                text: post.commentsNumber
+                text: post.commentsNumber,
             }]"
             :title="post.title"
             :slug="post.slug"
             :body-info="[{
                 icon: 'date',
-                text: formatDate(post.date)
+                text: formatDate(post.date),
             }, {
                 icon: 'folder',
-                links: post.categories
+                links: post.categories,
             }]"
             :body-text="post.excerpt"
         />

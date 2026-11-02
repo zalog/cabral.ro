@@ -34,7 +34,7 @@ const del = (obj, props) => {
     if (!obj[prop]) return;
 
     if (!props.length) {
-        delete obj[prop]; // eslint-disable-line no-param-reassign
+        delete obj[prop];
 
         return;
     }
