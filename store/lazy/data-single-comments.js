@@ -8,20 +8,20 @@ export default {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
             const pageComments = currentPage.comments;
-            const pageSingleSlug = route.params.singleSlug;
-            let commentsFrom = null;
+            const singleId = currentPage.main?.id;
+            let page = 1;
 
-            if (!pageSingleSlug) throw new Error('`fetchComments` needs `pageSingleSlug`.');
+            if (!singleId) return;
 
             if (pageComments && Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) {
-                    commentsFrom = pageComments.pageInfo.endCursor;
+                    page = pageComments.pageInfo.nextPage;
                 } else return;
             }
 
             const response = await fetchComments({
-                singleSlug: pageSingleSlug,
-                after: commentsFrom,
+                singleId,
+                page,
             });
 
             commit('SET_PAGE_DATA', {

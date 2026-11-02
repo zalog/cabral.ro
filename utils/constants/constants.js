@@ -3,7 +3,6 @@ const WP_HOST = process.env.WP_URL || HOST;
 const API_HOST = `${WP_HOST}/wp-json/`;
 
 export const ENDPOINTS = {
-    GRAPHQL: `${WP_HOST}/wordpress/graphql`,
     HEAD: `${API_HOST}yoast/v1/get_head`,
     MENU: `${API_HOST}custom/menu`,
     POSTS: `${API_HOST}wp/v2/posts`,

@@ -2,84 +2,67 @@ import { ENDPOINTS } from '../utils/constants';
 import { itemComment } from '../utils/adaptors';
 import { objectRenameKeys } from '../utils';
 
-const setCharAt = (string, index, char) => string
-    .substring(0, index) + char + string.substring(index + 1);
+const commentFields = 'id,parent,author_name,author_url,date,content';
 
-const fixCommentDate = (comment) => {
-    const isFixNeeded = comment.date.indexOf(' ') === 10;
+async function fetchReplies({ singleId, parentIds }) {
+    const replies = [];
+    let page = 1;
+    let totalPages;
 
-    if (!isFixNeeded) return comment;
+    do {
+        const response = await $fetch.raw(ENDPOINTS.COMMENTS, {
+            query: {
+                post: singleId,
+                parent: parentIds.join(','),
+                per_page: 100,
+                page,
+                order: 'asc',
+                _fields: commentFields,
+            },
+        });
+        replies.push(...response._data);
+        totalPages = parseInt(response.headers.get('x-wp-totalpages'), 10);
+        page += 1;
+    } while (page <= totalPages);
 
-    return {
-        ...comment,
-        date: setCharAt(comment.date, 10, 'T'),
-    };
-};
+    return replies;
+}
 
 export async function fetchComments({
-    singleSlug,
-    after = null,
+    singleId,
+    page = 1,
 }) {
-    const onPage = 10;
-
-    const response = await $fetch(ENDPOINTS.GRAPHQL, {
-        method: 'POST',
-        body: {
-            query: `
-                query GET_COMMENTS_FOR_POST(
-                    $singleSlug: String,
-                    $first: Int,
-                    $after: String
-                ) {
-                    comments(
-                        first: $first,
-                        after: $after,
-                        where: {
-                            contentName: $singleSlug
-                            parent: null
-                            order: DESC
-                        }
-                    ) {
-                        nodes {
-                            ...CommentFields
-                            replies {
-                                nodes {
-                                    ...CommentFields
-                                }
-                            }
-                        }
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                    }
-                }
-
-                fragment CommentFields on Comment {
-                    databaseId
-                    author {
-                        node {
-                            name
-                            url
-                        }
-                    }
-                    date
-                    content
-                }
-            `,
-            variables: {
-                singleSlug,
-                first: onPage,
-                after,
-            },
+    const response = await $fetch.raw(ENDPOINTS.COMMENTS, {
+        query: {
+            post: singleId,
+            parent: 0,
+            per_page: 10,
+            page,
+            order: 'desc',
+            _fields: commentFields,
         },
     });
-
-    const nodes = response.data.comments.nodes.map((comment) => fixCommentDate(comment));
+    const comments = response._data;
+    const replies = comments.length
+        ? await fetchReplies({
+                singleId,
+                parentIds: comments.map((comment) => comment.id),
+            })
+        : [];
 
     return {
-        ...response.data.comments,
-        nodes,
+        nodes: comments.map((comment) => ({
+            ...itemComment(comment),
+            replies: {
+                nodes: replies
+                    .filter((reply) => reply.parent === comment.id)
+                    .map((reply) => itemComment(reply)),
+            },
+        })),
+        pageInfo: {
+            hasNextPage: page < parseInt(response.headers.get('x-wp-totalpages'), 10),
+            nextPage: page + 1,
+        },
     };
 }
 
