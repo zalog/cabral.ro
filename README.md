@@ -8,9 +8,10 @@ npm install
 
 ## Configuration
 
-- `WP_URL`: the WordPress address used for API calls, without a trailing
-  slash. WordPress must answer at `$WP_URL/wp-json/` and
-  `$WP_URL/wordpress/graphql`. Default: `https://www.cabral.ro`.
+- `NUXT_WP_URL`: the WordPress address the server reads from, without a
+  trailing slash. WordPress must answer at `$NUXT_WP_URL/wp-json/`.
+  Default: `https://www.cabral.ro`.
 
-It is read at build time (`npm run nuxt:build`). The production build in
-GitHub Actions takes it from the `WP_URL` repository variable.
+It is read when the server starts, so it goes in the server environment
+(`ecosystem.config.cjs`), not in the build. Comment and contact form
+posts go from the browser to `https://www.cabral.ro/wp-json/`.

@@ -14,8 +14,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
         { name: ['data', 'dataComments'], imported: dataComments, preserveStateCheck: true },
     ]);
 
-    await Promise.all([
-        store.dispatch('data/fetchPageSingle', { route }),
-        hasComments || store.dispatch('data/fetchComments', { route }),
-    ]);
+    await store.dispatch('data/fetchPageSingle', { route });
+    if (!hasComments) await store.dispatch('data/fetchComments', { route });
 });
