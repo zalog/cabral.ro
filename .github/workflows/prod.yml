@@ -45,6 +45,8 @@ jobs:
         run: npm ci
 
       - name: npm build
+        env:
+          WP_URL: ${{ vars.WP_URL }}
         run: |
           npm run nuxt:build
 

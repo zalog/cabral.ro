@@ -32,6 +32,9 @@ export default {
             // svg sprites are referenced by `<use href>`, which does not load data URIs
             assetsInlineLimit: (filePath) => (filePath.endsWith('.svg') ? false : undefined),
         },
+        define: {
+            'process.env.WP_URL': JSON.stringify(process.env.WP_URL),
+        },
         css: {
             preprocessorOptions: {
                 scss: {
