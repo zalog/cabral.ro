@@ -1,6 +1,7 @@
 import { SITE } from '~/utils/constants';
 import head from './head';
 import entityDate from './entity-date';
+import media from './media';
 
 export default (payload) => {
     const date = entityDate({ date: payload.date, modified: payload.modified });
@@ -10,7 +11,7 @@ export default (payload) => {
         link: category.link.replace(SITE.LINK, ''),
     }));
 
-    const featuredMedia = payload.embed_featured_media;
+    const featuredMedia = media(payload.embed_featured_media);
     const featuredMediaRatio = featuredMedia.width / featuredMedia.height;
     const featuredMediaValid = (
         featuredMediaRatio > 1.2
