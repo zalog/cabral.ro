@@ -1,8 +1,9 @@
+@use "sass:map";
 @import "bootstrap/scss/utilities";
 
 // removes not needed
 
-$utilities: map-merge(
+$utilities: map.merge(
     $utilities,
     (
         "align": null,

@@ -1,11 +1,13 @@
+@use "sass:color";
+@use "sass:map";
 @import "../required";
 
 .toast-gdpr {
     p {
-        margin-bottom: map-get($spacers, 2);
+        margin-bottom: map.get($spacers, 2);
     }
 
     a {
-        color: lighten($primary, 35%);
+        color: color.adjust($primary, $lightness: 35%);
     }
 }

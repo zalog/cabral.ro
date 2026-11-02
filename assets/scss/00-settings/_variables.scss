@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $font-family-serif:           "Merriweather", serif;
 
 @import "./variables-bootstrap";
@@ -33,4 +35,4 @@ $social-colors: (
     "rss":        #f26522
 );
 
-$m-b-page:          map-get($spacers, 5);
+$m-b-page:          map.get($spacers, 5);

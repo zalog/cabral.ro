@@ -1,3 +1,4 @@
+@use "sass:map";
 @import "../required";
 
 .comment {
@@ -13,7 +14,7 @@
     margin-bottom: $spacer;
 
     div:first-child {
-        margin-bottom: map-get($spacers, 1);
+        margin-bottom: map.get($spacers, 1);
         font-weight: bold;
     }
 }
