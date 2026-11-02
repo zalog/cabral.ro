@@ -18,7 +18,7 @@
     "bootstrap": "^5.3.8",
     "jw-paginate": "^1.0.4",
     "nuxt": "^4.6.3",
-    "photoswipe": "^5.2.7",
+    "photoswipe": "^5.4.4",
     "vanilla-sharing": "^6.1.1",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0",
