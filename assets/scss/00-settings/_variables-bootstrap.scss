@@ -1,3 +1,7 @@
+// Options
+
+$enable-dark-mode:          false;
+
 // Color system
 
 $gray-900:  #212529; // default
@@ -19,9 +23,3 @@ $border-radius-sm:          .3rem;
 // Navbar
 
 $navbar-dark-toggler-border-color:      transparent;
-
-// Alerts
-
-$alert-bg-scale: -90%;
-$alert-border-scale: -80%;
-$alert-color-scale: 30%;

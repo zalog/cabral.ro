@@ -16,7 +16,7 @@
     "@nuxtjs/svg-sprite": "^1.0.2",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "bootstrap": "^5.2.0-beta1",
+    "bootstrap": "^5.3.8",
     "jw-paginate": "^1.0.4",
     "nuxt": "^4.6.3",
     "photoswipe": "^5.2.7",
