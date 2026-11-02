@@ -4,7 +4,7 @@ module.exports = {
             name: 'cabral.ro',
             script: './.output/server/index.mjs',
             exec_mode: 'cluster',
-            instances: 'max',
+            instances: 1,
             env: {
                 HOST: '0.0.0.0',
                 PORT: 8080,
