@@ -15,5 +15,5 @@ export default {
 </script>
 
 <style lang="scss">
-@use "~/assets/scss/05-components/the-footer.scss";
+@use "~/assets/scss/05-components/the-footer";
 </style>

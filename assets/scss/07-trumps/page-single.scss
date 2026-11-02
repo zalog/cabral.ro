@@ -3,7 +3,7 @@
 @use "../required" as *;
 
 .layout-hero + .container-fluid .entry-body {
-    margin: -100px ($grid-gutter-width * -.5) 0 ($grid-gutter-width * -.5);
+    margin: -100px ($grid-gutter-width * -.5) 0;
     padding: $grid-gutter-width * .5;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
@@ -30,7 +30,7 @@
     font-size: $font-size-lg;
     font-family: $font-family-serif;
     line-height: 1.9;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     > * {
         margin-bottom: $spacer;

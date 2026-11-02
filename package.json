@@ -28,13 +28,12 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.17.0",
+    "@stylistic/stylelint-config": "^5.0.0",
     "eslint": "^10.14.0",
+    "postcss-html": "^2.0.0",
     "sass": "^1.107.1",
-    "stylelint": "^13.13.1",
-    "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-config-recommended-scss": "^4.3.0",
-    "stylelint-config-standard": "^21.0.0",
-    "stylelint-scss": "^3.21.0"
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard-scss": "^17.0.0"
   },
   "type": "module"
 }
