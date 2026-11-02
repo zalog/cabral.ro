@@ -3,18 +3,25 @@
         class="icon"
         :class="`icon-${name}`"
     >
-        <svg-icon
-            :name="name"
-        />
+        <svg>
+            <use :href="href" />
+        </svg>
     </span>
 </template>
 
 <script>
+import sprite from '~/assets/icons/sprite.svg';
+
 export default {
     props: {
         name: {
             type: String,
             required: true,
+        },
+    },
+    computed: {
+        href() {
+            return `${sprite}#${this.name}`;
         },
     },
 };

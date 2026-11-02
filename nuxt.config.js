@@ -3,7 +3,6 @@ import { SITE } from './utils/constants';
 export default {
     modules: [
         '@nuxt/eslint',
-        '@nuxtjs/svg-sprite',
     ],
     app: {
         head: {
@@ -51,8 +50,5 @@ export default {
                 arrowParens: true,
             },
         },
-    },
-    svgSprite: {
-        input: '~/assets/icons/sprite',
     },
 };
