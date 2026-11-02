@@ -23,5 +23,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/layout-hero";
+@use "~/assets/scss/05-components/layout-hero";
 </style>

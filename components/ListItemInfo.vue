@@ -48,5 +48,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/list-item-info";
+@use "~/assets/scss/05-components/list-item-info";
 </style>

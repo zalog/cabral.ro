@@ -44,5 +44,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/toast-gdpr";
+@use "~/assets/scss/05-components/toast-gdpr";
 </style>

@@ -1,5 +1,5 @@
 @use "sass:map";
-@import "../required";
+@use "../required" as *;
 
 .list-share {
     @include list-unstyled;

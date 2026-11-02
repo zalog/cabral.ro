@@ -1,4 +1,4 @@
-@import "../required";
+@use "../required" as *;
 
 .slider {
     position: relative;

@@ -1,3 +1,5 @@
+@use "../required" as *;
+
 .box {
     > * {
         margin-bottom: 0;

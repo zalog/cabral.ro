@@ -143,5 +143,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/comments-list";
+@use "~/assets/scss/05-components/comments-list";
 </style>

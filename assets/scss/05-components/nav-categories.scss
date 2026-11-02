@@ -1,5 +1,5 @@
 @use "sass:color";
-@import "../required";
+@use "../required" as *;
 
 .nav-categories {
     flex-wrap: nowrap;

@@ -1,5 +1,4 @@
-@import "./required";
-@import "./02-generic/index";
-@import "./03-elements/index";
-@import "./04-objects/index";
-@import "./06-utilities/index";
+@use "./02-generic" as generic;
+@use "./03-elements" as elements;
+@use "./04-objects" as objects;
+@use "./06-utilities" as utilities;

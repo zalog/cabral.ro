@@ -1,4 +1,4 @@
-@import "../required";
+@use "../required" as *;
 
 .app-Header {
     box-shadow: $box-shadow-lg;

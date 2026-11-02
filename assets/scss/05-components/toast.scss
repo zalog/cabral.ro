@@ -1,5 +1,5 @@
 @use "sass:map";
-@import "../required";
+@use "../required" as *;
 
 $toast-color:               $gray-300;
 $toast-background-color:    $black;

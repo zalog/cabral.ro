@@ -1,4 +1,4 @@
-@import "../required";
+@use "../required" as *;
 
 .app-Footer {
     padding: $grid-gutter-width * .5;

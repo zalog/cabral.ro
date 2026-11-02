@@ -43,5 +43,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/list-related";
+@use "~/assets/scss/05-components/list-related";
 </style>

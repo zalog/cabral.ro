@@ -28,5 +28,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/nav-categories";
+@use "~/assets/scss/05-components/nav-categories";
 </style>

@@ -188,5 +188,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/05-components/comments-list-form";
+@use "~/assets/scss/05-components/comments-list-form";
 </style>

@@ -1,6 +1,6 @@
 @use "sass:map";
 @use "sass:math";
-@import "../required";
+@use "../required" as *;
 
 $card-border-radius:          $border-radius-lg;
 $card-border-color:           transparent;

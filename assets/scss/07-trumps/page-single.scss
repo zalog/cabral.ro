@@ -1,6 +1,6 @@
 @use "sass:map";
 @use "sass:math";
-@import "../required";
+@use "../required" as *;
 
 .layout-hero + .container-fluid .entry-body {
     margin: -100px ($grid-gutter-width * -.5) 0 ($grid-gutter-width * -.5);

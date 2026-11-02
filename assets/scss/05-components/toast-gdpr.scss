@@ -1,6 +1,6 @@
 @use "sass:color";
 @use "sass:map";
-@import "../required";
+@use "../required" as *;
 
 .toast-gdpr {
     p {
