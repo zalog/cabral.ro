@@ -21,8 +21,8 @@
 }
 
 .slider-item {
-    border: 1px solid transparent;
     scroll-snap-align: start;
+    border: 1px solid transparent;
 
     &.active {
         border-color: $primary;
@@ -49,8 +49,8 @@
     bottom: $grid-gutter-width * .5;
     left: 50%;
     display: flex;
-    margin-bottom: 0;
     padding-left: 0;
+    margin-bottom: 0;
     list-style: none;
     transform: translateX(-50%);
 
@@ -68,8 +68,8 @@
         width: 30px;
         height: 4px;
         overflow: hidden;
-        text-indent: -999px;
         vertical-align: middle;
+        text-indent: -999px;
         background: $white;
     }
 

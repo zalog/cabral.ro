@@ -33,7 +33,9 @@
     "postcss-html": "^2.0.0",
     "sass": "^1.107.1",
     "stylelint": "^17.16.0",
-    "stylelint-config-standard-scss": "^17.0.0"
+    "stylelint-config-recess-order": "^7.9.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-order": "^8.1.2"
   },
   "type": "module"
 }

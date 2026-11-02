@@ -3,16 +3,16 @@
 @use "../required" as *;
 
 .layout-hero + .container-fluid .entry-body {
-    margin: -100px ($grid-gutter-width * -.5) 0;
     padding: $grid-gutter-width * .5;
+    margin: -100px ($grid-gutter-width * -.5) 0;
     background-color: $body-bg;
     border-top-left-radius: $border-radius-lg;
     border-top-right-radius: $border-radius-lg;
 
     @include media-breakpoint-up(sm) {
+        padding: $grid-gutter-width $grid-gutter-width 0 $grid-gutter-width;
         margin-right: -$grid-gutter-width;
         margin-left: -$grid-gutter-width;
-        padding: $grid-gutter-width $grid-gutter-width 0 $grid-gutter-width;
     }
 }
 
@@ -27,8 +27,8 @@
 }
 
 .entry-content {
-    font-size: $font-size-lg;
     font-family: $font-family-serif;
+    font-size: $font-size-lg;
     line-height: 1.9;
     overflow-wrap: break-word;
 
@@ -163,8 +163,8 @@
 .gallery-caption {
     display: block;
     padding: math.ceil(math.div($spacer, 4)) 0;
-    color: fade($gray-100, 80%);
     font-size: $font-size-sm;
+    color: fade($gray-100, 80%);
 }
 
 [class*="gallery-columns"] {

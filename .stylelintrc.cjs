@@ -2,6 +2,7 @@ module.exports = {
     extends: [
         'stylelint-config-standard-scss',
         '@stylistic/stylelint-config',
+        'stylelint-config-recess-order',
     ],
     overrides: [
         {
