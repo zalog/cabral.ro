@@ -20,6 +20,9 @@ export default {
     css: [
         '~/assets/scss/app.scss',
     ],
+    runtimeConfig: {
+        wpUrl: 'https://www.cabral.ro',
+    },
     routeRules: {
         '/**': { swr: 300 },
     },
@@ -34,7 +37,7 @@ export default {
         storage: {
             cache: {
                 driver: 'lru-cache',
-                max: 500,
+                max: 1000,
             },
         },
     },
@@ -42,9 +45,6 @@ export default {
         build: {
             // svg sprites are referenced by `<use href>`, which does not load data URIs
             assetsInlineLimit: (filePath) => (filePath.endsWith('.svg') ? false : undefined),
-        },
-        define: {
-            'process.env.WP_URL': JSON.stringify(process.env.WP_URL),
         },
         css: {
             preprocessorOptions: {

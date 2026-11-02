@@ -1,16 +1,16 @@
 const HOST = 'https://www.cabral.ro';
-const WP_HOST = process.env.WP_URL || HOST;
-const API_HOST = `${WP_HOST}/wp-json/`;
+const API = '/api/wp/';
+const WP_API = `${HOST}/wp-json/`;
 
 export const ENDPOINTS = {
-    HEAD: `${API_HOST}yoast/v1/get_head`,
-    MENU: `${API_HOST}custom/menu`,
-    POSTS: `${API_HOST}wp/v2/posts`,
-    CATEGORIES: `${API_HOST}wp/v2/categories`,
-    TAGS: `${API_HOST}wp/v2/tags`,
-    PAGES: `${API_HOST}wp/v2/pages`,
-    COMMENTS: `${API_HOST}wp/v2/comments`,
-    FORM_WPCF7: (id) => `${API_HOST}contact-form-7/v1/contact-forms/${id}/feedback`,
+    HEAD: `${API}yoast/v1/get_head`,
+    MENU: `${API}custom/menu`,
+    POSTS: `${API}wp/v2/posts`,
+    CATEGORIES: `${API}wp/v2/categories`,
+    PAGES: `${API}wp/v2/pages`,
+    COMMENTS: `${API}wp/v2/comments`,
+    COMMENTS_POST: `${WP_API}wp/v2/comments`,
+    FORM_WPCF7: (id) => `${WP_API}contact-form-7/v1/contact-forms/${id}/feedback`,
 };
 
 export const SITE = {
