@@ -1,67 +1,58 @@
 import { SITE } from './utils/constants';
 
 export default {
-    build: {
-        babel: {
-            presets({ isClient }, preset) {
-                if (isClient) {
-                    Object.assign(preset[1], {
-                        targets: {
-                            chrome: '58',
-                        },
-                    });
-                }
-
-                return [preset];
+    modules: [
+        '@nuxt/eslint',
+        '@nuxtjs/svg-sprite',
+    ],
+    app: {
+        head: {
+            htmlAttrs: {
+                lang: SITE.LANG_REGION,
             },
-        },
-        extend(config, { isClient }) {
-            if (isClient) {
-                Object.assign(config, {
-                    devtool: 'source-map',
-                });
-            }
+            noscript: [
+                {
+                    tagPosition: 'bodyOpen',
+                    innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=${SITE.GTM_ID}" height="0" width="0" style="display:none;visibility:hidden" title="gtm"></iframe>`,
+                },
+            ],
         },
     },
-    components: true,
     css: [
         '~/assets/scss/app.scss',
     ],
-    head: {
-        meta: [
-            { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        ],
-        htmlAttrs: {
-            lang: SITE.LANG_REGION,
+    sourcemap: {
+        client: true,
+    },
+    compatibilityDate: '2026-11-02',
+    vite: {
+        build: {
+            // svg sprites are referenced by `<use href>`, which does not load data URIs
+            assetsInlineLimit: (filePath) => (filePath.endsWith('.svg') ? false : undefined),
+        },
+        define: {
+            'process.env.WP_URL': JSON.stringify(process.env.WP_URL),
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    quietDeps: true,
+                    silenceDeprecations: ['import'],
+                },
+            },
         },
     },
-    plugins: [
-        '~/plugins/store-utils.js',
-        '~/plugins/router-hooks.js',
-        '~/plugins/filters.js',
-        '~/plugins/gtm.js',
-        '~/plugins/webfontloader.client.js',
-        '~/plugins/client.js',
-    ],
-    buildModules: [
-        '@nuxtjs/router',
-    ],
-    modules: [
-        '@nuxtjs/gtm',
-        '@nuxtjs/axios',
-        'cookie-universal-nuxt',
-        '@nuxtjs/svg-sprite',
-    ],
-    publicRuntimeConfig: {
-        PM2_NODE_ENV: process.env.NODE_ENV,
+    eslint: {
+        config: {
+            stylistic: {
+                indent: 4,
+                semi: true,
+                braceStyle: '1tbs',
+                arrowParens: true,
+            },
+        },
     },
     svgSprite: {
         input: '~/assets/icons/sprite',
-        elementClass: null,
-    },
-    gtm: {
-        id: 'GTM-59M55JB',
-        autoInit: false,
     },
 };

@@ -18,11 +18,6 @@
 
 <script>
 export default {
-    model: {
-        prop: 'visible',
-        event: 'hidden',
-    },
-
     props: {
         visible: {
             type: Boolean,
@@ -43,9 +38,7 @@ export default {
         },
     },
 
-    destroyed() {
-        this.$emit('destroyed', this.$vnode.key);
-    },
+    emits: ['hidden'],
 
     mounted() {
         if (!this.noAutoHide) this.attachAutoHide();
@@ -54,8 +47,7 @@ export default {
     methods: {
         attachAutoHide() {
             setTimeout(() => {
-                this.$destroy();
-                this.$el.parentNode.removeChild(this.$el);
+                this.$emit('hidden');
             }, 5000);
         },
     },

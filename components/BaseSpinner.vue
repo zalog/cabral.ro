@@ -2,11 +2,14 @@
     <div
         class="spinner-border"
         :class="{
-            [`spinner-border-${size}`]: size
+            [`spinner-border-${size}`]: size,
         }"
         role="status"
     >
-        <span class="visually-hidden" v-text="'Loading...'" />
+        <span
+            class="visually-hidden"
+            v-text="'Loading...'"
+        />
     </div>
 </template>
 
@@ -23,5 +26,5 @@ export default {
 
 <style lang="scss">
 @import "../assets/scss/required";
-@import "~bootstrap/scss/spinners";
+@import "bootstrap/scss/spinners";
 </style>

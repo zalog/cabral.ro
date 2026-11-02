@@ -3,7 +3,7 @@
         class="slider-item"
         :class="[
             colClass,
-            { 'active': getActive }
+            { active: getActive },
         ]"
     >
         <slot v-if="$slots.default" />
@@ -27,7 +27,7 @@ export default {
         getActive() {
             const childrenActive = this.active;
             const parentActive = this.$parent.active;
-            const childrenIndex = Number(this.$vnode.key);
+            const childrenIndex = Number(this.$.vnode.key);
 
             return childrenActive !== null
                 ? childrenActive

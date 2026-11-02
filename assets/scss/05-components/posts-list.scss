@@ -13,7 +13,11 @@ $pagination-hover-bg:         transparent;
 $pagination-active-color:     $pagination-hover-color;
 $pagination-active-bg:        $gray-100;
 
-@import "~bootstrap/scss/pagination";
+@import "bootstrap/scss/pagination";
+
+.page-item .page-link {
+    border-radius: var(--bs-pagination-border-radius);
+}
 
 .cards-posts {
     .card {

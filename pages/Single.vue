@@ -8,13 +8,13 @@
                 <list-item-info
                     :data="[{
                         icon: 'date',
-                        text: $options.filters.formatDate(data.main.date)
+                        text: formatDate(data.main.date),
                     }, {
                         icon: 'folder',
-                        links: data.main.categories
+                        links: data.main.categories,
                     }, {
                         icon: 'comment',
-                        text: data.main.commentsNumber
+                        text: data.main.commentsNumber,
                     }]"
                 />
             </div>
@@ -35,16 +35,26 @@
                 v-observe-visibility="false && data.main.categories
                     ? {
                         callback: isVisible => isVisible && (load.banners = true),
-                        once: true
+                        once: true,
                     }
                     : false
                 "
             >
-                <lazy-banners v-if="load.banners">
-                    <a href="http://www.runningmag.ro/" target="_blank" title="runningmag.ro" rel="external nofollow noopener">
-                        <img src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png" width="300" height="250" alt="runningmag.ro">
+                <lazy-base-banners v-if="load.banners">
+                    <a
+                        href="http://www.runningmag.ro/"
+                        target="_blank"
+                        title="runningmag.ro"
+                        rel="external nofollow noopener"
+                    >
+                        <img
+                            src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png"
+                            width="300"
+                            height="250"
+                            alt="runningmag.ro"
+                        >
                     </a>
-                </lazy-banners>
+                </lazy-base-banners>
             </div>
             <comments-list
                 ref="comments"
@@ -57,10 +67,10 @@
         </div>
         <lazy-base-gallery
             v-if="galleryFull.show"
-            v-model="galleryFull.index"
+            v-model:index="galleryFull.index"
             :items="galleryFull.items"
             :hash="galleryFullHash"
-            :page-title="$metaInfo.title"
+            :page-title="data.head.title"
             @hidden="galleryFull.show = false"
             @update:index="onGalleryFullUpdate()"
         />
@@ -68,17 +78,15 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import { createError, defineNuxtComponent, useRoute } from '#imports';
 import dataSingle from '~/store/lazy/data-single';
 import dataComments from '~/store/lazy/data-single-comments';
 import { currentPage } from '~/mixins';
-import { ObserveVisibility } from 'vue-observe-visibility';
+import { formatDate } from '~/utils';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
 import CommentsList from '~/components/CommentsList.vue';
-
-Vue.directive('observe-visibility', ObserveVisibility);
 
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
 
@@ -91,7 +99,7 @@ const registerModules = (store) => {
     ]);
 };
 
-export default {
+export default defineNuxtComponent({
     components: {
         ListItemInfo,
         ListShare,
@@ -103,15 +111,13 @@ export default {
         currentPage,
     ],
 
-    async asyncData({ store, route, error }) {
+    async asyncData({ $store: store }) {
+        const route = { ...useRoute() };
+
         registerModules(store);
 
-        let actionName = 'data/fetchPageSingle';
-        if (route.params.singleType === 'post') actionName = 'data/fetchPagePost';
-        else if (route.params.singleType === 'page') actionName = 'data/fetchPagePage';
-
         await Promise.all([
-            store.dispatch(actionName, {
+            store.dispatch('data/fetchPageSingle', {
                 route,
             }),
             store.dispatch('data/fetchComments', {
@@ -121,9 +127,11 @@ export default {
 
         const data = store.getters['data/currentPage'](route.fullPath);
 
-        if (!data.main) return error({ statusCode: 404, message: 'Nu am găsit pagina' });
+        if (!data.main) {
+            throw createError({ statusCode: 404, statusMessage: 'Nu am găsit pagina', fatal: true });
+        }
 
-        return null;
+        return {};
     },
 
     data: () => ({
@@ -139,7 +147,7 @@ export default {
 
     created() {
         if (this.data.main) {
-            const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1; /* indexOf is faster */// eslint-disable-line unicorn/prefer-includes
+            const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1;
             if (hasEntrysGalleryJetpack) cssGallery();
         }
 
@@ -157,6 +165,7 @@ export default {
     },
 
     methods: {
+        formatDate,
         async fetchComments(isVisible, checkForData) {
             const { classList: commentsClass } = this.$refs.comments.$el;
             const loading = commentsClass.contains('loading');
@@ -194,7 +203,7 @@ export default {
             import('../utils/customs/form-cf7')
                 .then((module) => forms.forEach((formEl) => {
                     const { default: Form } = module;
-                    const form = new Form(formEl, this.$axios);
+                    const form = new Form(formEl);
                     form.init();
                 }));
         },
@@ -226,7 +235,7 @@ export default {
                 });
             });
 
-            if (this.$route.hash.indexOf(`${galleryFullHash}=`) !== -1) {
+            if (this.$route.hash.includes(`${galleryFullHash}=`)) {
                 const hashIndex = Number(this.$route.hash.split('=')[1]);
                 this.galleryFull = {
                     show: true,
@@ -237,12 +246,12 @@ export default {
         },
         onGalleryFullUpdate() {
             this.sendPageView({
-                title: this.$metaInfo.title,
+                title: this.data.head.title,
                 url: this.$route.fullPath,
             });
         },
     },
-};
+});
 </script>
 
 <style lang="scss">

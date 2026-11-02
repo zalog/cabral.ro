@@ -20,5 +20,5 @@ export default {
 
 <style lang="scss">
 @import "../assets/scss/required";
-@import "~bootstrap/scss/alert";
+@import "bootstrap/scss/alert";
 </style>

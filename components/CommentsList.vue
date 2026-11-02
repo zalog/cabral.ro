@@ -19,14 +19,23 @@
             <li>
                 <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
-                        <a href="https://zalog.ro/" target="_blank" rel="external noopener">Catalin Zălog</a>
+                        <a
+                            href="https://zalog.ro/"
+                            target="_blank"
+                            rel="external noopener"
+                        >Catalin Zălog</a>
                         <div class="small">
                             publicitate
                         </div>
                     </div>
                     <div class="comment-content">
                         <p>
-                            Colaborez cu cabral de prin 2014. Îmi place pentru că apreciază <a href="https://zalog.ro/" title="web development" target="_blank" rel="external noopener">serviciile mele</a>.
+                            Colaborez cu cabral de prin 2014. Îmi place pentru că apreciază <a
+                                href="https://zalog.ro/"
+                                title="web development"
+                                target="_blank"
+                                rel="external noopener"
+                            >serviciile mele</a>.
                         </p>
                     </div>
                 </div>
@@ -39,7 +48,7 @@
                 <comments-list-comment
                     v-observe-visibility="{
                         callback: isVisible => emitVisibleLastComment(isVisible, index + 1),
-                        once: true
+                        once: true,
                     }"
                     :comment="comment"
                 />
@@ -62,7 +71,7 @@
                         label: 'răspunde-i',
                         singleId,
                         commentId: comment.databaseId,
-                        index
+                        index,
                     }"
                 />
             </li>
@@ -103,6 +112,8 @@ export default {
             default: false,
         },
     },
+
+    emits: ['is-visible-last'],
 
     created() {
         this.getHeader();

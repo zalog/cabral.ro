@@ -8,7 +8,7 @@
                 <nuxt-link
                     :to="'/'"
                     class="navbar-brand"
-                    @click.native="menuClose()"
+                    @click="menuClose()"
                 >
                     {{ SITE.TITLE }}
                 </nuxt-link>
@@ -39,7 +39,7 @@
                             :to="item.to"
                             class="nav-link"
                             exact-active-class="active"
-                            @click.native="menuClose()"
+                            @click="menuClose()"
                         >
                             {{ item.title }}
                         </nuxt-link>
@@ -92,13 +92,13 @@ export default {
         },
         menuOpen() {
             this.show.navbarBodyMain = true;
-            this.$root.$el.addEventListener('click', this.onMenuOpenClick);
-            this.$root.$el.addEventListener('keydown', this.onMenuOpenKeydown);
+            document.addEventListener('click', this.onMenuOpenClick);
+            document.addEventListener('keydown', this.onMenuOpenKeydown);
         },
         menuClose() {
             this.show.navbarBodyMain = false;
-            this.$root.$el.removeEventListener('click', this.onMenuOpenClick);
-            this.$root.$el.removeEventListener('keydown', this.onMenuOpenKeydown);
+            document.removeEventListener('click', this.onMenuOpenClick);
+            document.removeEventListener('keydown', this.onMenuOpenKeydown);
         },
         goToSearch($event) {
             const s = $event.target.elements.s.value;

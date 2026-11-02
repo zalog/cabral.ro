@@ -5,8 +5,8 @@
     >
         <base-slider-inner
             ref="sliderInner"
-            v-model="internalActive"
-            @updateItems="items = $event"
+            v-model:active="internalActive"
+            @update-items="items = $event"
         >
             <base-slider-slide
                 v-for="(_, index) in $slots"
@@ -52,7 +52,7 @@
                 <li
                     v-for="(item, index) in items"
                     :key="`items-${index}`"
-                    :class="{ 'active': item.inView }"
+                    :class="{ active: item.inView }"
                 >
                     <a
                         :href="`#item-${index}`"
@@ -66,7 +66,7 @@
                 <li
                     v-for="(_, index) in screensLength"
                     :key="`screens-${index}`"
-                    :class="{ 'active': screensInView.has(index) }"
+                    :class="{ active: screensInView.has(index) }"
                 >
                     <button
                         type="button"
@@ -78,7 +78,10 @@
             </template>
         </ul>
 
-        <div v-if="false" class="debugging">
+        <div
+            v-if="false"
+            class="debugging"
+        >
             <ul class="list-inline text-center">
                 <li
                     v-for="(item, index) in items"
@@ -88,7 +91,7 @@
                     <a
                         :href="`#item-${index}`"
                         class="btn btn-primary"
-                        :style="[ item.inView && { background: 'red' }]"
+                        :style="[item.inView && { background: 'red' }]"
                         @click.prevent="goTo(index)"
                     >
                         {{ `${index} - ${item.screen}` }}
@@ -105,7 +108,7 @@
                     <button
                         type="button"
                         class="btn btn-primary"
-                        :style="[ screensInView.has(index) && { background: 'red' }]"
+                        :style="[screensInView.has(index) && { background: 'red' }]"
                         @click="goTo(index, 'screen')"
                     >
                         {{ index }}
@@ -138,11 +141,6 @@ export default {
         BaseSliderSlide,
     },
 
-    model: {
-        prop: 'active',
-        event: 'active:change',
-    },
-
     props: {
         active: {
             type: Number,
@@ -166,6 +164,8 @@ export default {
         },
     },
 
+    emits: ['update:active'],
+
     data: () => ({
         items: {},
         intervalIntervalId: null,
@@ -175,7 +175,7 @@ export default {
     computed: {
         internalActive: {
             get() { return this.active; },
-            set(value) { return this.$emit('active:change', value); },
+            set(value) { return this.$emit('update:active', value); },
         },
         itemsLength() {
             return Object.keys(this.items).length;
@@ -332,7 +332,7 @@ export default {
                 behavior,
             });
 
-            this.$emit('active:change', wantedItem.index);
+            this.$emit('update:active', wantedItem.index);
 
             return wantedItem.index;
         },

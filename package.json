@@ -5,41 +5,36 @@
   "scripts": {
     "start": "npm run nuxt:dev",
     "nuxt:dev": "nuxt dev",
-    "nuxt:build": "nuxt build --standalone",
-    "nuxt:start": "nuxt start",
+    "nuxt:build": "nuxt build",
+    "nuxt:start": "nuxt preview",
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "stylelint '**/*.{scss,vue}'",
-    "lint:js": "eslint --ext .js,.vue ."
+    "lint:js": "eslint .",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/gtm": "^2.4.0",
-    "@nuxtjs/svg-sprite": "^0.5.2",
+    "@nuxtjs/svg-sprite": "^1.0.2",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "bootstrap": "^5.2.0-beta1",
-    "cookie-universal-nuxt": "^2.1.5",
     "jw-paginate": "^1.0.4",
-    "nuxt": "^2.15.8",
+    "nuxt": "^4.6.3",
     "photoswipe": "^5.2.7",
     "vanilla-sharing": "^6.1.1",
-    "vue": "^2.6.14",
-    "vue-observe-visibility": "^1.0.0",
-    "vue-router": "^3.5.3",
-    "vuelidate": "^0.7.7",
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0",
+    "vuex": "^4.1.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^6.0.1",
-    "@nuxtjs/router": "^1.6.1",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "node-sass": "^6.0.1",
-    "sass-loader": "^10.2.1",
+    "@nuxt/eslint": "^1.17.0",
+    "eslint": "^10.14.0",
+    "sass": "^1.107.1",
     "stylelint": "^13.13.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-recommended-scss": "^4.3.0",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-scss": "^3.21.0"
-  }
+  },
+  "type": "module"
 }

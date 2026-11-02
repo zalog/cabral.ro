@@ -30,16 +30,16 @@ export default (payload) => {
                     meta.push({
                         property: getOgImageProperty.replace('_', ':'),
                         content: item[itemKey],
-                        hid: `yoast-${key}-${index}-${getOgImageProperty}`,
+                        key: `yoast-${key}-${index}-${getOgImageProperty}`,
                     });
                 });
             });
         } else if (key === scriptKeySchema) {
             script.push({
                 type: 'application/ld+json',
-                json: value,
+                innerHTML: value,
                 class: 'yoast-schema-graph',
-                hid: `yoast-${key}`,
+                key: `yoast-${key}`,
             });
         } else if (metaKeysName.includes(key)) {
             const content = typeof value === 'object'
@@ -49,19 +49,19 @@ export default (payload) => {
             meta.push({
                 name: key.replace('_', ':'),
                 content,
-                hid: `yoast-${key}`,
+                key: `yoast-${key}`,
             });
         } else if (metaKeysProperty.includes(key)) {
             meta.push({
                 property: key.replace('_', ':'),
                 content: value,
-                hid: `yoast-${key}`,
+                key: `yoast-${key}`,
             });
         } else if (linkKeys.includes(key)) {
             link.push({
                 rel: key,
                 href: value,
-                hid: `yoast-${key}`,
+                key: `yoast-${key}`,
             });
         }
     });

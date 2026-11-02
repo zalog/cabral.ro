@@ -48,17 +48,17 @@ export default {
             };
 
             switch (to) {
-            case 'facebook':
-                fbButton(payload);
-                break;
-            case 'whatsapp':
-                whatsapp(payload);
-                break;
-            case 'twitter':
-                tw(payload);
-                break;
-            default:
-                break;
+                case 'facebook':
+                    fbButton(payload);
+                    break;
+                case 'whatsapp':
+                    whatsapp(payload);
+                    break;
+                case 'twitter':
+                    tw(payload);
+                    break;
+                default:
+                    break;
             }
         },
     },
