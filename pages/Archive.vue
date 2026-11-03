@@ -19,7 +19,6 @@
 
 <script>
 import { defineNuxtComponent, useRoute } from '#imports';
-import { SITE } from '~/utils/constants';
 import dataListing from '~/store/lazy/data-listing';
 import dataHead from '~/store/lazy/data-head';
 import { currentPage } from '~/mixins';
@@ -53,7 +52,10 @@ export default defineNuxtComponent({
         await Promise.all([
             store.dispatch('data/fetchHead', {
                 route,
-                url: `${SITE.LINK}/${pathMatch}/${pageSlug}/`,
+                term: {
+                    taxonomy: taxonomyName,
+                    slug: pageSlug.split('/').pop(),
+                },
             }),
             store.dispatch('data/fetchPageListing', {
                 route,
