@@ -1,5 +1,5 @@
 import { isValidPropData } from '~/utils/store';
-import { fetchHead } from '../../services';
+import { fetchHead, fetchTermHead } from '../../services';
 
 export default {
     namespaced: false,
@@ -7,7 +7,7 @@ export default {
     actions: {
         async fetchHead(
             { getters, commit },
-            { route, url },
+            { route, url, term },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
@@ -15,9 +15,11 @@ export default {
 
             if (isValidPropData(currentPage, prop)) return;
 
-            const response = await fetchHead({
-                url,
-            });
+            const response = term
+                ? await fetchTermHead(term)
+                : await fetchHead({
+                        url,
+                    });
 
             commit('SET_PAGE_DATA', {
                 prop,

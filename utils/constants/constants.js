@@ -8,6 +8,7 @@ export const ENDPOINTS = {
     MENU: `${API}custom/menu`,
     POSTS: `${API}wp/v2/posts`,
     CATEGORIES: `${API}wp/v2/categories`,
+    TAGS: `${API}wp/v2/tags`,
     PAGES: `${API}wp/v2/pages`,
     COMMENTS: `${API}wp/v2/comments`,
     COMMENTS_POST: `${WP_API}wp/v2/comments`,
