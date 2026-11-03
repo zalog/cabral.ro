@@ -1,5 +1,5 @@
 import { ENDPOINTS } from '../utils/constants';
-import { pageCategory, navCategories } from '../utils/adaptors';
+import { navCategories } from '../utils/adaptors';
 
 const fetchCategories = async ({
     params,
@@ -19,8 +19,7 @@ const fetchCategories = async ({
         });
 
         let adaptorFunction;
-        if (adaptor === 'pageCategory') adaptorFunction = pageCategory;
-        else if (adaptor === 'navCategories') adaptorFunction = navCategories;
+        if (adaptor === 'navCategories') adaptorFunction = navCategories;
 
         return adaptorFunction(response);
     } catch (error) {
