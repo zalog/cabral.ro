@@ -20,14 +20,12 @@
 <script>
 import { defineNuxtComponent, useRoute } from '#imports';
 import dataListing from '~/store/lazy/data-listing';
-import dataHead from '~/store/lazy/data-head';
 import { currentPage } from '~/mixins';
 import PostsList from '~/components/PostsList.vue';
 
 const registerModules = (store) => {
     store.$registerModules([
         { name: ['data', 'dataListing'], imported: dataListing, preserveStateCheck: true },
-        { name: ['data', 'dataHead'], imported: dataHead, preserveStateCheck: true },
     ]);
 };
 
@@ -47,24 +45,15 @@ export default defineNuxtComponent({
 
         const { pathMatch, slug } = route.params;
         const [pageSlug, pageNumber] = slug.split('/page/');
-        const taxonomyName = (pathMatch === 'tag') ? 'tag' : 'category';
 
-        await Promise.all([
-            store.dispatch('data/fetchHead', {
-                route,
-                term: {
-                    taxonomy: taxonomyName,
-                    slug: pageSlug.split('/').pop(),
-                },
-            }),
-            store.dispatch('data/fetchPageListing', {
-                route,
-                taxonomy: {
-                    [taxonomyName]: pageSlug,
-                },
-                pageNumber,
-            }),
-        ]);
+        await store.dispatch('data/fetchPageListing', {
+            route,
+            term: {
+                taxonomy: (pathMatch === 'tag') ? 'tag' : 'category',
+                slug: pageSlug.split('/').pop(),
+            },
+            pageNumber,
+        });
 
         return {};
     },

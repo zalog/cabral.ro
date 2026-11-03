@@ -19,10 +19,11 @@ const fetchPosts = async ({
             _fields: fields.join(','),
         }),
         ...(taxonomy.categories.length && {
-            'filter[category_name]': taxonomy.categories.join(',') || undefined,
+            'categories[terms]': taxonomy.categories.join(','),
+            'categories[include_children]': true,
         }),
         ...(taxonomy.tags.length && {
-            'filter[tag]': taxonomy.tags.join(',') || undefined,
+            tags: taxonomy.tags.join(','),
         }),
         per_page: pagination.itemsOnPage || itemsOnPage,
         ...(pagination.currentPage && {

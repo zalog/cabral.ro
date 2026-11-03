@@ -1,4 +1,4 @@
-import { fetchPosts, fetchCategories } from '~/services';
+import { fetchPosts, fetchTerm } from '~/services';
 import { isValidPropData } from '~/utils/store';
 import { formatTitle, formatPageTitle } from '~/utils';
 import { SITE } from '~/utils/constants';
@@ -13,12 +13,13 @@ export default {
             { getters, commit, dispatch },
             {
                 route,
-                taxonomy = { category: '', tag: '' },
+                term,
                 pageNumber,
             },
         ) {
             const pageKey = route.fullPath;
             const currentPage = getters.currentPage(pageKey);
+            const taxonomy = { categories: [], tags: [] };
             let pageTitle = SITE.TITLE;
             let pageDescription = null;
 
@@ -28,20 +29,24 @@ export default {
             }
 
             // TODO adds category name
-            if (taxonomy.category) {
-                const pageSlug = taxonomy.category.split('/').slice(-1)[0];
-
+            if (term) {
                 if (isValidPropData(currentPage, 'title')) return;
 
-                const responseCategory = await fetchCategories({
-                    params: {
-                        slug: pageSlug.split('/').pop(),
-                    },
-                    fields: ['name', 'description'],
-                    adaptor: 'pageCategory',
+                const responseTerm = await fetchTerm(term);
+
+                if (term.taxonomy === 'tag') {
+                    taxonomy.tags.push(responseTerm.id);
+                } else {
+                    pageTitle = responseTerm.name;
+                    pageDescription = responseTerm.description;
+                    taxonomy.categories.push(responseTerm.id);
+                }
+
+                commit('SET_PAGE_DATA', {
+                    prop: 'head',
+                    data: responseTerm.head,
+                    routePath: pageKey,
                 });
-                pageTitle = responseCategory.name;
-                pageDescription = responseCategory.description;
             }
 
             if (pageNumber) {
@@ -65,10 +70,7 @@ export default {
 
             await dispatch('fetchPosts', {
                 route,
-                taxonomy: {
-                    categories: [taxonomy.category],
-                    tags: [taxonomy.tag],
-                },
+                taxonomy,
                 pageNumber: Number(pageNumber) || null,
             });
         },
