@@ -13,12 +13,14 @@ jobs:
 
     steps:
       - name: install ssh key
-        uses: shimataro/ssh-key-action@v2
+        uses: shimataro/ssh-key-action@87a8f067114a8ce263df83e9ed5c849953548bc3 # v2.8.1
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: '# known hosts'
       - name: add known hosts
-        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+        env:
+          DEPLOY_HOST: ${{ secrets.HOST }}
+        run: ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
       - name: checkout
         uses: actions/checkout@v7
@@ -42,7 +44,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: npm clean install
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: npm build
         run: |
@@ -53,14 +55,22 @@ jobs:
           7z a nuxt.zip .output/ ecosystem.config.cjs
 
       - name: copy
+        env:
+          DEPLOY_USER: ${{ secrets.USER }}
+          DEPLOY_HOST: ${{ secrets.HOST }}
+          DEPLOY_PATH: ${{ secrets.PATH_HOME }}
         run: |
-          scp nuxt.zip ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.PATH_HOME }}
+          scp nuxt.zip "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH"
 
       - name: unzip and start the server
+        env:
+          DEPLOY_USER: ${{ secrets.USER }}
+          DEPLOY_HOST: ${{ secrets.HOST }}
+          DEPLOY_PATH: ${{ secrets.PATH_HOME }}
         run: |
-          ssh ${{ secrets.USER }}@${{ secrets.HOST }} '
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "
             set -e
-            cd ${{ secrets.PATH_HOME }}
+            cd $DEPLOY_PATH
             rm -rf .output-temp/
             unzip -qq nuxt.zip -d .output-temp/
             rm -rf .output
@@ -68,4 +78,4 @@ jobs:
             cp -f .output-temp/ecosystem.config.cjs ecosystem.config.cjs
             pm2 startOrReload ecosystem.config.cjs -s --only cabral.ro
             pm2 save -s
-          '
+          "

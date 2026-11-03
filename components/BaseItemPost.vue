@@ -1,50 +1,43 @@
 <template>
-    <router-link
-        v-slot="{ navigate }"
-        custom
-        :to="postTo(slug)"
-    >
+    <div class="card">
         <div
-            class="card"
-            @click="navigate"
+            v-if="img"
+            class="card-img-top"
         >
-            <div
-                v-if="img"
-                class="card-img-top"
-            >
-                <div class="img">
-                    <img
-                        :loading="imgLoading"
-                        :src="img.src"
-                        :srcset="img.srcset"
-                        :sizes="img.sizes"
-                        :width="img.width"
-                        :height="img.height"
-                        :alt="img.alt"
-                    >
-                </div>
-                <list-item-info
-                    :data="imgInfo"
-                />
+            <div class="img">
+                <img
+                    :loading="imgLoading"
+                    :src="img.src"
+                    :srcset="img.srcset"
+                    :sizes="img.sizes"
+                    :width="img.width"
+                    :height="img.height"
+                    :alt="img.alt"
+                >
             </div>
-            <div class="card-body">
-                <h2 class="card-title">
-                    <router-link
-                        :to="postTo(slug)"
-                        v-html="title /* eslint-disable-line vue/no-v-html, vue/no-v-text-v-html-on-component */"
-                    />
-                </h2>
-                <list-item-info
-                    :data="bodyInfo"
-                />
-                <div
-                    v-if="bodyText"
-                    class="card-text"
-                    v-html="bodyText/* eslint-disable-line vue/no-v-html */"
-                />
-            </div>
+            <list-item-info
+                :data="imgInfo"
+            />
         </div>
-    </router-link>
+        <div class="card-body">
+            <h2 class="card-title">
+                <router-link
+                    :to="postTo(slug)"
+                    class="stretched-link"
+                >
+                    <span v-html="title /* eslint-disable-line vue/no-v-html */" />
+                </router-link>
+            </h2>
+            <list-item-info
+                :data="bodyInfo"
+            />
+            <div
+                v-if="bodyText"
+                class="card-text"
+                v-html="bodyText/* eslint-disable-line vue/no-v-html */"
+            />
+        </div>
+    </div>
 </template>
 
 <script>

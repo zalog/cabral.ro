@@ -61,7 +61,7 @@ export default {
                     }
 
                     return curr;
-                });
+                }, keyPages[0]);
 
                 del(state, [keyToDelete]);
             }

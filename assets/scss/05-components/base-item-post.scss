@@ -33,7 +33,6 @@ $card-border-color:           transparent;
 }
 
 .card {
-    cursor: pointer;
     border: 0;
     box-shadow: $box-shadow-lg;
 
@@ -75,6 +74,11 @@ $card-border-color:           transparent;
 
         .list-item-info {
             margin-top: -(map.get($spacers, 2));
+
+            a {
+                position: relative;
+                z-index: $stretched-link-z-index + 1;
+            }
         }
     }
 }

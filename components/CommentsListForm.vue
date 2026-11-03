@@ -3,6 +3,7 @@
         class="form-reply"
         novalidate
         @click="formOpen"
+        @keyup="formOpen"
         @submit.prevent="formSubmit"
     >
         <div class="label text-muted">

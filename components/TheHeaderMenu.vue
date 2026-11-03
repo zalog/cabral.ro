@@ -52,7 +52,14 @@
                 class="navbar-body-search"
                 @submit.prevent="goToSearch($event)"
             >
+                <label
+                    for="navbar-search"
+                    class="visually-hidden"
+                >
+                    Caută
+                </label>
                 <input
+                    id="navbar-search"
                     type="search"
                     class="form-control form-control-sm"
                     name="s"
