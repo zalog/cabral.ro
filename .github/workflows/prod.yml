@@ -44,7 +44,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: npm clean install
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: npm build
         run: |
