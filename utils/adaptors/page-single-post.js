@@ -18,7 +18,7 @@ export default (payload) => {
         && featuredMedia.width > 1200
     ) || false;
 
-    let related = payload['jetpack-related-posts']
+    let related = (payload['jetpack-related-posts'] ?? [])
         .filter((post) => post.img.src !== '');
     if (related.length > 3) related.splice(3);
     related = related.map((post) => {

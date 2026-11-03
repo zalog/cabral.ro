@@ -28,7 +28,7 @@
                 :url="data.main.link"
             />
             <list-related
-                v-if="data.related"
+                v-if="data.related?.length"
                 :data="data.related"
             />
             <div
