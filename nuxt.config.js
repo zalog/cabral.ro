@@ -1,4 +1,4 @@
-import { SITE } from './utils/constants';
+import { SITE, WP_HOST } from './utils/constants';
 
 export default {
     modules: [
@@ -21,7 +21,7 @@ export default {
         '~/assets/scss/app.scss',
     ],
     runtimeConfig: {
-        wpUrl: 'https://www.cabral.ro',
+        wpUrl: WP_HOST,
     },
     routeRules: {
         '/**': { swr: 300 },

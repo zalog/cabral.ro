@@ -1,6 +1,7 @@
 const HOST = 'https://www.cabral.ro';
+export const WP_HOST = 'https://wp.cabral.ro';
 const API = '/api/wp/';
-const WP_API = `${HOST}/wp-json/`;
+const WP_API = `${WP_HOST}/wp-json/`;
 
 export const ENDPOINTS = {
     HEAD: `${API}yoast/v1/get_head`,
