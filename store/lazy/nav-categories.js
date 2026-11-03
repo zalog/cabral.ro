@@ -21,7 +21,6 @@ export default {
                     per_page: 10,
                 },
                 fields: ['name', 'link'],
-                adaptor: 'navCategories',
             });
 
             commit('SET', response);

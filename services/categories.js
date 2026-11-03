@@ -4,7 +4,6 @@ import { navCategories } from '../utils/adaptors';
 const fetchCategories = async ({
     params,
     fields,
-    adaptor,
 }) => {
     try {
         if (fields) {
@@ -18,10 +17,7 @@ const fetchCategories = async ({
             query: params,
         });
 
-        let adaptorFunction;
-        if (adaptor === 'navCategories') adaptorFunction = navCategories;
-
-        return adaptorFunction(response);
+        return navCategories(response);
     } catch (error) {
         throw error.response;
     }
