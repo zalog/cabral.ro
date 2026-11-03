@@ -89,6 +89,7 @@ import CommentsList from '~/components/CommentsList.vue';
 const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
 
 const galleryFullHash = 'pid';
+const imageFile = /\.(avif|gif|jpe?g|png|webp)$/i;
 
 export default defineNuxtComponent({
     components: {
@@ -188,24 +189,23 @@ export default defineNuxtComponent({
 
             if (!imgs.length) return;
 
-            imgs.forEach((img, imgIndex) => {
+            imgs.forEach((img) => {
                 const a = img.parentElement;
 
-                if (!(a instanceof HTMLAnchorElement)) return;
+                if (!(a instanceof HTMLAnchorElement) || !imageFile.test(a.pathname)) return;
 
+                const index = this.galleryFull.items.length;
                 const src = img.getAttribute('data-orig-file') || a.getAttribute('href');
                 this.galleryFull.items.push({
                     src,
                 });
-
-                if (!this.galleryFull.items.length) return;
 
                 a.addEventListener('click', (event) => {
                     event.preventDefault();
 
                     this.galleryFull = {
                         show: true,
-                        index: imgIndex,
+                        index,
                         items: this.galleryFull.items,
                     };
                 });

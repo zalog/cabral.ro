@@ -87,7 +87,7 @@ export default {
             component: PageSingle,
             meta: {
                 class: 'single',
-                middleware: 'single-data',
+                middleware: ['attachment-redirect', 'single-data'],
             },
         },
         {

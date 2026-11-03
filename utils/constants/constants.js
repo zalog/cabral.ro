@@ -10,6 +10,7 @@ export const ENDPOINTS = {
     CATEGORIES: `${API}wp/v2/categories`,
     TAGS: `${API}wp/v2/tags`,
     PAGES: `${API}wp/v2/pages`,
+    MEDIA: `${API}wp/v2/media`,
     COMMENTS: `${API}wp/v2/comments`,
     COMMENTS_POST: `${WP_API}wp/v2/comments`,
     FORM_WPCF7: (id) => `${WP_API}contact-form-7/v1/contact-forms/${id}/feedback`,
