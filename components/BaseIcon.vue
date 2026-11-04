@@ -3,7 +3,10 @@
         class="relative mt-[-3px] inline-flex aspect-square items-center justify-center align-middle leading-0"
         :class="sizeClass"
     >
-        <svg class="absolute top-1/2 left-1/2 z-1 size-full -translate-1/2 fill-current">
+        <svg
+            class="absolute top-1/2 left-1/2 z-1 size-full -translate-1/2 fill-current"
+            aria-hidden="true"
+        >
             <use
                 :href="href"
                 class="pointer-events-none"
