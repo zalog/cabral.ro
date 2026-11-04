@@ -36,3 +36,11 @@ server checks `prod` every 5 minutes and runs the new image.
 The server health check requests `/favicon.ico`. If a new image does
 not answer it, the server goes back to the previous image, so
 `public/favicon.ico` must stay.
+
+## Rollback
+
+Run the `prod` workflow by hand (Actions, `prod`, Run workflow) with a
+version that was already released, for example `8.3.3`. It moves the
+`prod` tag to that image without a new build. Do this also when the
+server went back to the previous image on its own, because `prod` still
+points to the image that failed.
