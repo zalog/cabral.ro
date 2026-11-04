@@ -36,32 +36,6 @@
                 class="mb-12"
                 :data="data.related"
             />
-            <div
-                v-observe-visibility="false && data.main.categories
-                    ? {
-                        callback: isVisible => isVisible && (load.banners = true),
-                        once: true,
-                    }
-                    : false
-                "
-                class="mb-12"
-            >
-                <lazy-base-banners v-if="load.banners">
-                    <a
-                        href="http://www.runningmag.ro/"
-                        target="_blank"
-                        title="runningmag.ro"
-                        rel="external nofollow noopener"
-                    >
-                        <img
-                            src="https://www.cabral.ro/ads/300x250-runningmag.ro-26012018.png"
-                            width="300"
-                            height="250"
-                            alt="runningmag.ro"
-                        >
-                    </a>
-                </lazy-base-banners>
-            </div>
             <comments-list
                 ref="comments"
                 class="mb-12"
@@ -121,9 +95,6 @@ export default defineNuxtComponent({
     },
 
     data: () => ({
-        load: {
-            banners: false,
-        },
         galleryFull: {
             show: null,
             index: null,
