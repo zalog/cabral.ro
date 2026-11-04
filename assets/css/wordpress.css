@@ -222,6 +222,7 @@
             @apply text-center align-middle text-base select-none;
             @apply transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out;
             @apply focus-visible:ring-4 focus-visible:outline-none;
+            @apply disabled:pointer-events-none disabled:opacity-65;
         }
 
         & .btn-outline-secondary {
