@@ -8,7 +8,12 @@ const constants = {
         fieldInvalidFeedback: 'invalid-feedback',
         hide: 'hidden',
     },
+    message: {
+        fetchError: 'Mesajul nu a fost trimis. Încearcă din nou.',
+    },
 };
+
+const initializedForms = new WeakSet();
 
 export default class {
     constructor(form) {
@@ -17,11 +22,22 @@ export default class {
 
     #messageEl = null;
 
+    #submitEl = null;
+
+    #sending = false;
+
     init() {
+        if (initializedForms.has(this.form)) return;
+        initializedForms.add(this.form);
+
         this.#messageEl = this.form.querySelector(`.${constants.class.response}`);
+        this.#submitEl = this.form.querySelector('[type="submit"]');
 
         const onSubmit = (event) => {
             event.preventDefault();
+
+            if (this.#sending) return;
+            this.#setSending(true);
 
             this.#feedbackReset();
 
@@ -43,10 +59,19 @@ export default class {
                 this.#feedback(status, invalidFields, message);
             }).catch((error) => {
                 console.error('fetch error contact form: ', error);
+                this.#feedbackFetchError();
+            }).finally(() => {
+                this.#setSending(false);
             });
         };
 
         this.form.addEventListener('submit', onSubmit);
+    }
+
+    #setSending(sending) {
+        this.#sending = sending;
+
+        if (this.#submitEl) this.#submitEl.disabled = sending;
     }
 
     #getEndpoint() {
@@ -88,6 +113,11 @@ export default class {
 
         this.#messageEl.textContent = message;
         this.#messageEl.classList.add('alert', `alert-${classNameAlertMessage}`);
+    }
+
+    #feedbackFetchError() {
+        this.#messageEl.textContent = constants.message.fetchError;
+        this.#messageEl.classList.add('alert', 'alert-danger');
     }
 
     #feedbackReset() {
