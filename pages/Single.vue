@@ -1,7 +1,11 @@
 <template>
     <div v-if="data">
-        <div class="entry-body">
-            <div class="entry-header">
+        <div
+            :class="data.main.featuredMedia
+                ? '-mx-3 -mt-[100px] rounded-t-lg bg-white p-3 sm:-mx-6 sm:px-6 sm:pt-6 sm:pb-0'
+                : 'mb-12'"
+        >
+            <div class="mb-4">
                 <h1
                     v-html="data.main.title /* eslint-disable-line vue/no-v-html */"
                 />
@@ -20,15 +24,16 @@
             </div>
             <div
                 ref="content"
-                class="entry-content"
+                class="wp-content entry-content mb-12 font-serif text-xl/[1.9] break-words"
                 v-html="data.main.content.rendered/* eslint-disable-line vue/no-v-html */"
             />
             <list-share
-                class="scroll-x scroll-hide-bar"
+                class="mb-12 overflow-x-auto whitespace-nowrap scrollbar-none"
                 :url="data.main.link"
             />
             <list-related
                 v-if="data.related?.length"
+                class="mb-12"
                 :data="data.related"
             />
             <div
@@ -39,6 +44,7 @@
                     }
                     : false
                 "
+                class="mb-12"
             >
                 <lazy-base-banners v-if="load.banners">
                     <a
@@ -58,6 +64,7 @@
             </div>
             <comments-list
                 ref="comments"
+                class="mb-12"
                 :comments="data.comments"
                 :single-id="data.main.id"
                 :single-comment-status="data.main.commentStatus"
@@ -86,7 +93,7 @@ import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
 import CommentsList from '~/components/CommentsList.vue';
 
-const cssGallery = () => import('../assets/scss/05-components/gallery-tiled.scss');
+const cssGallery = () => import('../assets/css/gallery-tiled.css');
 
 const galleryFullHash = 'pid';
 const imageFile = /\.(avif|gif|jpe?g|png|webp)$/i;
@@ -229,7 +236,3 @@ export default defineNuxtComponent({
     },
 });
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/07-trumps/page-single";
-</style>

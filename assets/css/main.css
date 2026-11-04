@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "./wordpress.css";
+
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-sm: 36rem;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 62rem;
+    --breakpoint-xl: 75rem;
+
+    --color-*: initial;
+    --color-white: #fff;
+    --color-black: #000;
+    --color-gray-100: #f8f9fa;
+    --color-gray-200: #e9ecef;
+    --color-gray-300: #dee2e6;
+    --color-gray-400: #ced4da;
+    --color-gray-500: #adb5bd;
+    --color-gray-600: #6c757d;
+    --color-gray-700: #495057;
+    --color-gray-800: #343a40;
+    --color-gray-900: #212529;
+    --color-primary: #0d6efd;
+    --color-primary-200: #bed8fe;
+    --color-primary-300: #86b7fe;
+    --color-primary-700: #0a58ca;
+    --color-secondary: #212529;
+    --color-secondary-50: #e9e9ea;
+    --color-secondary-100: #d3d3d4;
+    --color-secondary-800: #171a1d;
+    --color-success: #198754;
+    --color-success-50: #e8f3ee;
+    --color-success-100: #d1e7dd;
+    --color-success-800: #125f3b;
+    --color-danger: #dc3545;
+    --color-danger-50: #fcebec;
+    --color-danger-100: #f8d7da;
+    --color-danger-800: #9a2530;
+    --color-warning: #ffc107;
+    --color-facebook: #3b5998;
+    --color-whatsapp: #25d366;
+    --color-twitter: #1da1f2;
+
+    --font-sans: "Open Sans", sans-serif;
+    --font-serif: "Merriweather", serif;
+
+    --text-sm--line-height: 1.5;
+    --text-xl--line-height: 1.5;
+
+    --radius-sm: .3rem;
+    --radius-md: .4rem;
+    --radius-lg: .5rem;
+
+    --shadow-*: initial;
+    --shadow-sm: 0 .125rem .25rem rgb(0 0 0 / 7.5%);
+    --shadow-md: 0 .5rem 1rem rgb(0 0 0 / 15%);
+    --shadow-lg: 0 1rem 3rem rgb(0 0 0 / 17.5%);
+
+    --animate-spin: spin .75s linear infinite;
+    --animate-highlight: highlight .25s linear 5 alternate;
+
+    @keyframes highlight {
+        from {
+            background: var(--color-warning);
+        }
+        to {
+            background: none;
+        }
+    }
+}
+
+@layer base {
+    :root {
+        --icon-invalid: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+
+        @variant motion-safe {
+            scroll-behavior: smooth;
+        }
+    }
+
+    body {
+        @apply bg-white text-gray-900 antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-bottom: .5rem;
+        font-family: var(--font-serif);
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    h1 {
+        font-size: calc(1.375rem + 1.5vw);
+
+        @variant xl {
+            font-size: 2.5rem;
+        }
+    }
+
+    h2 {
+        font-size: calc(1.325rem + .9vw);
+
+        @variant xl {
+            font-size: 2rem;
+        }
+    }
+
+    h3 {
+        font-size: calc(1.3rem + .6vw);
+
+        @variant xl {
+            font-size: 1.75rem;
+        }
+    }
+
+    h4 {
+        font-size: calc(1.275rem + .3vw);
+
+        @variant xl {
+            font-size: 1.5rem;
+        }
+    }
+
+    h5 {
+        font-size: 1.25rem;
+    }
+
+    h6 {
+        font-size: 1rem;
+    }
+
+    a {
+        color: var(--color-primary);
+        text-decoration: underline;
+
+        &:hover {
+            color: var(--color-primary-700);
+        }
+    }
+
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+@utility scrollbar-none {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

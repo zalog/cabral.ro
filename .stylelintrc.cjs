@@ -1,6 +1,6 @@
 module.exports = {
     extends: [
-        'stylelint-config-standard-scss',
+        'stylelint-config-standard',
         '@stylistic/stylelint-config',
         'stylelint-config-recess-order',
     ],
@@ -17,11 +17,18 @@ module.exports = {
         'no-descending-specificity': null,
         'selector-class-pattern': null,
         'selector-id-pattern': null,
-
-        'scss/load-no-partial-leading-underscore': true,
-        'scss/no-duplicate-mixins': true,
-        'scss/dollar-variable-colon-space-after': 'at-least-one-space',
-        'scss/dollar-variable-empty-line-before': null,
+        'at-rule-no-unknown': [true, {
+            ignoreAtRules: ['theme', 'utility', 'variant', 'apply'],
+        }],
+        'at-rule-prelude-no-invalid': [true, {
+            ignoreAtRules: ['apply'],
+        }],
+        'custom-property-empty-line-before': null,
+        'custom-property-pattern': null,
+        'import-notation': 'string',
+        'nesting-selector-no-missing-scoping-root': [true, {
+            ignoreAtRules: ['utility'],
+        }],
 
         '@stylistic/indentation': 4,
         '@stylistic/no-multiple-whitespaces': null,

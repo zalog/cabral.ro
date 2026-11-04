@@ -1,5 +1,5 @@
 <template>
-    <div class="app-Footer">
+    <div class="p-3 text-center shadow-lg">
         {{ `Copyright &copy; 2007 - ${new Date().getFullYear()} ${SITE.TITLE}` }}
     </div>
 </template>
@@ -13,7 +13,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/the-footer";
-</style>

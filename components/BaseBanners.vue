@@ -1,10 +1,6 @@
 <template>
-    <div class="banners">
-        <small>Parteneri</small>
+    <div class="flex flex-wrap justify-center text-center *:m-2">
+        <small class="flex-[1_0_100%] text-[.875em]">Parteneri</small>
         <slot />
     </div>
 </template>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/banners";
-</style>

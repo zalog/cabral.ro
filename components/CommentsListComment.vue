@@ -1,6 +1,6 @@
 <template>
-    <div class="comment">
-        <div class="comment-header">
+    <div class="bg-gray-100 p-6 text-gray-700 [&_a]:text-inherit">
+        <div class="mb-4">
             <template v-if="comment.author.node">
                 <template v-if="!comment.author.node.url">
                     {{ comment.author.node.name }}
@@ -22,7 +22,7 @@
             />
         </div>
         <div
-            class="comment-content"
+            class="wp-content break-words [&_iframe]:max-w-full [&>p:last-child]:mb-0"
             v-html="comment.content/* eslint-disable-line vue/no-v-html */"
         />
     </div>
@@ -49,7 +49,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/comments-list-comment";
-</style>

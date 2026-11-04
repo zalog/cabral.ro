@@ -1,6 +1,6 @@
 <template>
-    <div class="box">
-        <h3 class="box-title">
+    <div class="space-y-4">
+        <h3 class="text-2xl/[1.2]">
             {{ header.title }}
         </h3>
         <p v-if="header.subtitle">
@@ -14,21 +14,21 @@
 
         <ul
             v-if="!hideComments"
-            class="list-comments"
+            class="*:mt-6 *:bg-white *:shadow-sm"
         >
             <li>
-                <div class="comment">
-                    <div class="comment-header d-flex justify-content-between">
+                <div class="bg-gray-100 p-6 text-gray-700 [&_a]:text-inherit">
+                    <div class="mb-4 flex justify-between">
                         <a
                             href="https://zalog.ro/"
                             target="_blank"
                             rel="external noopener"
                         >Catalin Zălog</a>
-                        <div class="small">
+                        <div class="text-[.875em]">
                             publicitate
                         </div>
                     </div>
-                    <div class="comment-content">
+                    <div class="break-words">
                         <p>
                             Colaborez cu cabral de prin 2014. Îmi place pentru că apreciază <a
                                 href="https://zalog.ro/"
@@ -53,7 +53,10 @@
                     :comment="comment"
                 />
 
-                <ul v-if="comment.replies && comment.replies.nodes.length">
+                <ul
+                    v-if="comment.replies && comment.replies.nodes.length"
+                    class="border-t border-gray-300"
+                >
                     <li
                         v-for="commentReply in comment.replies.nodes"
                         :id="`comment-${commentReply.databaseId}`"
@@ -75,7 +78,7 @@
                     }"
                 />
             </li>
-            <li class="py-4 text-center">
+            <li class="hidden py-4 text-center in-[.loading]:block">
                 <base-spinner />
             </li>
         </ul>
@@ -141,7 +144,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/comments-list";
-</style>

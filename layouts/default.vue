@@ -1,11 +1,11 @@
 <template>
-    <div class="layout-default">
+    <div class="flex min-h-screen flex-col">
         <the-header />
         <layout-hero
             v-if="singleFeaturedMedia"
             :img="singleFeaturedMedia"
         />
-        <div class="container-fluid">
+        <div class="flex grow flex-col p-3 sm:py-6">
             <slot />
         </div>
         <the-footer />
@@ -34,7 +34,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/07-trumps/layout-default";
-</style>
