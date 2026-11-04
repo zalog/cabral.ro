@@ -28,7 +28,7 @@
                             publicitate
                         </div>
                     </div>
-                    <div class="break-words">
+                    <div class="wrap-break-word">
                         <p>
                             Colaborez cu cabral de prin 2014. Îmi place pentru că apreciază <a
                                 href="https://zalog.ro/"

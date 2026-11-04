@@ -2,7 +2,7 @@
     <div v-if="data">
         <div
             :class="data.main.featuredMedia
-                ? '-mx-3 -mt-[100px] rounded-t-lg bg-white p-3 sm:-mx-6 sm:px-6 sm:pt-6 sm:pb-0'
+                ? '-mx-3 mt-[-100px] rounded-t-lg bg-white p-3 sm:-mx-6 sm:px-6 sm:pt-6 sm:pb-0'
                 : 'mb-12'"
         >
             <div class="mb-4">
@@ -24,7 +24,7 @@
             </div>
             <div
                 ref="content"
-                class="wp-content entry-content mb-12 font-serif text-xl/[1.9] break-words"
+                class="wp-content entry-content mb-12 font-serif text-xl/[1.9] wrap-break-word"
                 v-html="data.main.content.rendered/* eslint-disable-line vue/no-v-html */"
             />
             <list-share

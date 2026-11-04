@@ -7,7 +7,7 @@
         aria-live="assertive"
         aria-atomic="true"
     >
-        <div class="p-3 break-words">
+        <div class="p-3 wrap-break-word">
             <slot />
         </div>
     </div>

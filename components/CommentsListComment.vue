@@ -22,7 +22,7 @@
             />
         </div>
         <div
-            class="wp-content break-words [&_iframe]:max-w-full [&>p:last-child]:mb-0"
+            class="wp-content wrap-break-word [&_iframe]:max-w-full [&>p:last-child]:mb-0"
             v-html="comment.content/* eslint-disable-line vue/no-v-html */"
         />
     </div>

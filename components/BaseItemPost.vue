@@ -1,5 +1,5 @@
 <template>
-    <div class="relative flex min-w-0 flex-col rounded-lg bg-white break-words shadow-lg">
+    <div class="relative flex min-w-0 flex-col rounded-lg bg-white wrap-break-word shadow-lg">
         <div
             v-if="img"
             class="relative overflow-hidden rounded-t-lg"
@@ -37,7 +37,7 @@
             />
             <div
                 v-if="bodyText"
-                class="wp-content [&>:last-child]:mb-0 [&>p_a]:hidden"
+                class="wp-content *:last:mb-0 [&>p_a]:hidden"
                 v-html="bodyText/* eslint-disable-line vue/no-v-html */"
             />
         </div>

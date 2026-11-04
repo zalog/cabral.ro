@@ -20,6 +20,7 @@ export default withNuxt({
         },
     },
     rules: {
+        'better-tailwindcss/enforce-canonical-classes': 'warn',
         'better-tailwindcss/enforce-consistent-class-order': 'warn',
     },
 });
