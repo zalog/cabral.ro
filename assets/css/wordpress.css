@@ -1,0 +1,243 @@
+@layer components {
+    .wp-content {
+        & :where(p, ul, ol, dl, pre) {
+            margin-bottom: 1rem;
+        }
+
+        & :where(ul, ol) {
+            padding-left: 2rem;
+            list-style: revert;
+        }
+
+        & :where(ul, ol) :where(ul, ol) {
+            margin-bottom: 0;
+        }
+
+        & :where(blockquote, figure) {
+            margin-bottom: 1rem;
+        }
+
+        & :where(img, svg, video, canvas, audio, iframe, embed, object) {
+            display: revert;
+        }
+
+        & :where(video, canvas, audio, iframe, embed, object) {
+            vertical-align: revert;
+        }
+
+        & :where(hr) {
+            margin-block: 1rem;
+            opacity: .25;
+        }
+
+        & :where(small) {
+            font-size: .875em;
+        }
+
+        & :where(pre) {
+            overflow: auto;
+            font-size: .875em;
+        }
+
+        & :where(td, th) {
+            padding: 1px;
+        }
+
+        & :where(th) {
+            text-align: inherit;
+        }
+
+        & .aligncenter {
+            display: block;
+            margin-inline: auto;
+        }
+
+        & .alignleft {
+            float: left;
+            margin-right: 1rem;
+        }
+
+        & .alignright {
+            float: right;
+            margin-left: 1rem;
+        }
+
+        & .clearfix::after {
+            clear: both;
+            display: block;
+            content: "";
+        }
+    }
+
+    .entry-content {
+        &::after {
+            clear: both;
+            display: block;
+            content: "";
+        }
+
+        & > * {
+            margin-bottom: 1rem;
+        }
+
+        & img {
+            width: auto !important;
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        & p > iframe,
+        & p > object {
+            display: block;
+            max-width: 100%;
+            margin-inline: auto;
+        }
+
+        & > figure,
+        & .wp-block-image,
+        & .wp-block-embed {
+            text-align: center;
+        }
+
+        @variant xl {
+            & > figure,
+            & .wp-block-image,
+            & .wp-block-embed,
+            & .embed-youtube {
+                margin-inline: -180px;
+            }
+        }
+
+        & .wp-block-embed {
+            position: relative;
+            display: block;
+            overflow: hidden;
+
+            &.is-type-video {
+                aspect-ratio: 16 / 9;
+            }
+
+            &.is-type-video .wp-block-embed__wrapper {
+                position: absolute;
+                inset: 0;
+
+                & > * {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        & .embed-youtube {
+            position: relative;
+            display: block;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+
+            & .youtube-player {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        & .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        & .gallery-item {
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        & .gallery-columns-1 .gallery-item { flex-basis: calc(100% - 3px); }
+        & .gallery-columns-2 .gallery-item { flex-basis: calc(100% / 2 - 3px); }
+        & .gallery-columns-3 .gallery-item { flex-basis: calc(100% / 3 - 3px); }
+        & .gallery-columns-4 .gallery-item { flex-basis: calc(100% / 4 - 3px); }
+        & .gallery-columns-5 .gallery-item { flex-basis: calc(100% / 5 - 3px); }
+        & .gallery-columns-6 .gallery-item { flex-basis: calc(100% / 6 - 3px); }
+        & .gallery-columns-7 .gallery-item { flex-basis: calc(100% / 7 - 3px); }
+        & .gallery-columns-8 .gallery-item { flex-basis: calc(100% / 8 - 3px); }
+        & .gallery-columns-9 .gallery-item { flex-basis: calc(100% / 9 - 3px); }
+
+        & .gallery-icon {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+
+            & img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                translate: -50% -50%;
+            }
+        }
+
+        & .gallery-caption {
+            display: block;
+            padding-block: 1rem;
+            font-size: .875rem;
+        }
+
+        & [class*="gallery-columns"] .gallery-caption {
+            display: none;
+        }
+    }
+
+    .wpcf7 {
+        & label {
+            display: inline-block;
+        }
+
+        & .form-control {
+            @apply block w-full appearance-none rounded-md border border-gray-400 bg-white bg-clip-padding;
+            @apply px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-600;
+            @apply transition-[border-color,box-shadow] duration-150 ease-in-out;
+            @apply focus:border-primary-300 focus:ring-4 focus:ring-primary/25 focus:outline-none;
+        }
+
+        & .form-control.is-invalid {
+            @apply border-danger pr-[calc(1.5em+.75rem)] focus:border-danger focus:ring-danger/25;
+            @apply bg-(image:--icon-invalid) bg-size-[calc(.75em+.375rem)] bg-no-repeat;
+            @apply bg-position-[right_calc(.375em+.1875rem)_center];
+        }
+
+        & textarea.form-control.is-invalid {
+            @apply bg-position-[right_calc(.375em+.1875rem)_top_calc(.375em+.1875rem)];
+        }
+
+        & .invalid-feedback {
+            @apply mt-1 hidden w-full text-[.875em] text-danger;
+        }
+
+        & .is-invalid ~ .invalid-feedback {
+            @apply block;
+        }
+
+        & .btn {
+            @apply inline-block cursor-pointer rounded-md border px-3 py-1.5;
+            @apply text-center align-middle text-base select-none;
+            @apply transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out;
+            @apply focus-visible:ring-4 focus-visible:outline-none;
+        }
+
+        & .btn-outline-secondary {
+            @apply border-secondary text-secondary hover:bg-secondary hover:text-white focus-visible:ring-secondary/50;
+        }
+
+        & .alert {
+            @apply relative mb-4 rounded-md border p-4;
+        }
+
+        & .alert-success {
+            @apply border-success-100 bg-success-50 text-success-800;
+        }
+
+        & .alert-danger {
+            @apply border-danger-100 bg-danger-50 text-danger-800;
+        }
+    }
+}

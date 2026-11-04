@@ -1,25 +1,19 @@
 <template>
-    <div class="w-100vw p-3 p-lg-5 bg-light">
-        <div class="box">
-            <h3 class="box-title">
+    <div class="ml-[50%] w-screen -translate-x-1/2 bg-gray-100 p-4 lg:p-12">
+        <div class="space-y-4">
+            <h3 class="text-2xl/[1.2]">
                 Pe aceeași temă
             </h3>
 
-            <div class="box-body">
-                <div class="row row-related">
-                    <div
-                        v-for="(post, index) in data"
-                        :key="`related-${index}`"
-                        class="col-sm-4 mb-3 mb-sm-0"
-                    >
-                        <base-item-post
-                            :img="post.featuredMedia"
-                            :title="post.title"
-                            :slug="post.slug"
-                            :body-text="post.excerpt"
-                        />
-                    </div>
-                </div>
+            <div class="grid gap-4 sm:grid-cols-3 sm:gap-6 [&_h2]:text-base/[1.2]">
+                <base-item-post
+                    v-for="(post, index) in data"
+                    :key="`related-${index}`"
+                    :img="post.featuredMedia"
+                    :title="post.title"
+                    :slug="post.slug"
+                    :body-text="post.excerpt"
+                />
             </div>
         </div>
     </div>
@@ -41,7 +35,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/list-related";
-</style>

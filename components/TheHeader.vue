@@ -1,5 +1,5 @@
 <template>
-    <div class="app-Header">
+    <div class="shadow-lg">
         <the-header-menu :data="$store.state.ui.menu" />
         <the-header-categories :data="$store.state.ui['nav-categories']" />
     </div>
@@ -29,7 +29,3 @@ export default defineNuxtComponent({
     },
 });
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/the-header";
-</style>

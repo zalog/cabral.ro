@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import { SITE, WP_HOST } from './utils/constants';
 
 export default {
@@ -18,7 +19,7 @@ export default {
         },
     },
     css: [
-        '~/assets/scss/app.scss',
+        '~/assets/css/main.css',
     ],
     runtimeConfig: {
         wpUrl: WP_HOST,
@@ -42,17 +43,12 @@ export default {
         },
     },
     vite: {
+        plugins: [
+            tailwindcss(),
+        ],
         build: {
             // svg sprites are referenced by `<use href>`, which does not load data URIs
             assetsInlineLimit: (filePath) => (filePath.endsWith('.svg') ? false : undefined),
-        },
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    quietDeps: true,
-                    silenceDeprecations: ['import'],
-                },
-            },
         },
     },
     eslint: {

@@ -8,14 +8,13 @@
     "nuxt:build": "nuxt build",
     "nuxt:start": "nuxt preview",
     "lint": "npm run lint:css && npm run lint:js",
-    "lint:css": "stylelint '**/*.{scss,vue}'",
+    "lint:css": "stylelint '**/*.{css,vue}'",
     "lint:js": "eslint .",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "bootstrap": "^5.3.8",
     "jw-paginate": "^1.0.4",
     "nuxt": "^4.6.3",
     "photoswipe": "^5.4.4",
@@ -28,13 +27,15 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.17.0",
     "@stylistic/stylelint-config": "^5.0.0",
+    "@tailwindcss/vite": "^4.3.4",
     "eslint": "^10.14.0",
+    "eslint-plugin-better-tailwindcss": "^4.10.0",
     "postcss-html": "^2.0.0",
-    "sass": "^1.107.1",
     "stylelint": "^17.16.0",
     "stylelint-config-recess-order": "^7.9.0",
-    "stylelint-config-standard-scss": "^17.0.0",
-    "stylelint-order": "^8.1.2"
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.2",
+    "tailwindcss": "^4.3.4"
   },
   "type": "module"
 }

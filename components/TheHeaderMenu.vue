@@ -1,44 +1,53 @@
 <template>
-    <nav
-        class="navbar navbar-expand-sm navbar-dark bg-dark"
-        :class="{ 'navbar-body-main-open': show.navbarBodyMain }"
-    >
-        <div class="container-fluid">
-            <div class="navbar-bar">
+    <nav class="relative flex flex-wrap items-center justify-between bg-gray-900 py-2 sm:flex-nowrap sm:justify-start sm:py-4">
+        <div class="flex w-full flex-col flex-wrap justify-between px-3 *:mb-4 sm:flex-row sm:items-center sm:*:mb-0">
+            <div class="flex justify-between">
                 <nuxt-link
                     :to="'/'"
-                    class="navbar-brand"
+                    class="mr-4 py-[.3125rem] text-xl whitespace-nowrap text-white no-underline"
                     @click="menuClose()"
                 >
                     {{ SITE.TITLE }}
                 </nuxt-link>
 
                 <button
+                    ref="toggler"
                     type="button"
-                    class="navbar-toggler"
+                    class="rounded-md border border-transparent px-3 py-1 text-xl leading-none text-white/55 focus:ring-4 focus:outline-none sm:hidden"
                     aria-controls="navbar-body-main"
                     :aria-expanded="show.navbarBodyMain && 'true' || 'false'"
                     aria-label="Toggle navigation"
                     @click="menuToggle()"
                 >
-                    <span class="navbar-toggler-icon" />
+                    <svg
+                        class="inline-block size-[1.5em] align-middle"
+                        viewBox="0 0 30 30"
+                        aria-hidden="true"
+                    >
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                            d="M4 7h22M4 15h22M4 23h22"
+                        />
+                    </svg>
                 </button>
             </div>
 
             <div
                 id="navbar-body-main"
-                class="navbar-body-main"
+                class="flex-[1_0_auto] sm:mr-4 sm:block"
+                :class="{ hidden: !show.navbarBodyMain }"
             >
-                <ul class="navbar-nav">
+                <ul class="flex flex-col sm:flex-row">
                     <li
                         v-for="item in data"
                         :key="item.ID"
-                        class="nav-item"
                     >
                         <nuxt-link
                             :to="item.to"
-                            class="nav-link"
-                            exact-active-class="active"
+                            class="block py-2 text-white/55 no-underline transition-colors duration-150 ease-in-out hover:text-white/75 aria-[current=page]:text-white sm:px-2"
                             @click="menuClose()"
                         >
                             {{ item.title }}
@@ -49,19 +58,20 @@
 
             <form
                 action="/"
-                class="navbar-body-search"
+                class="flex-[1_0_auto] lg:max-w-[20%]"
                 @submit.prevent="goToSearch($event)"
             >
                 <label
                     for="navbar-search"
-                    class="visually-hidden"
+                    class="sr-only"
                 >
                     Caută
                 </label>
                 <input
                     id="navbar-search"
+                    ref="search"
                     type="search"
-                    class="form-control form-control-sm"
+                    class="block min-h-[calc(1.5em+.5rem+2px)] w-full appearance-none rounded-sm border border-transparent bg-white/2 bg-clip-padding px-2 py-1 text-sm text-white transition-[border-color,box-shadow] duration-150 ease-in-out placeholder:text-gray-600 focus:border-primary-300 focus:bg-white/6 focus:outline-none"
                     name="s"
                     :value="$route.query.s"
                     placeholder="Caută aici..."
@@ -116,10 +126,10 @@ export default {
             this.menuClose();
         },
         onMenuOpenClick(event) {
-            const clickedTo = (classes) => classes
-                .some((className) => event.target.classList.contains(className));
+            const clickedTo = (refs) => refs
+                .some((ref) => this.$refs[ref].contains(event.target));
 
-            if (!clickedTo(['navbar-toggler', 'navbar-toggler-icon', 'form-control'])) {
+            if (!clickedTo(['toggler', 'search'])) {
                 this.menuClose();
             }
         },
@@ -131,7 +141,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/the-header-menu";
-</style>

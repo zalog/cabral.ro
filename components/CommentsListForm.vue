@@ -1,74 +1,77 @@
 <template>
     <form
-        class="form-reply"
+        class="group"
+        :class="isReply
+            ? '-mt-6 bg-gray-100 px-6 pt-4 pb-6'
+            : 'sticky top-0 z-1020 bg-white p-6 shadow-md'"
         novalidate
         @click="formOpen"
         @keyup="formOpen"
         @submit.prevent="formSubmit"
     >
-        <div class="label text-muted">
+        <div
+            class="max-h-[30px] overflow-hidden text-gray-900/75 transition-[max-height,opacity] duration-200 ease-[ease] group-[.open]:max-h-0 group-[.open]:opacity-0"
+            :class="{ 'text-sm': isReply }"
+        >
             {{ data.label || 'Lasă un comentariu la acest articol...' }}
         </div>
 
-        <div class="form">
-            <div class="mb-3">
+        <div class="max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-200 ease-[ease] group-[.open]:max-h-[500px] group-[.open]:overflow-visible group-[.open]:opacity-100">
+            <div class="mb-4">
                 <label
                     :for="getIdSuffix('form-reply-message')"
-                    class="visually-hidden"
+                    class="sr-only"
                 >
                     Comentariu
                 </label>
                 <textarea
                     :id="getIdSuffix('form-reply-message')"
                     v-model="form.data.message"
-                    :class="['form-control', { 'is-invalid': v$.form.data.message.$error }]"
+                    :class="fieldClass(v$.form.data.message.$error, true)"
                     rows="4"
                     placeholder="Scrie comentariul tău aici..."
                     required
                 />
             </div>
-            <div
-                v-if="form.data.message || form.data.name || form.data.email || form.data.site"
-                class="form-row"
-            >
-                <div class="mb-3 col-sm-4">
+            <div v-if="form.data.message || form.data.name || form.data.email || form.data.site">
+                <div class="mb-4 sm:w-1/3">
                     <label
                         for="form-reply-name"
-                        class="visually-hidden"
+                        class="sr-only"
                     >Nume</label>
                     <input
                         id="form-reply-name"
                         v-model="form.data.name"
                         type="text"
-                        :class="['form-control', { 'is-invalid': v$.form.data.name.$error }]"
+                        :class="fieldClass(v$.form.data.name.$error)"
                         placeholder="Nume"
                         required
                     >
                 </div>
-                <div class="mb-3 col-sm-4">
+                <div class="mb-4 sm:w-1/3">
                     <label
                         for="form-reply-email"
-                        class="visually-hidden"
+                        class="sr-only"
                     >Email</label>
                     <input
                         id="form-reply-email"
                         v-model="form.data.email"
                         type="email"
-                        :class="['form-control', { 'is-invalid': v$.form.data.email.$error }]"
+                        :class="fieldClass(v$.form.data.email.$error)"
                         placeholder="Email"
                         required
                     >
                 </div>
-                <div class="mb-3 col-sm-4">
+                <div class="mb-4 sm:w-1/3">
                     <label
                         for="form-reply-site"
-                        class="visually-hidden"
+                        class="sr-only"
                     >Site</label>
                     <input
                         id="form-reply-site"
                         v-model="form.data.site"
                         type="url"
-                        :class="['form-control', { 'is-invalid': v$.form.data.site.$error }]"
+                        :class="fieldClass(v$.form.data.site.$error)"
                         placeholder="Site"
                     >
                 </div>
@@ -77,13 +80,14 @@
             <base-alert
                 v-if="v$.form.data.$error"
                 variant="danger"
+                class="mb-4"
             >
                 Câmpurile marcate cu roșu conțin erori.
             </base-alert>
 
             <button
                 type="submit"
-                class="btn btn-outline-secondary d-flex align-items-center"
+                class="flex items-center rounded-md border border-secondary px-3 py-1.5 text-center align-middle text-secondary transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out select-none hover:bg-secondary hover:text-white focus-visible:ring-4 focus-visible:ring-secondary/50 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-65"
                 :disabled="form.loading"
             >
                 <base-spinner
@@ -138,7 +142,26 @@ export default {
         return { form, v$ };
     },
 
+    computed: {
+        isReply() {
+            return !!this.data.commentId;
+        },
+    },
+
     methods: {
+        fieldClass(invalid, multiline = false) {
+            const base = 'block w-full appearance-none rounded-md border bg-white bg-clip-padding px-3 py-1.5 text-gray-900 transition-[border-color,box-shadow] duration-150 ease-in-out placeholder:text-gray-600 focus:ring-4 focus:outline-none';
+
+            if (!invalid) return [base, 'border-gray-400 focus:border-primary-300 focus:ring-primary/25'];
+
+            return [
+                base,
+                'border-danger bg-(image:--icon-invalid) bg-size-[calc(.75em+.375rem)] bg-no-repeat pr-[calc(1.5em+.75rem)] focus:ring-danger/25',
+                multiline
+                    ? 'bg-position-[right_calc(.375em+.1875rem)_top_calc(.375em+.1875rem)]'
+                    : 'bg-position-[right_calc(.375em+.1875rem)_center]',
+            ];
+        },
         formOpen() {
             if (this.$el.classList.contains('open')) return;
 
@@ -147,9 +170,7 @@ export default {
             document.body.addEventListener('click', this.formClose);
         },
         formClose(event) {
-            const selfClicked = event.target.closest('.form-reply') === this.$el;
-
-            if (selfClicked) return;
+            if (this.$el.contains(event.target)) return;
 
             this.$el.classList.remove('open');
             document.body.removeEventListener('click', this.formClose);
@@ -173,7 +194,7 @@ export default {
 
                 this.form.data.message = null;
                 this.v$.form.data.$reset();
-                if (elComment) elComment.classList.add('highlight-background');
+                if (elComment) elComment.classList.add('animate-highlight');
                 setTimeout(() => this.$el.classList.remove('open'), 2000);
             }).catch(() => {
                 // empty catch
@@ -187,7 +208,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/comments-list-form";
-</style>

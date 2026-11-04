@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="notifications"
-        class="toast-container bottom-0"
+        class="pointer-events-none fixed bottom-0 z-1090 w-max max-w-full space-y-4 p-4"
     >
         <lazy-base-toast
             v-for="notification in notifications"

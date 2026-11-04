@@ -2,12 +2,12 @@
     <div v-if="data">
         <h1
             v-if="showPageTitle(data.title)"
-            class="mb-4"
+            class="mb-6"
         >
             {{ data.title }}
         </h1>
 
-        <base-alert>
+        <base-alert class="mb-12">
             Susțin <a
                 href="https://www.anvelope.ro/"
                 target="_blank"
@@ -17,6 +17,7 @@
 
         <posts-list
             :posts="data.main"
+            class="mb-12"
         />
     </div>
 </template>

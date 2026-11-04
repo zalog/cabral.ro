@@ -6,7 +6,7 @@ const constants = {
         field: 'form-control',
         fieldInvalid: 'is-invalid',
         fieldInvalidFeedback: 'invalid-feedback',
-        hide: 'd-none',
+        hide: 'hidden',
     },
 };
 

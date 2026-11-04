@@ -1,22 +1,26 @@
 <template>
     <div
         v-if="visible"
-        class="toast show"
-        :class="[
-            { [`text-bg-${variant}`]: variant },
-            toastClass,
-        ]"
+        class="pointer-events-auto w-[350px] max-w-full rounded-md bg-clip-padding text-sm shadow-md"
+        :class="variantClass"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
     >
-        <div class="toast-body">
+        <div class="p-3 wrap-break-word">
             <slot />
         </div>
     </div>
 </template>
 
 <script>
+const variants = {
+    default: 'bg-black text-gray-300',
+    secondary: 'bg-secondary text-white',
+    success: 'bg-success text-white',
+    danger: 'bg-danger text-white',
+};
+
 export default {
     props: {
         visible: {
@@ -25,12 +29,8 @@ export default {
         },
         variant: {
             type: String,
-            default: undefined,
-            validator: (value) => [undefined, 'secondary', 'success', 'danger'].includes(value),
-        },
-        toastClass: {
-            type: String,
-            default: null,
+            default: 'default',
+            validator: (value) => Object.keys(variants).includes(value),
         },
         noAutoHide: {
             type: Boolean,
@@ -39,6 +39,12 @@ export default {
     },
 
     emits: ['hidden'],
+
+    computed: {
+        variantClass() {
+            return variants[this.variant];
+        },
+    },
 
     mounted() {
         if (!this.noAutoHide) this.attachAutoHide();
@@ -53,7 +59,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/toast";
-</style>

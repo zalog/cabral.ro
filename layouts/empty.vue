@@ -1,11 +1,7 @@
 <template>
-    <div class="layout-default">
-        <div class="container-fluid">
+    <div class="flex min-h-screen flex-col">
+        <div class="flex grow flex-col p-3 sm:py-6">
             <slot />
         </div>
     </div>
 </template>
-
-<style lang="scss">
-@use "~/assets/scss/07-trumps/layout-default";
-</style>

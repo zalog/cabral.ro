@@ -1,30 +1,16 @@
 <template>
-    <ul class="list-share">
-        <li>
+    <ul class="flex gap-4 text-sm">
+        <li
+            v-for="network in networks"
+            :key="network.name"
+        >
             <button
-                class="btn btn-facebook"
-                @click="shareTo('facebook')"
+                class="inline-block rounded-md border px-3 py-1.5 text-center align-middle text-base transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out select-none hover:border-transparent hover:text-gray-900"
+                :class="network.class"
+                @click="shareTo(network.name)"
             >
-                <base-icon name="facebook" />
-                facebook
-            </button>
-        </li>
-        <li>
-            <button
-                class="btn btn-whatsapp"
-                @click="shareTo('whatsapp')"
-            >
-                <base-icon name="whatsapp" />
-                whatsapp
-            </button>
-        </li>
-        <li>
-            <button
-                class="btn btn-twitter"
-                @click="shareTo('twitter')"
-            >
-                <base-icon name="twitter" />
-                twitter
+                <base-icon :name="network.name" />
+                {{ network.name }}
             </button>
         </li>
     </ul>
@@ -33,12 +19,22 @@
 <script>
 import { fbButton, whatsapp, tw } from 'vanilla-sharing';
 
+const networks = [
+    { name: 'facebook', class: 'border-facebook text-facebook' },
+    { name: 'whatsapp', class: 'border-whatsapp text-whatsapp' },
+    { name: 'twitter', class: 'border-twitter text-twitter' },
+];
+
 export default {
     props: {
         url: {
             type: String,
             default: '',
         },
+    },
+
+    created() {
+        this.networks = networks;
     },
 
     methods: {
@@ -64,7 +60,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/list-share";
-</style>

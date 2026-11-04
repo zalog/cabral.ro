@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="posts.posts.length"
-        class="cards-posts"
-    >
+    <div v-if="posts.posts.length">
         <base-item-post
             v-for="(post, index) in posts.posts"
             :key="`post-${index}`"
@@ -22,35 +19,33 @@
                 links: post.categories,
             }]"
             :body-text="post.excerpt"
+            class="mb-12"
         />
 
         <nav
             v-if="posts.pagination"
             aria-label="Page navigation"
+            class="overflow-x-auto"
         >
-            <ul class="pagination">
+            <ul class="mb-4 flex">
                 <template
                     v-for="(page, index) in posts.pagination.pages"
                     :key="'pagination-item-' + index"
                 >
-                    <li
-                        v-if="page !== '...'"
-                        class="page-item"
-                    >
+                    <li v-if="page !== '...'">
                         <router-link
                             :to="paginationTo(page)"
-                            class="page-link"
+                            class="relative block rounded-md px-3 py-1.5 text-gray-900 no-underline transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out hover:z-2"
                             active-class
                             exact-active-class
-                            :class="{ active: [posts.pagination.currentPage] == page }"
+                            :class="([posts.pagination.currentPage] == page)
+                                ? 'z-3 bg-gray-100 font-bold shadow-md'
+                                : 'focus:z-3 focus:bg-gray-200 focus:text-primary-700 focus:outline-none'"
                         >
                             {{ page }}
                         </router-link>
                     </li>
-                    <li
-                        v-else
-                        class="page-item"
-                    >
+                    <li v-else>
                         {{ page }}
                     </li>
                 </template>
@@ -93,7 +88,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@use "~/assets/scss/05-components/posts-list";
-</style>
