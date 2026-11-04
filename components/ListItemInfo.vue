@@ -1,7 +1,7 @@
 <template>
     <ul
         v-if="data && data.length"
-        class="flex gap-2 overflow-x-scroll text-sm whitespace-nowrap text-gray-900/75 scrollbar-none"
+        class="scrollbar-none flex gap-2 overflow-x-scroll text-sm whitespace-nowrap text-gray-900/75"
     >
         <li
             v-for="(item, index) in getData"

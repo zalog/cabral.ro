@@ -28,7 +28,7 @@
                 v-html="data.main.content.rendered/* eslint-disable-line vue/no-v-html */"
             />
             <list-share
-                class="mb-12 overflow-x-auto whitespace-nowrap scrollbar-none"
+                class="mb-12 scrollbar-none overflow-x-auto whitespace-nowrap"
                 :url="data.main.link"
             />
             <list-related

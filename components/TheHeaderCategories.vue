@@ -1,5 +1,5 @@
 <template>
-    <ul class="flex gap-4 overflow-x-auto p-3 scrollbar-none">
+    <ul class="scrollbar-none flex gap-4 overflow-x-auto p-3">
         <li
             v-for="(category, index) in data"
             :key="`navbar-categories-${index}`"

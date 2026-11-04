@@ -29,6 +29,7 @@
     "@stylistic/stylelint-config": "^5.0.0",
     "@tailwindcss/vite": "^4.3.4",
     "eslint": "^10.14.0",
+    "eslint-plugin-better-tailwindcss": "^4.10.0",
     "postcss-html": "^2.0.0",
     "stylelint": "^17.16.0",
     "stylelint-config-recess-order": "^7.9.0",
