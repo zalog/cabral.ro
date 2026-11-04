@@ -1,0 +1,8 @@
+.data
+.DS_Store
+.env*
+.git
+.github
+.nuxt
+.output
+node_modules
