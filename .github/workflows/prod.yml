@@ -7,75 +7,86 @@ on:
 
 concurrency: prod
 
+env:
+  IMAGE: ghcr.io/zalog/cabral.ro
+
 jobs:
-  deploy:
+  release:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - name: install ssh key
-        uses: shimataro/ssh-key-action@87a8f067114a8ce263df83e9ed5c849953548bc3 # v2.8.1
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: '# known hosts'
-      - name: add known hosts
-        env:
-          DEPLOY_HOST: ${{ secrets.HOST }}
-        run: ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
-
       - name: checkout
-        uses: actions/checkout@v7
-
-      - name: nodejs
-        uses: actions/setup-node@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version-file: '.nvmrc'
+          persist-credentials: false
 
-      # see https://docs.github.com/en/actions/advanced-guides/caching-dependencies-to-speed-up-workflows
-      - name: cache node modules
-        uses: actions/cache@v6
-        env:
-          cache-name: cache-node-modules
+      - name: nodejs version
+        id: node
+        run: echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+
+      - name: set up buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: image metadata
+        id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          images: ${{ env.IMAGE }}
+          flavor: latest=false
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=prod
 
-      - name: npm clean install
-        run: npm ci --ignore-scripts
+      - name: build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/amd64
+          build-args: NODE_VERSION=${{ steps.node.outputs.version }}
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: cabral.ro:test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      - name: npm build
+      - name: smoke test
+        id: smoke
         run: |
-          npm run nuxt:build
+          docker run --detach --name app --read-only --publish 3000:3000 cabral.ro:test
+          health() {
+            docker exec app node -e "fetch('http://127.0.0.1:3000/favicon.ico').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+          }
+          for _ in $(seq 30); do
+            health && break
+            sleep 1
+          done
+          health
+          test "$(docker exec app id -u)" != 0
+          curl --fail --silent --show-error --output /dev/null http://localhost:3000/
 
-      - name: zip
-        run: |
-          7z a nuxt.zip .output/ ecosystem.config.cjs
+      - name: smoke test logs
+        if: failure() && steps.smoke.outcome == 'failure'
+        run: docker logs app
 
-      - name: copy
-        env:
-          DEPLOY_USER: ${{ secrets.USER }}
-          DEPLOY_HOST: ${{ secrets.HOST }}
-          DEPLOY_PATH: ${{ secrets.PATH_HOME }}
-        run: |
-          scp nuxt.zip "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH"
+      - name: log in to GHCR
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: unzip and start the server
-        env:
-          DEPLOY_USER: ${{ secrets.USER }}
-          DEPLOY_HOST: ${{ secrets.HOST }}
-          DEPLOY_PATH: ${{ secrets.PATH_HOME }}
-        run: |
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" "
-            set -e
-            cd $DEPLOY_PATH
-            rm -rf .output-temp/
-            unzip -qq nuxt.zip -d .output-temp/
-            rm -rf .output
-            cp -rf .output-temp/.output .output
-            cp -f .output-temp/ecosystem.config.cjs ecosystem.config.cjs
-            pm2 startOrReload ecosystem.config.cjs -s --only cabral.ro
-            pm2 save -s
-          "
+      - name: push
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/amd64
+          build-args: NODE_VERSION=${{ steps.node.outputs.version }}
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          push: true
+          cache-from: type=gha
+
