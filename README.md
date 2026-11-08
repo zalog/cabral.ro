@@ -8,13 +8,19 @@ npm install
 
 ## Configuration
 
-- `NUXT_WP_URL`: the WordPress address the server reads from, without a
+- `NUXT_WP_URL`: the WordPress address the server talks to, without a
   trailing slash. WordPress must answer at `$NUXT_WP_URL/wp-json/`.
   Default: `https://wp.cabral.ro`.
 
 It is read when the server starts, so it goes in the container
-environment, not in the build. Comment and contact form posts go from
-the browser to `https://wp.cabral.ro/wp-json/`.
+environment, not in the build.
+
+The browser talks only to this server, through `/api/wp/`, and the
+server talks to WordPress. With comment and contact form posts it sends
+WordPress the visitor's address in `X-Forwarded-For` (the first address
+of the request's own `X-Forwarded-For`), and the user agent, referer and
+language, for the spam checks. WordPress must take the visitor's address
+from that header, and only from this server.
 
 ## Container image
 

@@ -77,7 +77,7 @@ export async function postComment({ params }) {
     }, params);
 
     try {
-        const response = await $fetch(ENDPOINTS.COMMENTS_POST, {
+        const response = await $fetch(ENDPOINTS.COMMENTS, {
             method: 'POST',
             body: prepareParams,
         });

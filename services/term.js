@@ -1,6 +1,6 @@
-import { createError } from '#imports';
 import { ENDPOINTS } from '../utils/constants';
 import { pageTerm } from '../utils/adaptors';
+import { notFound } from '../utils';
 
 const fetchTerm = async ({
     taxonomy,
@@ -19,7 +19,7 @@ const fetchTerm = async ({
         throw error.response;
     }
 
-    if (!response.length) throw createError({ statusCode: 404, statusMessage: 'Nu am găsit pagina', fatal: true });
+    if (!response.length) throw notFound();
 
     return pageTerm(response[0]);
 };
