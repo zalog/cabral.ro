@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import { createError, defineNuxtComponent, useRoute } from '#imports';
+import { defineNuxtComponent, useRoute } from '#imports';
 import { currentPage } from '~/mixins';
-import { formatDate } from '~/utils';
+import { formatDate, notFound } from '~/utils';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
 import ListRelated from '~/components/ListRelated.vue';
@@ -88,7 +88,7 @@ export default defineNuxtComponent({
         const data = store.getters['data/currentPage'](useRoute().fullPath);
 
         if (!data.main) {
-            throw createError({ statusCode: 404, statusMessage: 'Nu am găsit pagina', fatal: true });
+            throw notFound();
         }
 
         return {};
