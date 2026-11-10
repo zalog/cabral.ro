@@ -28,7 +28,6 @@ export default {
                 pageTitle = `Caută după "${pageSearch}"`;
             }
 
-            // TODO adds category name
             if (term) {
                 if (isValidPropData(currentPage, 'title')) return;
 

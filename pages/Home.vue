@@ -83,7 +83,7 @@ export default defineNuxtComponent({
         const data = {};
 
         if (pageS) {
-            // TODO get search pages head data from api and remove this
+            // Yoast has no head for search pages
             data.head = {
                 title: `Caută după "${pageS}" - ${SITE.TITLE.toLowerCase()}`,
                 meta: [{
