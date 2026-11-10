@@ -133,9 +133,7 @@ export default defineNuxtComponent({
 
             if (checkForData && this.data.comments) return;
 
-            const hasNextPage = this.data.comments
-                && this.data.comments.pageInfo
-                && this.data.comments.pageInfo.hasNextPage;
+            const hasNextPage = this.data.comments?.pageInfo?.hasNextPage;
 
             if (hasNextPage === false) return;
 
