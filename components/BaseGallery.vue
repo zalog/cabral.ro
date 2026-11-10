@@ -71,11 +71,7 @@ export default {
 
     methods: {
         async photoSwipeInit(pswp) {
-            pswp.addFilter('useContentPlaceholder', (_, { width, height }) => {
-                if (width || height) return true;
-
-                return false;
-            });
+            pswp.addFilter('useContentPlaceholder', (_, { width, height }) => Boolean(width || height));
 
             pswp.on('contentLoadImage', (eventPswp) => {
                 const { content } = eventPswp;
