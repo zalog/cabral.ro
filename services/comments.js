@@ -56,7 +56,7 @@ export async function fetchComments({
             },
         })),
         pageInfo: {
-            hasNextPage: page < parseInt(response.headers.get('x-wp-totalpages'), 10),
+            hasNextPage: page < Number.parseInt(response.headers.get('x-wp-totalpages'), 10),
             nextPage: page + 1,
         },
     };

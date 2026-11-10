@@ -41,7 +41,7 @@ const fetchPosts = async ({
     const responsePosts = await $fetch.raw(ENDPOINTS.POSTS, {
         query: params,
     });
-    const responsePostsCount = parseInt(responsePosts.headers.get('x-wp-total'), 10);
+    const responsePostsCount = Number.parseInt(responsePosts.headers.get('x-wp-total'), 10);
     const responsePostsPages = responsePostsCount > pagination.itemsOnPage;
 
     output.posts = responsePosts._data.map((post) => itemPost(post));
