@@ -4,6 +4,8 @@ import { objectRenameKeys } from '../utils';
 
 const commentFields = 'id,parent,author_name,author_url,date,content';
 
+const getTotalPages = (response) => Number.parseInt(response.headers.get('x-wp-totalpages'), 10);
+
 async function fetchReplies({ singleId, parentIds }) {
     const fetchPage = (page) => $fetch.raw(ENDPOINTS.COMMENTS, {
         query: {
@@ -16,9 +18,8 @@ async function fetchReplies({ singleId, parentIds }) {
         },
     });
     const firstPage = await fetchPage(1);
-    const totalPages = Number.parseInt(firstPage.headers.get('x-wp-totalpages'), 10);
     const nextPages = await Promise.all(
-        Array.from({ length: totalPages - 1 }, (_, index) => fetchPage(index + 2)),
+        Array.from({ length: getTotalPages(firstPage) - 1 }, (_, index) => fetchPage(index + 2)),
     );
 
     return [firstPage, ...nextPages].flatMap((response) => response._data);
@@ -56,7 +57,7 @@ export async function fetchComments({
             },
         })),
         pageInfo: {
-            hasNextPage: page < Number.parseInt(response.headers.get('x-wp-totalpages'), 10),
+            hasNextPage: page < getTotalPages(response),
             nextPage: page + 1,
         },
     };
