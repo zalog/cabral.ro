@@ -104,7 +104,7 @@ export default defineNuxtComponent({
 
     created() {
         if (this.data.main) {
-            const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1;
+            const hasEntrysGalleryJetpack = this.data.main.content.rendered.includes('tiled-gallery');
             if (hasEntrysGalleryJetpack) {
                 cssGallery().catch((error) => {
                     console.error('load error gallery styles: ', error);
