@@ -3,7 +3,7 @@ const isValidPropData = (currentPage, prop, bypass = false, expireMinutes = 5) =
 
     if (isInvalid || bypass) return false;
 
-    const timestampNow = new Date().getTime();
+    const timestampNow = Date.now();
     const dataExpired = (currentPage.timestamp[prop] + (expireMinutes * 60 * 1000)) < timestampNow;
 
     return !dataExpired;

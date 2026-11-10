@@ -50,7 +50,7 @@ export default {
 
             set(state, dataKeys, data);
 
-            set(state, [dataKeyPage, 'timestamp', dataKeyFirst], new Date().getTime());
+            set(state, [dataKeyPage, 'timestamp', dataKeyFirst], Date.now());
 
             const stateKeys = Object.keys(state);
             const keyPages = stateKeys.filter((key) => key !== dataKeyPage && key[0] === '/' && state[key].timestamp);
