@@ -27,7 +27,7 @@ import { defineNuxtComponent, useRoute } from '#imports';
 import { SITE } from '~/utils/constants';
 import dataListing from '~/store/lazy/data-listing';
 import dataHead from '~/store/lazy/data-head';
-import { currentPage } from '~/mixins';
+import useCurrentPage from '~/composables/useCurrentPage';
 import BaseAlert from '~/components/BaseAlert.vue';
 import PostsList from '~/components/PostsList.vue';
 
@@ -45,15 +45,30 @@ const registerModules = (store, pageS) => {
     store.$registerModules(modules);
 };
 
+// Yoast has no head for search pages
+const searchHead = (pageS) => {
+    if (!pageS) return {};
+
+    return {
+        title: `Caută după "${pageS}" - ${SITE.TITLE.toLowerCase()}`,
+        meta: [{
+            name: 'robots',
+            content: 'noindex, follow',
+        }],
+    };
+};
+
 export default defineNuxtComponent({
     components: {
         BaseAlert,
         PostsList,
     },
 
-    mixins: [
-        currentPage,
-    ],
+    setup() {
+        const route = useRoute();
+
+        return useCurrentPage({ head: () => searchHead(route.query.s) });
+    },
 
     async asyncData({ $store: store }) {
         const route = { ...useRoute() };
@@ -80,20 +95,7 @@ export default defineNuxtComponent({
 
         await Promise.all(actions);
 
-        const data = {};
-
-        if (pageS) {
-            // Yoast has no head for search pages
-            data.head = {
-                title: `Caută după "${pageS}" - ${SITE.TITLE.toLowerCase()}`,
-                meta: [{
-                    name: 'robots',
-                    content: 'noindex, follow',
-                }],
-            };
-        }
-
-        return data;
+        return {};
     },
 
     mounted() {

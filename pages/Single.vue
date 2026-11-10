@@ -60,7 +60,7 @@
 
 <script>
 import { defineNuxtComponent, useRoute } from '#imports';
-import { currentPage } from '~/mixins';
+import useCurrentPage from '~/composables/useCurrentPage';
 import { formatDate, notFound } from '~/utils';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
@@ -80,9 +80,9 @@ export default defineNuxtComponent({
         CommentsList,
     },
 
-    mixins: [
-        currentPage,
-    ],
+    setup() {
+        return useCurrentPage();
+    },
 
     asyncData({ $store: store }) {
         const data = store.getters['data/currentPage'](useRoute().fullPath);
