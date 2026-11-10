@@ -9,4 +9,4 @@ const isValidPropData = (currentPage, prop, bypass = false, expireMinutes = 5) =
     return !dataExpired;
 };
 
-export { isValidPropData as default };
+export default isValidPropData;

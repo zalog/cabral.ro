@@ -6,4 +6,4 @@ const objectRenameKeys = (keysMap, obj) => Object.keys(obj).reduce(
     {},
 );
 
-export { objectRenameKeys as default };
+export default objectRenameKeys;

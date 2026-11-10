@@ -17,4 +17,4 @@ const fetchAttachment = async ({
     }
 };
 
-export { fetchAttachment as default };
+export default fetchAttachment;

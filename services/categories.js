@@ -23,4 +23,4 @@ const fetchCategories = async ({
     }
 };
 
-export { fetchCategories as default };
+export default fetchCategories;

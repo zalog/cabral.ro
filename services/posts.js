@@ -78,4 +78,4 @@ const fetchPosts = async ({
     return output;
 };
 
-export { fetchPosts as default };
+export default fetchPosts;
