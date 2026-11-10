@@ -24,7 +24,7 @@ export default {
 
             const output = { ...payload };
 
-            if (typeof payload.visible === 'undefined') output.visible = true;
+            if (payload.visible === undefined) output.visible = true;
             if (!output.id) output.id = Date.now();
 
             commit('PUSH', output);
