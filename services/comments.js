@@ -5,27 +5,23 @@ import { objectRenameKeys } from '../utils';
 const commentFields = 'id,parent,author_name,author_url,date,content';
 
 async function fetchReplies({ singleId, parentIds }) {
-    const replies = [];
-    let page = 1;
-    let totalPages;
+    const fetchPage = (page) => $fetch.raw(ENDPOINTS.COMMENTS, {
+        query: {
+            post: singleId,
+            parent: parentIds.join(','),
+            per_page: 100,
+            page,
+            order: 'asc',
+            _fields: commentFields,
+        },
+    });
+    const firstPage = await fetchPage(1);
+    const totalPages = Number.parseInt(firstPage.headers.get('x-wp-totalpages'), 10);
+    const nextPages = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, index) => fetchPage(index + 2)),
+    );
 
-    do {
-        const response = await $fetch.raw(ENDPOINTS.COMMENTS, {
-            query: {
-                post: singleId,
-                parent: parentIds.join(','),
-                per_page: 100,
-                page,
-                order: 'asc',
-                _fields: commentFields,
-            },
-        });
-        replies.push(...response._data);
-        totalPages = parseInt(response.headers.get('x-wp-totalpages'), 10);
-        page += 1;
-    } while (page <= totalPages);
-
-    return replies;
+    return [firstPage, ...nextPages].flatMap((response) => response._data);
 }
 
 export async function fetchComments({
