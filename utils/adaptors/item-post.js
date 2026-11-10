@@ -2,7 +2,7 @@ import { SITE } from '~/utils/constants';
 import entityDate from './entity-date';
 import media from './media';
 
-export default (payload) => {
+const itemPost = (payload) => {
     const date = entityDate({ date: payload.date, modified: payload.modified });
     const categories = payload.embed.categories.map((category) => ({
         ...category,
@@ -19,3 +19,5 @@ export default (payload) => {
         date,
     };
 };
+
+export default itemPost;

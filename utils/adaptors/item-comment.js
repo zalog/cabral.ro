@@ -1,4 +1,4 @@
-export default (payload) => ({
+const itemComment = (payload) => ({
     databaseId: payload.id,
     author: {
         node: {
@@ -10,3 +10,5 @@ export default (payload) => ({
     date: payload.date,
     status: payload.status,
 });
+
+export default itemComment;

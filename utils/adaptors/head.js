@@ -12,7 +12,7 @@ const metaKeyPropertyOgImage = 'og_image';
 const linkKeys = ['canonical'];
 const scriptKeySchema = 'schema';
 
-export default (payload) => {
+const head = (payload) => {
     let title = '';
     const meta = [];
     const link = [];
@@ -73,3 +73,5 @@ export default (payload) => {
         script,
     };
 };
+
+export default head;

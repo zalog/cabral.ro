@@ -6,4 +6,6 @@ const item = ({
     title: name, to: getUrl(link).pathname,
 });
 
-export default (payload) => payload.map((payloadItem) => item(payloadItem));
+const navCategories = (payload) => payload.map((payloadItem) => item(payloadItem));
+
+export default navCategories;

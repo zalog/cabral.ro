@@ -3,7 +3,7 @@ import head from './head';
 import entityDate from './entity-date';
 import media from './media';
 
-export default (payload) => {
+const pageSinglePost = (payload) => {
     const date = entityDate({ date: payload.date, modified: payload.modified });
 
     const categories = payload.embed.categories.map((category) => ({
@@ -53,3 +53,5 @@ export default (payload) => {
         related,
     };
 };
+
+export default pageSinglePost;
