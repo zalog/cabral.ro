@@ -23,7 +23,7 @@ const pageSinglePost = (payload) => {
     if (related.length > 3) related.splice(3);
     related = related.map((post) => {
         let slug = post.url.replace(SITE.LINK, '');
-        slug = slug.replace(/\//g, '');
+        slug = slug.replaceAll('/', '');
 
         return {
             title: post.title,
