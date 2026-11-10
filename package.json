@@ -20,7 +20,7 @@
     "photoswipe": "^5.4.4",
     "vanilla-sharing": "^6.1.2",
     "vue": "^3.5.45",
-    "vue-router": "^5.4.0",
+    "vue-router": "^5.5.0",
     "vuex": "^4.1.0",
     "webfontloader": "^1.6.28"
   },
