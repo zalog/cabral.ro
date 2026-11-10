@@ -105,7 +105,11 @@ export default defineNuxtComponent({
     created() {
         if (this.data.main) {
             const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1;
-            if (hasEntrysGalleryJetpack) cssGallery();
+            if (hasEntrysGalleryJetpack) {
+                cssGallery().catch((error) => {
+                    console.error('load error gallery styles: ', error);
+                });
+            }
         }
 
         this.galleryFullHash = galleryFullHash;
@@ -160,7 +164,10 @@ export default defineNuxtComponent({
                     const { default: Form } = module;
                     const form = new Form(formEl);
                     form.init();
-                }));
+                }))
+                .catch((error) => {
+                    console.error('load error contact form: ', error);
+                });
         },
         attachGallery() {
             const imgs = this.$refs.content.querySelectorAll('img');
