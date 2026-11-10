@@ -80,6 +80,7 @@
             margin-bottom: 1rem;
         }
 
+        /* `!important` wins over Tailwind utilities named like WordPress classes, such as `size-full` */
         & img {
             width: auto !important;
             max-width: 100%;
