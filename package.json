@@ -1,6 +1,6 @@
 {
   "name": "cabral.ro",
-  "version": "8.4.0",
+  "version": "8.4.1",
   "private": true,
   "scripts": {
     "start": "npm run nuxt:dev",
