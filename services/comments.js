@@ -4,28 +4,25 @@ import { objectRenameKeys } from '../utils';
 
 const commentFields = 'id,parent,author_name,author_url,date,content';
 
+const getTotalPages = (response) => Number.parseInt(response.headers.get('x-wp-totalpages'), 10);
+
 async function fetchReplies({ singleId, parentIds }) {
-    const replies = [];
-    let page = 1;
-    let totalPages;
+    const fetchPage = (page) => $fetch.raw(ENDPOINTS.COMMENTS, {
+        query: {
+            post: singleId,
+            parent: parentIds.join(','),
+            per_page: 100,
+            page,
+            order: 'asc',
+            _fields: commentFields,
+        },
+    });
+    const firstPage = await fetchPage(1);
+    const nextPages = await Promise.all(
+        Array.from({ length: getTotalPages(firstPage) - 1 }, (_, index) => fetchPage(index + 2)),
+    );
 
-    do {
-        const response = await $fetch.raw(ENDPOINTS.COMMENTS, {
-            query: {
-                post: singleId,
-                parent: parentIds.join(','),
-                per_page: 100,
-                page,
-                order: 'asc',
-                _fields: commentFields,
-            },
-        });
-        replies.push(...response._data);
-        totalPages = parseInt(response.headers.get('x-wp-totalpages'), 10);
-        page += 1;
-    } while (page <= totalPages);
-
-    return replies;
+    return [firstPage, ...nextPages].flatMap((response) => response._data);
 }
 
 export async function fetchComments({
@@ -60,7 +57,7 @@ export async function fetchComments({
             },
         })),
         pageInfo: {
-            hasNextPage: page < parseInt(response.headers.get('x-wp-totalpages'), 10),
+            hasNextPage: page < getTotalPages(response),
             nextPage: page + 1,
         },
     };

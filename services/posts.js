@@ -41,7 +41,7 @@ const fetchPosts = async ({
     const responsePosts = await $fetch.raw(ENDPOINTS.POSTS, {
         query: params,
     });
-    const responsePostsCount = parseInt(responsePosts.headers.get('x-wp-total'), 10);
+    const responsePostsCount = Number.parseInt(responsePosts.headers.get('x-wp-total'), 10);
     const responsePostsPages = responsePostsCount > pagination.itemsOnPage;
 
     output.posts = responsePosts._data.map((post) => itemPost(post));
@@ -56,17 +56,11 @@ const fetchPosts = async ({
         );
 
         if (responsePagination.pages[0] !== 1) {
-            pages.push(...[
-                1,
-                '...',
-            ]);
+            pages.push(1, '...');
         }
         pages.push(...responsePagination.pages);
         if (responsePagination.pages[paginationMaxPages - 1] !== responsePagination.totalPages) {
-            pages.push(...[
-                '...',
-                responsePagination.totalPages,
-            ]);
+            pages.push('...', responsePagination.totalPages);
         }
 
         output.pagination = {
@@ -78,4 +72,4 @@ const fetchPosts = async ({
     return output;
 };
 
-export { fetchPosts as default };
+export default fetchPosts;

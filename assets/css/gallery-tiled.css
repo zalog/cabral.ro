@@ -7,7 +7,7 @@
 }
 
 .tiled-gallery img {
-    margin: 2px !important;
+    margin: 2px;
 }
 
 .tiled-gallery .gallery-group {
@@ -84,7 +84,7 @@
 
 .tiled-gallery.type-circle .tiled-gallery-item img {
     object-fit: cover;
-    border-radius: 50% !important;
+    border-radius: 50%;
 }
 
 .tiled-gallery.type-circle .tiled-gallery-caption {

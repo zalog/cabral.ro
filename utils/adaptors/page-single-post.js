@@ -3,7 +3,7 @@ import head from './head';
 import entityDate from './entity-date';
 import media from './media';
 
-export default (payload) => {
+const pageSinglePost = (payload) => {
     const date = entityDate({ date: payload.date, modified: payload.modified });
 
     const categories = payload.embed.categories.map((category) => ({
@@ -23,7 +23,7 @@ export default (payload) => {
     if (related.length > 3) related.splice(3);
     related = related.map((post) => {
         let slug = post.url.replace(SITE.LINK, '');
-        slug = slug.replace(/\//g, '');
+        slug = slug.replaceAll('/', '');
 
         return {
             title: post.title,
@@ -53,3 +53,5 @@ export default (payload) => {
         related,
     };
 };
+
+export default pageSinglePost;

@@ -15,7 +15,7 @@ const constants = {
 
 const initializedForms = new WeakSet();
 
-export default class {
+export default class FormCf7 {
     constructor(form) {
         this.form = form;
     }

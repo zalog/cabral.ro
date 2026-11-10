@@ -13,4 +13,4 @@ const fetchHead = async ({
     }
 };
 
-export { fetchHead as default };
+export default fetchHead;

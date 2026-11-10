@@ -21,7 +21,7 @@
 <script>
 import { defineNuxtComponent, useRoute } from '#imports';
 import dataListing from '~/store/lazy/data-listing';
-import { currentPage } from '~/mixins';
+import useCurrentPage from '~/composables/useCurrentPage';
 import PostsList from '~/components/PostsList.vue';
 
 const registerModules = (store) => {
@@ -35,9 +35,9 @@ export default defineNuxtComponent({
         PostsList,
     },
 
-    mixins: [
-        currentPage,
-    ],
+    setup() {
+        return useCurrentPage();
+    },
 
     async asyncData({ $store: store }) {
         const route = { ...useRoute() };

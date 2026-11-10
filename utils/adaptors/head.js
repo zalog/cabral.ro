@@ -6,13 +6,13 @@ const ogImageProperty = (key) => {
     return `og_image:${key}`;
 };
 
-const metaKeysName = ['description', 'robots', 'twitter_card', 'twitter_site'];
-const metaKeysProperty = ['og_locale', 'og_type', 'og_title', 'og_description', 'og_url', 'og_site_name'];
+const metaKeysName = new Set(['description', 'robots', 'twitter_card', 'twitter_site']);
+const metaKeysProperty = new Set(['og_locale', 'og_type', 'og_title', 'og_description', 'og_url', 'og_site_name']);
 const metaKeyPropertyOgImage = 'og_image';
-const linkKeys = ['canonical'];
+const linkKeys = new Set(['canonical']);
 const scriptKeySchema = 'schema';
 
-export default (payload) => {
+const head = (payload) => {
     let title = '';
     const meta = [];
     const link = [];
@@ -41,7 +41,7 @@ export default (payload) => {
                 class: 'yoast-schema-graph',
                 key: `yoast-${key}`,
             });
-        } else if (metaKeysName.includes(key)) {
+        } else if (metaKeysName.has(key)) {
             const content = typeof value === 'object'
                 ? objectToString(value)
                 : value;
@@ -51,13 +51,13 @@ export default (payload) => {
                 content,
                 key: `yoast-${key}`,
             });
-        } else if (metaKeysProperty.includes(key)) {
+        } else if (metaKeysProperty.has(key)) {
             meta.push({
                 property: key.replace('_', ':'),
                 content: value,
                 key: `yoast-${key}`,
             });
-        } else if (linkKeys.includes(key)) {
+        } else if (linkKeys.has(key)) {
             link.push({
                 rel: key,
                 href: value,
@@ -73,3 +73,5 @@ export default (payload) => {
         script,
     };
 };
+
+export default head;

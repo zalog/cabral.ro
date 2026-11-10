@@ -22,4 +22,6 @@ const item = ({
     ID, title, to: to({ url, object }),
 });
 
-export default (payload) => payload.map((payloadItem) => item(payloadItem));
+const menu = (payload) => payload.map((payloadItem) => item(payloadItem));
+
+export default menu;

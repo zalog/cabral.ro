@@ -1,14 +1,13 @@
 <template>
-    <div
+    <output
         class="inline-block animate-spin rounded-full border-current border-r-transparent align-[-.125em]"
         :class="sizeClass"
-        role="status"
     >
         <span
             class="sr-only"
             v-text="'Loading...'"
         />
-    </div>
+    </output>
 </template>
 
 <script>

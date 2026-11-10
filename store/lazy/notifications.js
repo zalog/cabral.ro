@@ -24,8 +24,8 @@ export default {
 
             const output = { ...payload };
 
-            if (typeof payload.visible === 'undefined') output.visible = true;
-            if (!output.id) output.id = new Date().getTime();
+            if (payload.visible === undefined) output.visible = true;
+            if (!output.id) output.id = Date.now();
 
             commit('PUSH', output);
         },

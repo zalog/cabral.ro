@@ -50,10 +50,10 @@ export default {
 
             set(state, dataKeys, data);
 
-            set(state, [dataKeyPage, 'timestamp', dataKeyFirst], new Date().getTime());
+            set(state, [dataKeyPage, 'timestamp', dataKeyFirst], Date.now());
 
             const stateKeys = Object.keys(state);
-            const keyPages = stateKeys.filter((key) => key !== dataKeyPage && key[0] === '/' && state[key].timestamp);
+            const keyPages = stateKeys.filter((key) => key !== dataKeyPage && key.startsWith('/') && state[key].timestamp);
             if (keyPages.length > pagesToKeep) {
                 const keyToDelete = keyPages.reduce((prev, curr) => {
                     if (state[prev].timestamp.main < state[curr].timestamp.main) {

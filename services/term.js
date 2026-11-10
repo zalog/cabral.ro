@@ -24,4 +24,4 @@ const fetchTerm = async ({
     return pageTerm(response[0]);
 };
 
-export { fetchTerm as default };
+export default fetchTerm;

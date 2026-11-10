@@ -11,4 +11,4 @@ const fetchMenu = async () => {
     }
 };
 
-export { fetchMenu as default };
+export default fetchMenu;

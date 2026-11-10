@@ -1,7 +1,7 @@
 import head from './head';
 import entityDate from './entity-date';
 
-export default (payload) => {
+const pageSinglePage = (payload) => {
     const date = entityDate({ date: payload.date, modified: payload.modified });
 
     return {
@@ -17,3 +17,5 @@ export default (payload) => {
         },
     };
 };
+
+export default pageSinglePage;

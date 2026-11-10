@@ -1,3 +1,5 @@
 import { SITE } from '~/utils/constants';
 
-export default (link) => new URL(link, SITE.LINK);
+const url = (link) => new URL(link, SITE.LINK);
+
+export default url;

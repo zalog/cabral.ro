@@ -60,7 +60,7 @@
 
 <script>
 import { defineNuxtComponent, useRoute } from '#imports';
-import { currentPage } from '~/mixins';
+import useCurrentPage from '~/composables/useCurrentPage';
 import { formatDate, notFound } from '~/utils';
 import ListItemInfo from '~/components/ListItemInfo.vue';
 import ListShare from '~/components/ListShare.vue';
@@ -80,9 +80,9 @@ export default defineNuxtComponent({
         CommentsList,
     },
 
-    mixins: [
-        currentPage,
-    ],
+    setup() {
+        return useCurrentPage();
+    },
 
     asyncData({ $store: store }) {
         const data = store.getters['data/currentPage'](useRoute().fullPath);
@@ -104,8 +104,12 @@ export default defineNuxtComponent({
 
     created() {
         if (this.data.main) {
-            const hasEntrysGalleryJetpack = this.data.main.content.rendered.indexOf('tiled-gallery') !== -1;
-            if (hasEntrysGalleryJetpack) cssGallery();
+            const hasEntrysGalleryJetpack = this.data.main.content.rendered.includes('tiled-gallery');
+            if (hasEntrysGalleryJetpack) {
+                cssGallery().catch((error) => {
+                    console.error('load error gallery styles: ', error);
+                });
+            }
         }
 
         this.galleryFullHash = galleryFullHash;
@@ -129,9 +133,7 @@ export default defineNuxtComponent({
 
             if (checkForData && this.data.comments) return;
 
-            const hasNextPage = this.data.comments
-                && this.data.comments.pageInfo
-                && this.data.comments.pageInfo.hasNextPage;
+            const hasNextPage = this.data.comments?.pageInfo?.hasNextPage;
 
             if (hasNextPage === false) return;
 
@@ -160,7 +162,10 @@ export default defineNuxtComponent({
                     const { default: Form } = module;
                     const form = new Form(formEl);
                     form.init();
-                }));
+                }))
+                .catch((error) => {
+                    console.error('load error contact form: ', error);
+                });
         },
         attachGallery() {
             const imgs = this.$refs.content.querySelectorAll('img');
@@ -173,7 +178,7 @@ export default defineNuxtComponent({
                 if (!(a instanceof HTMLAnchorElement) || !imageFile.test(a.pathname)) return;
 
                 const index = this.galleryFull.items.length;
-                const src = img.getAttribute('data-orig-file') || a.getAttribute('href');
+                const src = img.dataset.origFile || a.getAttribute('href');
                 this.galleryFull.items.push({
                     src,
                 });
