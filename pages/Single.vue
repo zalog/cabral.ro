@@ -180,7 +180,7 @@ export default defineNuxtComponent({
                 if (!(a instanceof HTMLAnchorElement) || !imageFile.test(a.pathname)) return;
 
                 const index = this.galleryFull.items.length;
-                const src = img.getAttribute('data-orig-file') || a.getAttribute('href');
+                const src = img.dataset.origFile || a.getAttribute('href');
                 this.galleryFull.items.push({
                     src,
                 });
