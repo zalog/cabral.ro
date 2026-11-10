@@ -11,7 +11,7 @@ export default {
             const singleId = currentPage.main?.id;
             let page = 1;
 
-            if (!singleId) return;
+            if (!singleId || currentPage.main.content.protected) return;
 
             if (pageComments && Object.keys(pageComments.pageInfo).length) {
                 if (pageComments.pageInfo.hasNextPage) {
