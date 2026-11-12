@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
 
     useHead({
         bodyAttrs: {
-            class: computed(() => `body-${route.meta.class || route.name.toLowerCase()}`),
+            class: computed(() => `body-${route.meta.class || route.name?.toLowerCase() || 'error'}`),
         },
     });
 });
